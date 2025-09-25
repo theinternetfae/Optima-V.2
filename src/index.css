@@ -1,2 +1,16 @@
 @import "tailwindcss";
 
+body {
+    background-color: #262626;
+    color: white;
+}
+
+@layer components {
+    .date-menu {
+        @apply bg-[#876543];
+
+        & .today {
+            @apply bg-[#DA38CD];
+        }
+    }
+}

@@ -1,9 +1,11 @@
+import DateMenu from "./Date.jsx";
+
 function App() {
   return (
     <div className="named">
-      <h1 className="text-xl text-red-500">HELLP!</h1>
+      <DateMenu />
     </div>
   )
 }
 
-export default App
+export default App;
