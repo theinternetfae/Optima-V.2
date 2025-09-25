@@ -28,9 +28,9 @@ function DateMenu() {
             {days.map((day, index) => {
                 const isToday = day.toDateString() === new Date().toDateString();
                 if(isToday) {
-                    return (<span className="today" key={index}>{day.getDate()} </span>)
+                    return (<span className="border border-2 border-selected other-days" key={index}>{day.getDate()} </span>)
                 } else {
-                    return(<span key={index}>{day.getDate()} </span>)
+                    return(<span className="other-days" key={index}>{day.getDate()} </span>)
                 }
             })}
         </div>
