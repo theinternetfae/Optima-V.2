@@ -1,14 +1,15 @@
 @import "tailwindcss";
 
 body {
-    background-color: #171717;
-    color: white;
+    background-color: #0D0D0D;
+    color: #E5E7EB;
     width: 100vw;
     height: 100vh;
 }
 
 @theme {
   --color-selected: #DA38CD;
+  --color-bluet: #3B82F6;
 }
 
 @layer components {
@@ -17,19 +18,19 @@ body {
         @apply flex;
 
         & .a-body {
-            @apply border border-2 border-white w-[80%] mx-8 mt-6
+            @apply w-[80%] mx-8 mt-6
         }
     }
 
     .side-menu {
-        @apply bg-[#0A0A0A] w-[20%] h-[100vh] shadow-lg shadow-[#696969];
+        @apply bg-[#1A1A1A] w-[20%] h-[100vh] shadow-xl shadow-bluet;
     }
 
     .date-menu {
-        @apply bg-[#404040] rounded h-[10%] p-2 flex justify-between;
+        @apply bg-[#262626] rounded h-[10%] p-2 flex justify-between shadow-lg shadow-bluet;
 
         & .other-days {
-            @apply rounded h-full w-[30px] bg-[#262626] shadow-lg flex items-end justify-center;
+            @apply rounded h-full w-[30px] bg-[#333333] border-neutral-600 shadow-lg flex items-end justify-center;
         }
     }
 }
