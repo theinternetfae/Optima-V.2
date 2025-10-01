@@ -7,9 +7,14 @@ body {
     height: 100vh;
 }
 
+.date-track::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+
 @theme {
-  --color-selected: #DA38CD;
-  --color-bluet: #3B82F6;
+    --color-selected: #DA38CD;
+    --color-bluet: #2563EB;
+    --color-bluelight: #60A5FA; 
 }
 
 @layer components {
@@ -18,7 +23,7 @@ body {
         @apply flex;
 
         & .a-body {
-            @apply w-[80%] mx-8 mt-6
+            @apply w-[80%] mx-8 mt-6;
         }
     }
 
@@ -26,11 +31,35 @@ body {
         @apply bg-[#1A1A1A] w-[20%] h-[100vh] shadow-xl shadow-bluet;
     }
 
-    .date-menu {
-        @apply bg-[#262626] rounded h-[10%] p-2 flex justify-between shadow-lg shadow-bluet;
+    .task-handler {
+        @apply border border-2 border-white flex justify-between items-center mb-4;
 
-        & .other-days {
-            @apply rounded h-full w-[30px] bg-[#333333] border-neutral-600 shadow-lg flex items-end justify-center;
+        & .show {
+            @apply bg-[#262626] p-2 rounded-lg;
+        }
+
+        & .nav-date {
+            @apply text-xl
+        }
+
+        & .add {
+            @apply text-2xl
+        }
+    }
+
+    .date-menu {
+        @apply bg-[#262626] rounded-lg h-[15%] flex justify-center p-4;
+
+        & .date-track {
+            @apply flex gap-29 justify-between overflow-x-auto mt-2 snap-x snap-mandatory;
+        
+            & .ind-date-box {
+               @apply border border-4 border-[#262626] w-25 flex flex-col ml-[2px] p-[4px] rounded-xl gap-4;  
+            }
+
+            & .other-days {
+                @apply border border-[3px] border-bluelight rounded-full h-[50%] w-[30px] bg-[#333333] p-6 shadow-lg flex items-center justify-center cursor-pointer;
+            }
         }
     }
 }
