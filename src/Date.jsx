@@ -5,26 +5,39 @@ function DateMenu() {
     const containerRef = useRef(null);
     const todayRef = useRef(null);
 
-    function getDaysInMonth(year, month) {
-        const result = [];
-        const date = new Date(year, month, 1);
 
-        while (date.getMonth() === month) {
-            result.push(new Date(date));
-            date.setDate(date.getDate() + 1);
+    function getDaysAround(today, rangeInDays = 90) {
+        const result = [];
+        const start = new Date(today);
+        start.setDate(start.getDate() - rangeInDays);
+
+        for (let i = 0; i < rangeInDays * 90; i++) {
+            const day = new Date(start);
+            result.push(day);
+            start.setDate(start.getDate() + 1);
         }
-        
+
         return result;
     }
+
+    // function getDaysInMonth(year, month) {
+    //     const result = [];
+    //     const date = new Date(year, month, 1);
+
+    //     while (date.getMonth() === month) {
+    //         result.push(new Date(date));
+    //         date.setDate(date.getDate() + 1);
+    //     }
+        
+    //     return result;
+    // }
 
     const today = new Date();
 
     useEffect(() => {
         const today = new Date();
-        const year = today.getFullYear();   
-        const month = today.getMonth();
 
-        setDays(getDaysInMonth(year, month))
+        setDays(getDaysAround(today, 90))
     }, []);
 
     useEffect(() => {
@@ -37,6 +50,19 @@ function DateMenu() {
         }
     }, [days]);
 
+    function toggleTodayDisplay() {
+        const navDate = document.querySelector('.nav-date');
+        navDate.innerText = `${today.toLocaleDateString("en-US", { month: "long", day: "numeric" })}`;
+        if (todayRef.current && containerRef.current) {
+            todayRef.current.scrollIntoView({
+                behavior: "auto",
+                inline: "center",
+                block: "nearest",
+            });
+        }
+
+    }
+
     const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
 
     return ( 
@@ -48,7 +74,7 @@ function DateMenu() {
                     <option value="unmet">Unmet</option>
                     <option value="met">Met</option>
                 </select>
-                <p className="nav-date">{today.toLocaleDateString("en-US", { month: "long", day: "numeric" })}</p>
+                <p className="nav-date" onClick={toggleTodayDisplay}>{today.toLocaleDateString("en-US", { month: "long", day: "numeric" })}</p>
                 <i className="bi bi-plus-circle-fill add"></i>
             </div>
 
@@ -59,8 +85,13 @@ function DateMenu() {
                         const weekday = dayNames[day.getDay()];
                         const isMonday = weekday.toLowerCase() === "mon";
 
+                        function toggleDateDisplay() {
+                            const navDate = document.querySelector('.nav-date');
+                            navDate.innerText = `${day.toLocaleDateString("en-US", { month: "long", day: "numeric" })}`;
+                        }
+
                         return (
-                            <div key={index} className={`ind-date-box ${isMonday ? "snap-start monday" : ""} ${isToday ? "border-bluet" : ""}`} ref={isToday ? todayRef : null}>
+                            <div key={index} onClick={toggleDateDisplay} className={`ind-date-box ${isMonday ? "snap-start monday" : ""} ${isToday ? "border-t-bluelight" : ""}`} ref={isToday ? todayRef : null}>
                                 <span className="flex justify-center">{isToday ? "Today" : `${weekday}`}</span>
                                 <span className={`other-days ${isToday ? "border-bluet" : ""}`}>{day.getDate()} </span>
                             </div>

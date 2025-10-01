@@ -32,18 +32,18 @@ body {
     }
 
     .task-handler {
-        @apply border border-2 border-white flex justify-between items-center mb-4;
+        @apply flex items-center mb-4 relative;
 
         & .show {
-            @apply bg-[#262626] p-2 rounded-lg;
+            @apply bg-[#262626] p-2 rounded-lg w-[5%];
         }
 
         & .nav-date {
-            @apply text-xl
+            @apply text-xl font-semibold w-[95%] relative left-[-14px] text-center px-10 cursor-pointer;
         }
 
         & .add {
-            @apply text-2xl
+            @apply text-2xl text-bluet cursor-pointer
         }
     }
 
@@ -54,7 +54,7 @@ body {
             @apply flex gap-29 justify-between overflow-x-auto mt-2 snap-x snap-mandatory;
         
             & .ind-date-box {
-               @apply border border-4 border-[#262626] w-25 flex flex-col ml-[2px] p-[4px] rounded-xl gap-4;  
+               @apply border border-4 border-[#262626] w-25 flex flex-col ml-[2px] p-[4px] gap-4;  
             }
 
             & .other-days {
