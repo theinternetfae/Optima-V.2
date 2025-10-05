@@ -28,7 +28,7 @@ body {
     }
 
     .side-menu {
-        @apply bg-[#1A1A1A] w-[20%] h-[100vh] shadow-xl shadow-bluet;
+        @apply bg-[#1A1A1A] w-[20%] h-[100vh] shadow-xl;
     }
 
     .task-handler {
@@ -39,7 +39,7 @@ body {
         }
 
         & .nav-date {
-            @apply text-xl font-semibold w-[95%] relative left-[-14px] text-center px-10 cursor-pointer;
+            @apply text-xl font-semibold w-[95%] relative left-[-16px] text-center px-10 cursor-pointer;
         }
 
         & .add {
@@ -54,11 +54,31 @@ body {
             @apply flex gap-29 justify-between overflow-x-auto mt-2 snap-x snap-mandatory;
         
             & .ind-date-box {
-               @apply border border-4 border-[#262626] w-25 flex flex-col ml-[2px] p-[4px] gap-4;  
+               @apply border border-2 border-[#262626] rounded-2xl w-25 flex flex-col ml-[2px] p-[6px] gap-4;  
             }
 
             & .other-days {
                 @apply border border-[3px] border-bluelight rounded-full h-[50%] w-[30px] bg-[#333333] p-6 shadow-lg flex items-center justify-center cursor-pointer;
+            }
+        }
+    }
+
+    .new-task {
+        @apply bg-black/1 fixed top-0 left-[240px] z-50 w-[90%] h-full backdrop-blur-sm;
+
+        & .exit-new-screen {
+            @apply absolute text-2xl right-[120px] top-7;
+        }
+
+        & .new-task-container {
+            @apply bg-[#262626] w-[80%] absolute left-25 mt-20 p-10 rounded-xl shadow-md;
+
+            & .task-desc {
+                @apply bg-[#171717] flex rounded-md p-4;
+
+                & .emoji-cont {
+                    @apply bg-[#262626] w-[10%] h-[100px] flex items-center justify-center shadow-lg text-8xl rounded-md cursor-pointer;
+                } 
             }
         }
     }

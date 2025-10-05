@@ -1,10 +1,11 @@
 import { useEffect, useState, useRef} from "react";
+import NewTask from "./NewTask";
 
 function DateMenu() {
     const [days, setDays] = useState([]);
     const containerRef = useRef(null);
     const todayRef = useRef(null);
-
+    const [newTaskDisplay, setNewTaskDisplay] = useState(false);
 
     function getDaysAround(today, rangeInDays = 90) {
         const result = [];
@@ -20,24 +21,17 @@ function DateMenu() {
         return result;
     }
 
-    // function getDaysInMonth(year, month) {
-    //     const result = [];
-    //     const date = new Date(year, month, 1);
-
-    //     while (date.getMonth() === month) {
-    //         result.push(new Date(date));
-    //         date.setDate(date.getDate() + 1);
-    //     }
-        
-    //     return result;
-    // }
+    function addTask() {
+        setNewTaskDisplay(!newTaskDisplay);
+    }
 
     const today = new Date();
 
     useEffect(() => {
-        const today = new Date();
 
+        const today = new Date();
         setDays(getDaysAround(today, 90))
+    
     }, []);
 
     useEffect(() => {
@@ -52,7 +46,7 @@ function DateMenu() {
 
     function toggleTodayDisplay() {
         const navDate = document.querySelector('.nav-date');
-        navDate.innerText = `${today.toLocaleDateString("en-US", { month: "long", day: "numeric" })}`;
+        navDate.innerText = `${today.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}`;
         if (todayRef.current && containerRef.current) {
             todayRef.current.scrollIntoView({
                 behavior: "auto",
@@ -74,8 +68,8 @@ function DateMenu() {
                     <option value="unmet">Unmet</option>
                     <option value="met">Met</option>
                 </select>
-                <p className="nav-date" onClick={toggleTodayDisplay}>{today.toLocaleDateString("en-US", { month: "long", day: "numeric" })}</p>
-                <i className="bi bi-plus-circle-fill add"></i>
+                <p className="nav-date" onClick={toggleTodayDisplay}>{today.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}</p>
+                <button className="bi bi-plus-circle-fill add" onClick={() => addTask()}></button>
             </div>
 
             <div className="date-menu" ref={containerRef}>
@@ -87,11 +81,11 @@ function DateMenu() {
 
                         function toggleDateDisplay() {
                             const navDate = document.querySelector('.nav-date');
-                            navDate.innerText = `${day.toLocaleDateString("en-US", { month: "long", day: "numeric" })}`;
+                            navDate.innerText = `${day.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}`;
                         }
 
                         return (
-                            <div key={index} onClick={toggleDateDisplay} className={`ind-date-box ${isMonday ? "snap-start monday" : ""} ${isToday ? "border-t-bluelight" : ""}`} ref={isToday ? todayRef : null}>
+                            <div key={index} onClick={toggleDateDisplay} className={`ind-date-box ${isMonday ? "snap-start monday" : ""} ${isToday ? "border-bluelight" : ""}`} ref={isToday ? todayRef : null}>
                                 <span className="flex justify-center">{isToday ? "Today" : `${weekday}`}</span>
                                 <span className={`other-days ${isToday ? "border-bluet" : ""}`}>{day.getDate()} </span>
                             </div>
@@ -99,6 +93,9 @@ function DateMenu() {
                     })}
                 </div>
             </div>
+
+            {newTaskDisplay ? <NewTask exit={() => addTask()} /> : ""}
+
         </div>
     );
 }
