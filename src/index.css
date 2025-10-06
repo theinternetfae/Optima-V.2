@@ -5,6 +5,7 @@ body {
     color: #E5E7EB;
     width: 100vw;
     height: 100vh;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .date-track::-webkit-scrollbar {
@@ -71,15 +72,71 @@ body {
         }
 
         & .new-task-container {
-            @apply bg-[#262626] w-[80%] absolute left-25 mt-20 p-10 rounded-xl shadow-md;
+            @apply bg-[#262626] w-[50%] absolute left-[310px] mt-18 p-10 rounded-xl flex flex-col gap-4 shadow-md;
 
             & .task-desc {
-                @apply bg-[#171717] flex rounded-md p-4;
+                @apply bg-[#171717] grid place-items-center rounded-md p-4 gap-4;
 
                 & .emoji-cont {
-                    @apply bg-[#262626] w-[10%] h-[100px] flex items-center justify-center shadow-lg text-8xl rounded-md cursor-pointer;
+                    @apply bg-[#262626] w-[20%] h-[100px] flex items-center justify-center shadow-lg text-8xl rounded-md cursor-pointer;
                 } 
+
+                & .name-input {
+                    @apply text-2xl text-center outline-none;
+                }
+            }
+
+            & .goal-value {
+                @apply bg-[#171717] p-4 flex flex-col gap-6 rounded-lg;
+                
+                & h2 {
+                    @apply text-lg font-bold; 
+                }
+
+                & ul {
+                    @apply flex gap-10 justify-center items-center;
+
+                    & li {
+                        @apply border border-2 p-2 border-[#262626] bg-[#262626] transition ease-in-out duration-300 shadow-md rounded-md cursor-pointer hover:border-bluelight
+                    }
+                }
+            }
+
+            & .reminder-selection {
+                @apply bg-[#171717] p-4 flex flex-col gap-6 rounded-lg;
+                
+                & h2 {
+                    @apply text-lg font-bold; 
+                }
+
+                & ul {
+                    @apply flex gap-19 justify-center items-center;
+
+                    & li {
+                        @apply border border-2 p-2 border-[#262626] bg-[#262626] transition ease-in-out duration-300 shadow-md rounded-2xl cursor-pointer hover:border-bluelight
+                    }
+                }
+            }
+
+            & .reminder {
+                @apply bg-[#171717] p-4 flex justify-between rounded-lg cursor-pointer;
+                
+                & h2 {
+                    @apply text-lg font-bold flex; 
+                }
+
+                & .switch-cont {
+                    @apply bg-black w-[15%] rounded-lg p-1 shadow-inset-dark;
+                }
+
+                & .switch-ball {
+                    @apply h-[80%] w-[25%] rounded-full mt-[3px] mx-[2px] bg-white bg-gradient-to-b from-white to-gray-400 shadow;  
+                }
             }
         }
     }
+}
+
+@utility shadow-inset-dark {
+  box-shadow: inset 0 4px 15px #262626;
 }
