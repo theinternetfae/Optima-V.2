@@ -4,11 +4,21 @@ import EmojiPicker from "emoji-picker-react";
 function NewTask({exit}) {
 
     const [showPicker, setShowPicker] = useState(false);
+
     const [emojiInput, setEmojiInput] = useState("");
     const [nameInput, setNameInput] = useState("");
+    const [taskDays, setTaskDays] = useState([]);
+    const [taskPeriod, setTaskPeriod] = useState([]);
+    const [reminder, setReminder] = useState(false);
+
+    const [tasks, setTasks] = useState([]);
 
     function clickShowPicker() {
         setShowPicker(prev => !prev);
+    }
+
+    function onReminder() {
+        setReminder(prev => !prev);
     }
 
     return ( 
@@ -20,7 +30,7 @@ function NewTask({exit}) {
 
                 <div className="task-desc">
                     <button className={`emoji-cont ${!emojiInput ? " bi bi-plus" : "text-6xl"}`} onClick={clickShowPicker}>{emojiInput || ""}</button>
-                    <input type="text" placeholder="What to do?" className="name-input"/>
+                    <input type="text" placeholder="What to do?" className="name-input" />
                     
                     {showPicker && <EmojiPicker onEmojiClick={(emojiData) => {
                         setEmojiInput(emojiData.emoji);
@@ -53,11 +63,12 @@ function NewTask({exit}) {
                 
                 <div className="reminder">
                     <h2>Turn on reminder?</h2>
-                    <div className="switch-cont">
-                        <div className="switch-ball"></div>
+                    <div className={`switch-cont ${reminder && "bg-bluelight"}`} onClick={() => onReminder()}>
+                        <div className={`switch-ball ease duration-400 ${reminder && "translate-x-14"}`}></div>
                     </div>
                 </div>
 
+                <button className="addTask">Add Task</button>
             </div>            
         </div>
     );
