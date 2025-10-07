@@ -29,7 +29,20 @@ function NewTask({exit, newTasks}) {
     }
 
     function creatingTask() {
+        
+        const missing = [];
+
+        if (!emojiInput) missing.push("pick an emoji");
+        if (!nameInput) missing.push("define your task");
+        if (!colorCont) missing.push("pick a color");
+
+        if (missing.length > 0) {
+            alert(`Please ${missing.join(", ")} then create your task.`);
+            return;
+        }   
+
         const timeString = `${hour}:${minute < 10 ? "0" + minute : minute} ${meridiem}`;
+   
         const theTask = {
             emoji: emojiInput,
             name: nameInput,
@@ -39,7 +52,7 @@ function NewTask({exit, newTasks}) {
         };
 
         newTasks(theTask);
-        exit();
+        exit(); 
     }
 
     const minutes = () => Array.from({ length: 60 }, (_, i) => i);
