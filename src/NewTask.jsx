@@ -7,6 +7,7 @@ function NewTask({exit, newTasks}) {
 
     const [emojiInput, setEmojiInput] = useState("");
     const [nameInput, setNameInput] = useState("");
+    const [colorCont, setColorCont] = useState("");
     const [taskDays, setTaskDays] = useState([]);
 
     const [reminder, setReminder] = useState(false);
@@ -32,6 +33,7 @@ function NewTask({exit, newTasks}) {
         const theTask = {
             emoji: emojiInput,
             name: nameInput,
+            color: colorCont,
             days: taskDays,
             reminderTime: reminder ? timeString : null
         };
@@ -58,6 +60,11 @@ function NewTask({exit, newTasks}) {
                         setEmojiInput(emojiData.emoji);
                         clickShowPicker();
                     }} />}
+                </div>
+
+                <div className="color-value">
+                    <h2>Color</h2>
+                    <input type="color" value={colorCont} className="pick-color" onChange={e => setColorCont(e.target.value)}/>
                 </div>
 
                 <div className="goal-value">

@@ -74,7 +74,7 @@ body {
         & .new-task-container {
             @apply bg-[#262626] w-[50%] absolute left-[310px] mt-18 p-10 rounded-xl flex flex-col gap-4 shadow-md;
 
-            & .task-desc {
+            .task-desc {
                 @apply bg-[#171717] grid place-items-center rounded-md p-4 gap-4;
 
                 & .emoji-cont {
@@ -86,7 +86,15 @@ body {
                 }
             }
 
-            & .goal-value {
+            .color-value {
+                @apply bg-[#171717] p-4 flex justify-between gap-6 rounded-lg;
+                
+                & .pick-color {
+                    @apply rounded-xl cursor-pointer outline-none; 
+                }
+            }
+
+            .goal-value {
                 @apply bg-[#171717] p-4 flex flex-col gap-6 rounded-lg;
                 
                 & h2 {
@@ -138,6 +146,34 @@ body {
             & .addTask {
                 @apply mt-2 bg-gradient-to-b from-bluelight to-bluet p-2 rounded-lg bg-bluelight shadow font-bold text-shadow-md cursor-pointer;
             }
+        }
+    }
+
+    .task-display {
+        @apply bg-[#262626] w-full rounded-lg mt-8 flex flex-col gap-6 p-4;
+        
+        & .no-tasks {
+            @apply text-center;
+        }
+    }
+
+    .task-box {
+        @apply w-full p-2 h-[80px] rounded-lg shadow flex items-center justify-between transition-all duration-700 ease-in-out; 
+
+        & .description {
+            @apply flex h-full items-center gap-4 w-[20%];
+        
+            & .emoji-t-box {
+               @apply h-full w-[30%] bg-[#262626] text-4xl flex items-center justify-center rounded-lg
+            }
+
+            & .name-t-box {
+                @apply font-bold text-shadow-md p-2 rounded-md text-neutral-300
+            }
+        }
+
+        & .done {
+            @apply w-4 h-4 accent-bluet scale-125 mr-2;
         }
     }
 }
