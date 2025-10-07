@@ -5,7 +5,9 @@ function DateMenu() {
     const [days, setDays] = useState([]);
     const containerRef = useRef(null);
     const todayRef = useRef(null);
+
     const [newTaskDisplay, setNewTaskDisplay] = useState(false);
+    const [taskList, setTaskList] = useState([]);
 
     function getDaysAround(today, rangeInDays = 90) {
         const result = [];
@@ -30,7 +32,7 @@ function DateMenu() {
     useEffect(() => {
 
         const today = new Date();
-        setDays(getDaysAround(today, 90))
+        setDays(getDaysAround(today, 90));
     
     }, []);
 
@@ -43,6 +45,10 @@ function DateMenu() {
             });
         }
     }, [days]);
+
+    useEffect(() => {
+      console.log("Updated task list:", taskList);
+    }, [taskList]);
 
     function toggleTodayDisplay() {
         const navDate = document.querySelector('.nav-date');
@@ -94,8 +100,7 @@ function DateMenu() {
                 </div>
             </div>
 
-            {newTaskDisplay ? <NewTask exit={() => addTask()} /> : ""}
-
+            {newTaskDisplay ? <NewTask exit={addTask} newTasks={((taskList) => setTaskList(prev => [...prev, taskList]))} /> : ""}
         </div>
     );
 }

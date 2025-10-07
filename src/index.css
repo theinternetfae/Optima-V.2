@@ -72,7 +72,7 @@ body {
         }
 
         & .new-task-container {
-            @apply bg-[#262626] w-[50%] absolute left-[310px] mt-16 p-10 rounded-xl flex flex-col gap-4 shadow-md;
+            @apply bg-[#262626] w-[50%] absolute left-[310px] mt-18 p-10 rounded-xl flex flex-col gap-4 shadow-md;
 
             & .task-desc {
                 @apply bg-[#171717] grid place-items-center rounded-md p-4 gap-4;
@@ -103,19 +103,20 @@ body {
             }
 
             & .reminder-selection {
-                @apply bg-[#171717] p-4 flex flex-col gap-6 rounded-lg;
+                @apply bg-[#171717] p-4 flex justify-between items-center rounded-lg;
                 
                 & h2 {
                     @apply text-lg font-bold; 
                 }
 
-                & ul {
-                    @apply flex gap-19 justify-center items-center;
-
-                    & li {
-                        @apply border border-2 p-2 border-[#262626] bg-[#262626] transition ease-in-out duration-300 shadow-md rounded-2xl cursor-pointer hover:border-bluelight
+                & .the-time {
+                    @apply flex gap-2;
+                
+                    & select {
+                        @apply appearance-none bg-black text-center p-2 outline-none;
                     }
                 }
+
             }
 
             & .reminder {
@@ -135,7 +136,7 @@ body {
             }
 
             & .addTask {
-                @apply mt-2 bg-gradient-to-b from-bluelight to-bluet p-2 rounded-lg bg-bluelight shadow font-bold text-shadow-md
+                @apply mt-2 bg-gradient-to-b from-bluelight to-bluet p-2 rounded-lg bg-bluelight shadow font-bold text-shadow-md cursor-pointer;
             }
         }
     }
