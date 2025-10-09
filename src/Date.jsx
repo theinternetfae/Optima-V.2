@@ -83,7 +83,7 @@ function DateMenu() {
                 </div>
 
                 <div className="date-menu" ref={containerRef}>
-                    <div className="date-track">
+                    <div className="date-track" ref={containerRef}>
                         {days.map((day, index) => {
                             const isToday = day.toDateString() === new Date().toDateString();
                             const weekday = dayNames[day.getDay()];
@@ -96,8 +96,8 @@ function DateMenu() {
 
                             return (
                                 <div key={index} onClick={toggleDateDisplay} className={`ind-date-box ${isMonday ? "snap-start monday" : ""} ${isToday ? "border-bluelight" : ""}`} ref={isToday ? todayRef : null}>
-                                    <span className="flex justify-center">{isToday ? "Today" : `${weekday}`}</span>
-                                    <span className={`other-days ${isToday ? "border-bluet" : ""}`}>{day.getDate()} </span>
+                                    <span className="date-name">{weekday}</span>
+                                    <span className="other-days">{day.getDate()} </span>
                                 </div>
                             )
                         })}

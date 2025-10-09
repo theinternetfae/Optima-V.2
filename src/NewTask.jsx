@@ -12,7 +12,7 @@ function NewTask({exit, newTasks}) {
 
     const [reminder, setReminder] = useState(false);
 
-    const [hour, setHour] = useState(0);
+    const [hour, setHour] = useState(8);
     const [minute, setMinute] = useState(0);
     const [meridiem, setMeridiem] = useState("AM");
 
@@ -34,7 +34,6 @@ function NewTask({exit, newTasks}) {
 
         if (!emojiInput) missing.push("pick an emoji");
         if (!nameInput) missing.push("define your task");
-        if (!colorCont) missing.push("pick a color");
 
         if (missing.length > 0) {
             alert(`Please ${missing.join(", ")} then create your task.`);
@@ -66,7 +65,7 @@ function NewTask({exit, newTasks}) {
             <div className="new-task-container">
 
                 <div className="task-desc">
-                    <button className={`emoji-cont ${!emojiInput ? " bi bi-plus" : "text-6xl"}`} value={emojiInput} onClick={clickShowPicker}>{emojiInput || ""}</button>
+                    <button className={`emoji-cont ${!emojiInput ? " bi bi-plus" : "text-4xl md:text-6xl"}`} value={emojiInput} onClick={clickShowPicker}>{emojiInput || ""}</button>
                     <input type="text" placeholder="What to do?" value={nameInput} onChange={e => setNameInput(e.target.value)} className="name-input" />
                     
                     {showPicker && <EmojiPicker onEmojiClick={(emojiData) => {
@@ -90,15 +89,15 @@ function NewTask({exit, newTasks}) {
                 </div>
 
                 <div className="reminder">
-                    <h2>Turn on reminder?</h2>
+                    <h2>{reminder ? "Off reminder?" : "On reminder?"}</h2>
                     <div className={`switch-cont ${reminder && "bg-bluelight"}`} onClick={() => onReminder()}>
-                        <div className={`switch-ball ease duration-400 ${reminder && "translate-x-14"}`}></div>
+                        <div className={`switch-ball ease duration-400 ${reminder && "translate-x-9 md:translate-x-14"}`}></div>
                     </div>
                 </div>
 
                 {reminder && (
                     <div className="reminder-selection">
-                        <h2>Task reminder</h2>
+                        <h2>Set reminder</h2>
                         <div className="the-time">
 
                             <select value={hour} onChange={(e) => setHour(Number(e.target.value))}>

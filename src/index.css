@@ -12,82 +12,97 @@ body {
     display: none; /* Chrome, Safari */
 }
 
+select::-webkit-scrollbar {
+    display: none;
+}
+
 @theme {
     --color-selected: #DA38CD;
     --color-bluet: #2563EB;
-    --color-bluelight: #60A5FA; 
+    --color-bluelight: #60A5FA;
+    --color-dullblack: #171717;
+    --color-commongrey: #262626;
+    --color-backblack: #0D0D0D; 
 }
 
 @layer components {
 
     .named {
-        @apply flex;
+        @apply flex flex-col md:flex-row;
 
         & .a-body {
-            @apply w-[80%] mx-8 mt-6;
+            @apply mt-6 w-full md:w-[80%] md:mx-8;
         }
     }
 
     .side-menu {
-        @apply bg-[#1A1A1A] w-[20%] h-[100vh] shadow-xl;
+        @apply bg-[#1A1A1A] w-[100vw] h-[10vh] bottom-0 shadow-xl absolute md:w-[20%] md:h-[100vh] md:static;
     }
 
     .task-handler {
-        @apply flex items-center mb-4 relative;
+        @apply flex items-center mb-6 mx-2 relative md:mx-0;
 
         & .show {
-            @apply bg-[#262626] p-2 rounded-lg w-[5%];
+            @apply bg-commongrey text-sm p-2 rounded-lg w-[60px] md:text-base;
         }
 
         & .nav-date {
-            @apply text-xl font-semibold w-[95%] relative left-[-16px] text-center px-10 cursor-pointer;
+            @apply text-sm font-semibold w-[95%] relative left-[-16px] text-center px-10 cursor-pointer md:text-xl;
         }
 
         & .add {
-            @apply text-2xl text-bluet cursor-pointer
+            @apply text-xl text-bluet cursor-pointer md:text-2xl;
         }
     }
 
     .date-menu {
-        @apply bg-[#262626] rounded-lg h-[15%] flex justify-center p-4;
+        @apply h-[10%] w-full rounded-lg flex justify-center items-center md:bg-commongrey md:p-4 md:h-[15%];
 
         & .date-track {
-            @apply flex gap-29 justify-between overflow-x-auto mt-2 snap-x snap-mandatory;
-        
+            @apply flex gap-[13.5px] w-[380px] overflow-x-auto snap-x items-center snap-mandatory md:border-none md:w-full md:gap-29;
+
             & .ind-date-box {
-               @apply border border-2 border-[#262626] rounded-2xl w-25 flex flex-col ml-[2px] p-[6px] gap-4;  
+               @apply border border-2 border-backblack rounded-2xl p-[7px] w-10 flex flex-col justify-center items-center gap-2 ml-[1px] md:border-commongrey md:w-25 md:gap-4 md:p-[6px];  
+            }
+
+            & .date-name {
+                @apply text-xs flex justify-center md:text-base;
             }
 
             & .other-days {
-                @apply border border-[3px] border-bluelight rounded-full h-[50%] w-[30px] bg-[#333333] p-6 shadow-lg flex items-center justify-center cursor-pointer;
+                @apply border border-[2px] text-[10px] border-bluelight p-[12px] rounded-full h-[2px] w-[2px] bg-[#333333] shadow-lg flex items-center justify-center cursor-pointer md:text-base md:border-[3px] md:h-[55px] md:w-[30px] md:p-6;
             }
         }
     }
 
     .new-task {
-        @apply bg-black/1 fixed top-0 left-[240px] z-50 w-[90%] h-full backdrop-blur-sm;
+        @apply bg-black/1 fixed flex justify-center items-center top-0 z-50 w-full h-full backdrop-blur-sm md:w-[90%] md:left-[240px];
 
         & .exit-new-screen {
-            @apply absolute text-2xl right-[120px] top-7;
+            @apply absolute text-xl right-[7px] top-7 md:text-2xl md:right-[120px];
         }
 
         & .new-task-container {
-            @apply bg-[#262626] w-[50%] absolute left-[310px] mt-18 p-10 rounded-xl flex flex-col gap-4 shadow-md;
+            @apply bg-commongrey mx-auto w-[80%] p-4 rounded-xl flex flex-col gap-4 shadow-md md:w-[50%]  md:p-10 md:mx-0 md:absolute md:left-[310px];
 
             .task-desc {
-                @apply bg-[#171717] grid place-items-center rounded-md p-4 gap-4;
+                @apply bg-dullblack rounded-md p-2 flex flex-col gap-2 justify-center items-center md:grid md:p-4 md:place-items-center;
 
                 & .emoji-cont {
-                    @apply bg-[#262626] w-[20%] h-[100px] flex items-center justify-center shadow-lg text-8xl rounded-md cursor-pointer;
+                    @apply bg-commongrey w-15 h-[60px] flex items-center justify-center shadow-lg text-6xl rounded-md cursor-pointer md:text-8xl md:w-[30%] md:h-[100px];
                 } 
 
                 & .name-input {
-                    @apply text-2xl text-center outline-none;
+                    @apply text-sm outline-none text-center md:text-2xl;
                 }
             }
 
             .color-value {
-                @apply bg-[#171717] p-4 flex justify-between gap-6 rounded-lg;
+                @apply bg-dullblack p-2 flex justify-between gap-6 rounded-lg md:p-4;
+
+                & h2 {
+                    @apply text-sm md:font-bold md:text-lg;
+                }
                 
                 & .pick-color {
                     @apply rounded-xl cursor-pointer outline-none; 
@@ -95,62 +110,61 @@ body {
             }
 
             .goal-value {
-                @apply bg-[#171717] p-4 flex flex-col gap-6 rounded-lg;
+                @apply bg-dullblack p-2 flex flex-col gap-4 rounded-lg md:p-4;
                 
                 & h2 {
-                    @apply text-lg font-bold; 
+                    @apply text-sm md:font-bold md:text-lg; 
                 }
 
                 & ul {
-                    @apply flex gap-10 justify-center items-center;
+                    @apply flex justify-between items-center md:gap-10;
 
                     & li {
-                        @apply border border-2 p-2 border-[#262626] bg-[#262626] transition ease-in-out duration-300 shadow-md rounded-md cursor-pointer hover:border-bluelight
+                        @apply border border-2 text-sm border-commongrey bg-commongrey transition p-[2px] ease-in-out duration-300 shadow-md rounded-md cursor-pointer hover:border-bluelight md:p-2 md:text-base;
                     }
                 }
             }
 
             & .reminder-selection {
-                @apply bg-[#171717] p-4 flex justify-between items-center rounded-lg;
+                @apply bg-dullblack p-2 flex justify-between items-center rounded-lg md:p-4;
                 
                 & h2 {
-                    @apply text-lg font-bold; 
+                    @apply text-sm md:font-bold md:text-lg; 
                 }
 
                 & .the-time {
                     @apply flex gap-2;
                 
                     & select {
-                        @apply appearance-none bg-black text-center p-2 outline-none;
+                        @apply appearance-none bg-black p-[2px] text-sm text-center outline-none md:p-2 md:text-base;
                     }
                 }
-
             }
 
             & .reminder {
-                @apply bg-[#171717] p-4 flex justify-between rounded-lg;
+                @apply bg-dullblack p-2 flex justify-between rounded-lg md:p-4;
                 
                 & h2 {
-                    @apply text-lg font-bold flex; 
+                    @apply text-sm flex md:text-lg md:font-bold; 
                 }
 
                 & .switch-cont {
-                    @apply bg-black w-[15%] rounded-lg p-1 shadow-inset-dark cursor-pointer;
+                    @apply bg-black w-[25%] rounded-lg p-1 shadow-inset-dark cursor-pointer md:w-[15%];
                 }
 
                 & .switch-ball {
-                    @apply h-[80%] w-[25%] rounded-full mt-[3px] mx-[2px] bg-white bg-gradient-to-b from-white to-gray-400 shadow;  
+                    @apply h-[90%] w-[30%] rounded-full mt-[1px] mx-[1px] bg-white bg-gradient-to-b from-white to-gray-400 shadow md:mx-[2px] md:w-[25%] md:h-[80%] md:mt-[3px];  
                 }
             }
 
             & .addTask {
-                @apply mt-2 bg-gradient-to-b from-bluelight to-bluet p-2 rounded-lg bg-bluelight shadow font-bold text-shadow-md cursor-pointer;
+                @apply mt-2 bg-gradient-to-b from-bluelight to-bluet p-2 rounded-lg bg-bluelight text-sm shadow font-bold text-shadow-md cursor-pointer md:text-base;
             }
         }
     }
 
     .task-display {
-        @apply bg-[#262626] w-full rounded-lg mt-8 flex flex-col gap-6 p-4;
+        @apply p-2 w-full rounded-lg mt-8 flex flex-col gap-4 text-sm md:bg-commongrey md:p-4 md:gap-6 md:text-base;
         
         & .no-tasks {
             @apply text-center;
@@ -158,30 +172,26 @@ body {
     }
 
     .task-box {
-        @apply w-full p-2 h-[80px] rounded-lg shadow flex items-center justify-between transition-all duration-700 ease-in-out; 
+        @apply p-2 h-[40px] rounded-md shadow flex items-center transition-all duration-700 ease-in-out md:border-none md:h-[80px] md:w-full; 
 
-        & .description {
-            @apply flex h-full items-center gap-4 w-[20%];
-        
-            & .emoji-t-box {
-               @apply h-full w-[30%] bg-[#262626] text-4xl flex items-center justify-center rounded-lg
-            }
-
-            & .name-t-box {
-                @apply font-bold text-shadow-md p-2 rounded-md text-neutral-300
-            }
+        & .emoji-t-box {
+            @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center rounded-lg md:w-[6%] md:h-full md:text-4xl;
         }
 
+        & .name-t-box {
+            @apply text-shadow-md ml-2 p-2 w-[90%] text-sm rounded-md text-neutral-300 md:font-bold md:text-base;
+        }
+        
         & .done {
-            @apply w-4 h-4 accent-bluet scale-125 mr-2;
+            @apply w-4 h-4 accent-bluet mr-2 md:scale-125;
         }
     }
 }
 
 @utility shadow-inset-dark {
-  box-shadow: inset 0 4px 15px #262626;
+  box-shadow: inset 0 4px 15px commongrey;
 }
 
 @utility text-shadow-md {
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
-  }
+}

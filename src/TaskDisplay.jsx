@@ -6,20 +6,15 @@ function TaskDisplay({emoji, name, color}) {
 
     return (
 
-    <div
-      className="task-box"
-      style={{
-        backgroundColor: done ? (color || "#60A5FA") : "#111111",
-      }}
-    >
-            <div className="description">
-                <div className="emoji-t-box">{emoji}</div>
-                <p className="name-t-box">{name}</p>
-            </div>
+    <div className="task-box" style={{backgroundColor: done ? (color || "#60A5FA") : "#111111",}}>
 
-            <input type="checkbox" className="done" onClick={() => setDone(prev => !prev)}/>
+      <div className="emoji-t-box">{emoji}</div>
+      
+      <p className="name-t-box">{name}</p>
+      
+      <input type="checkbox" className="done" onClick={() => setDone(prev => !prev)}/>
 
-        </div>
+    </div>
 
     );
 }
