@@ -72,35 +72,37 @@ function DateMenu() {
         
         <>
             <div>
-                <div className="task-handler">
-                    <select name="show" className="show">
-                        <option value="all">All</option>
-                        <option value="unmet">Unmet</option>
-                        <option value="met">Met</option>
-                    </select>
-                    <p className="nav-date" onClick={toggleTodayDisplay}>{today.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}</p>
-                    <button className="bi bi-plus-circle-fill add" onClick={() => addTask()}></button>
-                </div>
+                <div className="full-date-cont">
+                    <div className="task-handler">
+                        <select name="show" className="show">
+                            <option value="all">All</option>
+                            <option value="unmet">Unmet</option>
+                            <option value="met">Met</option>
+                        </select>
+                        <p className="nav-date" onClick={toggleTodayDisplay}>{today.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}</p>
+                        <button className="bi bi-plus-circle-fill add" onClick={() => addTask()}></button>
+                    </div>
 
-                <div className="date-menu" ref={containerRef}>
-                    <div className="date-track" ref={containerRef}>
-                        {days.map((day, index) => {
-                            const isToday = day.toDateString() === new Date().toDateString();
-                            const weekday = dayNames[day.getDay()];
-                            const isMonday = weekday.toLowerCase() === "mon";
+                    <div className="date-menu" ref={containerRef}>
+                        <div className="date-track" ref={containerRef}>
+                            {days.map((day, index) => {
+                                const isToday = day.toDateString() === new Date().toDateString();
+                                const weekday = dayNames[day.getDay()];
+                                const isMonday = weekday.toLowerCase() === "mon";
 
-                            function toggleDateDisplay() {
-                                const navDate = document.querySelector('.nav-date');
-                                navDate.innerText = `${day.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}`;
-                            }
+                                function toggleDateDisplay() {
+                                    const navDate = document.querySelector('.nav-date');
+                                    navDate.innerText = `${day.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}`;
+                                }
 
-                            return (
-                                <div key={index} onClick={toggleDateDisplay} className={`ind-date-box ${isMonday ? "snap-start monday" : ""} ${isToday ? "border-bluelight" : ""}`} ref={isToday ? todayRef : null}>
-                                    <span className="date-name">{weekday}</span>
-                                    <span className="other-days">{day.getDate()} </span>
-                                </div>
-                            )
-                        })}
+                                return (
+                                    <div key={index} onClick={toggleDateDisplay} className={`ind-date-box ${isMonday ? "snap-start monday" : ""} ${isToday ? "border-bluelight" : ""}`} ref={isToday ? todayRef : null}>
+                                        <span className="date-name">{weekday}</span>
+                                        <span className="other-days">{day.getDate()} </span>
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
                 </div>
 
