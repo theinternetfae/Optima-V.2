@@ -1,20 +1,24 @@
 import { useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 
-function NewTask({exit, newTasks}) {
+//TO-DO: Exit button, Save changes, delete task
+
+function NewTask({exit, newTasks, editExit, task}) {
+
+    const isEditingMode = !!task;    
 
     const [showPicker, setShowPicker] = useState(false);
 
-    const [emojiInput, setEmojiInput] = useState("");
-    const [nameInput, setNameInput] = useState("");
-    const [colorCont, setColorCont] = useState("");
-    const [taskDays, setTaskDays] = useState([]);
+    const [emojiInput, setEmojiInput] = useState(task ? task.emoji : "");
+    const [nameInput, setNameInput] = useState(task ? task.name : "");
+    const [colorCont, setColorCont] = useState(task ? task.color : "");
+    const [taskDays, setTaskDays] = useState(task ? task.days : []);
 
-    const [reminder, setReminder] = useState(false);
+    const [reminder, setReminder] = useState(task ? task.reminderStatus : false);
 
-    const [hour, setHour] = useState(8);
-    const [minute, setMinute] = useState(0);
-    const [meridiem, setMeridiem] = useState("AM");
+    const [hour, setHour] = useState(task && task.reminderTime ? parseInt(task.reminderTime.split(':')[0]) : 8);
+    const [minute, setMinute] = useState(task && task.reminderTime ? parseInt(task.reminderTime.split(':')[1]) : 0);
+    const [meridiem, setMeridiem] = useState(task && task.reminderTime ? parseInt(task.reminderTime.split(' ')[1]) : "AM");
 
     function clickShowPicker() {
         setShowPicker(prev => !prev);
@@ -41,17 +45,18 @@ function NewTask({exit, newTasks}) {
         }   
 
         const timeString = `${hour}:${minute < 10 ? "0" + minute : minute} ${meridiem}`;
-   
+
         const theTask = {
             emoji: emojiInput,
             name: nameInput,
             color: colorCont,
             days: taskDays,
-            reminderTime: reminder ? timeString : null
+            reminderStatus: reminder,
+            reminderTime: reminder ? timeString : null,
         };
 
         newTasks(theTask);
-        exit(); 
+        exit()
     }
 
     const minutes = () => Array.from({ length: 60 }, (_, i) => i);
@@ -121,7 +126,8 @@ function NewTask({exit, newTasks}) {
                     </div>
                 )}
 
-                <button className="addTask" onClick={() => creatingTask()}>Add Task</button>
+                <button className="addTask" onClick={() => creatingTask()}>{isEditingMode ? "Save Changes" : "Add task"}</button>
+                {isEditingMode && <button className="deleteTask">Delete task</button>}
             </div>            
         </div>
     );

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef} from "react";
-import NewTask from "./NewTask.jsx";
-import TaskDisplay from "./TaskDisplay.jsx";
+import NewTask from "./components/NewTask.jsx";
+import TaskDisplay from "./components/TaskDisplay.jsx";
 
 function DateMenu() {
     const [days, setDays] = useState([]);
@@ -23,7 +23,6 @@ function DateMenu() {
         }
 
         return result;
-    
     }
 
     function addTask() {
@@ -33,10 +32,8 @@ function DateMenu() {
     const today = new Date();
 
     useEffect(() => {
-
         const today = new Date();
         setDays(getDaysAround(today, 90));
-    
     }, []);
 
     useEffect(() => {
@@ -117,9 +114,7 @@ function DateMenu() {
                     taskList.map(task => (
                     <TaskDisplay
                         key={task.name}
-                        emoji={task.emoji}
-                        name={task.name}
-                        color={task.color}
+                        taskE={task}
                     />
                     ))
                 )}
