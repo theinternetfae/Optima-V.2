@@ -170,7 +170,7 @@ body {
                 @apply mt-2 bg-gradient-to-b from-bluelight to-bluet p-2 rounded-lg text-sm shadow font-bold text-shadow-md cursor-pointer md:text-base;
             }
 
-            & .deleteTask {
+            & .delete-task {
                 @apply mt-2 bg-gradient-to-b from-delLight to-delDark p-2 rounded-lg text-sm shadow font-bold text-shadow-md cursor-pointer md:text-base;
             }
         }

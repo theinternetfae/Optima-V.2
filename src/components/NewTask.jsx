@@ -77,6 +77,13 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
 
     }
 
+    function deleteTask() {
+        const tasksRemaining = prevTasks.filter(t => t.name !== task.name);
+        console.log(tasksRemaining);
+        editedTasks(tasksRemaining);
+        editExit();
+    }
+
     const minutes = () => Array.from({ length: 60 }, (_, i) => i);
     const hours = () => Array.from({length: 13}, (_, i) => i);
 
@@ -145,7 +152,7 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
                 )}
 
                 <button className="addTask" onClick={isEditingMode ? () => editingTask() : () => creatingTask()}>{isEditingMode ? "Save Changes" : "Add task"}</button>
-                {isEditingMode && <button className="deleteTask">Delete task</button>}
+                {isEditingMode && <button className="delete-task" onClick={() => deleteTask()}>Delete task</button>}
             </div>            
         </div>
     );
