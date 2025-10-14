@@ -103,7 +103,7 @@ function DateMenu() {
                     </div>
                 </div>
 
-                {newTaskDisplay ? <NewTask exit={addTask} newTasks={((taskList) => setTaskList(prev => [...prev, taskList]))} /> : ""}
+                {newTaskDisplay ? <NewTask exit={addTask} newTasks={((addingTask) => setTaskList(prev => [...prev, addingTask]))} /> : ""}
             </div>
 
             <div className="task-display">
@@ -115,6 +115,8 @@ function DateMenu() {
                     <TaskDisplay
                         key={task.name}
                         taskE={task}
+                        editedTasks={(editedList) => setTaskList(editedList)}
+                        prevTasks={taskList}
                     />
                     ))
                 )}

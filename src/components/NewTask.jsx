@@ -1,9 +1,9 @@
 import { useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 
-//TO-DO: Exit button, Save changes, delete task
+//TO-DO: Save changes, delete task
 
-function NewTask({exit, newTasks, editExit, task}) {
+function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
 
     const isEditingMode = !!task;    
 
@@ -56,7 +56,25 @@ function NewTask({exit, newTasks, editExit, task}) {
         };
 
         newTasks(theTask);
-        exit()
+        exit();
+    }
+
+    function editingTask() {
+        
+        const timeString = `${hour}:${minute < 10 ? "0" + minute : minute} ${meridiem}`;
+
+        const editedTask = prevTasks.map(prev => prev.name === task.name ? {...prev,
+            name: nameInput,
+            emoji: emojiInput,
+            color: colorCont,
+            days: taskDays,
+            reminderStatus: reminder,
+            reminderTime: reminder ? timeString : null,
+        } : prev)
+
+        editedTasks(editedTask);
+        editExit();
+
     }
 
     const minutes = () => Array.from({ length: 60 }, (_, i) => i);
@@ -65,7 +83,7 @@ function NewTask({exit, newTasks, editExit, task}) {
     return ( 
         <div className="new-task">
             
-            <i className="bi bi-x-circle-fill exit-new-screen cursor-pointer" onClick={exit}></i>
+            {isEditingMode ? <i className="bi bi-x-circle-fill exit-new-screen cursor-pointer" onClick={editExit}></i> : <i className="bi bi-x-circle-fill exit-new-screen cursor-pointer" onClick={exit}></i>}
 
             <div className="new-task-container">
 
@@ -126,7 +144,7 @@ function NewTask({exit, newTasks, editExit, task}) {
                     </div>
                 )}
 
-                <button className="addTask" onClick={() => creatingTask()}>{isEditingMode ? "Save Changes" : "Add task"}</button>
+                <button className="addTask" onClick={isEditingMode ? () => editingTask() : () => creatingTask()}>{isEditingMode ? "Save Changes" : "Add task"}</button>
                 {isEditingMode && <button className="deleteTask">Delete task</button>}
             </div>            
         </div>
