@@ -9,6 +9,8 @@ function DateMenu() {
 
     const [newTaskDisplay, setNewTaskDisplay] = useState(false);
     const [taskList, setTaskList] = useState([]);
+    const [taskShow, setTaskShow] = useState([]);
+    const [taskFilter, setTaskFilter] = useState('all');
 
     function getDaysAround(today, rangeInDays = 90) {
         
@@ -47,8 +49,16 @@ function DateMenu() {
     }, [days]);
 
     useEffect(() => {
-      console.log("Updated task list:", taskList);
-    }, [taskList]);
+        if (taskFilter === 'all') {
+            setTaskShow(taskList);
+        } else if (taskFilter === 'met') {
+            setTaskShow(taskList.filter(task => task.isDone));
+        } else {
+            setTaskShow(taskList.filter(task => !task.isDone));
+        }
+
+        console.log(taskList);
+    }, [taskList, taskFilter]);
 
     function toggleTodayDisplay() {
         const navDate = document.querySelector('.nav-date');
@@ -60,18 +70,34 @@ function DateMenu() {
                 block: "nearest",
             });
         }
+    }
 
+    function toggleTaskDisplay(operator) {
+        setTaskFilter(operator);
+        if(operator === 'all') {
+            return setTaskShow(taskList) || 'No tasks';
+        } else if (operator === 'met') {
+            return setTaskShow(taskList.filter(task => task.isDone));
+        } else {
+            return setTaskShow(taskList.filter(task => !task.isDone));
+        }
     }
 
     const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
 
+    
+    function moveCompletedToBottom() {
+        const sorted = [...taskList].sort((a, b) => a.isDone - b.isDone);
+        setTaskList(sorted);
+    } 
+    
     return (
         
         <>
             <div>
                 <div className="full-date-cont">
                     <div className="task-handler">
-                        <select name="show" className="show">
+                        <select name="show" className="show" value={taskFilter} onChange={(e) => toggleTaskDisplay(e.target.value)}>
                             <option value="all">All</option>
                             <option value="unmet">Unmet</option>
                             <option value="met">Met</option>
@@ -108,10 +134,10 @@ function DateMenu() {
 
             <div className="task-display">
 
-                {taskList.length === 0 ? (
-                    <p className="no-tasks">No tasks</p>
+                {taskShow.length === 0 ? (
+                    <p className="no-tasks">{taskFilter === 'all' ? 'No tasks' : taskFilter === 'met' ? 'No tasks completed...' : 'None!'}</p>
                 ) : (
-                    taskList.map(task => (
+                    taskShow.map(task => (
                     <TaskDisplay
                         key={task.name}
                         taskE={task}

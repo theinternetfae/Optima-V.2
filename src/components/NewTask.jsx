@@ -53,8 +53,9 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
             days: taskDays,
             reminderStatus: reminder,
             reminderTime: reminder ? timeString : null,
+            isDone: false
         };
-
+        
         newTasks(theTask);
         exit();
     }
@@ -78,10 +79,12 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
     }
 
     function deleteTask() {
+
         const tasksRemaining = prevTasks.filter(t => t.name !== task.name);
         console.log(tasksRemaining);
         editedTasks(tasksRemaining);
         editExit();
+
     }
 
     const minutes = () => Array.from({ length: 60 }, (_, i) => i);

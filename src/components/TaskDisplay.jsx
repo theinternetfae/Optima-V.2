@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NewTask from "./NewTask.jsx";
 
 function TaskDisplay({taskE, prevTasks, editedTasks}) {
 
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState(taskE.isDone);
   const[editScreen, setEditScreen] = useState(false);
+
+  useEffect(() => {
+    setDone(taskE.isDone)
+  }, [taskE.isDone]);
 
   return (
 
@@ -20,7 +24,15 @@ function TaskDisplay({taskE, prevTasks, editedTasks}) {
           }
         }>{taskE.name}</p>
         
-        <input type="checkbox" className="done" onClick={() => setDone(prev => !prev)}/>
+        <input type="checkbox" className="done" onChange={() => {
+          const newDone = !done
+          setDone(newDone);
+
+          const doneTask = prevTasks.map(prev => prev.name === taskE.name ? { ...prev, isDone: newDone} : prev);
+
+          editedTasks(doneTask);
+
+        }}/>
 
       </div>
 

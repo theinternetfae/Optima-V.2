@@ -51,11 +51,11 @@ body {
             @apply flex items-center mb-6 mx-2 relative lg:mx-0;
 
             & .show {
-                @apply bg-commongrey text-sm p-2 rounded-lg w-[60px] md:text-base;
+                @apply bg-commongrey text-xs p-2 rounded-lg outline-none w-[60px] md:w-[100px] md:text-base;
             }
 
             & .nav-date {
-                @apply text-sm font-semibold w-[95%] relative left-[-16px] text-center px-10 cursor-pointer md:text-xl;
+                @apply text-sm font-semibold w-[95%] relative left-[-20px] text-center px-10 cursor-pointer md:left-[-30px] md:text-xl;
             }
 
             & .add {
@@ -185,7 +185,7 @@ body {
     }
 
     .task-box {
-        @apply p-2 h-[40px] snap-start cursor-pointer rounded-md shadow no-scrollbar flex items-center transition-all duration-700 ease-in-out md:p-4 md:border-none md:h-[70px] md:w-full; 
+        @apply p-2 h-[40px] snap-start cursor-pointer rounded-md shadow no-scrollbar flex items-center transition-all duration-2000 ease-in-out md:p-4 md:border-none md:h-[70px] md:w-full; 
 
         & .emoji-t-box {
             @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center rounded-lg md:w-[5%] md:h-full md:text-3xl;
