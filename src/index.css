@@ -51,7 +51,7 @@ body {
             @apply flex items-center mb-6 mx-2 relative lg:mx-0;
 
             & .show {
-                @apply bg-commongrey text-xs p-2 rounded-lg outline-none w-[60px] md:w-[100px] md:text-base;
+                @apply bg-commongrey text-xs p-2 rounded-lg outline-none w-[60px] cursor-pointer md:w-[100px] md:text-base;
             }
 
             & .nav-date {
@@ -196,7 +196,7 @@ body {
         }
         
         & .done {
-            @apply w-4 h-4 accent-bluet mr-2 md:scale-125;
+            @apply w-4 h-4 accent-bluet mr-2 cursor-pointer md:scale-125;
         }
     }
 

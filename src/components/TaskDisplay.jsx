@@ -24,7 +24,7 @@ function TaskDisplay({taskE, prevTasks, editedTasks}) {
           }
         }>{taskE.name}</p>
         
-        <input type="checkbox" className="done" onChange={() => {
+        <input type="checkbox" className="done" checked={done} onChange={() => {
           const newDone = !done
           setDone(newDone);
 

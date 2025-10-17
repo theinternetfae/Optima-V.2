@@ -85,12 +85,6 @@ function DateMenu() {
 
     const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
 
-    
-    function moveCompletedToBottom() {
-        const sorted = [...taskList].sort((a, b) => a.isDone - b.isDone);
-        setTaskList(sorted);
-    } 
-    
     return (
         
         <>
@@ -129,11 +123,12 @@ function DateMenu() {
                     </div>
                 </div>
 
-                {newTaskDisplay ? <NewTask exit={addTask} newTasks={((addingTask) => setTaskList(prev => [...prev, addingTask]))} /> : ""}
+                {newTaskDisplay ? <NewTask exit={addTask} newTasks={((addingTask) => setTaskList(prev => [...prev, addingTask].sort((a, b) => a.isDone - b.isDone)))} /> : ""}
             </div>
 
             <div className="task-display">
 
+                
                 {taskShow.length === 0 ? (
                     <p className="no-tasks">{taskFilter === 'all' ? 'No tasks' : taskFilter === 'met' ? 'No tasks completed...' : 'None!'}</p>
                 ) : (
@@ -141,7 +136,7 @@ function DateMenu() {
                     <TaskDisplay
                         key={task.name}
                         taskE={task}
-                        editedTasks={(editedList) => setTaskList(editedList)}
+                        editedTasks={(editedList) => setTaskList([...editedList].sort((a, b) => a.isDone - b.isDone))}
                         prevTasks={taskList}
                     />
                     ))
