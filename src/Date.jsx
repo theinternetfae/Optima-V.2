@@ -8,7 +8,16 @@ function DateMenu() {
     const todayRef = useRef(null);
 
     const [newTaskDisplay, setNewTaskDisplay] = useState(false);
-    const [taskList, setTaskList] = useState([]);
+    
+    const [taskList, setTaskList] = useState(() => {
+        const saved = localStorage.getItem("tasks");
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem("tasks", JSON.stringify(taskList));
+    }, [taskList]);
+
     const [taskShow, setTaskShow] = useState([]);
     const [taskFilter, setTaskFilter] = useState('all');
 

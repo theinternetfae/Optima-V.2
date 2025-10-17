@@ -18,7 +18,7 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
 
     const [hour, setHour] = useState(task && task.reminderTime ? parseInt(task.reminderTime.split(':')[0]) : 8);
     const [minute, setMinute] = useState(task && task.reminderTime ? parseInt(task.reminderTime.split(':')[1]) : 0);
-    const [meridiem, setMeridiem] = useState(task && task.reminderTime ? parseInt(task.reminderTime.split(' ')[1]) : "AM");
+    const [meridiem, setMeridiem] = useState(task && task.reminderTime ? task.reminderTime.split(' ')[1] : "AM");
 
     function clickShowPicker() {
         setShowPicker(prev => !prev);
@@ -47,6 +47,7 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
         const timeString = `${hour}:${minute < 10 ? "0" + minute : minute} ${meridiem}`;
 
         const theTask = {
+            id: Date.now(),
             emoji: emojiInput,
             name: nameInput,
             color: colorCont,
@@ -64,7 +65,7 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
         
         const timeString = `${hour}:${minute < 10 ? "0" + minute : minute} ${meridiem}`;
 
-        const editedTask = prevTasks.map(prev => prev.name === task.name ? {...prev,
+        const editedTask = prevTasks.map(prev => prev.id === task.id ? {...prev,
             name: nameInput,
             emoji: emojiInput,
             color: colorCont,
@@ -80,7 +81,7 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
 
     function deleteTask() {
 
-        const tasksRemaining = prevTasks.filter(t => t.name !== task.name);
+        const tasksRemaining = prevTasks.filter(t => t.id !== task.id);
         console.log(tasksRemaining);
         editedTasks(tasksRemaining);
         editExit();
