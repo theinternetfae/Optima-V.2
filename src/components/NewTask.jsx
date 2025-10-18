@@ -65,14 +65,15 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
         
         const timeString = `${hour}:${minute < 10 ? "0" + minute : minute} ${meridiem}`;
 
-        const editedTask = prevTasks.map(prev => prev.id === task.id ? {...prev,
+        const editedTask = {
+            ...task,
             name: nameInput,
             emoji: emojiInput,
             color: colorCont,
             days: taskDays,
             reminderStatus: reminder,
             reminderTime: reminder ? timeString : null,
-        } : prev)
+        }
 
         editedTasks(editedTask);
         editExit();

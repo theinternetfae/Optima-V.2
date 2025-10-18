@@ -72,11 +72,16 @@ function DateMenu() {
         }
     }
 
+    const [activeDate, setActiveDate] = useState(new Date());
+
     useEffect(() => {
         
-        if (taskList.length === 0) return;
+        if (taskList.length === 0) {
+            setbeforeTaskShow([]); 
+            return;
+        }
 
-        const todayString = new Date().toLocaleDateString("en-US", { 
+        const activeDateString = activeDate.toLocaleDateString("en-US", { 
             day: "numeric", 
             month: "long", 
             year: "numeric" 
@@ -88,24 +93,24 @@ function DateMenu() {
                 month: "long", 
                 year: "numeric"
             });
-            return taskDate === todayString;
+            return taskDate === activeDateString;
         });
 
-        setbeforeTaskShow(todayTasks);
+        setbeforeTaskShow(todayTasks.sort((a, b) => a.isDone - b.isDone));
 
-    }, [taskList, days])
+    }, [taskList, activeDate])
 
     useEffect(() => {
         if (taskFilter === 'all') {
-            setTaskShow(taskList);
+            setTaskShow(beforeTaskShow);
         } else if (taskFilter === 'met') {
-            setTaskShow(taskList.filter(task => task.isDone));
+            setTaskShow(beforeTaskShow.filter(task => task.isDone));
         } else {
-            setTaskShow(taskList.filter(task => !task.isDone));
+            setTaskShow(beforeTaskShow.filter(task => !task.isDone));
         }
 
         console.log(taskList);
-    }, [taskList, taskFilter]);
+    }, [beforeTaskShow, taskFilter]);
 
     useEffect(() => {
       console.log("Updated beforeTaskShow:", beforeTaskShow);
@@ -147,22 +152,19 @@ function DateMenu() {
                                 function saveToDays(dateDate) {
                                     if (taskList.length === 0) return;
 
-                                    let beforeShowArray = [];
+                                    const parsedDate = new Date(dateDate);
+                                    setActiveDate(parsedDate);
 
-                                    taskList.forEach(task => {
-                                        const taskDate = new Date(task.id).toLocaleDateString("en-US", { 
+                                    const selectedDayTasks = taskList.filter(task => {
+                                        const taskDate = new Date(task.id).toLocaleDateString("en-us", {
                                             day: "numeric", 
                                             month: "long", 
-                                            year: "numeric" 
+                                            year: "numeric"
                                         });
+                                        return taskDate === dateDate;
+                                    });                      
 
-                                        if(taskDate === dateDate) {
-                                            beforeShowArray.push(task);          
-                                            setbeforeTaskShow(beforeShowArray);
-                                        } else {
-                                            console.log('Nope');
-                                        }
-                                    });
+                                    setbeforeTaskShow(selectedDayTasks.sort((a, b) => a.isDone - b.isDone));
                                 }
 
                                 return (
@@ -179,20 +181,26 @@ function DateMenu() {
                     </div>
                 </div>
 
-                {newTaskDisplay ? <NewTask exit={addTask} newTasks={((addingTask) => setTaskList(prev => [...prev, addingTask].sort((a, b) => a.isDone - b.isDone)))} /> : ""}
+                {newTaskDisplay ? <NewTask exit={addTask} newTasks={((addingTask) => setTaskList(prev => [...prev, addingTask]))} /> : ""}
             </div>
 
             <div className="task-display">
 
                 
-                {taskShow.length === 0 ? (
+                {taskShow.length === 0 || taskShow.length === 0 ? (
                     <p className="no-tasks">{taskFilter === 'all' ? 'No tasks' : taskFilter === 'met' ? 'No tasks completed...' : 'None!'}</p>
                 ) : (
                     taskShow.map(task => (
                     <TaskDisplay
                         key={task.name}
                         taskE={task}
-                        editedTasks={(editedList) => setTaskList([...editedList].sort((a, b) => a.isDone - b.isDone))}
+                        editedTasks={(update) => {
+                            if(Array.isArray(update)) {
+                                setTaskList(update);
+                            } else {
+                                setTaskList(prev => prev.map(t => t.id === update.id ? update : t ))     
+                            }
+                        }}
                         prevTasks={taskList}
                     />
                     ))
