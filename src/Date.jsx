@@ -22,19 +22,21 @@ function DateMenu() {
     const [taskShow, setTaskShow] = useState([]);
     const [taskFilter, setTaskFilter] = useState('all');
 
-    function getDaysAround(today, rangeInDays = 90) {
+    function getDaysAround(today, totalYears) {
         
         const result = [];
         const start = new Date(today);
-        start.setDate(start.getDate() - rangeInDays);
+        start.setFullYear(start.getFullYear() - 1);
+        const totalDays = totalYears * 365;
 
-        for (let i = 0; i < rangeInDays * 90; i++) {
-            const day = new Date(start);
-            result.push(day);
+
+        for (let i = 0; i < totalDays; i++) {
+            result.push(new Date(start));
             start.setDate(start.getDate() + 1);
         }
 
         return result;
+        
     }
 
     function addTask() {
@@ -45,7 +47,7 @@ function DateMenu() {
 
     useEffect(() => {
         const today = new Date();
-        setDays(getDaysAround(today, 90));
+        setDays(getDaysAround(today, 20));
     }, []);
 
     useEffect(() => {
@@ -57,18 +59,6 @@ function DateMenu() {
             });
         }
     }, [days]);
-
-    useEffect(() => {
-        if (taskFilter === 'all') {
-            setTaskShow(taskList);
-        } else if (taskFilter === 'met') {
-            setTaskShow(taskList.filter(task => task.isDone));
-        } else {
-            setTaskShow(taskList.filter(task => !task.isDone));
-        }
-
-        console.log(taskList);
-    }, [taskList, taskFilter]);
 
     function toggleTodayDisplay() {
         const navDate = document.querySelector('.nav-date');
@@ -82,6 +72,40 @@ function DateMenu() {
         }
     }
 
+    useEffect(() => {
+        
+        if (taskList.length === 0) return;
+
+        const todayString = new Date().toLocaleDateString("en-US", { 
+            day: "numeric", 
+            month: "long", 
+            year: "numeric" 
+        });
+
+        const todayTasks = taskList.filter(task => {
+            const taskDate = new Date(task.id).toLocaleDateString("en-us", {
+                day: "numeric", 
+                month: "long", 
+                year: "numeric"
+            });
+            return taskDate === todayString;
+        });
+
+        setbeforeTaskShow(todayTasks);
+
+    }, [taskList, days])
+
+    useEffect(() => {
+        if (taskFilter === 'all') {
+            setTaskShow(taskList);
+        } else if (taskFilter === 'met') {
+            setTaskShow(taskList.filter(task => task.isDone));
+        } else {
+            setTaskShow(taskList.filter(task => !task.isDone));
+        }
+
+        console.log(taskList);
+    }, [taskList, taskFilter]);
 
     useEffect(() => {
       console.log("Updated beforeTaskShow:", beforeTaskShow);
@@ -89,13 +113,6 @@ function DateMenu() {
 
     function toggleTaskDisplay(operator) {
         setTaskFilter(operator);
-        if(operator === 'all') {
-            return setTaskShow(taskList) || 'No tasks';
-        } else if (operator === 'met') {
-            return setTaskShow(taskList.filter(task => task.isDone));
-        } else {
-            return setTaskShow(taskList.filter(task => !task.isDone));
-        }
     }
 
     const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
@@ -144,7 +161,6 @@ function DateMenu() {
                                             setbeforeTaskShow(beforeShowArray);
                                         } else {
                                             console.log('Nope');
-                                            return;
                                         }
                                     });
                                 }
