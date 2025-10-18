@@ -18,6 +18,7 @@ function DateMenu() {
         localStorage.setItem("tasks", JSON.stringify(taskList));
     }, [taskList]);
 
+    const [beforeTaskShow, setbeforeTaskShow] = useState([]);
     const [taskShow, setTaskShow] = useState([]);
     const [taskFilter, setTaskFilter] = useState('all');
 
@@ -81,6 +82,11 @@ function DateMenu() {
         }
     }
 
+
+    useEffect(() => {
+      console.log("Updated beforeTaskShow:", beforeTaskShow);
+    }, [beforeTaskShow]);
+
     function toggleTaskDisplay(operator) {
         setTaskFilter(operator);
         if(operator === 'all') {
@@ -121,8 +127,33 @@ function DateMenu() {
                                     navDate.innerText = `${day.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}`;
                                 }
 
+                                function saveToDays(dateDate) {
+                                    if (taskList.length === 0) return;
+
+                                    let beforeShowArray = [];
+
+                                    taskList.forEach(task => {
+                                        const taskDate = new Date(task.id).toLocaleDateString("en-US", { 
+                                            day: "numeric", 
+                                            month: "long", 
+                                            year: "numeric" 
+                                        });
+
+                                        if(taskDate === dateDate) {
+                                            beforeShowArray.push(task);          
+                                            setbeforeTaskShow(beforeShowArray);
+                                        } else {
+                                            console.log('Nope');
+                                            return;
+                                        }
+                                    });
+                                }
+
                                 return (
-                                    <div key={index} onClick={toggleDateDisplay} className={`ind-date-box ${isMonday ? "snap-start monday" : ""} ${isToday ? "border-bluelight" : ""}`} ref={isToday ? todayRef : null}>
+                                    <div key={index} onClick={() => {
+                                        toggleDateDisplay();
+                                        saveToDays(day.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }));
+                                    }} className={`ind-date-box ${isMonday ? "snap-start monday" : ""} ${isToday ? "border-bluelight" : ""}`} ref={isToday ? todayRef : null}>
                                         <span className="date-name">{weekday}</span>
                                         <span className="other-days">{day.getDate()} </span>
                                     </div>
