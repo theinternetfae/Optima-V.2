@@ -7,8 +7,12 @@ function DateMenu() {
     const containerRef = useRef(null);
     const todayRef = useRef(null);
 
+
     const [newTaskDisplay, setNewTaskDisplay] = useState(false);
     
+    const today = new Date();
+    const [navDate, setNavDate] = useState(today.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }));
+
     const [taskList, setTaskList] = useState(() => {
         const saved = localStorage.getItem("tasks");
         return saved ? JSON.parse(saved) : [];
@@ -43,8 +47,6 @@ function DateMenu() {
         setNewTaskDisplay(!newTaskDisplay);
     }
 
-    const today = new Date();
-
     useEffect(() => {
         const today = new Date();
         setDays(getDaysAround(today, 20));
@@ -61,8 +63,6 @@ function DateMenu() {
     }, [days]);
 
     function toggleTodayDisplay() {
-        const navDate = document.querySelector('.nav-date');
-        navDate.innerText = `${today.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}`;
         if (todayRef.current && containerRef.current) {
             todayRef.current.scrollIntoView({
                 behavior: "auto",
@@ -73,6 +73,13 @@ function DateMenu() {
     }
 
     const [activeDate, setActiveDate] = useState(new Date());
+    const [border, setBorder] = useState(new Date().toDateString());
+
+    function redirectDateTask() {
+        setActiveDate(new Date());
+        setBorder(new Date().toDateString());
+        setNavDate(today.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }));
+    }
 
     useEffect(() => {
         
@@ -133,11 +140,14 @@ function DateMenu() {
                             <option value="unmet">Unmet</option>
                             <option value="met">Met</option>
                         </select>
-                        <p className="nav-date" onClick={toggleTodayDisplay}>{today.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}</p>
+                        <p className="nav-date" onClick={() => {
+                            toggleTodayDisplay();
+                            redirectDateTask();
+                        }}>{navDate}</p>
                         <button className="bi bi-plus-circle-fill add" onClick={() => addTask()}></button>
                     </div>
 
-                    <div className="date-menu" ref={containerRef}>
+                    <div className="date-menu">
                         <div className="date-track" ref={containerRef}>
                             {days.map((day, index) => {
                                 const isToday = day.toDateString() === new Date().toDateString();
@@ -145,8 +155,7 @@ function DateMenu() {
                                 const isMonday = weekday.toLowerCase() === "mon";
 
                                 function toggleDateDisplay() {
-                                    const navDate = document.querySelector('.nav-date');
-                                    navDate.innerText = `${day.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}`;
+                                    setNavDate(day.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }));
                                 }
 
                                 function saveToDays(dateDate) {
@@ -170,13 +179,15 @@ function DateMenu() {
                                 return (
                                     <div key={index} onClick={() => {
                                         toggleDateDisplay();
+                                        setBorder(day.toDateString());
                                         saveToDays(day.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }));
-                                    }} className={`ind-date-box ${isMonday ? "snap-start monday" : ""} ${isToday ? "border-bluelight" : ""}`} ref={isToday ? todayRef : null}>
+                                    }} className={`ind-date-box ${isMonday ? "snap-start monday" : ""} ${border === day.toDateString() ? "border-bluelight" : ""}`} ref={isToday ? todayRef : null}>
                                         <span className="date-name">{weekday}</span>
                                         <span className="other-days">{day.getDate()} </span>
                                     </div>
                                 )
                             })}
+
                         </div>
                     </div>
                 </div>
@@ -187,7 +198,7 @@ function DateMenu() {
             <div className="task-display">
 
                 
-                {taskShow.length === 0 || taskShow.length === 0 ? (
+                {taskShow.length === 0 || beforeTaskShow.length === 0 ? (
                     <p className="no-tasks">{taskFilter === 'all' ? 'No tasks' : taskFilter === 'met' ? 'No tasks completed...' : 'None!'}</p>
                 ) : (
                     taskShow.map(task => (
