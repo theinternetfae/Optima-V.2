@@ -89,14 +89,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .new-task {
-        @apply bg-black/1 fixed flex justify-center items-center top-0 z-50 w-full h-full backdrop-blur-sm md:w-[90%] md:left-[240px];
+        @apply bg-black/1 fixed flex justify-center items-center top-0 left-[-2px] z-50 w-full h-full backdrop-blur-sm md:w-[90%] md:left-[240px];
 
         & .exit-new-screen {
             @apply absolute text-xl right-[7px] top-7 md:text-2xl md:right-[120px];
         }
 
+        & .exit-edit-screen {
+            @apply absolute text-xl right-[7px] top-7 md:text-2xl md:right-[120px] cursor-pointer;
+        }
+
         & .new-task-container {
-            @apply bg-commongrey mx-auto w-[80%] p-4 rounded-xl flex flex-col gap-4 shadow-md md:w-[50%]  md:p-10 md:mx-0 md:absolute md:left-[310px];
+            @apply bg-commongrey mx-auto w-[80%] p-4 rounded-xl flex flex-col gap-4 shadow-md md:w-[50%] md:p-10;
 
             .task-desc {
                 @apply bg-dullblack rounded-md p-2 flex flex-col gap-2 justify-center items-center md:grid md:p-4 md:place-items-center;
@@ -142,7 +146,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                 @apply bg-dullblack p-2 flex justify-between items-center rounded-lg md:p-4;
 
                 & input {
-                    @apply bg-black p-2 rounded;
+                    @apply bg-black p-2 rounded w-[35px] text-sm md:text-base;
                 }
             }
 
@@ -212,11 +216,27 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         }
     }
 
-    .edit-task {
-        @apply bg-black/1 fixed flex justify-center items-center top-0 z-50 w-full h-full backdrop-blur-sm md:w-[90%] md:left-[240px];
+    .alert-container {
+        @apply bg-black/1 fixed flex justify-center items-center top-0 left-[-2px] z-60 w-full h-full backdrop-blur-sm md:w-[90%] md:left-[240px];
     
-        & .exit-edit-screen {
-            @apply absolute text-xl right-[7px] top-7 md:text-2xl md:right-[120px] cursor-pointer;
+        & .alert-box {
+            @apply border border-2 border-white bg-commongrey w-[70%] p-4 text-base text-center rounded-md;
+        
+            & .choice {
+                @apply flex justify-between mt-4;
+
+                & button {
+                    @apply w-[70px] rounded shadow-lg p-2;
+                }
+
+                & .yes-yes {
+                    @apply bg-gradient-to-b from-delLight to-delDark;
+                }
+
+                & .no-no {
+                    @apply bg-gradient-to-b from-bluelight to-bluet;
+                }
+            }
         }
     }
 }

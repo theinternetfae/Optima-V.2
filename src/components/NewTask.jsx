@@ -1,5 +1,6 @@
 import { useState } from "react";
 import EmojiPicker from "emoji-picker-react";
+import Alert from "./Alert.jsx";
 
 //TO-DO: Save changes, delete task
 
@@ -8,11 +9,13 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
     const isEditingMode = !!task;    
 
     const [showPicker, setShowPicker] = useState(false);
+    const [alertShow, setAlertShow] = useState(false);
 
     const [emojiInput, setEmojiInput] = useState(task ? task.emoji : "");
     const [nameInput, setNameInput] = useState(task ? task.name : "");
     const [colorCont, setColorCont] = useState(task ? task.color : "");
     const [taskDays, setTaskDays] = useState(task ? task.days : []);
+
 
     const today = new Date().toLocaleDateString("en-CA");
     const [startDate, setStartDate] = useState(task ? task.start : today);
@@ -52,7 +55,7 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
 
         const theTask = {
             id: Date.now(),
-            copyBaseId: Date.now(),
+            baseId: Date.now(),
             start: startDate,
             end: endDate,
             emoji: emojiInput,
@@ -91,8 +94,7 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
 
     function deleteTask() {
 
-        const tasksRemaining = prevTasks.filter(t => t.id !== task.id);
-        console.log(tasksRemaining);
+        const tasksRemaining = prevTasks.filter(t => t.id !== task.id && t.baseId !== task.baseId);
         editedTasks(tasksRemaining);
         editExit();
 
@@ -104,7 +106,7 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
     return ( 
         <div className="new-task">
             
-            {isEditingMode ? <i className="bi bi-x-circle-fill exit-new-screen cursor-pointer" onClick={editExit}></i> : <i className="bi bi-x-circle-fill exit-new-screen cursor-pointer" onClick={exit}></i>}
+            {isEditingMode ? <i className="bi bi-x-circle-fill exit-new-screen cursor-pointer" onClick={editExit}></i> : <i className="bi bi-x-circle-fill exit-edit-screen cursor-pointer" onClick={exit}></i>}
 
             <div className="new-task-container">
 
@@ -174,7 +176,8 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
                 )}
 
                 <button className="addTask" onClick={isEditingMode ? () => editingTask() : () => creatingTask()}>{isEditingMode ? "Save Changes" : "Add task"}</button>
-                {isEditingMode && <button className="delete-task" onClick={() => deleteTask()}>Delete task</button>}
+                {isEditingMode && <button className="delete-task" onClick={() => setAlertShow(prev => !prev)}>Delete task</button>}
+                {alertShow && <Alert yesDelete={() => deleteTask()} noDelete={() => setAlertShow(prev => !prev)} />}
             </div>            
         </div>
     );
