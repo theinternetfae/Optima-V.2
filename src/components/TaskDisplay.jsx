@@ -20,7 +20,7 @@ function TaskDisplay({taskE, prevTasks, editedTasks}) {
         
         <p className="name-t-box" onClick={() => 
           {
-            setEditScreen(!editScreen);
+            new Date(taskE.id).toDateString() !== new Date().toDateString() ? '' : setEditScreen(editScreen => !editScreen);
           }
         }>{taskE.name}</p>
         
@@ -31,12 +31,11 @@ function TaskDisplay({taskE, prevTasks, editedTasks}) {
           const doneTask = prevTasks.map(prev => prev.name === taskE.name ? { ...prev, isDone: newDone} : prev);
 
           editedTasks(doneTask);
-
-        }}/>
+        }} disabled={new Date(taskE.id).toDateString() !== new Date().toDateString()}/>
 
       </div>
 
-      {editScreen && <NewTask editExit={() => setEditScreen(!editScreen)} editedTasks={editedTasks} prevTasks={prevTasks} task={taskE}/>}
+      {editScreen && <NewTask editExit={() => setEditScreen(editScreen => !editScreen)} editedTasks={editedTasks} prevTasks={prevTasks} task={taskE}/>}
     </div>
   
   );

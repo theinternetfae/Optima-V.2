@@ -22,6 +22,55 @@ function DateMenu() {
         localStorage.setItem("tasks", JSON.stringify(taskList));
     }, [taskList]);
 
+
+
+    function getWeekdayName(date) {
+     const days = ["sun", "mon", "tue", "wed", "thur", "fri", "sat"];
+     return days[new Date(date).getDay()];
+    }
+
+    useEffect(() => {
+        
+        const repeatTasks = taskList.filter(task => task.days.length > 0);
+
+        days.forEach(day => {
+            repeatTasks.forEach(rt => {
+                const theDate = new Date(day);
+                const startDate = new Date(rt.start);
+                const endDate = new Date(rt.end);
+
+                if(theDate >= startDate && theDate <= endDate) {
+                    
+                    if (rt.days.some(d => d.toLowerCase() === getWeekdayName(day).toLowerCase())) {
+
+                        const alreadyExists = taskList.some(
+                            t =>
+                            t.name === rt.name &&
+                            new Date(t.id).toDateString() === theDate.toDateString()
+                        );                    
+            
+                        if (alreadyExists) return;
+
+                        const repeat = {
+                            ...rt,
+                            id: theDate.getTime() 
+                        }                    
+                    
+                        setTaskList (prev => [...prev, repeat]);
+
+                    } 
+
+                }
+
+            })
+
+        })
+
+
+    }, [days, taskList]);
+
+    //Check for duplicates and make sure it's not created again if it already exists, use either the id or copyid and the name
+
     const [beforeTaskShow, setbeforeTaskShow] = useState([]);
     const [taskShow, setTaskShow] = useState([]);
     const [taskFilter, setTaskFilter] = useState('all');
@@ -32,7 +81,6 @@ function DateMenu() {
         const start = new Date(today);
         start.setFullYear(start.getFullYear() - 1);
         const totalDays = totalYears * 365;
-
 
         for (let i = 0; i < totalDays; i++) {
             result.push(new Date(start));
@@ -105,6 +153,7 @@ function DateMenu() {
 
         setbeforeTaskShow(todayTasks.sort((a, b) => a.isDone - b.isDone));
 
+        console.log(taskList);
     }, [taskList, activeDate])
 
     useEffect(() => {
@@ -115,8 +164,6 @@ function DateMenu() {
         } else {
             setTaskShow(beforeTaskShow.filter(task => !task.isDone));
         }
-
-        console.log(taskList);
     }, [beforeTaskShow, taskFilter]);
 
     useEffect(() => {
@@ -202,18 +249,18 @@ function DateMenu() {
                     <p className="no-tasks">{taskFilter === 'all' ? 'No tasks' : taskFilter === 'met' ? 'No tasks completed...' : 'None!'}</p>
                 ) : (
                     taskShow.map(task => (
-                    <TaskDisplay
-                        key={task.name}
-                        taskE={task}
-                        editedTasks={(update) => {
-                            if(Array.isArray(update)) {
-                                setTaskList(update);
-                            } else {
-                                setTaskList(prev => prev.map(t => t.id === update.id ? update : t ))     
-                            }
-                        }}
-                        prevTasks={taskList}
-                    />
+                        <TaskDisplay
+                            key={task.id}
+                            taskE={task}
+                            editedTasks={(update) => {
+                                if(Array.isArray(update)) {
+                                    setTaskList(update);
+                                } else {
+                                    setTaskList(prev => prev.map(t => t.id === update.id ? update : t ))     
+                                }
+                            }}
+                            prevTasks={taskList}
+                        />
                     ))
                 )}
 

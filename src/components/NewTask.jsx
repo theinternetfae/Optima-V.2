@@ -14,6 +14,10 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
     const [colorCont, setColorCont] = useState(task ? task.color : "");
     const [taskDays, setTaskDays] = useState(task ? task.days : []);
 
+    const today = new Date().toLocaleDateString("en-CA");
+    const [startDate, setStartDate] = useState(task ? task.start : today);
+    const [endDate, setEndDate] = useState(task ? task.end : today);
+
     const [reminder, setReminder] = useState(task ? task.reminderStatus : false);
 
     const [hour, setHour] = useState(task && task.reminderTime ? parseInt(task.reminderTime.split(':')[0]) : 8);
@@ -48,6 +52,9 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
 
         const theTask = {
             id: Date.now(),
+            copyBaseId: Date.now(),
+            start: startDate,
+            end: endDate,
             emoji: emojiInput,
             name: nameInput,
             color: colorCont,
@@ -67,6 +74,8 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
 
         const editedTask = {
             ...task,
+            start: startDate,
+            end: endDate,
             name: nameInput,
             emoji: emojiInput,
             color: colorCont,
@@ -122,6 +131,14 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
                         ))}
                     </ul>
                 </div>
+                
+                {taskDays.length > 0 && (
+                    <div className="when-to-when">
+                        <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} min={today}/>
+                        <i className="bi bi-arrow-right"></i>
+                        <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} min={today}/>
+                    </div>
+                )}
 
                 <div className="reminder">
                     <h2>{reminder ? "Off reminder?" : "On reminder?"}</h2>
