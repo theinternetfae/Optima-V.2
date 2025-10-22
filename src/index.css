@@ -36,6 +36,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 @layer components {
 
+    
+    .add {
+        @apply text-xl text-bluet cursor-pointer md:text-2xl;
+    }
+
+    .tips {
+        @apply text-xl cursor-pointer transition ease-in-out duration-300 md:text-2xl;
+    }
+
+    .tips:hover {
+        @apply text-bluet;
+    }
+
     .named {
         @apply flex flex-col lg:flex-row;
 
@@ -45,7 +58,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .side-menu {
-        @apply bg-[#1A1A1A] w-[100vw] h-[10vh] bottom-0 shadow-xl absolute lg:w-[20%] lg:h-[100vh] lg:static;
+        @apply bg-[#1A1A1A] w-[100vw] h-[10vh] bottom-0 shadow-xl absolute flex flex-col px-4 py-6 gap-6 cursor-pointer lg:w-[20%] lg:h-[100vh] lg:static;
+
+        & .road {
+            @apply cursor-pointer rounded-md bg-commongrey shadow-lg p-3 border border-2 border-transparent flex gap-2;
+        }
     }
 
     .full-date-cont {
@@ -60,10 +77,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
             & .nav-date {
                 @apply text-sm font-semibold w-[95%] relative left-[-20px] text-center px-10 cursor-pointer md:left-[-30px] md:text-xl;
-            }
-
-            & .add {
-                @apply text-xl text-bluet cursor-pointer md:text-2xl;
             }
         }
 
@@ -146,7 +159,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                 @apply bg-dullblack p-2 flex justify-between items-center rounded-lg md:p-4;
 
                 & input {
-                    @apply bg-black p-2 rounded w-[35px] text-sm md:text-base;
+                    @apply bg-black p-2 rounded w-[35px] text-sm md:text-base md:w-[180px];
                 }
             }
 
@@ -220,7 +233,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         @apply bg-black/1 fixed flex justify-center items-center top-0 left-[-2px] z-60 w-full h-full backdrop-blur-sm md:w-[90%] md:left-[240px];
     
         & .alert-box {
-            @apply border border-2 border-white bg-commongrey w-[70%] p-4 text-base text-center rounded-md;
+            @apply border border-2 border-white bg-commongrey w-[70%] p-4 text-base text-center rounded-md md:fixed md:right-[595px] md:w-[30%];
         
             & .choice {
                 @apply flex justify-between mt-4;
@@ -236,6 +249,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                 & .no-no {
                     @apply bg-gradient-to-b from-bluelight to-bluet;
                 }
+            }
+        }
+    }
+
+    .full-stats-cont {
+        @apply border border-2;
+
+        & .stats-header {
+            @apply border border-2 flex justify-between;
+
+            & .task-selected {
+                @apply cursor-pointer outline-none text-lg bg-commongrey p-2 rounded-lg;
             }
         }
     }
