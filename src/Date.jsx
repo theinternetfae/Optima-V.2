@@ -1,28 +1,20 @@
 import { useEffect, useState, useRef} from "react";
 import NewTask from "./components/NewTask.jsx";
 import TaskDisplay from "./components/TaskDisplay.jsx";
+import React, {useContext} from "react";
+import { TaskContext } from "./components/TaskContext.js";
+
 
 function DateMenu() {
+    const { taskList, setTaskList } = useContext(TaskContext); 
     const [days, setDays] = useState([]);
     const containerRef = useRef(null);
     const todayRef = useRef(null);
-
 
     const [newTaskDisplay, setNewTaskDisplay] = useState(false);
     
     const today = new Date();
     const [navDate, setNavDate] = useState(today.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }));
-
-    const [taskList, setTaskList] = useState(() => {
-        const saved = localStorage.getItem("tasks");
-        return saved ? JSON.parse(saved) : [];
-    });
-
-    useEffect(() => {
-        localStorage.setItem("tasks", JSON.stringify(taskList));
-    }, [taskList]);
-
-
 
     function getWeekdayName(date) {
      const days = ["sun", "mon", "tue", "wed", "thur", "fri", "sat"];
@@ -266,7 +258,6 @@ function DateMenu() {
 
             </div>
         </> 
-        
     );
 }
 

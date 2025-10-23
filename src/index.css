@@ -254,13 +254,29 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .full-stats-cont {
-        @apply border border-2;
+        @apply flex flex-col gap-8;
 
         & .stats-header {
             @apply border border-2 flex justify-between;
 
             & .task-selected {
                 @apply cursor-pointer outline-none text-lg bg-commongrey p-2 rounded-lg;
+            }
+        }
+
+        & .selected-scroll-cont {
+            @apply bg-commongrey rounded-lg p-4;
+
+            & ul {
+                @apply flex gap-2;
+
+                & .li-cont {
+                    @apply  w-40 overflow-hidden flex justify-center items-center;
+                }
+
+                & li {
+                    @apply border border-2 border-transparent bg-dullblack p-4 rounded-full cursor-pointer shadow-lg text-xl;
+                }
             }
         }
     }

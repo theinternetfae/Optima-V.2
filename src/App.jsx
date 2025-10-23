@@ -1,34 +1,49 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DateMenu from "./Date.jsx";
 import SideMenu from "./SideMenu.jsx";
 import TaskStats from "./TaskStats.jsx";
+import { useState, useEffect } from "react";
+import { TaskContext } from "./components/TaskContext.js";
 
 function App() {
+
+  const [taskList, setTaskList] = useState(() => {
+      const saved = localStorage.getItem("tasks");
+      return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+      localStorage.setItem("tasks", JSON.stringify(taskList));
+  }, [taskList]);
+
   return (
-    <BrowserRouter>    
-      <div className="named">
-        <SideMenu/>
 
-        <Routes>
+    <TaskContext.Provider value={{taskList, setTaskList}}>
+      <BrowserRouter>    
+        <div className="named">
+          <SideMenu/>
 
-          <Route path="/" element={
-              <div className="a-body">
-                <DateMenu />
-              </div>
-            }
-          />
+          <Routes>
 
-          <Route path="/taskStats" element={
-              <div className="a-body">
-                <TaskStats />
-              </div>
-            }
-          />
+            <Route path="/" element={
+                <div className="a-body">
+                  <DateMenu />
+                </div>
+              }
+            />
 
-        </Routes>
-      
-      </div>
-    </BrowserRouter>
+            <Route path="/taskStats" element={
+                <div className="a-body">
+                  <TaskStats />
+                </div>
+              }
+            />
+
+          </Routes>
+        
+        </div>
+      </BrowserRouter>
+    </TaskContext.Provider>
   )
 }
 
