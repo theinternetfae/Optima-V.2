@@ -24,15 +24,21 @@ function TaskStats() {
         }, {})
     )
 
+    function cutWords(text, limit = 2) {
+        const words = text.split(" ");
+        if (words.length <= limit) return text; 
+        return words.slice(0, limit).join(" ") + "...";
+    }
+
     return ( 
         <div className="full-stats-cont">
 
             <div className="stats-header">
                 <button className="bi bi-lightbulb-fill tips"></button>
-                <select name="task-selected" value={taskSelected} onChange={e => toggleSelected(e.target.value)} className="task-selected">         
+                <select name="task-selected" value={taskSelected} onChange={e => toggleSelected(Number(e.target.value))} className="task-selected">         
                     
                     <option value={0}>
-                        <span>📚</span> <span>Overall</span>
+                        {`📚 Overall`}
                     </option>
                      
                     {
@@ -49,7 +55,7 @@ function TaskStats() {
             <div className="selected-scroll-cont">
                 <ul className="selected-scroll">
                     <div className="li-cont">
-                        <li onClick={() => toggleSelected(0)} className={selectedScroll === 0 && 'border-bluelight'}>
+                        <li onClick={() => toggleSelected(0)} className={selectedScroll === 0 ? 'border-bluelight' : ""}>
                             <span>📚</span> {selectedScroll === 0 && <span>Overall</span>}
                         </li>
                     </div>
@@ -58,7 +64,7 @@ function TaskStats() {
                         uniqueTasks.map((task, index) => (
                             <div key={index} className="li-cont">
                                 <li onClick={() => toggleSelected(task.baseId)} className={selectedScroll === task.baseId ? 'border-bluelight' : ""}>
-                                    {task.emoji} {selectedScroll === task.baseId && <span>{task.name}</span>}
+                                    {task.emoji} {selectedScroll === task.baseId && <span>{cutWords(task.name)}</span>}
                                 </li>
                             </div>
                         ))

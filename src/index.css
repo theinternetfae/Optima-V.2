@@ -257,7 +257,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         @apply flex flex-col gap-8;
 
         & .stats-header {
-            @apply border border-2 flex justify-between;
+            @apply flex justify-between;
 
             & .task-selected {
                 @apply cursor-pointer outline-none text-lg bg-commongrey p-2 rounded-lg;
