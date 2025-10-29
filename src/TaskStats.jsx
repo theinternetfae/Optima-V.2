@@ -30,6 +30,11 @@ function TaskStats() {
         return words.slice(0, limit).join(" ") + "...";
     }
 
+    function getDaysFor() {
+        const resultDays = [];
+        const start = new Date(today);
+    }
+
     return ( 
         <div className="full-stats-cont">
 
