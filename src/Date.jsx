@@ -87,6 +87,16 @@ function DateMenu() {
         setNewTaskDisplay(!newTaskDisplay);
     }
 
+    // Fix to make sure that past dates show up as needed instead of only loading 1 year back in case user has data past that
+    // useEffect(() => {
+    //     const earliestTask = Math.min(...taskList.map(t => new Date(t.baseId)));
+    //     const latestTask = Math.max(...taskList.map(t => new Date(t.baseId)));
+
+    //     if (earliestTask < days[0].getTime() || latestTask > days[days.length - 1].getTime()) {
+    //         setDays(getDaysAround(today, 20));
+    //     }
+    // }, [taskList]);
+
     useEffect(() => {
         const today = new Date();
         setDays(getDaysAround(today, 20));

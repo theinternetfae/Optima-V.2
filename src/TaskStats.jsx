@@ -1,86 +1,216 @@
-import React, {useContext, useState} from "react";
-import { TaskContext } from "./components/TaskContext.js";
+    import React, {useContext, useState, useEffect} from "react";
+    import { TaskContext } from "./components/TaskContext.js";
 
-// const completedCount = tasks.reduce((acc, task) => {
-//   if (task.done) acc++;
-//   return acc;
-// }, 0);
+    // const completedCount = tasks.reduce((acc, task) => {
+    //   if (task.done) acc++;
+    //   return acc;
+    // }, 0);
 
-function TaskStats() {
+    function TaskStats() {
 
-    const { taskList, setTaskList } = useContext(TaskContext);
-    const [taskSelected, setTaskSelected] = useState(0);
-    const [selectedScroll, setSelectedScroll] = useState(0);
+        const { taskList, setTaskList } = useContext(TaskContext);
+        const [taskSelected, setTaskSelected] = useState(0);
+        const [selectedScroll, setSelectedScroll] = useState(0);
+        const [taskDays, setTaskDays] = useState([]);
 
-    function toggleSelected(id) {
-        setSelectedScroll(id);
-        setTaskSelected(id);
-    }
 
-    const uniqueTasks = Object.values(
-        taskList.reduce((acc, task) => {
-            if(!acc[task.baseId] && task.days.length > 0) acc[task.baseId] = task;
-            return acc;
-        }, {})
-    )
+        function toggleSelected(id) {
+            setSelectedScroll(id);
+            setTaskSelected(id);
+        }
 
-    function cutWords(text, limit = 2) {
-        const words = text.split(" ");
-        if (words.length <= limit) return text; 
-        return words.slice(0, limit).join(" ") + "...";
-    }
+        const uniqueTasks = Object.values(
+            taskList.reduce((acc, task) => {
+                if(!acc[task.baseId] && task.days.length > 0) acc[task.baseId] = task;
+                return acc;
+            }, {})
+        )
 
-    function getDaysFor() {
-        const resultDays = [];
-        const start = new Date(today);
-    }
+        function cutWords(text, limit = 2) {
+            const words = text.split(" ");
+            if (words.length <= limit) return text; 
+            return words.slice(0, limit).join(" ") + "...";
+        }
 
-    return ( 
-        <div className="full-stats-cont">
+        function getDaysFor(today, totalYears) {
+            const resultDays = [];
+            const start = new Date(today);
+            start.setFullYear(start.getFullYear() - 1);
+            const totalDays = totalYears * 365;
 
-            <div className="stats-header">
-                <button className="bi bi-lightbulb-fill tips"></button>
-                <select name="task-selected" value={taskSelected} onChange={e => toggleSelected(Number(e.target.value))} className="task-selected">         
-                    
-                    <option value={0}>
-                        {`📚 Overall`}
-                    </option>
-                     
-                    {
-                        uniqueTasks.map((task, index) => (
-                            <option value={task.baseId} key={index}>
-                                {task.emoji} {task.name}
-                            </option>
-                        ))
-                    }                    
-                </select>
-                <button className="bi bi-plus-circle-fill add"></button>
-            </div>
+            for (let i = 0; i < totalDays; i++) {
+                resultDays.push(new Date(start));
+                start.setDate(start.getDate() + 1);
+            }
 
-            <div className="selected-scroll-cont">
-                <ul className="selected-scroll">
-                    <div className="li-cont">
-                        <li onClick={() => toggleSelected(0)} className={selectedScroll === 0 ? 'border-bluelight' : ""}>
-                            <span>📚</span> {selectedScroll === 0 && <span>Overall</span>}
-                        </li>
+            return resultDays;
+        }
+
+        useEffect(() => {
+            const today = new Date();
+            setTaskDays(getDaysFor(today, 20));
+        }, []);
+
+        const [currentMonth, setCurrentMonth] = useState(new Date());
+        const [monthDays, setMonthDays] = useState([]);
+        
+        useEffect(() => {
+
+            const daysForCurrentMonth = taskDays.filter(day => {
+                return day.toLocaleDateString("en-US", { month: "long", year: "numeric" }) === currentMonth.toLocaleDateString("en-US", {month: "long", year: "numeric"});
+            })
+
+            setMonthDays(daysForCurrentMonth);
+
+        }, [currentMonth, taskDays]);
+
+        useEffect(() => {
+            console.log(currentMonth, monthDays,);
+        }, [monthDays]);
+
+        useEffect(() => {
+            console.log(new Date().getDay());
+        }, [])
+
+        function oneMonthBack() {
+            const newCurrentMonth = new Date(currentMonth);
+            newCurrentMonth.setMonth(currentMonth.getMonth() - 1);
+
+            setCurrentMonth(newCurrentMonth);
+        }
+
+        function oneMonthForward() {
+            const newCurrentMonth = new Date(currentMonth);
+            newCurrentMonth.setMonth(currentMonth.getMonth() + 1);
+
+            setCurrentMonth(newCurrentMonth);   
+        }
+        //////////////////////////////////////////
+        function whichDay(w) {
+            return monthDays.filter(day =>
+                day.toLocaleDateString("en-US", { weekday: "short" }).toLowerCase() === w
+            );
+        }
+
+        return ( 
+            <div className="full-stats-cont">
+
+                <div className="stats-header">
+                    <button className="bi bi-lightbulb-fill tips"></button>
+                    <select name="task-selected" value={taskSelected} onChange={e => toggleSelected(Number(e.target.value))} className="task-selected">         
+                        
+                        <option value={0}>
+                            {`📚 Overall`}
+                        </option>
+                        
+                        {
+                            uniqueTasks.map((task, index) => (
+                                <option value={task.baseId} key={index}>
+                                    {task.emoji} {task.name}
+                                </option>
+                            ))
+                        }                    
+                    </select>
+                    <button className="bi bi-plus-circle-fill add"></button>
+                </div>
+
+                <div className="selected-scroll-cont">
+                    <ul className="selected-scroll">
+                        <div className="li-cont">
+                            <li onClick={() => toggleSelected(0)} className={selectedScroll === 0 ? 'border-bluelight' : ""}>
+                                <span>📚</span> {selectedScroll === 0 && <span>Overall</span>}
+                            </li>
+                        </div>
+
+
+                        {
+                            uniqueTasks.map((task, index) => (
+                                <div key={index} className="li-cont">
+                                    <li onClick={() => toggleSelected(task.baseId)} className={selectedScroll === task.baseId ? 'border-bluelight' : ""}>
+                                        {task.emoji} {selectedScroll === task.baseId && <span>{cutWords(task.name)}</span>}
+                                    </li>
+                                </div>
+                            ))
+
+                        }
+
+                    </ul>
+                </div>
+
+                <div className="date-box-main">
+                    <button className="bi-chevron-left bi-chevron" onClick={(() => oneMonthBack())}></button>
+                    <div className="date-box-cont">
+                        <p onClick={() => setCurrentMonth(new Date())} className="cursor-pointer">{currentMonth.toLocaleDateString("en-US", {month: "long", year: "numeric"})}</p>
+                        <div className="date-box-sub">
+                            <div className="calendar-grid">
+
+                                {["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map((d, i) => (
+                                <div key={i} className="day-label">{d}</div>
+                                ))}
+
+                                {
+                                monthDays.length > 0 &&
+                                Array(monthDays[0].getDay()).fill(null).map((_, i) => (
+                                    <div key={"blank"+i} className="blank"></div>
+                                ))
+                                }
+
+                                {
+                                monthDays.map((day, i) => (            //new Date(day) === new Date(), day === new Date()?
+                                    <div key={i} title={day.toLocaleDateString("en-US", {day: 'numeric', month: 'long', year: 'numeric'})} className={`date-cell ${day.getDate() === new Date().getDate() && 'border border-2 border-bluelight'}`}>{day.getDate()}</div>
+                                ))
+                                }
+
+                            </div>
+                        </div>
+
+                        {/* <div className="date-box-sub">
+
+                            <div className="date-weekdays-box">
+                                <p>Mon</p>
+                                <ul className="date-weekdays">
+                                    {
+                                        whichDay("mon").map((day, index) => {
+                                            return <li label="" key={index}>{day.getDate()}</li>
+                                        })
+                                    }
+                                </ul>
+                            </div>
+
+                        </div> */}
+                    </div>
+                    <button className="bi-chevron-right bi-chevron" onClick={(() => oneMonthForward())}></button>
+                </div>
+
+                <div className="average-display">
+                   
+                    <div className="filler-front">
+
+                        <div className="average-body">
+                            <p>0.00%</p>
+                            <p>Overall rate</p>
+                        </div>
+
+                        <div className="average-loader">
+                        </div>
+
                     </div>
 
-                    {
-                        uniqueTasks.map((task, index) => (
-                            <div key={index} className="li-cont">
-                                <li onClick={() => toggleSelected(task.baseId)} className={selectedScroll === task.baseId ? 'border-bluelight' : ""}>
-                                    {task.emoji} {selectedScroll === task.baseId && <span>{cutWords(task.name)}</span>}
-                                </li>
-                            </div>
-                        ))
+                    <div className="the-four">
+                        <div className="top">
+                            <section className="sec-one"></section>
+                            <section className="sec-two"></section>
+                        </div>
+                        <div className="bottom">
+                            <section className="sec-one"></section>
+                            <section className="sec-two"></section>
+                        </div>
+                    </div>
 
-                    }
+                </div>
 
-                </ul>
-            </div>
+            </div> 
+        );
+    }
 
-        </div> 
-    );
-}
-
-export default TaskStats;
+    export default TaskStats;

@@ -12,6 +12,22 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1); /* makes it white */
 }
 
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1rem; /* adjust if needed */
+}
+
+.day-label {
+  @apply font-bold text-center;
+}
+
+.date-cell, .blank {
+  @apply h-10 flex items-center justify-center bg-commongrey rounded cursor-pointer;
+}
+
+
+
 @theme {
     --color-selected: #DA38CD;
     --color-bluet: #2563EB;
@@ -58,7 +74,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .side-menu {
-        @apply bg-[#1A1A1A] w-[100vw] h-[10vh] bottom-0 shadow-xl absolute flex flex-col px-4 py-6 gap-6 cursor-pointer lg:w-[20%] lg:h-[100vh] lg:static;
+        @apply  bg-[#1A1A1A] w-[100vw] bottom-0 shadow-xl absolute flex flex-col px-4 py-6 gap-6 cursor-pointer lg:w-[20%] lg:static;
 
         & .road {
             @apply cursor-pointer rounded-md bg-commongrey shadow-lg p-3 border border-2 border-transparent flex gap-2;
@@ -254,10 +270,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .full-stats-cont {
-        @apply flex flex-col gap-8;
+        @apply flex flex-col gap-8 items-center;
 
         & .stats-header {
-            @apply flex justify-between;
+            @apply w-full flex justify-between;
 
             & .task-selected {
                 @apply cursor-pointer outline-none text-lg bg-commongrey p-2 rounded-lg;
@@ -265,20 +281,101 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         }
 
         & .selected-scroll-cont {
-            @apply bg-commongrey rounded-lg p-4;
+            @apply bg-commongrey rounded-lg p-4 w-full;
 
             & ul {
                 @apply flex gap-2;
 
                 & .li-cont {
-                    @apply  w-40 overflow-hidden flex justify-center items-center;
+                    @apply w-40 overflow-hidden flex justify-center items-center;
                 }
 
                 & li {
-                    @apply border border-2 border-transparent bg-dullblack p-4 rounded-full cursor-pointer shadow-lg text-xl;
+                    @apply border border-2 border-transparent bg-dullblack p-4 rounded-full cursor-pointer shadow-lg text-lg;
                 }
             }
         }
+
+        & .date-box-main {
+            @apply w-[50%] h-[500px] bg-commongrey rounded-lg p-6 flex gap-2 justify-center font-bold;
+
+            & .bi-chevron {
+                @apply cursor-pointer;
+            }
+
+            & .date-box-cont {
+                @apply rounded-lg bg-dullblack w-[90%] p-4;
+                
+                & p {
+                    @apply mb-4 text-base font-bold;
+                }
+
+                & .date-box-sub {
+                    @apply shadow-lg shadow-inset-dark bg-commongrey rounded flex gap-[20px] justify-center p-2;
+
+
+                    & .date-weekdays-box {
+                        @apply text-center h-[350px];                  
+
+                        & .date-weekdays {
+                            @apply border border-2 flex flex-col gap-[30px];
+                        }
+
+                        & li {
+                            @apply bg-bluet p-2 rounded shadow cursor-pointer;
+                        }
+                    }
+                }
+            }
+        }
+
+        & .average-display {
+            @apply w-full h-[100vh] flex flex-col items-center justify-center;
+
+            .filler-front {
+                @apply w-[50%] h-[50%] relative flex items-center justify-center p-5;
+
+                & .average-loader {
+                    @apply border border-20 border-transparent absolute h-full w-[60%] rounded-full
+                }
+
+                & .average-body {
+                    @apply border border-20 border-commongrey relative rounded-full h-full w-[60%] shadow-xl;
+
+                    & p {
+                        @apply text-5xl font-bold absolute top-[125px] left-[55px]
+                    }
+                }
+            }
+
+            .the-four {
+                @apply w-full h-[50%] flex flex-col gap-5;
+
+                .top {
+                    @apply h-[50%] flex gap-40 items-center justify-center;
+
+                    & .sec-one {
+                        @apply border border-2 h-full w-[30%]
+                    }
+
+                    & .sec-two {
+                        @apply border border-2 h-full w-[30%]
+                    }
+                }
+
+                .bottom {
+                    @apply h-[50%] flex gap-40 items-center justify-center;
+
+                    & .sec-one {
+                        @apply border border-2 h-full w-[30%]
+                    }
+
+                    & .sec-two {
+                        @apply border border-2 h-full w-[30%]
+                    }
+                }            
+            }
+        } 
     }
 }
 
@@ -289,3 +386,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 @utility text-shadow-md {
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
 }
+
+
+                  /* display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1rem; adjust if needed */
