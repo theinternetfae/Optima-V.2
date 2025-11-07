@@ -36,7 +36,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     --color-commongrey: #262626;
     --color-backblack: #0D0D0D; 
     --color-delDark: #650207;
-    --color-delLight: #C93631; 
+    --color-delLight: #C93631;
+    --color-yellow: #FFFF00; 
+    --color-grey: #5B6066;
+    --color-green: #237414;
 }
 
 @utility no-scrollbar {
@@ -342,8 +345,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                 & .average-body {
                     @apply border border-20 border-commongrey relative rounded-full h-full w-[60%] shadow-xl;
 
-                    & p {
-                        @apply text-5xl font-bold absolute top-[125px] left-[55px]
+                    & .rating {
+                        @apply text-5xl font-bold absolute top-[120px] left-[55px]
+                    }
+
+                    & .rating-title {
+                        @apply text-2xl absolute top-[180px] left-[69px] text-commongrey
                     }
                 }
             }
@@ -355,11 +362,35 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                     @apply h-[50%] flex gap-40 items-center justify-center;
 
                     & .sec-one {
-                        @apply border border-2 h-full w-[30%]
+                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-dullblack rounded-full shadow-xl text-bluet hover:text-bluelight transition ease-in duration-300;
+                    
+                        i {
+                            @apply text-4xl;
+                        }
+
+                        .calculator {
+                            @apply text-shadow-md text-white;
+                        }
+
+                        .calculator-label {
+                            @apply text-base text-grey
+                        }
                     }
 
                     & .sec-two {
-                        @apply border border-2 h-full w-[30%]
+                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-dullblack rounded-full shadow-xl text-yellow hover:text-bluelight transition ease-in duration-300;
+                    
+                        i {
+                            @apply text-4xl;
+                        }
+
+                        .calculator {
+                            @apply text-shadow-md text-white;
+                        }
+
+                        .calculator-label {
+                            @apply text-base text-grey
+                        }
                     }
                 }
 
@@ -367,11 +398,35 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                     @apply h-[50%] flex gap-40 items-center justify-center;
 
                     & .sec-one {
-                        @apply border border-2 h-full w-[30%]
+                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-dullblack rounded-full shadow-xl text-green hover:text-bluelight transition ease-in duration-300;
+                    
+                        i {
+                            @apply text-4xl;
+                        }
+
+                        .calculator {
+                            @apply text-shadow-md text-white;
+                        }
+
+                        .calculator-label {
+                            @apply text-base text-grey;
+                        }
                     }
 
                     & .sec-two {
-                        @apply border border-2 h-full w-[30%]
+                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-dullblack rounded-full shadow-xl text-selected hover:text-bluelight transition ease-in duration-300;
+                    
+                        i {
+                            @apply text-4xl;
+                        }
+
+                        .calculator {
+                            @apply text-shadow-md text-white;
+                        }
+
+                        .calculator-label {
+                            @apply text-base text-grey;
+                        }
                     }
                 }            
             }

@@ -163,21 +163,6 @@
 
                             </div>
                         </div>
-
-                        {/* <div className="date-box-sub">
-
-                            <div className="date-weekdays-box">
-                                <p>Mon</p>
-                                <ul className="date-weekdays">
-                                    {
-                                        whichDay("mon").map((day, index) => {
-                                            return <li label="" key={index}>{day.getDate()}</li>
-                                        })
-                                    }
-                                </ul>
-                            </div>
-
-                        </div> */}
                     </div>
                     <button className="bi-chevron-right bi-chevron" onClick={(() => oneMonthForward())}></button>
                 </div>
@@ -187,8 +172,8 @@
                     <div className="filler-front">
 
                         <div className="average-body">
-                            <p>0.00%</p>
-                            <p>Overall rate</p>
+                            <p className="rating">0.00%</p>
+                            <p className="rating-title">Overall rate</p>
                         </div>
 
                         <div className="average-loader">
@@ -198,12 +183,28 @@
 
                     <div className="the-four">
                         <div className="top">
-                            <section className="sec-one"></section>
-                            <section className="sec-two"></section>
+                            <section className="sec-one">
+                                <i className="bi bi-award"></i>
+                                <p className="calculator">0 days</p>
+                                <p className="calculator-label">Top streak</p>
+                            </section>
+                            <section className="sec-two">
+                                <i className="bi-trophy"></i>
+                                <p className="calculator">0 days</p>
+                                <p className="calculator-label">Perfect days</p>
+                            </section>
                         </div>
                         <div className="bottom">
-                            <section className="sec-one"></section>
-                            <section className="sec-two"></section>
+                            <section className="sec-one">
+                                <i className="bi bi-check2-circle"></i>
+                                <p className="calculator">0</p>
+                                <p className="calculator-label">Habits done</p>
+                            </section>
+                            <section className="sec-two">
+                                <i className="bi bi-activity"></i>
+                                <p className="calculator">0</p>
+                                <p className="calculator-label">Daily average</p>
+                            </section>
                         </div>
                     </div>
 
