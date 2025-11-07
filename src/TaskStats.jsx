@@ -7,7 +7,7 @@
     // }, 0);
 
     function TaskStats() {
-
+        const today = new Date();
         const { taskList, setTaskList } = useContext(TaskContext);
         const [taskSelected, setTaskSelected] = useState(0);
         const [selectedScroll, setSelectedScroll] = useState(0);
@@ -32,9 +32,9 @@
             return words.slice(0, limit).join(" ") + "...";
         }
 
-        function getDaysFor(today, totalYears) {
+        function getDaysFor(now, totalYears) {
             const resultDays = [];
-            const start = new Date(today);
+            const start = new Date(now);
             start.setFullYear(start.getFullYear() - 1);
             const totalDays = totalYears * 365;
 
@@ -47,7 +47,6 @@
         }
 
         useEffect(() => {
-            const today = new Date();
             setTaskDays(getDaysFor(today, 20));
         }, []);
 
@@ -156,8 +155,8 @@
                                 }
 
                                 {
-                                monthDays.map((day, i) => (            //new Date(day) === new Date(), day === new Date()?
-                                    <div key={i} title={day.toLocaleDateString("en-US", {day: 'numeric', month: 'long', year: 'numeric'})} className={`date-cell ${day.getDate() === new Date().getDate() && 'border border-2 border-bluelight'}`}>{day.getDate()}</div>
+                                monthDays.map((day, i) => (       
+                                    <div key={i} title={day.toLocaleDateString("en-US", {day: 'numeric', month: 'long', year: 'numeric'})} className='date-cell'>{day.toDateString() === today.toDateString() ? <i className="bi bi-geo-alt text-bluet"></i> : day.getDate()}</div>
                                 ))
                                 }
 
