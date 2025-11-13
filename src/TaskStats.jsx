@@ -11,13 +11,34 @@
         const { taskList, setTaskList } = useContext(TaskContext);
         const [taskSelected, setTaskSelected] = useState(0);
         const [selectedScroll, setSelectedScroll] = useState(0);
+
+        const [selectedTask, setSelectedTask] = useState(null);
+        const [matchingBorderDay, setMatchingBorderDay] = useState([]);
+
         const [taskDays, setTaskDays] = useState([]);
 
 
-        function toggleSelected(id) {
+        function toggleSelected(id, task) {
             setSelectedScroll(id);
             setTaskSelected(id);
+            setSelectedTask(task);
         }
+        
+        useEffect(() => {
+            if (!selectedTask || !selectedTask.start || !selectedTask.end) return;
+
+            const startDate = new Date(selectedTask.start);
+            const endDate = new Date(selectedTask.end);
+
+            const broderDays = monthDays.filter(day => new Date(day) >= startDate && new Date(day) <= endDate);
+
+            setMatchingBorderDay(broderDays);
+
+        }, [selectedTask])
+
+        useEffect(() => {
+            console.log('The Day:', matchingBorderDay);
+        }, [matchingBorderDay]);
 
         const uniqueTasks = Object.values(
             taskList.reduce((acc, task) => {
@@ -61,7 +82,7 @@
 
             setMonthDays(daysForCurrentMonth);
 
-        }, [currentMonth, taskDays]);
+        }, [currentMonth, taskDays, taskList]);
 
         useEffect(() => {
             console.log(currentMonth, monthDays,);
@@ -125,12 +146,11 @@
                         {
                             uniqueTasks.map((task, index) => (
                                 <div key={index} className="li-cont">
-                                    <li onClick={() => toggleSelected(task.baseId)} className={selectedScroll === task.baseId ? 'border-bluelight' : ""}>
+                                    <li onClick={() => toggleSelected(task.baseId, task)} style={selectedScroll === task.baseId ? { border: `2px solid ${task.color}` } : {}}>
                                         {task.emoji} {selectedScroll === task.baseId && <span>{cutWords(task.name)}</span>}
                                     </li>
                                 </div>
                             ))
-
                         }
 
                     </ul>
@@ -144,20 +164,53 @@
                             <div className="calendar-grid">
 
                                 {["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map((d, i) => (
-                                <div key={i} className="day-label">{d}</div>
+                                    <div key={i} className="day-label">{d}</div>
                                 ))}
 
                                 {
-                                monthDays.length > 0 &&
-                                Array(monthDays[0].getDay()).fill(null).map((_, i) => (
-                                    <div key={"blank"+i} className="blank"></div>
-                                ))
+                                    monthDays.length > 0 &&
+                                    Array(monthDays[0].getDay()).fill(null).map((_, i) => (
+                                        <div key={"blank"+i} className="blank"></div>
+                                    ))
                                 }
 
                                 {
-                                monthDays.map((day, i) => (       
-                                    <div key={i} title={day.toLocaleDateString("en-US", {day: 'numeric', month: 'long', year: 'numeric'})} className='date-cell'>{day.toDateString() === today.toDateString() ? <i className="bi bi-geo-alt text-bluet"></i> : day.getDate()}</div>
-                                ))
+                                    monthDays.map((day, i) => (<div key={i} title={day.toLocaleDateString("en-US", {day: 'numeric', month: 'long', year: 'numeric'})} className='date-cell' style={
+  matchingBorderDay.some(border => border.toDateString() === day.toDateString())
+    ? { border: `2px solid ${selectedTask?.color}` }
+    : {}
+} ////LOOK AT THIS AGAINERGERGRGRTGRTGTRGDFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+//VERGERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//GRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+////LOOK AT THIS AGAINERGERGRGRTGRTGTRGDFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+//VERGERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//GRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+////LOOK AT THIS AGAINERGERGRGRTGRTGTRGDFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+//VERGERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//GRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+////LOOK AT THIS AGAINERGERGRGRTGRTGTRGDFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+//VERGERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//GRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+////LOOK AT THIS AGAINERGERGRGRTGRTGTRGDFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+//VERGERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//GRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+////LOOK AT THIS AGAINERGERGRGRTGRTGTRGDFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+//VERGERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//GRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+>{day.toDateString() === today.toDateString() ? <i className="bi bi-geo-alt text-bluet"></i> : day.getDate()}</div>
+                                    ))
                                 }
 
                             </div>
