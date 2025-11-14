@@ -21,7 +21,7 @@
         function toggleSelected(id, task) {
             setSelectedScroll(id);
             setTaskSelected(id);
-            setSelectedTask(id === 0 ? null : task);
+            setSelectedTask(task);
         }
 
         useEffect(() => {
@@ -109,12 +109,6 @@
 
             setCurrentMonth(newCurrentMonth);   
         }
-        //////////////////////////////////////////
-        // function whichDay(w) {
-        //     return monthDays.filter(day =>
-        //         day.toLocaleDateString("en-US", { weekday: "short" }).toLowerCase() === w
-        //     );
-        // }
 
         return ( 
             <div className="full-stats-cont">
@@ -179,12 +173,22 @@
                                 }
 
                                 {
-                                    monthDays.map((day, i) => (<div key={i} title={day.toLocaleDateString("en-US", {day: 'numeric', month: 'long', year: 'numeric'})} className='date-cell' style={
-                                        matchingBorderDay.some(border => border.toDateString() === day.toDateString())
-                                        ? { border: `2px solid ${selectedTask?.color}` }
-                                        : {}
-                                    }>{day.toDateString() === today.toDateString() ? <i className="bi bi-geo-alt text-bluet"></i> : day.getDate()}</div>
-                                    ))
+                                    monthDays.map((day, i) => {
+                                        const isToday = day.toDateString() === today.toDateString();
+                                        const isMatch = matchingBorderDay.some(border => border.toDateString() === day.toDateString());
+    
+                                        const borderStyle = !selectedTask
+                                        ? { border: "2px solid #60A5FA" }
+                                        : isMatch
+                                            ? {border: `2px solid ${selectedTask.color}`}
+                                            : {};
+
+                                        return (
+                                            <div key={i} title={day.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })} className="date-cell" style={borderStyle}>
+                                                {isToday ? <i className="bi bi-geo-alt text-bluet"></i> : day.getDate()}
+                                            </div>
+                                        )
+                                    })
                                 }
 
                             </div>
