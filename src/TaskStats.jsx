@@ -21,20 +21,8 @@
         function toggleSelected(id, task) {
             setSelectedScroll(id);
             setTaskSelected(id);
-            setSelectedTask(task);
+            setSelectedTask(id === 0 ? null : task);
         }
-        
-        useEffect(() => {
-            if (!selectedTask || !selectedTask.start || !selectedTask.end) return;
-
-            const startDate = new Date(selectedTask.start);
-            const endDate = new Date(selectedTask.end);
-
-            const broderDays = monthDays.filter(day => new Date(day) >= startDate && new Date(day) <= endDate);
-
-            setMatchingBorderDay(broderDays);
-
-        }, [selectedTask])
 
         useEffect(() => {
             console.log('The Day:', matchingBorderDay);
@@ -92,6 +80,22 @@
             console.log(new Date().getDay());
         }, [])
 
+        useEffect(() => {
+            if (!selectedTask || !selectedTask.start || !selectedTask.end) return;
+
+            const startDate = new Date(selectedTask.start);
+            const endDate = new Date(selectedTask.end);
+            const normalize = date => new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+            const broderDays = monthDays.filter(day => {
+                const d = normalize(new Date(day));
+                return d >= normalize(startDate) && d <= normalize(endDate);
+            });
+                
+            setMatchingBorderDay(broderDays);
+
+        }, [selectedTask, monthDays])
+
         function oneMonthBack() {
             const newCurrentMonth = new Date(currentMonth);
             newCurrentMonth.setMonth(currentMonth.getMonth() - 1);
@@ -106,11 +110,11 @@
             setCurrentMonth(newCurrentMonth);   
         }
         //////////////////////////////////////////
-        function whichDay(w) {
-            return monthDays.filter(day =>
-                day.toLocaleDateString("en-US", { weekday: "short" }).toLowerCase() === w
-            );
-        }
+        // function whichDay(w) {
+        //     return monthDays.filter(day =>
+        //         day.toLocaleDateString("en-US", { weekday: "short" }).toLowerCase() === w
+        //     );
+        // }
 
         return ( 
             <div className="full-stats-cont">
@@ -176,40 +180,10 @@
 
                                 {
                                     monthDays.map((day, i) => (<div key={i} title={day.toLocaleDateString("en-US", {day: 'numeric', month: 'long', year: 'numeric'})} className='date-cell' style={
-  matchingBorderDay.some(border => border.toDateString() === day.toDateString())
-    ? { border: `2px solid ${selectedTask?.color}` }
-    : {}
-} ////LOOK AT THIS AGAINERGERGRGRTGRTGTRGDFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-//VERGERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//GRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-////LOOK AT THIS AGAINERGERGRGRTGRTGTRGDFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-//VERGERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//GRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-////LOOK AT THIS AGAINERGERGRGRTGRTGTRGDFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-//VERGERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//GRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-////LOOK AT THIS AGAINERGERGRGRTGRTGTRGDFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-//VERGERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//GRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-////LOOK AT THIS AGAINERGERGRGRTGRTGTRGDFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-//VERGERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//GRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-////LOOK AT THIS AGAINERGERGRGRTGRTGTRGDFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-//VERGERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//GRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
->{day.toDateString() === today.toDateString() ? <i className="bi bi-geo-alt text-bluet"></i> : day.getDate()}</div>
+                                        matchingBorderDay.some(border => border.toDateString() === day.toDateString())
+                                        ? { border: `2px solid ${selectedTask?.color}` }
+                                        : {}
+                                    }>{day.toDateString() === today.toDateString() ? <i className="bi bi-geo-alt text-bluet"></i> : day.getDate()}</div>
                                     ))
                                 }
 
