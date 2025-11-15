@@ -87,9 +87,15 @@
             const endDate = new Date(selectedTask.end);
             const normalize = date => new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
+
             const broderDays = monthDays.filter(day => {
                 const d = normalize(new Date(day));
-                return d >= normalize(startDate) && d <= normalize(endDate);
+                const weekday = d.toLocaleDateString("en-US", { weekday: "short" }).toLowerCase();
+                
+                const isInRange = d >= normalize(startDate) && d <= normalize(endDate);
+                const isMatchingDay = selectedTask.days.some(st => st.toLowerCase() === weekday);
+
+                return isInRange && isMatchingDay;
             });
                 
             setMatchingBorderDay(broderDays);
