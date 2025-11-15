@@ -115,7 +115,16 @@
 
                 <div className="stats-header">
                     <button className="bi bi-lightbulb-fill tips"></button>
-                    <select name="task-selected" value={taskSelected} onChange={e => toggleSelected(Number(e.target.value))} className="task-selected">         
+                    <select name="task-selected" value={taskSelected} onChange={e => {
+                        
+                        uniqueTasks.forEach(task => {
+                            Number(e.target.value) === task.baseId ? toggleSelected(Number(e.target.value), task) : Number(e.target.value) === 0 && toggleSelected(Number(e.target.value));
+                        })
+
+                        console.log(Number(e.target.value));
+                        // toggleSelected(Number(e.target.value), task);
+                    
+                    }} className="task-selected">         
                         
                         <option value={0}>
                             {`📚 Overall`}
