@@ -35,7 +35,7 @@
             }, {})
         )
 
-        function cutWords(text, limit = 2) {
+        function cutWords(text, limit = 1) {
             const words = text.split(" ");
             if (words.length <= limit) return text; 
             return words.slice(0, limit).join(" ") + "...";
