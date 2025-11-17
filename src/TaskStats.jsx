@@ -8,7 +8,7 @@
 
     function TaskStats() {
         const today = new Date();
-        const { taskList, setTaskList } = useContext(TaskContext);
+        const { taskList, setTaskList, tasksDone } = useContext(TaskContext);
         const [taskSelected, setTaskSelected] = useState(0);
         const [selectedScroll, setSelectedScroll] = useState(0);
 
@@ -253,7 +253,7 @@
                         <div className="bottom">
                             <section className="sec-one">
                                 <i className="bi bi-check2-circle"></i>
-                                <p className="calculator">0</p>
+                                <p className="calculator">{tasksDone.length}</p>
                                 <p className="calculator-label">Habits done</p>
                             </section>
                             <section className="sec-two">

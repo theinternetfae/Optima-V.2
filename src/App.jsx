@@ -8,17 +8,26 @@ import { TaskContext } from "./components/TaskContext.js";
 function App() {
 
   const [taskList, setTaskList] = useState(() => {
-      const saved = localStorage.getItem("tasks");
-      return saved ? JSON.parse(saved) : [];
+    const saved = localStorage.getItem("tasks");
+    return saved ? JSON.parse(saved) : [];
   });
 
   useEffect(() => {
       localStorage.setItem("tasks", JSON.stringify(taskList));
   }, [taskList]);
 
+  const [tasksDone, setTasksDone] = useState(() => {
+    const savedTD = localStorage.getItem("tasksDone");
+    return savedTD ? JSON.parse(savedTD) : [];
+  });
+
+  useEffect(() => {
+      localStorage.setItem("tasksDone", JSON.stringify(tasksDone));
+  }, [tasksDone]);
+
   return (
 
-    <TaskContext.Provider value={{taskList, setTaskList}}>
+    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone}}>
       <BrowserRouter>    
         <div className="named">
           <SideMenu/>

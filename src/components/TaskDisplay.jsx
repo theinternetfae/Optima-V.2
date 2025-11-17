@@ -1,14 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import NewTask from "./NewTask.jsx";
+import { TaskContext } from "./TaskContext.js";
 
 function TaskDisplay({taskE, prevTasks, editedTasks}) {
 
+  const { tasksDone, setTasksDone} = useContext(TaskContext);
   const [done, setDone] = useState(taskE.isDone);
   const[editScreen, setEditScreen] = useState(false);
 
   useEffect(() => {
     setDone(taskE.isDone)
   }, [taskE.isDone]);
+
+  useEffect(() => {
+    console.log('Tasks Done:', tasksDone);
+  }, [tasksDone]);
 
   return (
 
@@ -29,6 +35,13 @@ function TaskDisplay({taskE, prevTasks, editedTasks}) {
           setDone(newDone);
 
           const doneTask = prevTasks.map(prev => prev.name === taskE.name ? { ...prev, isDone: newDone} : prev);
+           
+          if (newDone === true) { 
+            setTasksDone(prev => [...prev, taskE])
+          } else {
+            setTasksDone(prev => prev.filter(t => t.id !== taskE.id));
+          }
+          
 
           editedTasks(doneTask);
         }} disabled={new Date(taskE.id).toDateString() !== new Date().toDateString()}/>
