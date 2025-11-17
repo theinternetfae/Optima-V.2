@@ -128,7 +128,7 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
                 <div className="goal-value">
                     <h2>Task days</h2>
                     <ul>
-                        {["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"].map(day => (
+                        {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(day => (
                             <li key={day} onClick={() => selectDays(day)} className={taskDays.includes(day) ? "border-bluelight" : ""}>{day}</li>
                         ))}
                     </ul>

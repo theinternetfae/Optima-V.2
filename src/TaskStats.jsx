@@ -87,13 +87,20 @@
             const endDate = new Date(selectedTask.end);
             const normalize = date => new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
-
             const broderDays = monthDays.filter(day => {
                 const d = normalize(new Date(day));
-                const weekday = d.toLocaleDateString("en-US", { weekday: "short" }).toLowerCase();
+
+                const weekdayIndex = d.getDay();
+                const weekdayNames = ["sun", "mon", "tue", "wed", "thur", "fri", "sat"];
+                const weekday = weekdayNames[weekdayIndex];
                 
                 const isInRange = d >= normalize(startDate) && d <= normalize(endDate);
-                const isMatchingDay = selectedTask.days.some(st => st.toLowerCase() === weekday);
+                const isMatchingDay = Array.isArray(selectedTask.days) && selectedTask.days.some(st => st && st.toString().trim().toLowerCase() === weekday);
+                
+                
+                const matchingDayTask = selectedTask.days.filter(st => st.toLowerCase() === weekday)
+                console.log(isMatchingDay);
+                console.log(matchingDayTask);
 
                 return isInRange && isMatchingDay;
             });
@@ -101,6 +108,10 @@
             setMatchingBorderDay(broderDays);
 
         }, [selectedTask, monthDays])
+
+        useEffect(() => {
+            console.log(selectedTask)
+        }, [ selectedTask ])
 
         function oneMonthBack() {
             const newCurrentMonth = new Date(currentMonth);
