@@ -8,10 +8,9 @@
 
     function TaskStats() {
         const today = new Date();
-        const { taskList, setTaskList, tasksDone } = useContext(TaskContext);
-        const [taskSelected, setTaskSelected] = useState(0);
-        const [selectedScroll, setSelectedScroll] = useState(0);
+        const { taskList, setTaskList, tasksDone, setTasksDone } = useContext(TaskContext);
 
+        const [selectedId, setSelectedId] = useState(0);
         const [selectedTask, setSelectedTask] = useState(null);
         const [matchingBorderDay, setMatchingBorderDay] = useState([]);
 
@@ -19,8 +18,7 @@
 
 
         function toggleSelected(id, task) {
-            setSelectedScroll(id);
-            setTaskSelected(id);
+            setSelectedId(id);
             setSelectedTask(task);
         }
 
@@ -113,6 +111,22 @@
             console.log(selectedTask)
         }, [ selectedTask ])
 
+        const [selectedTaskCount, setSelectedTaskCount] = useState(0);
+
+        useEffect(() => {
+            // const theUniqueTasks = taskList.filter(tl => tl.baseId === selectedTask.baseId);
+            // const theUniqueTasksCount = theUniqueTasks.length; 
+
+            if (!selectedTask) {
+                setSelectedTaskCount(tasksDone.length);
+                return;
+            };
+
+            const uniqueDone = taskList.filter(tl => tl.baseId === selectedTask.baseId && tl.isDone === true && selectedTask.isDone === true);
+            setSelectedTaskCount(uniqueDone.length);
+            
+        }, [selectedTask])
+
         function oneMonthBack() {
             const newCurrentMonth = new Date(currentMonth);
             newCurrentMonth.setMonth(currentMonth.getMonth() - 1);
@@ -132,7 +146,7 @@
 
                 <div className="stats-header">
                     <button className="bi bi-lightbulb-fill tips"></button>
-                    <select name="task-selected" value={taskSelected} onChange={e => {
+                    <select name="task-selected" value={selectedId} onChange={e => {
                         
                         uniqueTasks.forEach(task => {
                             Number(e.target.value) === task.baseId ? toggleSelected(Number(e.target.value), task) : Number(e.target.value) === 0 && toggleSelected(Number(e.target.value));
@@ -161,8 +175,8 @@
                 <div className="selected-scroll-cont">
                     <ul className="selected-scroll">
                         <div className="li-cont">
-                            <li onClick={() => toggleSelected(0)} className={selectedScroll === 0 ? 'border-bluelight' : ""}>
-                                <span>📚</span> {selectedScroll === 0 && <span>Overall</span>}
+                            <li onClick={() => toggleSelected(0)} className={selectedId === 0 ? 'border-bluelight' : ""}>
+                                <span>📚</span> {selectedId === 0 && <span>Overall</span>}
                             </li>
                         </div>
 
@@ -170,8 +184,8 @@
                         {
                             uniqueTasks.map((task, index) => (
                                 <div key={index} className="li-cont">
-                                    <li onClick={() => toggleSelected(task.baseId, task)} style={selectedScroll === task.baseId ? { border: `2px solid ${task.color}` } : {}}>
-                                        {task.emoji} {selectedScroll === task.baseId && <span>{cutWords(task.name)}</span>}
+                                    <li onClick={() => toggleSelected(task.baseId, task)} style={selectedId === task.baseId ? { border: `2px solid ${task.color}` } : {}}>
+                                        {task.emoji} {selectedId === task.baseId && <span>{cutWords(task.name)}</span>}
                                     </li>
                                 </div>
                             ))
@@ -253,7 +267,7 @@
                         <div className="bottom">
                             <section className="sec-one">
                                 <i className="bi bi-check2-circle"></i>
-                                <p className="calculator">{tasksDone.length}</p>
+                                <p className="calculator">{selectedTaskCount}</p>
                                 <p className="calculator-label">Habits done</p>
                             </section>
                             <section className="sec-two">
