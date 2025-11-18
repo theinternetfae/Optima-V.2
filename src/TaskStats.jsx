@@ -8,14 +8,11 @@
 
     function TaskStats() {
         const today = new Date();
-        const { taskList, setTaskList, tasksDone, setTasksDone } = useContext(TaskContext);
+        const { taskList, setTaskList, tasksDone, setTasksDone, days } = useContext(TaskContext);
 
         const [selectedId, setSelectedId] = useState(0);
         const [selectedTask, setSelectedTask] = useState(null);
         const [matchingBorderDay, setMatchingBorderDay] = useState([]);
-
-        const [taskDays, setTaskDays] = useState([]);
-
 
         function toggleSelected(id, task) {
             setSelectedId(id);
@@ -39,36 +36,18 @@
             return words.slice(0, limit).join(" ") + "...";
         }
 
-        function getDaysFor(now, totalYears) {
-            const resultDays = [];
-            const start = new Date(now);
-            start.setFullYear(start.getFullYear() - 1);
-            const totalDays = totalYears * 365;
-
-            for (let i = 0; i < totalDays; i++) {
-                resultDays.push(new Date(start));
-                start.setDate(start.getDate() + 1);
-            }
-
-            return resultDays;
-        }
-
-        useEffect(() => {
-            setTaskDays(getDaysFor(today, 20));
-        }, []);
-
         const [currentMonth, setCurrentMonth] = useState(new Date());
         const [monthDays, setMonthDays] = useState([]);
         
         useEffect(() => {
 
-            const daysForCurrentMonth = taskDays.filter(day => {
+            const daysForCurrentMonth = days.filter(day => {
                 return day.toLocaleDateString("en-US", { month: "long", year: "numeric" }) === currentMonth.toLocaleDateString("en-US", {month: "long", year: "numeric"});
             })
 
             setMonthDays(daysForCurrentMonth);
 
-        }, [currentMonth, taskDays, taskList]);
+        }, [currentMonth, days, taskList]);
 
         useEffect(() => {
             console.log(currentMonth, monthDays,);
