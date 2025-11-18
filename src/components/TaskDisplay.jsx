@@ -34,7 +34,7 @@ function TaskDisplay({taskE, prevTasks, editedTasks}) {
           const newDone = !done
           setDone(newDone);
 
-          const doneTask = prevTasks.map(prev => prev.name === taskE.name ? { ...prev, isDone: newDone} : prev);
+          const doneTask = prevTasks.map(prev => prev.id === taskE.id ? { ...prev, isDone: newDone} : prev);
            
           if (newDone === true) { 
             setTasksDone(prev => [...prev, taskE])
