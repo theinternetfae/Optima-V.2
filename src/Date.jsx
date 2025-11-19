@@ -17,7 +17,7 @@ function DateMenu() {
     const [navDate, setNavDate] = useState(today.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }));
 
     function getWeekdayName(date) {
-     const days = ["sun", "mon", "tue", "wed", "thur", "fri", "sat"];
+     const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
      return days[new Date(date).getDay()];
     }
 
@@ -176,7 +176,7 @@ function DateMenu() {
         setTaskFilter(operator);
     }
 
-    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     return (
         

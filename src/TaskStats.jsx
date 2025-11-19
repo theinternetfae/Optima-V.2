@@ -89,7 +89,7 @@
                 const d = normalize(new Date(day));
 
                 const weekdayIndex = d.getDay();
-                const weekdayNames = ["sun", "mon", "tue", "wed", "thur", "fri", "sat"];
+                const weekdayNames = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
                 const weekday = weekdayNames[weekdayIndex];
                 
                 const isInRange = d >= normalize(startDate) && d <= normalize(endDate);
@@ -201,7 +201,7 @@
                         <div className="date-box-sub">
                             <div className="calendar-grid">
 
-                                {["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map((d, i) => (
+                                {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d, i) => (
                                     <div key={i} className="day-label">{d}</div>
                                 ))}
 
