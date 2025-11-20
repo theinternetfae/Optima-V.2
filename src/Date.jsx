@@ -125,6 +125,10 @@ function DateMenu() {
     const [activeDate, setActiveDate] = useState(new Date());
     const [border, setBorder] = useState(new Date().toDateString());
 
+    useEffect(() => {
+        console.log('the tasklistttttt', taskList);
+    }, [activeDate])
+
     function redirectDateTask() {
         setActiveDate(new Date());
         setBorder(new Date().toDateString());
@@ -155,7 +159,6 @@ function DateMenu() {
 
         setbeforeTaskShow(todayTasks.sort((a, b) => a.isDone - b.isDone));
 
-        console.log(taskList);
     }, [taskList, activeDate])
 
     useEffect(() => {

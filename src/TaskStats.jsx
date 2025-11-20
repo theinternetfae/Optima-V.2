@@ -71,14 +71,6 @@
         }, [currentMonth, taskDays, taskList]);
 
         useEffect(() => {
-            console.log(currentMonth, monthDays,);
-        }, [monthDays]);
-
-        useEffect(() => {
-            console.log(new Date().getDay());
-        }, [])
-
-        useEffect(() => {
             if (!selectedTask || !selectedTask.start || !selectedTask.end) return;
 
             const startDate = new Date(selectedTask.start);
@@ -106,10 +98,6 @@
             setMatchingBorderDay(broderDays);
 
         }, [selectedTask, monthDays])
-
-        useEffect(() => {
-            console.log(selectedTask)
-        }, [ selectedTask ])
 
         const [selectedTaskCount, setSelectedTaskCount] = useState(0);
 
@@ -151,8 +139,7 @@
                         uniqueTasks.forEach(task => {
                             Number(e.target.value) === task.baseId ? toggleSelected(Number(e.target.value), task) : Number(e.target.value) === 0 && toggleSelected(Number(e.target.value));
                         })
-
-                        console.log(Number(e.target.value));
+                        
                         // toggleSelected(Number(e.target.value), task);
                     
                     }} className="task-selected">         
