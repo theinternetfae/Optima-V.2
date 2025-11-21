@@ -2,9 +2,9 @@ import { useEffect, useState, useContext } from "react";
 import NewTask from "./NewTask.jsx";
 import { TaskContext } from "./TaskContext.js";
 
-function TaskDisplay({taskE, prevTasks, editedTasks}) {
+function TaskDisplay({taskE}) {
 
-  const { tasksDone, setTasksDone} = useContext(TaskContext);
+  const { taskList, setTaskList, tasksDone, setTasksDone } = useContext(TaskContext);
   const [done, setDone] = useState(taskE.isDone);
   const[editScreen, setEditScreen] = useState(false);
 
@@ -34,21 +34,26 @@ function TaskDisplay({taskE, prevTasks, editedTasks}) {
           const newDone = !done
           setDone(newDone);
 
-          const doneTask = prevTasks.map(prev => prev.id === taskE.id ? { ...prev, isDone: newDone} : prev);
-           
+          const updatedTask = { ...taskE, isDone: newDone };
+
+          setTaskList(prev =>
+            prev.map(t =>
+              t.id === taskE.id ? updatedTask : t
+            )
+          );
+
           if (newDone === true) { 
-            setTasksDone(prev => [...prev, taskE])
+            setTasksDone(prev => [...prev, updatedTask])
           } else {
             setTasksDone(prev => prev.filter(t => t.id !== taskE.id));
           }
           
-
-          editedTasks(doneTask);
+          
         }} disabled={new Date(taskE.id).toDateString() !== new Date().toDateString()}/>
 
       </div>
 
-      {editScreen && <NewTask editExit={() => setEditScreen(editScreen => !editScreen)} editedTasks={editedTasks} prevTasks={prevTasks} task={taskE}/>}
+      {editScreen && <NewTask editExit={() => setEditScreen(editScreen => !editScreen)} task={taskE}/>}
     </div>
   
   );

@@ -83,7 +83,7 @@ function DateMenu() {
         
     }
 
-    function addTask() {
+    function openCloseNewTaskSetter() {
         setNewTaskDisplay(!newTaskDisplay);
     }
 
@@ -196,7 +196,7 @@ function DateMenu() {
                             toggleTodayDisplay();
                             redirectDateTask();
                         }}>{navDate}</p>
-                        <button className="bi bi-plus-circle-fill add" onClick={() => addTask()}></button>
+                        <button className="bi bi-plus-circle-fill add" onClick={() => openCloseNewTaskSetter()}></button>
                     </div>
 
                     <div className="date-menu">
@@ -244,7 +244,7 @@ function DateMenu() {
                     </div>
                 </div>
 
-                {newTaskDisplay ? <NewTask exit={addTask} newTasks={((addingTask) => setTaskList(prev => [...prev, addingTask]))} /> : ""}
+                {newTaskDisplay ? <NewTask exit={openCloseNewTaskSetter} /> : ""}
             </div>
 
             <div className="task-display">
@@ -257,14 +257,6 @@ function DateMenu() {
                         <TaskDisplay
                             key={task.id}
                             taskE={task}
-                            editedTasks={(update) => {
-                                if(Array.isArray(update)) {
-                                    setTaskList(update);
-                                } else {
-                                    setTaskList(prev => prev.map(t => t.id === update.id ? update : t ))     
-                                }
-                            }}
-                            prevTasks={taskList}
                         />
                     ))
                 )}

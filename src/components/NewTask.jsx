@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import EmojiPicker from "emoji-picker-react";
 import Alert from "./Alert.jsx";
+import { TaskContext } from "./TaskContext.js";
 
 //TO-DO: Save changes, delete task
 
-function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
+function NewTask({exit, editExit, task}) {
+
+    const { taskList, setTaskList } = useContext(TaskContext);
 
     const isEditingMode = !!task;    
 
@@ -67,7 +70,7 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
             isDone: false
         };
         
-        newTasks(theTask);
+        setTaskList(prev => [...prev, theTask])
         exit();
     }
 
@@ -87,15 +90,15 @@ function NewTask({exit, prevTasks, editedTasks, newTasks, editExit, task}) {
             reminderTime: reminder ? timeString : null,
         }
 
-        editedTasks(editedTask);
+        setTaskList(prev => prev.map(t => t.id === editedTask.id ? editedTask : t ));
         editExit();
 
     }
 
     function deleteTask() {
 
-        const tasksRemaining = prevTasks.filter(t => t.id !== task.id && t.baseId !== task.baseId);
-        editedTasks(tasksRemaining);
+        const tasksRemaining = taskList.filter(t => t.id !== task.id && t.baseId !== task.baseId);
+        setTaskList(tasksRemaining);;
         editExit();
 
     }
