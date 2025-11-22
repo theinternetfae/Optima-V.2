@@ -51,7 +51,6 @@ function DateMenu() {
                         setTaskList (prev => [...prev, repeat]);
 
                     } 
-
                 }
 
             })
@@ -60,9 +59,7 @@ function DateMenu() {
 
 
     }, [days, taskList]);
-
-    //Check for duplicates and make sure it's not created again if it already exists, use either the id or copyid and the name
-
+    
     const [beforeTaskShow, setbeforeTaskShow] = useState([]);
     const [taskShow, setTaskShow] = useState([]);
     const [taskFilter, setTaskFilter] = useState('all');

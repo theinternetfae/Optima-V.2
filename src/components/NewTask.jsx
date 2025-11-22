@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import EmojiPicker from "emoji-picker-react";
 import Alert from "./Alert.jsx";
 import { TaskContext } from "./TaskContext.js";
@@ -7,7 +7,7 @@ import { TaskContext } from "./TaskContext.js";
 
 function NewTask({exit, editExit, task}) {
 
-    const { taskList, setTaskList } = useContext(TaskContext);
+    const { taskList, setTaskList, updateTasks } = useContext(TaskContext);
 
     const isEditingMode = !!task;    
 
@@ -18,7 +18,6 @@ function NewTask({exit, editExit, task}) {
     const [nameInput, setNameInput] = useState(task ? task.name : "");
     const [colorCont, setColorCont] = useState(task ? task.color : "");
     const [taskDays, setTaskDays] = useState(task ? task.days : []);
-
 
     const today = new Date().toLocaleDateString("en-CA");
     const [startDate, setStartDate] = useState(task ? task.start : today);
@@ -88,12 +87,14 @@ function NewTask({exit, editExit, task}) {
             days: taskDays,
             reminderStatus: reminder,
             reminderTime: reminder ? timeString : null,
-        }
+        }        
 
-        setTaskList(prev => prev.map(t => t.id === editedTask.id ? editedTask : t ));
+        updateTasks(editedTask);
+        // setTaskList(prev => prev.map(t => t.id === editedTask.id ? editedTask : t ));
         editExit();
 
     }
+
 
     function deleteTask() {
 

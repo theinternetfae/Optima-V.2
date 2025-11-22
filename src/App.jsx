@@ -25,9 +25,22 @@ function App() {
       localStorage.setItem("tasksDone", JSON.stringify(tasksDone));
   }, [tasksDone]);
 
+
+  function updateTasks(editedTask) {
+
+    const currentDate = new Date(editedTask.id);
+
+    const cleanedTasks = taskList.filter(t => 
+      t.baseId !== editedTask.baseId && new Date(t.id) < currentDate
+    );
+
+    setTaskList([...cleanedTasks, editedTask])
+
+  }
+  
   return (
 
-    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone}}>
+    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, updateTasks}}>
       <BrowserRouter>    
         <div className="named">
           <SideMenu/>
