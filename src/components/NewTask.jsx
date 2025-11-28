@@ -118,7 +118,6 @@ function NewTask({exit, editExit, task}) {
 
     }
 
-
     function deleteTask() {
 
         const tasksRemaining = taskList.filter(t => t.id !== task.id && t.baseId !== task.baseId);
@@ -129,6 +128,26 @@ function NewTask({exit, editExit, task}) {
 
     const minutes = () => Array.from({ length: 60 }, (_, i) => i);
     const hours = () => Array.from({length: 13}, (_, i) => i);
+
+    useEffect(() => {
+        function handleAddTask(e) {
+            if(e.key === 'Enter') {
+                console.log('Enter pressed globally!');
+                if(isEditingMode) editingTask();
+                else creatingTask();
+            }
+
+            if(e.key === "Escape" || e.key === "Esc" || e.code === "Escape" || e.keyCode === 27) {
+                console.log('Exited!');
+                if(isEditingMode) editExit();
+                else exit();
+            }
+        }
+
+        window.addEventListener('keydown', handleAddTask);
+
+        return () => window.removeEventListener('keydown', handleAddTask);
+    });
 
     return ( 
         <div className="new-task">
