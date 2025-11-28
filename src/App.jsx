@@ -119,14 +119,6 @@ function App() {
     regenerateRepeats(editedTask.baseId);
   }
 
-  useEffect(() => {
-    taskList.forEach(t => {
-      const particularDate = weekDaysMap[new Date(t.id).getDay()]
-      console.log(particularDate, t.name);
-    })
-  }, []);
-  
-
   return (
 
     <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask}}>

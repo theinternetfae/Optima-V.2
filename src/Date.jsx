@@ -15,50 +15,6 @@ function DateMenu() {
     
     const today = new Date();
     const [navDate, setNavDate] = useState(today.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }));
-
-    // function getWeekdayName(date) {
-    //  const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-    //  return days[new Date(date).getDay()];
-    // }
-
-    // useEffect(() => {
-        
-    //     const repeatTasks = taskList.filter(task => task.days.length > 0);
-
-    //     days.forEach(day => {
-    //         repeatTasks.forEach(rt => {
-    //             const theDate = new Date(day);
-    //             const startDate = new Date(rt.start);
-    //             const endDate = new Date(rt.end);
-
-    //             if(theDate >= startDate && theDate <= endDate) {
-                    
-    //                 if (rt.days.some(d => d.toLowerCase() === getWeekdayName(day).toLowerCase())) {
-
-    //                     const alreadyExists = taskList.some(
-    //                         t =>
-    //                         t.name === rt.name &&
-    //                         new Date(t.id).toDateString() === theDate.toDateString()
-    //                     );                    
-            
-    //                     if (alreadyExists) return;
-
-    //                     const repeat = {
-    //                         ...rt,
-    //                         id: theDate.getTime() 
-    //                     }                    
-                    
-    //                     setTaskList (prev => [...prev, repeat]);
-
-    //                 } 
-    //             }
-
-    //         })
-
-    //     })
-
-
-    // }, [days]);
     
     const [beforeTaskShow, setbeforeTaskShow] = useState([]);
     const [taskShow, setTaskShow] = useState([]);
@@ -122,10 +78,6 @@ function DateMenu() {
     const [activeDate, setActiveDate] = useState(new Date());
     const [border, setBorder] = useState(new Date().toDateString());
 
-    useEffect(() => {
-        console.log('the tasklistttttt', taskList);
-    }, [activeDate])
-
     function redirectDateTask() {
         setActiveDate(new Date());
         setBorder(new Date().toDateString());
@@ -167,10 +119,6 @@ function DateMenu() {
             setTaskShow(beforeTaskShow.filter(task => !task.isDone));
         }
     }, [beforeTaskShow, taskFilter]);
-
-    useEffect(() => {
-      console.log("Updated beforeTaskShow:", beforeTaskShow);
-    }, [beforeTaskShow]);
 
     function toggleTaskDisplay(operator) {
         setTaskFilter(operator);
@@ -250,9 +198,9 @@ function DateMenu() {
                 {taskShow.length === 0 || beforeTaskShow.length === 0 ? (
                     <p className="no-tasks">{taskFilter === 'all' ? 'No tasks' : taskFilter === 'met' ? 'No tasks completed...' : 'None!'}</p>
                 ) : (
-                    taskShow.map((task, index) => (
+                    taskShow.map(task => (
                         <TaskDisplay
-                            key={index}
+                            key={`${task.baseId}-${task.id}`}
                             taskE={task}
                         />
                     ))
