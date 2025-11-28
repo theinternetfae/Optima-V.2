@@ -16,49 +16,49 @@ function DateMenu() {
     const today = new Date();
     const [navDate, setNavDate] = useState(today.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }));
 
-    function getWeekdayName(date) {
-     const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-     return days[new Date(date).getDay()];
-    }
+    // function getWeekdayName(date) {
+    //  const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+    //  return days[new Date(date).getDay()];
+    // }
 
-    useEffect(() => {
+    // useEffect(() => {
         
-        const repeatTasks = taskList.filter(task => task.days.length > 0);
+    //     const repeatTasks = taskList.filter(task => task.days.length > 0);
 
-        days.forEach(day => {
-            repeatTasks.forEach(rt => {
-                const theDate = new Date(day);
-                const startDate = new Date(rt.start);
-                const endDate = new Date(rt.end);
+    //     days.forEach(day => {
+    //         repeatTasks.forEach(rt => {
+    //             const theDate = new Date(day);
+    //             const startDate = new Date(rt.start);
+    //             const endDate = new Date(rt.end);
 
-                if(theDate >= startDate && theDate <= endDate) {
+    //             if(theDate >= startDate && theDate <= endDate) {
                     
-                    if (rt.days.some(d => d.toLowerCase() === getWeekdayName(day).toLowerCase())) {
+    //                 if (rt.days.some(d => d.toLowerCase() === getWeekdayName(day).toLowerCase())) {
 
-                        const alreadyExists = taskList.some(
-                            t =>
-                            t.name === rt.name &&
-                            new Date(t.id).toDateString() === theDate.toDateString()
-                        );                    
+    //                     const alreadyExists = taskList.some(
+    //                         t =>
+    //                         t.name === rt.name &&
+    //                         new Date(t.id).toDateString() === theDate.toDateString()
+    //                     );                    
             
-                        if (alreadyExists) return;
+    //                     if (alreadyExists) return;
 
-                        const repeat = {
-                            ...rt,
-                            id: theDate.getTime() 
-                        }                    
+    //                     const repeat = {
+    //                         ...rt,
+    //                         id: theDate.getTime() 
+    //                     }                    
                     
-                        setTaskList (prev => [...prev, repeat]);
+    //                     setTaskList (prev => [...prev, repeat]);
 
-                    } 
-                }
+    //                 } 
+    //             }
 
-            })
+    //         })
 
-        })
+    //     })
 
 
-    }, [days, taskList]);
+    // }, [days]);
     
     const [beforeTaskShow, setbeforeTaskShow] = useState([]);
     const [taskShow, setTaskShow] = useState([]);
@@ -250,9 +250,9 @@ function DateMenu() {
                 {taskShow.length === 0 || beforeTaskShow.length === 0 ? (
                     <p className="no-tasks">{taskFilter === 'all' ? 'No tasks' : taskFilter === 'met' ? 'No tasks completed...' : 'None!'}</p>
                 ) : (
-                    taskShow.map(task => (
+                    taskShow.map((task, index) => (
                         <TaskDisplay
-                            key={task.id}
+                            key={index}
                             taskE={task}
                         />
                     ))

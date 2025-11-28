@@ -26,21 +26,103 @@ function App() {
   }, [tasksDone]);
 
 
-  function updateTasks(editedTask) {
+  const weekDaysMap = [ "sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
-    const currentDate = new Date(editedTask.id);
+  function normalizeDayKey(str) {
+    return String(str || "").trim().toLowerCase().slice(0, 3);
+  }
 
-    const cleanedTasks = taskList.filter(t => 
-      t.baseId !== editedTask.baseId && new Date(t.id) < currentDate
-    );
+  function getFirstOnOrAfter(startDate, targetWeekday) {
+    const d = new Date(startDate);
 
-    setTaskList([...cleanedTasks, editedTask])
+    d.setHours(0,0,0,0);
+    const offset = (targetWeekday - d.getDay() + 7) % 7;
+    d.setDate(d.getDate() + offset);
+    return d;
+  }
 
+  function generateFutureTasks(baseTask, fromDate = null) {
+    if (!baseTask || !Array.isArray(baseTask.days) || baseTask.days.length === 0) return [];
+
+    const startBoundary = new Date(baseTask.start);
+    const endBoundary = new Date(baseTask.end);
+
+    const startAfter = fromDate ? new Date(fromDate) : new Date(baseTask.id);
+
+    startAfter.setDate(startAfter.getDate() + 1);
+    startAfter.setHours(0, 0, 0, 0);
+
+    const generationStart = startAfter > startBoundary ? startAfter : new Date(startBoundary);
+
+    const future = [];
+
+    const weekDayIndexes = baseTask.days
+    .map(d => normalizeDayKey(d))
+    .map(k => weekDaysMap.indexOf(k))
+    .filter(i => i >= 0);
+
+    for (const weekDayIdx of weekDayIndexes) {
+    
+      let d = getFirstOnOrAfter(generationStart, weekDayIdx);
+      
+      while (d <= endBoundary) {
+        future.push({
+          ...baseTask,
+          id: d.getTime(),
+        });
+
+        d = new Date(d);
+        d.setDate(d.getDate() + 7);
+      }
+    }
+
+    future.sort((a, b) => a.id - b.id);
+
+    return future;
   }
   
+
+  function updateTasks(editedTask) {
+    setTaskList(prev => {
+      const editedDate = new Date(editedTask.id)
+    
+      const cleaned = prev.filter(t => t.baseId !== editedTask.baseId || new Date(t.id) < editedDate);
+
+      return [...cleaned, editedTask];
+    });
+  }
+
+  function regenerateRepeats(baseId) {
+    setTaskList(prev => {
+
+      const series = prev.filter(t => t.baseId === baseId);
+
+      if(series.length === 0) return prev;
+
+      const latest = series.reduce((a,b) => (new Date(a.id) > new Date(b.id) ? a : b), series[0]);
+
+      const future = generateFutureTasks(latest, new Date(latest.id));
+
+      if (future.length === 0) return prev;
+
+      const existingIds = new Set(prev.map(t => String(t.id)));
+      const filteredFuture = future.filter(f => !existingIds.has(String(f.id)));
+
+      return [...prev, ...filteredFuture];
+
+    });
+  }
+
+  function saveEditedTask(editedTask) {
+    updateTasks(editedTask);
+
+    regenerateRepeats(editedTask.baseId);
+  }
+  
+
   return (
 
-    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, updateTasks}}>
+    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask}}>
       <BrowserRouter>    
         <div className="named">
           <SideMenu/>

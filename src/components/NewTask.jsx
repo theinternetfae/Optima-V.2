@@ -7,7 +7,7 @@ import { TaskContext } from "./TaskContext.js";
 
 function NewTask({exit, editExit, task}) {
 
-    const { taskList, setTaskList, updateTasks } = useContext(TaskContext);
+    const { taskList, setTaskList, saveEditedTask } = useContext(TaskContext);
 
     const isEditingMode = !!task;    
 
@@ -53,6 +53,12 @@ function NewTask({exit, editExit, task}) {
             return;
         }   
 
+        if (new Date(startDate) < new Date(today) || new Date(endDate) < new Date(today)) {
+            alert("Selected dates cannot be in the past.");
+            return;
+        }
+
+
         const timeString = `${hour}:${minute < 10 ? "0" + minute : minute} ${meridiem}`;
 
         const theTask = {
@@ -68,13 +74,29 @@ function NewTask({exit, editExit, task}) {
             reminderTime: reminder ? timeString : null,
             isDone: false
         };
-        
-        setTaskList(prev => [...prev, theTask])
+
+        saveEditedTask(theTask);
+        // setTaskList(prev => [...prev, theTask])
         exit();
     }
 
     function editingTask() {
         
+        const missing = [];
+
+        if (!emojiInput) missing.push("pick an emoji");
+        if (!nameInput) missing.push("define your task");
+
+        if (missing.length > 0) {
+            alert(`Please ${missing.join(", ")} then create your task.`);
+            return;
+        }   
+
+        if (new Date(startDate) < new Date(today) || new Date(endDate) < new Date(today)) {
+            alert("Selected dates cannot be in the past.");
+            return;
+        }
+
         const timeString = `${hour}:${minute < 10 ? "0" + minute : minute} ${meridiem}`;
 
         const editedTask = {
@@ -89,7 +111,8 @@ function NewTask({exit, editExit, task}) {
             reminderTime: reminder ? timeString : null,
         }        
 
-        updateTasks(editedTask);
+        saveEditedTask(editedTask);
+        // updateTasks(editedTask);
         // setTaskList(prev => prev.map(t => t.id === editedTask.id ? editedTask : t ));
         editExit();
 
