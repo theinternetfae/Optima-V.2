@@ -105,8 +105,8 @@ function App() {
 
       if (future.length === 0) return prev;
 
-      const existingIds = new Set(prev.map(t => String(t.id)));
-      const filteredFuture = future.filter(f => !existingIds.has(String(f.id)));
+      const existingIds = new Set(prev.map(t => `${t.baseId}|${t.id}`));
+      const filteredFuture = future.filter(f => !existingIds.has(`${f.baseId}|${f.id}`));
 
       return [...prev, ...filteredFuture];
 
@@ -118,6 +118,13 @@ function App() {
 
     regenerateRepeats(editedTask.baseId);
   }
+
+  useEffect(() => {
+    taskList.forEach(t => {
+      const particularDate = weekDaysMap[new Date(t.id).getDay()]
+      console.log(particularDate, t.name);
+    })
+  }, []);
   
 
   return (
