@@ -22,10 +22,6 @@
             setSelectedTask(task);
         }
 
-        useEffect(() => {
-            console.log('The Day:', matchingBorderDay);
-        }, [matchingBorderDay]);
-
         const uniqueTasks = Object.values(
             taskList.reduce((acc, task) => {
                 if(!acc[task.baseId] && task.days.length > 0) acc[task.baseId] = task;
@@ -87,10 +83,6 @@
                 const isInRange = d >= normalize(startDate) && d <= normalize(endDate);
                 const isMatchingDay = Array.isArray(selectedTask.days) && selectedTask.days.some(st => st && st.toString().trim().toLowerCase() === weekday);
                 
-                
-                const matchingDayTask = selectedTask.days.filter(st => st.toLowerCase() === weekday)
-                console.log(isMatchingDay);
-                console.log(matchingDayTask);
 
                 return isInRange && isMatchingDay;
             });
@@ -100,10 +92,28 @@
         }, [selectedTask, monthDays])
 
         const [selectedTaskCount, setSelectedTaskCount] = useState(0);
+        // const [selectedTaskStreak, setSelectedTaskStreak] = useState(0);
+
+        // useEffect(() => {
+
+        //     if(!selectedTask) return;
+
+        //     // const days = taskDays.filter(d => {
+        //     //     const startDate = selectedTask.start;
+        //     //     const endDate = selectedTask.end;
+
+        //     //     if(new Date(d) >= new Date(startDate) && new Date(d) <= new Date(endDate)) return d;
+        //     // })
+
+        //     const tasksToCalculate = taskList.filter(t => {
+        //         t.baseId === selectedTask.baseId;
+        //     })
+
+        //     console.log(tasksToCalculate);
+
+        // }, [selectedTask])
 
         useEffect(() => {
-            // const theUniqueTasks = taskList.filter(tl => tl.baseId === selectedTask.baseId);
-            // const theUniqueTasksCount = theUniqueTasks.length; 
 
             if (!selectedTask) {
                 setSelectedTaskCount(tasksDone.length);
