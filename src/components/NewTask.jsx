@@ -182,7 +182,7 @@ function NewTask({exit, editExit, task}) {
                 
                 {taskDays.length > 0 && (
                     <div className="when-to-when">
-                        <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} min={today}/>
+                        <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} min={today} disabled={task && task.id !== task.baseId}/>
                         <i className="bi bi-arrow-right"></i>
                         <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} min={today}/>
                     </div>

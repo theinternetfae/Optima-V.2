@@ -1,17 +1,16 @@
     import React, {useContext, useState, useEffect} from "react";
     import { TaskContext } from "./components/TaskContext.js";
 
-    // const completedCount = tasks.reduce((acc, task) => {
-    //   if (task.done) acc++;
-    //   return acc;
-    // }, 0);
-
     function TaskStats() {
         const today = new Date();
         const { taskList, setTaskList, tasksDone, setTasksDone } = useContext(TaskContext);
 
         const [selectedId, setSelectedId] = useState(0);
+
         const [selectedTask, setSelectedTask] = useState(null);
+        const [selectedTaskCount, setSelectedTaskCount] = useState(0);        
+        const [selectedTaskStreaks, setSelectedTaskStreaks] = useState([]);
+
         const [matchingBorderDay, setMatchingBorderDay] = useState([]);
 
         const [taskDays, setTaskDays] = useState([]);
@@ -20,6 +19,7 @@
         function toggleSelected(id, task) {
             setSelectedId(id);
             setSelectedTask(task);
+
         }
 
         const uniqueTasks = Object.values(
@@ -91,25 +91,54 @@
 
         }, [selectedTask, monthDays])
 
-        const [selectedTaskCount, setSelectedTaskCount] = useState(0);
-        // const [selectedTaskStreak, setSelectedTaskStreak] = useState(0);
+        useEffect(() => {
+
+            if(!selectedTask) return;
+
+            const tasksToCalculate = taskList.filter(t => {
+                return t.baseId === selectedTask.baseId;
+            })
+
+            const resultStreak = tasksToCalculate.reduce((acc, tc) => {
+                if(tc.isDone) {
+                    acc.count++
+                } else {
+                    acc.count > 0 && acc.streaks.push(acc.count);
+                    acc.count = 0;
+                }
+
+                return acc;
+            }, {count: 0, streaks: []})
+
+            resultStreak.count > 0 && resultStreak.streaks.push(resultStreak.count);
+
+            setSelectedTaskStreaks(resultStreak.streaks)
+
+        }, [selectedTask])
 
         // useEffect(() => {
 
         //     if(!selectedTask) return;
 
-        //     // const days = taskDays.filter(d => {
-        //     //     const startDate = selectedTask.start;
-        //     //     const endDate = selectedTask.end;
-
-        //     //     if(new Date(d) >= new Date(startDate) && new Date(d) <= new Date(endDate)) return d;
-        //     // })
-
         //     const tasksToCalculate = taskList.filter(t => {
-        //         t.baseId === selectedTask.baseId;
+        //         return t.baseId === selectedTask.baseId;
         //     })
 
+        //     const lat = tasksToCalculate.filter(tc => tc.id <= today);
+        //     const latest = lat.reduce((a,b) => (new Date(a.id) > new Date(b.id) ? a : b), lat[0]);
+            
+        //     // const days = taskDays.filter(d => {
+        //     //     const startDate = selectedTask.start;
+        //     //     const endDate = latest.end;
+
+        //     //     if(new Date(d) >= new Date(startDate) && new Date(d) <= new Date(endDate)) return d;
+        //     // })  
+
+        //     const current = new Date(latest.id).toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'})
+            
         //     console.log(tasksToCalculate);
+        //     console.log(lat);
+        //     console.log(current)
 
         // }, [selectedTask])
 
@@ -252,7 +281,7 @@
                         <div className="top">
                             <section className="sec-one">
                                 <i className="bi bi-award"></i>
-                                <p className="calculator">0 days</p>
+                                <p className="calculator">{selectedTaskStreaks.length > 0 ? Math.max(...selectedTaskStreaks) : 0} days</p>
                                 <p className="calculator-label">Top streak</p>
                             </section>
                             <section className="sec-two">
