@@ -10,6 +10,7 @@
         const [selectedTask, setSelectedTask] = useState(null);
         const [selectedTaskCount, setSelectedTaskCount] = useState(0);        
         const [selectedTaskStreaks, setSelectedTaskStreaks] = useState([]);
+        const [generalStreak, setGeneralStreak] = useState([]);
 
         const [matchingBorderDay, setMatchingBorderDay] = useState([]);
 
@@ -93,54 +94,60 @@
 
         useEffect(() => {
 
-            if(!selectedTask) return;
+            if(!selectedTask) {
+                const normalizeDate = date => new Date(date).toDateString();
 
-            const tasksToCalculate = taskList.filter(t => {
-                return t.baseId === selectedTask.baseId;
-            })
+                const start = new Date(taskList[0].start);
+                const end = new Date(taskList[taskList.length - 1].end);
 
-            const resultStreak = tasksToCalculate.reduce((acc, tc) => {
-                if(tc.isDone) {
-                    acc.count++
-                } else {
-                    acc.count > 0 && acc.streaks.push(acc.count);
-                    acc.count = 0;
-                }
+                const validDays = taskDays.filter(d => d >= start && d <= end);
+                
+                const generalStreak = validDays.reduce((acc, d) => {
 
-                return acc;
-            }, {count: 0, streaks: []})
+                    const tasksNDays = taskList.filter(tl => normalizeDate(tl.id) === normalizeDate(d));
 
-            resultStreak.count > 0 && resultStreak.streaks.push(resultStreak.count);
+                    // console.log(tasksNDays.length > 0 && tasksNDays.every(td => td.isDone));
+                    // console.log(tasksNDays.length > 0 && tasksNDays.some(td => !td.isDone));
 
-            setSelectedTaskStreaks(resultStreak.streaks)
+                    if(tasksNDays.length > 0 && tasksNDays.every(td => td.isDone)) {
+                        acc.count++;
+                    } else if (tasksNDays.length > 0 && tasksNDays.every(td => td.isDone === false)) {
+                        acc.count > 0 && acc.streak.push(acc.count);
+                        acc.count = 0;
+                    }
 
-        }, [selectedTask])
+                    return acc;
 
-        // useEffect(() => {
+                }, {count: 0, streak: []})
 
-        //     if(!selectedTask) return;
+                generalStreak.count > 0 && generalStreak.streak.push(generalStreak.count);
 
-        //     const tasksToCalculate = taskList.filter(t => {
-        //         return t.baseId === selectedTask.baseId;
-        //     })
+                setGeneralStreak(generalStreak.streak);
+            } else {
 
-        //     const lat = tasksToCalculate.filter(tc => tc.id <= today);
-        //     const latest = lat.reduce((a,b) => (new Date(a.id) > new Date(b.id) ? a : b), lat[0]);
-            
-        //     // const days = taskDays.filter(d => {
-        //     //     const startDate = selectedTask.start;
-        //     //     const endDate = latest.end;
+                const tasksToCalculate = taskList.filter(t => {
+                    return t.baseId === selectedTask.baseId;
+                })
 
-        //     //     if(new Date(d) >= new Date(startDate) && new Date(d) <= new Date(endDate)) return d;
-        //     // })  
+                const resultStreak = tasksToCalculate.reduce((acc, tc) => {
+                    if(tc.isDone) {
+                        acc.count++;
+                    } else {
+                        acc.count > 0 && acc.streaks.push(acc.count);
+                        acc.count = 0;
+                    }
 
-        //     const current = new Date(latest.id).toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'})
-            
-        //     console.log(tasksToCalculate);
-        //     console.log(lat);
-        //     console.log(current)
+                    return acc;
+                }, {count: 0, streaks: []})
 
-        // }, [selectedTask])
+                resultStreak.count > 0 && resultStreak.streaks.push(resultStreak.count);
+
+                setSelectedTaskStreaks(resultStreak.streaks);
+
+            };
+
+
+        }, [selectedTask, taskDays])
 
         useEffect(() => {
 
@@ -168,6 +175,11 @@
             setCurrentMonth(newCurrentMonth);   
         }
 
+        function amountGeneralStreak() {
+            const number = selectedTask ? (selectedTaskStreaks.length > 0 ? Math.max(...selectedTaskStreaks) : 0) : generalStreak.length > 0 ? Math.max(...generalStreak) : 0
+            return `${number} ${number === 1 ? 'day' : 'days'}`;
+        }
+
         return ( 
             <div className="full-stats-cont">
 
@@ -178,8 +190,6 @@
                         uniqueTasks.forEach(task => {
                             Number(e.target.value) === task.baseId ? toggleSelected(Number(e.target.value), task) : Number(e.target.value) === 0 && toggleSelected(Number(e.target.value));
                         })
-                        
-                        // toggleSelected(Number(e.target.value), task);
                     
                     }} className="task-selected">         
                         
@@ -280,14 +290,14 @@
                     <div className="the-four">
                         <div className="top">
                             <section className="sec-one">
-                                <i className="bi bi-award"></i>
-                                <p className="calculator">{selectedTaskStreaks.length > 0 ? Math.max(...selectedTaskStreaks) : 0} days</p>
+                                <i className="bi-trophy "></i>
+                                <p className="calculator">{amountGeneralStreak()}</p>
                                 <p className="calculator-label">Top streak</p>
                             </section>
                             <section className="sec-two">
-                                <i className="bi-trophy"></i>
+                                <i className="bi-fire"></i>
                                 <p className="calculator">0 days</p>
-                                <p className="calculator-label">Perfect days</p>
+                                <p className="calculator-label">current streak</p>
                             </section>
                         </div>
                         <div className="bottom">
