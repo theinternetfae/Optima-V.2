@@ -16,6 +16,9 @@
         const [currentStreak, setCurrentStreak] = useState(0);
         const [generalCurrentStreak, setGeneralCurrentStreak] = useState(0);
 
+        const [selectedAverage, setSelectedAverage] = useState(0);
+        const [generalAverage, setGeneralAverage] = useState(0);
+
         const [matchingBorderDay, setMatchingBorderDay] = useState([]);
 
         const [taskDays, setTaskDays] = useState([]);
@@ -151,6 +154,115 @@
 
         }, [selectedTask, taskDays])
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        useEffect(() => {
+
+            if(!selectedTask) {
+
+                const normalizeDate = date => new Date(date).toDateString();
+
+                const start = new Date(taskList[0].start);
+                const end = new Date(taskList[taskList.length - 1].end);
+
+                const validDays = taskDays.filter(d => d >= start && d <= end);
+                
+                const overallTaskDays = validDays.reduce((acc, d) => {
+
+                    const tasksNDays = taskList.filter(tl => normalizeDate(tl.id) === normalizeDate(d));
+                    
+                    acc.push(tasksNDays);
+
+                    return acc;
+
+                }, [])
+
+                const totalTaskDays = overallTaskDays.filter(td => td.length > 0);
+                const completedTasks = overallTaskDays.filter(t => t.length > 0 && t.every(td => td.isDone)); 
+               
+                const generalAverage = (completedTasks.length / totalTaskDays.length) * 100;
+                setGeneralAverage(Number(generalAverage.toFixed(2)));
+
+            } else {
+                
+                const validTasks = taskList.filter(t => t.baseId === selectedTask.baseId);
+                
+                const completedTasks = validTasks.filter(t => t.isDone);
+
+                const average = (completedTasks.length / validTasks.length) * 100; 
+
+                setSelectedAverage(Number(average.toFixed(2)));
+            
+            }
+
+        }, [selectedTask, taskDays]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         useEffect(() => {
 
             if (!selectedTask) {
@@ -207,8 +319,6 @@
                 const validDays = taskDays.filter(d => d >= start && d <= end);
                 const validTasks = tasksToCalculate.filter(tc => normalizeDate(tc.id) >= normalizeDate(start) && normalizeDate(tc.id) <= normalizeDate(end));
 
-                console.log(validTasks);
-
                 const currentStreak = validDays.reduce((acc, d) => {
 
                     validTasks.filter(tl => {
@@ -228,6 +338,26 @@
             }
 
         }, [selectedTask, taskDays])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         function oneMonthBack() {
             const newCurrentMonth = new Date(currentMonth);
@@ -381,7 +511,7 @@
                             </section>
                             <section className="sec-two">
                                 <i className="bi bi-activity"></i>
-                                <p className="calculator">0</p>
+                                <p className="calculator">{selectedTask ? selectedAverage : generalAverage}%</p>
                                 <p className="calculator-label">Daily average</p>
                             </section>
                         </div>
