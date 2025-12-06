@@ -8,9 +8,13 @@
         const [selectedId, setSelectedId] = useState(0);
 
         const [selectedTask, setSelectedTask] = useState(null);
-        const [selectedTaskCount, setSelectedTaskCount] = useState(0);        
+        const [selectedTaskCount, setSelectedTaskCount] = useState(0);
+
         const [selectedTaskStreaks, setSelectedTaskStreaks] = useState([]);
         const [generalStreak, setGeneralStreak] = useState([]);
+
+        const [currentStreak, setCurrentStreak] = useState(0);
+        const [generalCurrentStreak, setGeneralCurrentStreak] = useState(0);
 
         const [matchingBorderDay, setMatchingBorderDay] = useState([]);
 
@@ -111,7 +115,7 @@
 
                     if(tasksNDays.length > 0 && tasksNDays.every(td => td.isDone)) {
                         acc.count++;
-                    } else if (tasksNDays.length > 0 && tasksNDays.every(td => td.isDone === false)) {
+                    } else if (tasksNDays.length > 0 && tasksNDays.some(td => td.isDone === false)) {
                         acc.count > 0 && acc.streak.push(acc.count);
                         acc.count = 0;
                     }
@@ -125,9 +129,7 @@
                 setGeneralStreak(generalStreak.streak);
             } else {
 
-                const tasksToCalculate = taskList.filter(t => {
-                    return t.baseId === selectedTask.baseId;
-                })
+                const tasksToCalculate = taskList.filter(t => t.baseId === selectedTask.baseId)
 
                 const resultStreak = tasksToCalculate.reduce((acc, tc) => {
                     if(tc.isDone) {
@@ -161,6 +163,72 @@
             
         }, [selectedTask])
 
+
+        useEffect(() => {
+
+            if(!selectedTask) {
+
+                const normalizeDate = date => new Date(date).toDateString();
+
+                const start = new Date(taskList[0].start);
+                const end = new Date();
+
+                const validDays = taskDays.filter(d => d >= start && d <= end);
+                
+                const generalStreak = validDays.reduce((acc, d) => {
+
+                    const tasksNDays = taskList.filter(tl => normalizeDate(tl.id) === normalizeDate(d));
+
+                    // console.log(tasksNDays.length > 0 && tasksNDays.every(td => td.isDone));
+                    // console.log(tasksNDays.length > 0 && tasksNDays.some(td => !td.isDone));
+
+                    if(tasksNDays.length > 0 && tasksNDays.every(td => td.isDone)) {
+                        acc++;
+                    } else if (tasksNDays.length > 0 && tasksNDays.some(td => td.isDone === false)) {
+                        acc = 0;
+                    }
+
+                    return acc;
+
+                }, 0)
+
+                setGeneralCurrentStreak(generalStreak);
+
+            } else {
+
+                const tasksToCalculate = taskList.filter(t => t.baseId === selectedTask.baseId);
+
+                const normalizeDate = date => new Date(date).toDateString();
+
+                const start = new Date(tasksToCalculate[0].start);
+                // const testEnd = new Date(tasksToCalculate[tasksToCalculate.length - 1].end);
+                const end = new Date();
+
+                const validDays = taskDays.filter(d => d >= start && d <= end);
+                const validTasks = tasksToCalculate.filter(tc => normalizeDate(tc.id) >= normalizeDate(start) && normalizeDate(tc.id) <= normalizeDate(end));
+
+                console.log(validTasks);
+
+                const currentStreak = validDays.reduce((acc, d) => {
+
+                    validTasks.filter(tl => {
+                        if(tl.isDone){
+                            acc++;    
+                        } else {
+                            acc = 0;
+                        }
+                    });
+
+                    return acc;
+
+                }, 0)
+
+                setCurrentStreak(currentStreak);
+
+            }
+
+        }, [selectedTask, taskDays])
+
         function oneMonthBack() {
             const newCurrentMonth = new Date(currentMonth);
             newCurrentMonth.setMonth(currentMonth.getMonth() - 1);
@@ -177,6 +245,11 @@
 
         function amountGeneralStreak() {
             const number = selectedTask ? (selectedTaskStreaks.length > 0 ? Math.max(...selectedTaskStreaks) : 0) : generalStreak.length > 0 ? Math.max(...generalStreak) : 0
+            return `${number} ${number === 1 ? 'day' : 'days'}`;
+        }
+
+        function amountGeneralCurrentStreak() {
+            const number = selectedTask ? currentStreak : generalCurrentStreak;
             return `${number} ${number === 1 ? 'day' : 'days'}`;
         }
 
@@ -296,7 +369,7 @@
                             </section>
                             <section className="sec-two">
                                 <i className="bi-fire"></i>
-                                <p className="calculator">0 days</p>
+                                <p className="calculator">{amountGeneralCurrentStreak()}</p>
                                 <p className="calculator-label">current streak</p>
                             </section>
                         </div>
