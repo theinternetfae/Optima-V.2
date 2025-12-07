@@ -3,6 +3,8 @@
 
     function TaskStats() {
         const today = new Date();
+        const normalizeDate = date => new Date(date).toDateString();
+
         const { taskList, setTaskList, tasksDone, setTasksDone } = useContext(TaskContext);
 
         const [selectedId, setSelectedId] = useState(0);
@@ -16,8 +18,11 @@
         const [currentStreak, setCurrentStreak] = useState(0);
         const [generalCurrentStreak, setGeneralCurrentStreak] = useState(0);
 
-        const [selectedAverage, setSelectedAverage] = useState(0);
-        const [generalAverage, setGeneralAverage] = useState(0);
+        const [selectedRate, setSelectedRate] = useState(0);
+        const [generalRate, setGeneralRate] = useState(0);
+
+        const [activeStatus, setActiveStatus] = useState(false);
+        const [activeCount, setActiveCount] = useState(0);
 
         const [matchingBorderDay, setMatchingBorderDay] = useState([]);
 
@@ -102,7 +107,6 @@
         useEffect(() => {
 
             if(!selectedTask) {
-                const normalizeDate = date => new Date(date).toDateString();
 
                 const start = new Date(taskList[0].start);
                 const end = new Date(taskList[taskList.length - 1].end);
@@ -179,7 +183,46 @@
 
 
 
+        useEffect(() => {
 
+            if(!selectedTask) {
+
+                const tasksByBase = taskList.reduce((acc, t) => {
+                    if (!acc[t.baseId]) acc[t.baseId] = [];
+                    acc[t.baseId].push(t);
+                    return acc;
+                }, {})
+
+                const lastTasks = Object.values(tasksByBase).map(ta => {
+                    
+                    const lastTask = ta.reduce((latest, current) =>
+                        new Date(current.id) > new Date(latest.id) ? current : latest
+                    , ta[0]);
+
+                    return lastTask;
+                });
+
+                const lastEndDates = lastTasks.map(t => t.end);
+                console.log(lastEndDates);
+                let count = 0;
+
+                lastEndDates.forEach(ld => new Date(ld).getTime() > new Date(today).getTime() && count++)
+
+                setActiveCount(count);
+
+            } else {
+                const validTasks = taskList.filter(t => t.baseId === selectedTask.baseId);
+
+                const end = validTasks[validTasks.length - 1].end;
+                console.log(new Date(end).getTime() > new Date(today).getTime());
+            
+                new Date(end).getTime() > new Date(today).getTime() ? setActiveStatus(true) : setActiveStatus(false);
+
+            }
+
+        
+
+        }, [selectedTask])
 
 
 
@@ -194,38 +237,23 @@
 
             if(!selectedTask) {
 
-                const normalizeDate = date => new Date(date).toDateString();
+                const total = taskList.length;
 
-                const start = new Date(taskList[0].start);
-                const end = new Date(taskList[taskList.length - 1].end);
-
-                const validDays = taskDays.filter(d => d >= start && d <= end);
+                const totalDone = taskList.filter(t => t.isDone).length;
                 
-                const overallTaskDays = validDays.reduce((acc, d) => {
-
-                    const tasksNDays = taskList.filter(tl => normalizeDate(tl.id) === normalizeDate(d));
-                    
-                    acc.push(tasksNDays);
-
-                    return acc;
-
-                }, [])
-
-                const totalTaskDays = overallTaskDays.filter(td => td.length > 0);
-                const completedTasks = overallTaskDays.filter(t => t.length > 0 && t.every(td => td.isDone)); 
-               
-                const generalAverage = (completedTasks.length / totalTaskDays.length) * 100;
-                setGeneralAverage(Number(generalAverage.toFixed(2)));
+                const totalRate = Number(((totalDone / total) * 100).toFixed(2));
+                
+                setGeneralRate(totalRate);
 
             } else {
                 
-                const validTasks = taskList.filter(t => t.baseId === selectedTask.baseId);
+                const selectedTotal = taskList.filter(t => t.baseId === selectedTask.baseId);
                 
-                const completedTasks = validTasks.filter(t => t.isDone);
-
-                const average = (completedTasks.length / validTasks.length) * 100; 
-
-                setSelectedAverage(Number(average.toFixed(2)));
+                const selectedCompleted = selectedTotal.filter(t => t.isDone);
+                
+                const selectedRate = Number(((selectedCompleted.length / selectedTotal.length) * 100).toFixed(2)); 
+                
+                setSelectedRate(selectedRate);
             
             }
 
@@ -270,7 +298,7 @@
                 return;
             };
 
-            const uniqueDone = taskList.filter(tl => tl.baseId === selectedTask.baseId && tl.isDone === true && selectedTask.isDone === true);
+            const uniqueDone = taskList.filter(tl => tl.baseId === selectedTask.baseId && tl.isDone === true);
             setSelectedTaskCount(uniqueDone.length);
             
         }, [selectedTask])
@@ -280,60 +308,45 @@
 
             if(!selectedTask) {
 
-                const normalizeDate = date => new Date(date).toDateString();
-
                 const start = new Date(taskList[0].start);
-                const end = new Date();
 
-                const validDays = taskDays.filter(d => d >= start && d <= end);
-                
-                const generalStreak = validDays.reduce((acc, d) => {
+                const validDays = taskDays.filter(d => d >= start && d <= today);
 
-                    const tasksNDays = taskList.filter(tl => normalizeDate(tl.id) === normalizeDate(d));
+                let count = 0;
 
-                    // console.log(tasksNDays.length > 0 && tasksNDays.every(td => td.isDone));
-                    // console.log(tasksNDays.length > 0 && tasksNDays.some(td => !td.isDone));
-
+                for(let i = validDays.length - 1; i >= 0; i--) {
+                    const tasksNDays = taskList.filter(tl => normalizeDate(tl.id) === normalizeDate(validDays[i]));
+                    
                     if(tasksNDays.length > 0 && tasksNDays.every(td => td.isDone)) {
-                        acc++;
-                    } else if (tasksNDays.length > 0 && tasksNDays.some(td => td.isDone === false)) {
-                        acc = 0;
-                    }
-
-                    return acc;
-
-                }, 0)
-
-                setGeneralCurrentStreak(generalStreak);
+                        count++;
+                    } else if (tasksNDays.length > 0 && tasksNDays.some(td => !td.isDone)) {
+                        break;
+                    }                    
+                }
+    
+                setGeneralCurrentStreak(count);
 
             } else {
 
                 const tasksToCalculate = taskList.filter(t => t.baseId === selectedTask.baseId);
 
-                const normalizeDate = date => new Date(date).toDateString();
-
                 const start = new Date(tasksToCalculate[0].start);
-                // const testEnd = new Date(tasksToCalculate[tasksToCalculate.length - 1].end);
-                const end = new Date();
 
-                const validDays = taskDays.filter(d => d >= start && d <= end);
-                const validTasks = tasksToCalculate.filter(tc => normalizeDate(tc.id) >= normalizeDate(start) && normalizeDate(tc.id) <= normalizeDate(end));
+                const validDays = taskDays.filter(d => d >= start && d <= today);
 
-                const currentStreak = validDays.reduce((acc, d) => {
+                let count = 0;
 
-                    validTasks.filter(tl => {
-                        if(tl.isDone){
-                            acc++;    
-                        } else {
-                            acc = 0;
-                        }
-                    });
-
-                    return acc;
-
-                }, 0)
-
-                setCurrentStreak(currentStreak);
+                for(let i = validDays.length - 1; i >= 0; i--) {
+                    const tasksNDays = tasksToCalculate.filter(tl => normalizeDate(tl.id) === normalizeDate(validDays[i]));
+                    
+                    if(tasksNDays.length > 0 && tasksNDays.some(td => td.isDone)) {
+                        count++;
+                    } else if (tasksNDays.length > 0 && tasksNDays.some(td => !td.isDone)) {
+                        break;
+                    }
+                }
+    
+                setCurrentStreak(count);
 
             }
 
@@ -481,7 +494,7 @@
                     <div className="filler-front">
 
                         <div className="average-body">
-                            <p className="rating">0.00%</p>
+                            <p className="rating">{selectedTask ? (selectedRate === 0 ? '0.00' : selectedRate) : (generalRate === 0 ? '0.00' : generalRate)}%</p>
                             <p className="rating-title">Overall rate</p>
                         </div>
 
@@ -507,12 +520,12 @@
                             <section className="sec-one">
                                 <i className="bi bi-check2-circle"></i>
                                 <p className="calculator">{selectedTaskCount}</p>
-                                <p className="calculator-label">Habits done</p>
+                                <p className="calculator-label">{selectedTask ? 'Times Done' : 'Habits done'}</p>
                             </section>
                             <section className="sec-two">
-                                <i className="bi bi-activity"></i>
-                                <p className="calculator">{selectedTask ? selectedAverage : generalAverage}%</p>
-                                <p className="calculator-label">Daily average</p>
+                                <i className="bi-info-circle"></i>
+                                <p className="calculator">{selectedTask ? (activeStatus ? 'Active' : 'Inactive') : `${activeCount} Active`}</p>
+                                <p className="calculator-label">Status</p>
                             </section>
                         </div>
                     </div>
