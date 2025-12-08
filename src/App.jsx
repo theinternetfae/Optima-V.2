@@ -68,6 +68,7 @@ function App() {
       while (d <= endBoundary) {
         future.push({
           ...baseTask,
+          keyUUID:crypto.randomUUID(),
           id: d.getTime(),
         });
 

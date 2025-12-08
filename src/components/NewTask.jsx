@@ -64,6 +64,7 @@ function NewTask({exit, editExit, task}) {
         const theTask = {
             id: Date.now(),
             baseId: Date.now(),
+            keyUUID: crypto.randomUUID(),
             start: startDate,
             end: endDate,
             emoji: emojiInput,

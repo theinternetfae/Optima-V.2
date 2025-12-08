@@ -198,12 +198,13 @@ function DateMenu() {
                 {taskShow.length === 0 || beforeTaskShow.length === 0 ? (
                     <p className="no-tasks">{taskFilter === 'all' ? 'No tasks' : taskFilter === 'met' ? 'No tasks completed...' : 'None!'}</p>
                 ) : (
-                    taskShow.map(task => (
-                        <TaskDisplay
-                            key={`${task.baseId}-${task.id}`}
+                    taskShow.map(task => {
+                        console.log(taskList);
+                        return <TaskDisplay
+                            key={task.keyUUID}
                             taskE={task}
                         />
-                    ))
+                    })
                 )}
 
             </div>
