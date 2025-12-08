@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DateMenu from "./Date.jsx";
 import SideMenu from "./SideMenu.jsx";
+import TaskHistory from "./TaskHistory.jsx";
 import TaskStats from "./TaskStats.jsx";
 import { useState, useEffect } from "react";
 import { TaskContext } from "./components/TaskContext.js";
@@ -139,6 +140,13 @@ function App() {
             <Route path="/taskStats" element={
                 <div className="a-body">
                   <TaskStats />
+                </div>
+              }
+            />
+
+            <Route path="/taskHistory" element={
+              <div className="a-body">
+                <TaskHistory />
                 </div>
               }
             />
