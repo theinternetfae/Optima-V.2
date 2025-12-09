@@ -56,6 +56,12 @@ function DateMenu() {
     }, []);
 
     useEffect(() => {
+        console.log(taskShow);
+        console.log(taskList);
+        console.log(activeDate);
+    })
+
+    useEffect(() => {
         if (todayRef.current && containerRef.current) {
             todayRef.current.scrollIntoView({
                 behavior: "auto",
@@ -161,16 +167,6 @@ function DateMenu() {
                                     const parsedDate = new Date(dateDate);
                                     setActiveDate(parsedDate);
 
-                                    const selectedDayTasks = taskList.filter(task => {
-                                        const taskDate = new Date(task.id).toLocaleDateString("en-us", {
-                                            day: "numeric", 
-                                            month: "long", 
-                                            year: "numeric"
-                                        });
-                                        return taskDate === dateDate;
-                                    });                      
-
-                                    setbeforeTaskShow(selectedDayTasks.sort((a, b) => a.isDone - b.isDone));
                                 }
 
                                 return (

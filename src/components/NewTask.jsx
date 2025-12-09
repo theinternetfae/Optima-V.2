@@ -102,6 +102,7 @@ function NewTask({exit, editExit, task}) {
 
         const editedTask = {
             ...task,
+            keyUUID: crypto.randomUUID(),
             start: startDate,
             end: endDate,
             name: nameInput,

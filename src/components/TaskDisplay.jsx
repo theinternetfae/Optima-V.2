@@ -38,7 +38,7 @@ function TaskDisplay({taskE}) {
 
           setTaskList(prev =>
             prev.map(t =>
-              t.id === taskE.id ? updatedTask : t
+              t.keyUUID === taskE.keyUUID ? updatedTask : t
             )
           );
 

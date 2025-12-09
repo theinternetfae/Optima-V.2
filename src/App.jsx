@@ -63,13 +63,13 @@ function App() {
     .filter(i => i >= 0);
 
     for (const weekDayIdx of weekDayIndexes) {
-    
+      
       let d = getFirstOnOrAfter(generationStart, weekDayIdx);
       
       while (d <= endBoundary) {
         future.push({
           ...baseTask,
-          keyUUID:crypto.randomUUID(),
+          keyUUID: crypto.randomUUID(),
           id: d.getTime(),
         });
 
@@ -107,8 +107,8 @@ function App() {
 
       if (future.length === 0) return prev;
 
-      const existingIds = new Set(prev.map(t => `${t.baseId}|${t.id}`));
-      const filteredFuture = future.filter(f => !existingIds.has(`${f.baseId}|${f.id}`));
+      const existingIds = new Set(prev.map(t => t.keyUUID));
+      const filteredFuture = future.filter(f => !existingIds.has(f.keyUUID));
 
       return [...prev, ...filteredFuture];
 

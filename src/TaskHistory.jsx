@@ -1,7 +1,9 @@
 function TaskJistory() {
     
     return ( 
-        <p>Hello!</p> 
+        <div>
+            Hello!
+        </div> 
     );
 }
 
