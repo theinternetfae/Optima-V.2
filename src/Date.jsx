@@ -162,11 +162,7 @@ function DateMenu() {
                                 }
 
                                 function saveToDays(dateDate) {
-                                    if (taskList.length === 0) return;
-
-                                    const parsedDate = new Date(dateDate);
-                                    setActiveDate(parsedDate);
-
+                                    setActiveDate(new Date(dateDate));
                                 }
 
                                 return (
