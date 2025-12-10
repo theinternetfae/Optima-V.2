@@ -12,10 +12,6 @@ function TaskDisplay({taskE}) {
     setDone(taskE.isDone)
   }, [taskE.isDone]);
 
-  useEffect(() => {
-    console.log('Tasks Done:', tasksDone);
-  }, [tasksDone]);
-
   return (
 
     <div>

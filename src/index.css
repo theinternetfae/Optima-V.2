@@ -92,14 +92,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         @apply border border-2 border-transparent;
 
         & .task-handler {
-            @apply flex items-center mb-6 mx-2 relative lg:mx-0;
+            @apply flex items-center mb-6 mx-2 flex justify-between relative lg:mx-0;
 
             & .show {
                 @apply bg-commongrey text-xs p-2 rounded-lg outline-none w-[60px] cursor-pointer md:w-[100px] md:text-base;
             }
 
             & .nav-date {
-                @apply text-sm font-semibold w-[95%] relative left-[-20px] text-center px-10 cursor-pointer md:left-[-30px] md:text-xl;
+                @apply text-sm font-semibold w-[30%] text-center relative left-[-20px] text-center px-10 cursor-pointer md:left-[-30px] md:text-xl;
             }
         }
 
@@ -107,18 +107,22 @@ input[type="date"]::-webkit-calendar-picker-indicator {
             @apply h-[10%] w-full rounded-lg flex justify-center items-center md:bg-commongrey md:p-4 md:h-[15%];
 
             & .date-track {
-                @apply flex gap-[clamp(0.3rem,2.9vw,2rem)] w-[clamp(300px,100vw,390px)] no-scrollbar overflow-x-auto scroll-pl-[clamp(1.5px,_16px,_15px)] snap-x items-center snap-mandatory md:gap-[clamp(10px,4.3vw,7rem)] md:scroll-pl-[clamp(1.5px,1vw,120px)] lg:scroll-pl-0 md:w-full lg:gap-29;
+                @apply w-[100%] flex justify-between p-1 no-scrollbar overflow-x-auto;
 
-                & .ind-date-box {
-                @apply border border-2 border-backblack rounded-2xl p-[7px] w-10 flex flex-col justify-center items-center gap-2 ml-[1px] md:border-commongrey md:w-25 md:gap-4 md:p-[6px];  
+                & .test-box-cont {
+                @apply w-[100%] flex justify-between h-[6rem];
                 }
+                
+                & .test-box {
+                @apply border border-2 w-[60px] border-backblack flex flex-col justify-center items-center rounded-2xl p-[3px] gap-4 md:border-commongrey; 
+                
+                    & .d-name {
+                        @apply h-[25%] text-xs flex justify-center md:text-base;
+                    }
 
-                & .date-name {
-                    @apply text-xs flex justify-center md:text-base;
-                }
-
-                & .other-days {
-                    @apply border border-[2px] text-[10px] border-bluelight p-[12px] rounded-full h-[2px] w-[2px] bg-[#333333] shadow-lg flex items-center justify-center cursor-pointer md:text-base md:border-[3px] md:h-[55px] md:w-[30px] md:p-6;
+                    & .d-other {
+                        @apply h-[75%] text-[10px] border-bluelight p-[12px] rounded-full bg-[#333333] shadow-lg flex items-center justify-center cursor-pointer md:text-base md:border-[3px] md:h-[10px] md:w-[10px] md:p-6;
+                    }
                 }
             }
         }
