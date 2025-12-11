@@ -6,64 +6,135 @@ import { TaskContext } from "./components/TaskContext.js";
 
 
 function DateMenu() {
-    const today = new Date();
+
     const { taskList, setTaskList } = useContext(TaskContext); 
+
     const containerRef = useRef(null);
+    const dayRefs = useRef(new Map());
     const todayRef = useRef(null);
 
     const [newTaskDisplay, setNewTaskDisplay] = useState(false);
-    
-    const [activeDate, setActiveDate] = useState(new Date());
-    const [border, setBorder] = useState(new Date().toDateString());
 
     const [taskFilter, setTaskFilter] = useState('all');
 
-    // function generateDayWindow(centerDate, rangeInDays = 30) {
+    //////////////////////////////////////////////////////////////
 
-    // }
+    const ONE_DAY = 24 * 60 * 60 * 1000;
 
-    function generateDayWindow(centerDate, rangeInDays = 30) {
-        const result = [];
-        const start = new Date(centerDate);
-
-        start.setDate(start.getDate() - rangeInDays);
-        const totalDays = rangeInDays * 3;
-        
-        for (let i = 0; i <= totalDays; i++) {
-            result.push(new Date(start));
-            start.setDate(start.getDate() + 1);
-        }
-
-        return result;
+    function addDays(date, days) {
+        const d = new Date(date);
+        d.setDate(d.getDate() + days);
+        return d;
     }
 
+    function diffDays(a, b) {
+        return Math.round((b - a) / ONE_DAY);
+    }
+
+    function isSameDay(a, b) {
+        return a.toDateString() === b.toDateString();
+    }
+
+    const CHUNK = 30;
+    const today = new Date();
+
+    const [startDate, setStartDate] = useState(() => addDays(today, -CHUNK));
+    const [endDate, setEndDate] = useState(() => addDays(today, CHUNK));
+    const [selectedDate, setSelectedDate] = useState(() => today);
+
     const days = useMemo(() => {
-        return generateDayWindow(activeDate, 30);
-    }, [today]);
+        const arr = [];
+        for (let i = 0; ; i++){
+            const d = addDays(startDate, i);
+            if (d > endDate) break;
+            arr.push(d);
+        }
+
+        return arr;
+    }, [startDate, endDate]);
+
+
+    useEffect(() => {
+        const el = dayRefs.current.get(selectedDate.toDateString());
+        if (el && containerRef.current) {
+            el.scrollIntoView({inline: "center", block: "nearest", behavior: "smooth"});
+        }
+    }, [selectedDate, days]);
+
+    useEffect(() => {
+        function onKey(e) {
+            if (e.key === "ArrowLeft") {
+                setSelectedDate(prev => addDays(prev, -7));
+            } else if (e.key === "ArrowRight") {
+                setSelectedDate(prev => addDays(prev, 7));
+            }
+        }
+
+        window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
+    }, []);
+
+    useEffect(() => {
+        const THRESHOLD = 5;
+
+        const distFromStart = diffDays(startDate, selectedDate);
+        const distFromEnd = diffDays(selectedDate, endDate);
+
+        if (distFromStart <= THRESHOLD) {
+            setStartDate(prev => addDays(prev, -CHUNK));
+        }
+        if (distFromEnd <= THRESHOLD) {
+            setEndDate(prev => addDays(prev, CHUNK));
+        }
+    }, [selectedDate, startDate, endDate]);
+
+    const MIN_DATE = new Date(1900, 0, 1);
+    const MAX_DATE = new Date(2100, 11, 31);
+
+    useEffect(() => {
+        if(selectedDate < MIN_DATE) setSelectedDate(MIN_DATE);
+        if(selectedDate > MAX_DATE) setSelectedDate(MIN_DATE);
+    }, [selectedDate]);
+
+    const [windowedDates, setWindowedDates] = useState(days.slice(0, 7));
+
+    useEffect(() => {
+        if (!selectedDate || days.length === 0) return;
+
+        const index = days.findIndex(d => 
+            d.toDateString() === selectedDate.toDateString()
+        );
+
+        setWindowedDates(days.slice(index, index + 7));
+    }, [days, selectedDate]);
+
+    function getWeekWindow(date) {
+        const day = date.getDay();
+        const sunday = new Date(date);
+        sunday.setDate(date.getDate() - day);
+
+        const week = [];
+        for(let i = 0; i < 7; i++) {
+            const d = new Date(sunday);
+            d.setDate(sunday.getDate() + i);
+            week.push(d);
+        }
+
+        return week;
+    }
+
+    useEffect(() => {
+        if(!selectedDate) return;
+        const week = getWeekWindow(selectedDate);
+        setWindowedDates(week);
+    }, [selectedDate]);
+
+
+    ///////////////////////////////////////////////////
     
     function openCloseNewTaskSetter() {
         setNewTaskDisplay(!newTaskDisplay);
     }
-
-    // Fix to make sure that past dates show up as needed instead of only loading 1 year back in case user has data past that
-    // useEffect(() => {
-    //     const earliestTask = Math.min(...taskList.map(t => new Date(t.baseId)));
-    //     const latestTask = Math.max(...taskList.map(t => new Date(t.baseId)));
-
-    //     if (earliestTask < days[0].getTime() || latestTask > days[days.length - 1].getTime()) {
-    //         setDays(getDaysAround(today, 20));
-    //     }
-    // }, [taskList]);
-
-    useEffect(() => {
-        if (todayRef.current && containerRef.current) {
-            todayRef.current.scrollIntoView({
-                behavior: "auto",
-                inline: "center",
-                block: "nearest",
-            });
-        }
-    }, [days]);
 
     function toggleTodayDisplay() {
         if (todayRef.current && containerRef.current) {
@@ -76,14 +147,13 @@ function DateMenu() {
     }
 
     function redirectDateTask() {
-        setActiveDate(new Date());
-        setBorder(new Date().toDateString());
+        setSelectedDate(new Date());
     }
 
-    const tasksForActiveDate = useMemo(() => {
+    const tasksForSelectedDate = useMemo(() => {
         if(!taskList.length) return [];
 
-        const activeDateString = activeDate.toLocaleDateString("en-US", { 
+        const selectedDateString = selectedDate.toLocaleDateString("en-US", { 
             day: "numeric", 
             month: "long", 
             year: "numeric" 
@@ -95,67 +165,20 @@ function DateMenu() {
                 month: "long", 
                 year: "numeric"
             });
-            return taskDate === activeDateString;
+            return taskDate === selectedDateString;
         }).sort((a, b) => a.isDone - b.isDone);
 
-    }, [taskList, activeDate]);
+    }, [taskList, selectedDate]);
 
     const visibleTasks = useMemo(() => {
-        if (taskFilter === 'all') return tasksForActiveDate;
-        if (taskFilter === 'met') return tasksForActiveDate.filter(ta => ta.isDone);
-        return tasksForActiveDate.filter(ta => !ta.isDone);
-    }, [tasksForActiveDate, taskFilter])
+        if (taskFilter === 'all') return tasksForSelectedDate;
+        if (taskFilter === 'met') return tasksForSelectedDate.filter(ta => ta.isDone);
+        return tasksForSelectedDate.filter(ta => !ta.isDone);
+    }, [tasksForSelectedDate, taskFilter])
 
     function toggleTaskDisplay(operator) {
         setTaskFilter(operator);
     }
-
-    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-    const [startIndex, setStartIndex] = useState(7);
-    const [windowedDates, setWindowedDates] = useState(days.slice(0, 7));
-
-    useEffect(() => {
-
-        function scrollBar(e) {
-            if(e.key === 'ArrowLeft') {
-                if(startIndex === 7) {
-                    setWindowedDates(days.slice(0, 7));
-                    return;
-                }
-
-                setStartIndex(s => s - 7);
-            }
-
-            if(e.key === 'ArrowRight') {
-                if(startIndex >= days.length) {
-                    return
-                };
-                
-                setStartIndex(s => s + 7);
-            }
-
-        }   
-
-        window.addEventListener('keydown', scrollBar);
-
-        return () => window.removeEventListener('keydown', scrollBar);
-    })
-
-    useEffect(() => {
-        setWindowedDates(days.slice(startIndex, startIndex + 7))
-    }, [startIndex])
-
-    useEffect(() => {
-        console.log(windowedDates.toLocaleString('en-US', {day: 'numeric', month: 'long', year: 'numeric'}));
-        console.log(startIndex)
-    }, [startIndex, windowedDates]);
-
-    ///FIX: When going back it disappears ✅, fix the UI ✅, Initialize all that needs to be initalized, add animation if possible, set snap day to Sundays, fix border to snap day
-
-    useEffect(() => {
-        console.log(days.map(d => d.toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric'})))
-    }, [days])
 
     return (
         
@@ -171,78 +194,39 @@ function DateMenu() {
                         <p className="nav-date" onClick={() => {
                             toggleTodayDisplay();
                             redirectDateTask();
-                        }}>{activeDate.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}</p>
+                        }}>{selectedDate.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}</p>
                         <button className="bi bi-plus-circle-fill add" onClick={() => openCloseNewTaskSetter()}></button>
                     </div>
 
                     <div className="date-menu">
                         <div className="date-track" ref={containerRef}>
-                            <ul className="test-box-cont">
-
-                                {/* <li className="test-box">
-                                    <span className="d-name"></span>
-                                    <span className="d-other"></span>
-                                </li>
-
-                                <li className="test-box">
-                                    <span className="d-name"></span>
-                                    <span className="d-other"></span>
-                                </li>
-
-                                <li className="test-box">
-                                    <span className="d-name"></span>
-                                    <span className="d-other"></span>
-                                </li>
-
-                                <li className="test-box">
-                                    <span className="d-name"></span>
-                                    <span className="d-other"></span>
-                                </li>
-
-                                <li className="test-box">
-                                    <span className="d-name"></span>
-                                    <span className="d-other"></span>
-                                </li>
-
-                                <li className="test-box">
-                                    <span className="d-name"></span>
-                                    <span className="d-other"></span>
-                                </li>
-
-                                <li className="test-box">
-                                    <span className="d-name"></span>
-                                    <span className="d-other"></span>
-                                </li>     */}
-                                
+                            <ul className="test-box-cont">                            
+    
+    
                                 {
                                     windowedDates.map((d, i) => {
-                                
-                                    const weekday = dayNames[d.getDay()];
+                                        const dateString = d.toDateString();
+                                        const isSelected = isSameDay(d, selectedDate);
 
-                                    return <li key={i} className="test-box">
-                                            <span className="d-name">{weekday}</span>
-                                            <span className="d-other">{d.getDate()}</span>
-                                        </li> 
+                                        return(
+                                            <li 
+                                                key={dateString} 
+                                                ref={el => {
+                                                if (el) dayRefs.current.set(dateString, el);
+                                                else dayRefs.current.delete(dateString);
+                                                }} 
+                                                className={`test-box ${isSelected ? "border-bluelight" : ""}`} 
+                                                onClick={() => setSelectedDate(new Date(d))}
+                                            >
+
+                                                <span className="d-name">{d.toLocaleDateString(undefined, {weekday: 'short'})}</span>
+                                                <span className="d-other">{d.getDate()}</span>
+
+                                            </li>
+                                        )
                                     })
-                                     
-
                                 }
                             </ul>
-                            {/* {days.map((day, index) => {
-                                const isToday = day.toDateString() === new Date().toDateString();
-                                const weekday = dayNames[day.getDay()];
-                                const isMonday = weekday.toLowerCase() === "mon";                
-
-                                return (
-                                    <div key={index} onClick={() => {
-                                        setBorder(day.toDateString());
-                                        setActiveDate(new Date(day));
-                                    }} className={`ind-date-box ${isMonday ? "snap-start monday" : ""} ${border === day.toDateString() ? "border-bluelight" : ""}`} ref={isToday ? todayRef : null}>
-                                        <span className="date-name">{weekday}</span>
-                                        <span className="other-days">{day.getDate()} </span>
-                                    </div>
-                                )
-                            })} */}
 
                         </div>
                     </div>

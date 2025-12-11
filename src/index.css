@@ -104,17 +104,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         }
 
         & .date-menu {
-            @apply h-[10%] w-full rounded-lg flex justify-center items-center md:bg-commongrey md:p-4 md:h-[15%];
+            @apply h-[10%] w-full rounded-lg flex justify-center items-center md:bg-commongrey md:p-2 md:h-[15%];
 
             & .date-track {
                 @apply w-[100%] flex justify-between p-1 no-scrollbar overflow-x-auto;
 
                 & .test-box-cont {
-                @apply w-[100%] flex justify-between h-[6rem];
-                }
-                
-                & .test-box {
-                @apply border border-2 w-[60px] border-backblack flex flex-col justify-center items-center rounded-2xl p-[3px] gap-4 md:border-commongrey; 
+                @apply w-[100%] flex justify-between h-[7rem];
+                    & .test-box {
+                    @apply border border-2 w-[65px] border-backblack flex flex-col justify-center items-center rounded-2xl p-[3px] gap-4 md:border-commongrey; 
                 
                     & .d-name {
                         @apply h-[25%] text-xs flex justify-center md:text-base;
@@ -123,6 +121,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                     & .d-other {
                         @apply h-[75%] text-[10px] border-bluelight p-[12px] rounded-full bg-[#333333] shadow-lg flex items-center justify-center cursor-pointer md:text-base md:border-[3px] md:h-[10px] md:w-[10px] md:p-6;
                     }
+                }
                 }
             }
         }
