@@ -155,7 +155,7 @@ function NewTask({exit, editExit, task}) {
     return ( 
         <div className="new-task">
             
-            {isEditingMode ? <i className="bi bi-x-circle-fill exit-new-screen cursor-pointer" onClick={editExit}></i> : <i className="bi bi-x-circle-fill exit-edit-screen cursor-pointer" onClick={exit}></i>}
+            {isEditingMode ? <i className="bi bi-x-circle-fill exit-edit-screen cursor-pointer" onClick={editExit}></i> : <i className="bi bi-x-circle-fill exit-new-screen cursor-pointer" onClick={exit}></i>}
 
             <div className="new-task-container">
 

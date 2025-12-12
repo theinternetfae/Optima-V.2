@@ -129,18 +129,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .new-task {
-        @apply bg-black/1 fixed flex justify-center items-center top-0 left-[-2px] z-50 w-full h-full backdrop-blur-sm md:w-[90%] md:left-[240px];
+        @apply bg-black/1 fixed flex justify-center items-center top-0 left-[-2px] z-50 w-full h-full backdrop-blur-sm md:w-[100%];
 
         & .exit-new-screen {
-            @apply absolute text-xl right-[7px] top-7 md:text-2xl md:right-[120px];
+            @apply absolute text-xl right-[7px] top-7 md:text-2xl md:right-[30px];
         }
 
         & .exit-edit-screen {
-            @apply absolute text-xl right-[7px] top-7 md:text-2xl md:right-[120px] cursor-pointer;
+            @apply absolute text-xl right-[7px] top-7 md:text-2xl md:right-[30px] cursor-pointer;
         }
 
         & .new-task-container {
-            @apply bg-commongrey mx-auto w-[80%] p-4 rounded-xl flex flex-col gap-4 shadow-md md:w-[50%] md:p-10;
+            @apply bg-commongrey mx-auto w-[80%] p-4 rounded-xl flex flex-col gap-4 shadow-md md:w-[50%] md:right-[320px] absolute  md:p-10;
 
             .task-desc {
                 @apply bg-dullblack rounded-md p-2 flex flex-col gap-2 justify-center items-center md:grid md:p-4 md:place-items-center;
@@ -354,7 +354,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                     @apply border border-20 border-commongrey relative rounded-full h-full w-[60%] shadow-xl;
 
                     & .rating {
-                        @apply text-5xl font-bold absolute top-[120px] left-[60px]
+                        @apply text-5xl font-bold absolute top-[120px] left-[58px]
                     }
 
                     & .rating-title {
