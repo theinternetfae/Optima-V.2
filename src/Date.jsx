@@ -19,6 +19,21 @@ function DateMenu() {
 
     //////////////////////////////////////////////////////////////
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     const ONE_DAY = 24 * 60 * 60 * 1000;
 
     function addDays(date, days) {
@@ -40,7 +55,7 @@ function DateMenu() {
 
     const [startDate, setStartDate] = useState(() => addDays(today, -CHUNK));
     const [endDate, setEndDate] = useState(() => addDays(today, CHUNK));
-    const [selectedDate, setSelectedDate] = useState(() => today);
+    const [selectedDate, setSelectedDate] = useState(today);
 
     const days = useMemo(() => {
         const arr = [];
@@ -128,6 +143,19 @@ function DateMenu() {
         const week = getWeekWindow(selectedDate);
         setWindowedDates(week);
     }, [selectedDate]);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     ///////////////////////////////////////////////////

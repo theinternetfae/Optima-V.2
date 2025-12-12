@@ -1,4 +1,4 @@
-    import React, {useContext, useState, useEffect} from "react";
+    import React, {useContext, useState, useEffect, useMemo} from "react";
     import { TaskContext } from "./components/TaskContext.js";
 
     function TaskStats() {
@@ -48,6 +48,120 @@
             return words.slice(0, limit).join(" ") + "...";
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        const ONE_DAY = 24 * 60 * 60 * 1000;
+
+        function addDays(date, days) {
+            const d = new Date(date);
+            d.setDate(d.getDate() + days);
+            return d;
+        }
+
+        function diffDays(a, b) {
+            return Math.round((b - a) / ONE_DAY);
+        }
+        
+        const CHUNK = 60;
+
+        const [startDate, setStartDate] = useState(addDays(today, -CHUNK));
+        const [endDate, setEndDate] = useState(addDays(today, CHUNK));
+
+        const month = useMemo(() => {
+            const arr = [];
+
+            for (let i = 0; ; i++) {
+                const m = addDays(startDate, i);
+                if (m > endDate) break;
+                arr.push(m);
+            }
+
+            return arr;
+        }, [startDate, endDate]);
+
+        const [currentMonth, setCurrentMonth] = useState(new Date());
+        const [monthDays, setMonthDays] = useState([]);
+        
+        useEffect(() => {
+
+            const daysForCurrentMonth = month.filter(m => {
+                return m.toLocaleDateString("en-US", { month: "long", year: "numeric" }) === currentMonth.toLocaleDateString("en-US", {month: "long", year: "numeric"});
+            })
+
+            setMonthDays(daysForCurrentMonth);
+
+        }, [currentMonth, month, taskList]);
+
+
+        function oneMonthBack() {
+            const newCurrentMonth = new Date(currentMonth);
+            newCurrentMonth.setMonth(currentMonth.getMonth() - 1);
+
+            setCurrentMonth(newCurrentMonth);
+        }
+
+        function oneMonthForward() {
+            const newCurrentMonth = new Date(currentMonth);
+            newCurrentMonth.setMonth(currentMonth.getMonth() + 1);
+
+            setCurrentMonth(newCurrentMonth);   
+        }
+
+        useEffect(() => {
+            
+            const THRESHOLD = 5;
+            const distFromStart = Math.abs(diffDays(startDate, currentMonth));
+            const distFromEnd = Math.abs(diffDays(currentMonth, endDate));
+            
+            
+            if(distFromStart <= THRESHOLD) {
+                setStartDate(prev => addDays(prev, -CHUNK));
+            }
+
+            if(distFromEnd <= THRESHOLD) {
+                setEndDate(prev => addDays(prev, CHUNK));
+            }
+
+        }, [startDate, endDate, currentMonth]);
+
+        const MIN_DATE = new Date(2000, 0, 1);
+        const MAX_DATE = new Date(2100, 11, 31);
+
+        useEffect(() => {
+            if(currentMonth < MIN_DATE && setCurrentMonth(MIN_DATE));
+            if(currentMonth > MAX_DATE && setCurrentMonth(MAX_DATE));
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         function getDaysFor(now, totalYears) {
             const resultDays = [];
             const start = new Date(now);
@@ -65,19 +179,6 @@
         useEffect(() => {
             setTaskDays(getDaysFor(today, 20));
         }, []);
-
-        const [currentMonth, setCurrentMonth] = useState(new Date());
-        const [monthDays, setMonthDays] = useState([]);
-        
-        useEffect(() => {
-
-            const daysForCurrentMonth = taskDays.filter(day => {
-                return day.toLocaleDateString("en-US", { month: "long", year: "numeric" }) === currentMonth.toLocaleDateString("en-US", {month: "long", year: "numeric"});
-            })
-
-            setMonthDays(daysForCurrentMonth);
-
-        }, [currentMonth, taskDays, taskList]);
 
         useEffect(() => {
             if (!selectedTask || !selectedTask.start || !selectedTask.end) return;
@@ -116,9 +217,6 @@
                 const generalStreak = validDays.reduce((acc, d) => {
 
                     const tasksNDays = taskList.filter(tl => normalizeDate(tl.id) === normalizeDate(d));
-
-                    // console.log(tasksNDays.length > 0 && tasksNDays.every(td => td.isDone));
-                    // console.log(tasksNDays.length > 0 && tasksNDays.some(td => !td.isDone));
 
                     if(tasksNDays.length > 0 && tasksNDays.every(td => td.isDone)) {
                         acc.count++;
@@ -182,7 +280,7 @@
 
 
 
-
+        /////////////////////////////////////////////////////////
         useEffect(() => {
 
             if(!selectedTask) {
@@ -191,7 +289,7 @@
                     if (!acc[t.baseId]) acc[t.baseId] = [];
                     acc[t.baseId].push(t);
                     return acc;
-                }, {})
+                }, {});
 
                 const lastTasks = Object.values(tasksByBase).map(ta => {
                     
@@ -203,7 +301,6 @@
                 });
 
                 const lastEndDates = lastTasks.map(t => t.end);
-                console.log(lastEndDates);
                 let count = 0;
 
                 lastEndDates.forEach(ld => new Date(ld).getTime() > new Date(today).getTime() && count++)
@@ -214,7 +311,6 @@
                 const validTasks = taskList.filter(t => t.baseId === selectedTask.baseId);
 
                 const end = validTasks[validTasks.length - 1].end;
-                console.log(new Date(end).getTime() > new Date(today).getTime());
             
                 new Date(end).getTime() > new Date(today).getTime() ? setActiveStatus(true) : setActiveStatus(false);
 
@@ -225,14 +321,6 @@
         }, [selectedTask])
 
 
-
-
-
-
-
-
-
-
         useEffect(() => {
 
             if(!selectedTask) {
@@ -241,7 +329,7 @@
 
                 const totalDone = taskList.filter(t => t.isDone).length;
                 
-                const totalRate = Number(((totalDone / total) * 100).toFixed(2));
+                const totalRate = ((totalDone / total) * 100).toFixed(2);
                 
                 setGeneralRate(totalRate);
 
@@ -251,7 +339,7 @@
                 
                 const selectedCompleted = selectedTotal.filter(t => t.isDone);
                 
-                const selectedRate = Number(((selectedCompleted.length / selectedTotal.length) * 100).toFixed(2)); 
+                const selectedRate = ((selectedCompleted.length / selectedTotal.length) * 100).toFixed(2); 
                 
                 setSelectedRate(selectedRate);
             
@@ -259,40 +347,10 @@
 
         }, [selectedTask, taskDays]);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        ////////////////////////////////////////////////////////////////////
 
 
         useEffect(() => {
-
             if (!selectedTask) {
                 setSelectedTaskCount(tasksDone.length);
                 return;
@@ -352,39 +410,6 @@
 
         }, [selectedTask, taskDays])
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        function oneMonthBack() {
-            const newCurrentMonth = new Date(currentMonth);
-            newCurrentMonth.setMonth(currentMonth.getMonth() - 1);
-
-            setCurrentMonth(newCurrentMonth);
-        }
-
-        function oneMonthForward() {
-            const newCurrentMonth = new Date(currentMonth);
-            newCurrentMonth.setMonth(currentMonth.getMonth() + 1);
-
-            setCurrentMonth(newCurrentMonth);   
-        }
 
         function amountGeneralStreak() {
             const number = selectedTask ? (selectedTaskStreaks.length > 0 ? Math.max(...selectedTaskStreaks) : 0) : generalStreak.length > 0 ? Math.max(...generalStreak) : 0

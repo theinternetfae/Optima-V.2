@@ -13,9 +13,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 1rem; /* adjust if needed */
+    height: 370px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1rem; /* adjust if needed */
 }
 
 .day-label {
@@ -353,7 +354,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                     @apply border border-20 border-commongrey relative rounded-full h-full w-[60%] shadow-xl;
 
                     & .rating {
-                        @apply text-5xl font-bold absolute top-[120px] left-[55px]
+                        @apply text-5xl font-bold absolute top-[120px] left-[60px]
                     }
 
                     & .rating-title {
