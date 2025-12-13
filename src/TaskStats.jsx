@@ -26,8 +26,6 @@
 
         const [matchingBorderDay, setMatchingBorderDay] = useState([]);
 
-        const [taskDays, setTaskDays] = useState([]);
-
 
         function toggleSelected(id, task) {
             setSelectedId(id);
@@ -63,17 +61,38 @@
 
 
 
+        function generateDayRange(startDate, endDate) {
+            const days = [];
+            const start = new Date(Date.UTC(
+                startDate.getUTCFullYear(),
+                startDate.getUTCMonth(),
+                startDate.getUTCDate()
+            ));
+            const end = new Date(Date.UTC(
+                endDate.getUTCFullYear(),
+                endDate.getUTCMonth(),
+                endDate.getUTCDate()
+            ));
 
+            for (let d = start; d <= end; d = addDaysUTC(d, 1)) {
+                days.push(d);
+            }
 
-
+            return days;
+        }
 
         const ONE_DAY = 24 * 60 * 60 * 1000;
 
-        function addDays(date, days) {
-            const d = new Date(date);
-            d.setDate(d.getDate() + days);
-            return d;
+        function addDaysUTC(date, days) {
+            return new Date(
+                Date.UTC(
+                    date.getUTCFullYear(),
+                    date.getUTCMonth(),
+                    date.getUTCDate() + days
+                )
+            );
         }
+
 
         function diffDays(a, b) {
             return Math.round((b - a) / ONE_DAY);
@@ -81,14 +100,14 @@
         
         const CHUNK = 60;
 
-        const [startDate, setStartDate] = useState(addDays(today, -CHUNK));
-        const [endDate, setEndDate] = useState(addDays(today, CHUNK));
+        const [startDate, setStartDate] = useState(addDaysUTC(today, -CHUNK));
+        const [endDate, setEndDate] = useState(addDaysUTC(today, CHUNK));
 
         const month = useMemo(() => {
             const arr = [];
 
             for (let i = 0; ; i++) {
-                const m = addDays(startDate, i);
+                const m = addDaysUTC(startDate, i);
                 if (m > endDate) break;
                 arr.push(m);
             }
@@ -132,11 +151,11 @@
             
             
             if(distFromStart <= THRESHOLD) {
-                setStartDate(prev => addDays(prev, -CHUNK));
+                setStartDate(prev => addDaysUTC(prev, -CHUNK));
             }
 
             if(distFromEnd <= THRESHOLD) {
-                setEndDate(prev => addDays(prev, CHUNK));
+                setEndDate(prev => addDaysUTC(prev, CHUNK));
             }
 
         }, [startDate, endDate, currentMonth]);
@@ -152,33 +171,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-        function getDaysFor(now, totalYears) {
-            const resultDays = [];
-            const start = new Date(now);
-            start.setFullYear(start.getFullYear() - 1);
-            const totalDays = totalYears * 365;
-
-            for (let i = 0; i < totalDays; i++) {
-                resultDays.push(new Date(start));
-                start.setDate(start.getDate() + 1);
-            }
-
-            return resultDays;
-        }
-
-        useEffect(() => {
-            setTaskDays(getDaysFor(today, 20));
-        }, []);
+        
 
         useEffect(() => {
             if (!selectedTask || !selectedTask.start || !selectedTask.end) return;
@@ -209,10 +202,12 @@
 
             if(!selectedTask) {
 
+                if(taskList.length === 0) return;
+
                 const start = new Date(taskList[0].start);
                 const end = new Date(taskList[taskList.length - 1].end);
 
-                const validDays = taskDays.filter(d => d >= start && d <= end);
+                const validDays = generateDayRange(start, end);
                 
                 const generalStreak = validDays.reduce((acc, d) => {
 
@@ -232,6 +227,7 @@
                 generalStreak.count > 0 && generalStreak.streak.push(generalStreak.count);
 
                 setGeneralStreak(generalStreak.streak);
+
             } else {
 
                 const tasksToCalculate = taskList.filter(t => t.baseId === selectedTask.baseId)
@@ -254,7 +250,7 @@
             };
 
 
-        }, [selectedTask, taskDays])
+        }, [selectedTask])
 
 
 
@@ -284,6 +280,8 @@
         useEffect(() => {
 
             if(!selectedTask) {
+
+                if(taskList.length === 0) return;
 
                 const tasksByBase = taskList.reduce((acc, t) => {
                     if (!acc[t.baseId]) acc[t.baseId] = [];
@@ -345,7 +343,7 @@
             
             }
 
-        }, [selectedTask, taskDays]);
+        }, [selectedTask, taskList]);
 
         ////////////////////////////////////////////////////////////////////
 
@@ -368,7 +366,7 @@
 
                 const start = new Date(taskList[0].start);
 
-                const validDays = taskDays.filter(d => d >= start && d <= today);
+                const validDays = generateDayRange(start, today);
 
                 let count = 0;
 
@@ -390,7 +388,7 @@
 
                 const start = new Date(tasksToCalculate[0].start);
 
-                const validDays = taskDays.filter(d => d >= start && d <= today);
+                const validDays = generateDayRange(start, today);
 
                 let count = 0;
 
@@ -408,7 +406,7 @@
 
             }
 
-        }, [selectedTask, taskDays])
+        }, [selectedTask])
 
 
         function amountGeneralStreak() {
