@@ -8,6 +8,7 @@ import { TaskContext } from "./components/TaskContext.js";
 
 function App() {
 
+  //LOCAL STORAGE
   const [taskList, setTaskList] = useState(() => {
     const saved = localStorage.getItem("tasks");
     return saved ? JSON.parse(saved) : [];
@@ -27,6 +28,7 @@ function App() {
   }, [tasksDone]);
 
 
+  //REPEATING TASKS LOGIC
   const weekDaysMap = [ "sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
   function normalizeDayKey(str) {

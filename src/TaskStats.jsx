@@ -30,7 +30,6 @@
         function toggleSelected(id, task) {
             setSelectedId(id);
             setSelectedTask(task);
-
         }
 
         const uniqueTasks = Object.values(
@@ -44,41 +43,6 @@
             const words = text.split(" ");
             if (words.length <= limit) return text; 
             return words.slice(0, limit).join(" ") + "...";
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        function generateDayRange(startDate, endDate) {
-            const days = [];
-            const start = new Date(Date.UTC(
-                startDate.getUTCFullYear(),
-                startDate.getUTCMonth(),
-                startDate.getUTCDate()
-            ));
-            const end = new Date(Date.UTC(
-                endDate.getUTCFullYear(),
-                endDate.getUTCMonth(),
-                endDate.getUTCDate()
-            ));
-
-            for (let d = start; d <= end; d = addDaysUTC(d, 1)) {
-                days.push(d);
-            }
-
-            return days;
         }
 
         const ONE_DAY = 24 * 60 * 60 * 1000;
@@ -103,7 +67,7 @@
         const [startDate, setStartDate] = useState(addDaysUTC(today, -CHUNK));
         const [endDate, setEndDate] = useState(addDaysUTC(today, CHUNK));
 
-        const month = useMemo(() => {
+        const days = useMemo(() => {
             const arr = [];
 
             for (let i = 0; ; i++) {
@@ -120,28 +84,21 @@
         
         useEffect(() => {
 
-            const daysForCurrentMonth = month.filter(m => {
+            const daysForCurrentMonth = days.filter(m => {
                 return m.toLocaleDateString("en-US", { month: "long", year: "numeric" }) === currentMonth.toLocaleDateString("en-US", {month: "long", year: "numeric"});
             })
 
             setMonthDays(daysForCurrentMonth);
 
-        }, [currentMonth, month, taskList]);
+        }, [currentMonth, days, taskList]);
+        
+        const MIN_DATE = new Date(2000, 0, 1);
+        const MAX_DATE = new Date(2100, 11, 31);
 
-
-        function oneMonthBack() {
-            const newCurrentMonth = new Date(currentMonth);
-            newCurrentMonth.setMonth(currentMonth.getMonth() - 1);
-
-            setCurrentMonth(newCurrentMonth);
-        }
-
-        function oneMonthForward() {
-            const newCurrentMonth = new Date(currentMonth);
-            newCurrentMonth.setMonth(currentMonth.getMonth() + 1);
-
-            setCurrentMonth(newCurrentMonth);   
-        }
+        useEffect(() => {
+            if(currentMonth < MIN_DATE && setCurrentMonth(MIN_DATE));
+            if(currentMonth > MAX_DATE && setCurrentMonth(MAX_DATE));
+        })
 
         useEffect(() => {
             
@@ -160,17 +117,47 @@
 
         }, [startDate, endDate, currentMonth]);
 
-        const MIN_DATE = new Date(2000, 0, 1);
-        const MAX_DATE = new Date(2100, 11, 31);
-
-        useEffect(() => {
-            if(currentMonth < MIN_DATE && setCurrentMonth(MIN_DATE));
-            if(currentMonth > MAX_DATE && setCurrentMonth(MAX_DATE));
-        })
 
 
 
 
+
+
+        function oneMonthBack() {
+            const newCurrentMonth = new Date(currentMonth);
+            newCurrentMonth.setMonth(currentMonth.getMonth() - 1);
+
+            setCurrentMonth(newCurrentMonth);
+        }
+
+        function oneMonthForward() {
+            const newCurrentMonth = new Date(currentMonth);
+            newCurrentMonth.setMonth(currentMonth.getMonth() + 1);
+
+            setCurrentMonth(newCurrentMonth);   
+        }
+
+
+
+        function generateDayRange(startDate, endDate) {
+            const days = [];
+            const start = new Date(Date.UTC(
+                startDate.getUTCFullYear(),
+                startDate.getUTCMonth(),
+                startDate.getUTCDate()
+            ));
+            const end = new Date(Date.UTC(
+                endDate.getUTCFullYear(),
+                endDate.getUTCMonth(),
+                endDate.getUTCDate()
+            ));
+
+            for (let d = start; d <= end; d = addDaysUTC(d, 1)) {
+                days.push(d);
+            }
+
+            return days;
+        }
         
 
         useEffect(() => {
@@ -346,7 +333,6 @@
         }, [selectedTask, taskList]);
 
         ////////////////////////////////////////////////////////////////////
-
 
         useEffect(() => {
             if (!selectedTask) {

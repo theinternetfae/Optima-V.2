@@ -20,14 +20,9 @@ function DateMenu() {
     //////////////////////////////////////////////////////////////
 
 
-
-
-
-
-
-
-
-
+    function dayKey(d) {
+        return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    }
 
 
 
@@ -36,10 +31,14 @@ function DateMenu() {
     
     const ONE_DAY = 24 * 60 * 60 * 1000;
 
-    function addDays(date, days) {
-        const d = new Date(date);
-        d.setDate(d.getDate() + days);
-        return d;
+    function addDaysUTC(date, days) {
+        return new Date(
+            Date.UTC(
+                date.getUTCFullYear(),
+                date.getUTCMonth(),
+                date.getUTCDate() + days
+            )
+        );
     }
 
     function diffDays(a, b) {
@@ -47,20 +46,20 @@ function DateMenu() {
     }
 
     function isSameDay(a, b) {
-        return a.toDateString() === b.toDateString();
+        return dayKey(a) === dayKey(b);
     }
 
     const CHUNK = 30;
     const today = new Date();
 
-    const [startDate, setStartDate] = useState(() => addDays(today, -CHUNK));
-    const [endDate, setEndDate] = useState(() => addDays(today, CHUNK));
+    const [startDate, setStartDate] = useState(() => addDaysUTC(today, -CHUNK));
+    const [endDate, setEndDate] = useState(() => addDaysUTC(today, CHUNK));
     const [selectedDate, setSelectedDate] = useState(today);
 
     const days = useMemo(() => {
         const arr = [];
         for (let i = 0; ; i++){
-            const d = addDays(startDate, i);
+            const d = addDaysUTC(startDate, i);
             if (d > endDate) break;
             arr.push(d);
         }
@@ -70,18 +69,26 @@ function DateMenu() {
 
 
     useEffect(() => {
-        const el = dayRefs.current.get(selectedDate.toDateString());
+        const el = dayRefs.current.get(dayKey(selectedDate));
         if (el && containerRef.current) {
             el.scrollIntoView({inline: "center", block: "nearest", behavior: "smooth"});
         }
     }, [selectedDate, days]);
 
+    const MIN_DATE = new Date(1900, 0, 1);
+    const MAX_DATE = new Date(2100, 11, 31);
+
+    useEffect(() => {
+        if(selectedDate < MIN_DATE) setSelectedDate(MIN_DATE);
+        if(selectedDate > MAX_DATE) setSelectedDate(MIN_DATE);
+    }, [selectedDate]);
+
     useEffect(() => {
         function onKey(e) {
             if (e.key === "ArrowLeft") {
-                setSelectedDate(prev => addDays(prev, -7));
+                setSelectedDate(prev => addDaysUTC(prev, -7));
             } else if (e.key === "ArrowRight") {
-                setSelectedDate(prev => addDays(prev, 7));
+                setSelectedDate(prev => addDaysUTC(prev, 7));
             }
         }
 
@@ -96,32 +103,12 @@ function DateMenu() {
         const distFromEnd = diffDays(selectedDate, endDate);
 
         if (distFromStart <= THRESHOLD) {
-            setStartDate(prev => addDays(prev, -CHUNK));
+            setStartDate(prev => addDaysUTC(prev, -CHUNK));
         }
         if (distFromEnd <= THRESHOLD) {
-            setEndDate(prev => addDays(prev, CHUNK));
+            setEndDate(prev => addDaysUTC(prev, CHUNK));
         }
     }, [selectedDate, startDate, endDate]);
-
-    const MIN_DATE = new Date(1900, 0, 1);
-    const MAX_DATE = new Date(2100, 11, 31);
-
-    useEffect(() => {
-        if(selectedDate < MIN_DATE) setSelectedDate(MIN_DATE);
-        if(selectedDate > MAX_DATE) setSelectedDate(MIN_DATE);
-    }, [selectedDate]);
-
-    const [windowedDates, setWindowedDates] = useState(days.slice(0, 7));
-
-    useEffect(() => {
-        if (!selectedDate || days.length === 0) return;
-
-        const index = days.findIndex(d => 
-            d.toDateString() === selectedDate.toDateString()
-        );
-
-        setWindowedDates(days.slice(index, index + 7));
-    }, [days, selectedDate]);
 
     function getWeekWindow(date) {
         const day = date.getDay();
@@ -138,11 +125,12 @@ function DateMenu() {
         return week;
     }
 
-    useEffect(() => {
+
+    const week = useMemo(() => {
         if(!selectedDate) return;
-        const week = getWeekWindow(selectedDate);
-        setWindowedDates(week);
+        return getWeekWindow(selectedDate);
     }, [selectedDate]);
+
 
 
 
@@ -232,13 +220,13 @@ function DateMenu() {
     
     
                                 {
-                                    windowedDates.map((d, i) => {
-                                        const dateString = d.toDateString();
+                                    week.map((d, i) => {
+                                        const dateString = dayKey(d);
                                         const isSelected = isSameDay(d, selectedDate);
 
                                         return(
                                             <li 
-                                                key={dateString} 
+                                                key={i} 
                                                 ref={el => {
                                                 if (el) dayRefs.current.set(dateString, el);
                                                 else dayRefs.current.delete(dateString);
