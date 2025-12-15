@@ -32,6 +32,10 @@
             setSelectedTask(task);
         }
 
+        function monthKey(d) {
+            return `${d.getUTCFullYear()}-${d.getUTCMonth()}`;
+        }
+
         const uniqueTasks = Object.values(
             taskList.reduce((acc, task) => {
                 if(!acc[task.baseId] && task.days.length > 0) acc[task.baseId] = task;
@@ -79,13 +83,13 @@
             return arr;
         }, [startDate, endDate]);
 
-        const [currentMonth, setCurrentMonth] = useState(new Date());
+        const [currentMonth, setCurrentMonth] = useState(today);
         const [monthDays, setMonthDays] = useState([]);
         
         useEffect(() => {
 
             const daysForCurrentMonth = days.filter(m => {
-                return m.toLocaleDateString("en-US", { month: "long", year: "numeric" }) === currentMonth.toLocaleDateString("en-US", {month: "long", year: "numeric"});
+                return monthKey(m) === monthKey(currentMonth);
             })
 
             setMonthDays(daysForCurrentMonth);
@@ -99,6 +103,20 @@
             if(currentMonth < MIN_DATE && setCurrentMonth(MIN_DATE));
             if(currentMonth > MAX_DATE && setCurrentMonth(MAX_DATE));
         })
+
+        function oneMonthBack() {
+            const newCurrentMonth = new Date(currentMonth);
+            newCurrentMonth.setMonth(currentMonth.getMonth() - 1);
+
+            setCurrentMonth(newCurrentMonth);
+        }
+
+        function oneMonthForward() {
+            const newCurrentMonth = new Date(currentMonth);
+            newCurrentMonth.setMonth(currentMonth.getMonth() + 1);
+
+            setCurrentMonth(newCurrentMonth);   
+        }
 
         useEffect(() => {
             
@@ -123,19 +141,7 @@
 
 
 
-        function oneMonthBack() {
-            const newCurrentMonth = new Date(currentMonth);
-            newCurrentMonth.setMonth(currentMonth.getMonth() - 1);
 
-            setCurrentMonth(newCurrentMonth);
-        }
-
-        function oneMonthForward() {
-            const newCurrentMonth = new Date(currentMonth);
-            newCurrentMonth.setMonth(currentMonth.getMonth() + 1);
-
-            setCurrentMonth(newCurrentMonth);   
-        }
 
 
 

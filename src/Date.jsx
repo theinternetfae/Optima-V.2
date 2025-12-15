@@ -111,7 +111,7 @@ function DateMenu() {
     }, [selectedDate, startDate, endDate]);
 
     function getWeekWindow(date) {
-        const day = date.getDay();
+        const day = date.getUTCDay();
         const sunday = new Date(date);
         sunday.setDate(date.getDate() - day);
 

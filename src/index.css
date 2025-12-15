@@ -9,7 +9,13 @@ body {
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1); /* makes it white */
+    filter: invert(1);
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .calendar-grid {
@@ -30,8 +36,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .date-cell {
     @apply border border-2 border-grey;  
 }
-
-
 
 @theme {
     --color-selected: #DA38CD;
@@ -439,6 +443,39 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                 }            
             }
         } 
+    }
+
+    .history-cont {
+        @apply flex flex-col gap-8 h-[100%];
+
+        & .date-header {
+            @apply flex mt-4 items-center justify-between;
+
+            .setter {
+                @apply flex gap-2;
+
+                & .selecting {
+                    @apply bg-commongrey p-2 rounded-lg w-[70px];
+                }
+
+                & button {
+                    @apply p-2 border border-2 border-transparent w-15 rounded-lg font-bold hover:border-bluelight bg-dullblack active:scale-90 ease-in-out duration-300;
+                }
+            }
+
+            .chosen {
+                @apply text-lg font-bold
+            }
+
+        }
+
+        & .tasks-per-day {
+            @apply h-[40%] rounded-lg shadow-lg bg-commongrey;
+        }
+
+        & .chosen-task-info {
+            @apply h-[40%] rounded-lg shadow-lg bg-dullblack;
+        }
     }
 }
 
