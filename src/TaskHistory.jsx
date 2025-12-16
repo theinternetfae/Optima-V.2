@@ -37,7 +37,7 @@ function TaskHistory() {
         console.log(toDayKey(chosenDate));
 
         return tasks;
-    }, [chosenDate])
+    }, [chosenDate, taskList])
 
     return ( 
         <div className="history-cont">

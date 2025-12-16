@@ -1,12 +1,21 @@
 import { useEffect, useState, useContext } from "react";
 import NewTask from "./NewTask.jsx";
 import { TaskContext } from "./TaskContext.js";
+import Alert from "./Alert.jsx";
 
 function TaskDisplay({taskE, history}) {
 
   const { taskList, setTaskList, tasksDone, setTasksDone } = useContext(TaskContext);
   const [done, setDone] = useState(taskE.isDone);
   const[editScreen, setEditScreen] = useState(false);
+
+  const [alertShow, setAlertShow] = useState(false);
+
+  function deleteTask() {
+    const tasksRemaining = taskList.filter(t => t.id !== taskE.id && t.baseId !== taskE.baseId);
+    setTaskList(tasksRemaining);
+    setAlertShow(prev => !prev);
+  }
 
   useEffect(() => {
     setDone(taskE.isDone)
@@ -52,11 +61,11 @@ function TaskDisplay({taskE, history}) {
           ) :
          
           (
-            <button className="bi bi-trash"></button>
+            <button className="bi bi-trash" onClick={() => setAlertShow(prev => !prev)}></button>
           )
-
         }
 
+        {alertShow && <Alert yesDelete={() => deleteTask()} noDelete={() => setAlertShow(prev => !prev)} history={history}/>}
 
       </div>
 

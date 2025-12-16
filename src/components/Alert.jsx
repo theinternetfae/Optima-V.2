@@ -1,6 +1,6 @@
-function Alert({yesDelete, noDelete}) {
+function Alert({yesDelete, noDelete, history}) {
     return ( 
-        <div className="alert-container">
+        <div className={history ? "hist-container" : "alert-container"}>
             <div className="alert-box">
                 <h1>This will delete this task, past, present and future. Are you sure?</h1>
                 <div className="choice">
