@@ -69,31 +69,39 @@ function TaskHistory() {
             </div>
 
             <div className="chosen-task-info">
-                
-                <div className="top">
-                    <section className="sec">
-                        <i className="bi-trophy"></i>
-                        <p className="calculator">0</p>
-                        <p className="calculator-label">Top streak</p>
-                    </section>
-                    <section className="sec">
-                        <i className="bi-fire"></i>
-                        <p className="calculator">0</p>
-                        <p className="calculator-label">current streak</p>
-                    </section>
-                </div>
-                <div className="top">
-                    <section className="sec">
-                        <i className="bi bi-check2-circle"></i>
-                        <p className="calculator">0</p>
-                        <p className="calculator-label">Times Done</p>
-                    </section>
-                    <section className="sec">
-                        <i className="bi-info-circle"></i>
-                        <p className="calculator">0</p>
-                        <p className="calculator-label">Status</p>
-                    </section>
-                </div>
+                {chosenHist === '' ? (
+                    <p className="no-chosen">Choose task to see stats...</p>
+                ) : (
+                    <>
+
+                        <div className="top">
+                            <section className="sec">
+                                <i className="bi-trophy"></i>
+                                <p className="calculator">0</p>
+                                <p className="calculator-label">Top streak</p>
+                            </section>
+                            <section className="sec">
+                                <i className="bi-fire"></i>
+                                <p className="calculator">0</p>
+                                <p className="calculator-label">current streak</p>
+                            </section>
+                        </div>
+                        <div className="top">
+                            <section className="sec">
+                                <i className="bi bi-check2-circle"></i>
+                                <p className="calculator">0</p>
+                                <p className="calculator-label">Times Done</p>
+                            </section>
+                            <section className="sec">
+                                <i className="bi-info-circle"></i>
+                                <p className="calculator">0</p>
+                                <p className="calculator-label">Status</p>
+                            </section>
+                        </div>
+                    
+                    </>
+                )}
+
             
             </div>
         </div> 

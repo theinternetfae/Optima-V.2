@@ -25,23 +25,27 @@ function TaskDisplay({taskE, history, chosenHist, setChosenHist}) {
     console.log("Chosen History", chosenHist);
   }, [chosenHist])
 
+  const isChosenHist = chosenHist.keyUUID === taskE.keyUUID;
+
   return (
 
     <div>
     
-      <div className={!history ? "task-box" : "history-box"} style={{backgroundColor: done ? (taskE.color || "#60A5FA") : "#111111"}} >
+      <div className={!history ? "task-box" : "history-box"} style={{
+        backgroundColor: done ? (taskE.color || "#60A5FA") : "#111111",
+        border: isChosenHist ? `2px solid ${taskE.color}` : ''
+      }} onClick={() => {
+        if (history) setChosenHist(taskE);
+      }}>
 
         <div className="emoji-t-box">{taskE.emoji}</div>
         
-        <p className="name-t-box" onClick={() => 
-          {
-            if(history) {
-              setChosenHist(taskE);
-              return;
-            };
-            new Date(taskE.id).toDateString() !== new Date().toDateString() ? '' : setEditScreen(editScreen => !editScreen);
-          }
-        }>{taskE.name}</p>
+        <p className="name-t-box" onClick={() => {
+        
+          if(history) return;
+          new Date(taskE.id).toDateString() !== new Date().toDateString() ? '' : setEditScreen(editScreen => !editScreen)
+
+        }}>{taskE.name}</p>
         
         {
           !history ? (
