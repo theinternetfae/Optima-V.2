@@ -3,7 +3,7 @@ import NewTask from "./NewTask.jsx";
 import { TaskContext } from "./TaskContext.js";
 import Alert from "./Alert.jsx";
 
-function TaskDisplay({taskE, history}) {
+function TaskDisplay({taskE, history, chosenHist, setChosenHist}) {
 
   const { taskList, setTaskList, tasksDone, setTasksDone } = useContext(TaskContext);
   const [done, setDone] = useState(taskE.isDone);
@@ -21,17 +21,24 @@ function TaskDisplay({taskE, history}) {
     setDone(taskE.isDone)
   }, [taskE.isDone]);
 
+  useEffect(() => {
+    console.log("Chosen History", chosenHist);
+  }, [chosenHist])
+
   return (
 
     <div>
     
-      <div className={!history ? "task-box" : "history-box"} style={{backgroundColor: done ? (taskE.color || "#60A5FA") : "#111111"}}>
+      <div className={!history ? "task-box" : "history-box"} style={{backgroundColor: done ? (taskE.color || "#60A5FA") : "#111111"}} >
 
         <div className="emoji-t-box">{taskE.emoji}</div>
         
         <p className="name-t-box" onClick={() => 
           {
-            if(history) return;
+            if(history) {
+              setChosenHist(taskE);
+              return;
+            };
             new Date(taskE.id).toDateString() !== new Date().toDateString() ? '' : setEditScreen(editScreen => !editScreen);
           }
         }>{taskE.name}</p>

@@ -12,6 +12,8 @@ function TaskHistory() {
     const [year, setYear] = useState('');
     const [chosenDate, setChosenDate] = useState('');
     
+    const [chosenHist, setChosenHist] = useState('');
+
     const today = new Date();
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
@@ -31,11 +33,6 @@ function TaskHistory() {
 
     const tasksPerDay = useMemo(() => {
         const tasks = taskList.filter(t => !chosenDate ? toDayKey(t.id) === toDayKey(today) : toDayKey(t.id) === toDayKey(chosenDate));
-        console.log(tasks);
-        console.log(tasks.length === 0 ? 'NO TASKS' : toDayKey(tasks[0].id));
-        console.log(toDayKey(today));
-        console.log(toDayKey(chosenDate));
-
         return tasks;
     }, [chosenDate, taskList])
 
@@ -64,13 +61,40 @@ function TaskHistory() {
                             key={t.keyUUID}
                             taskE={t}
                             history={history}
+                            chosenHist={chosenHist}
+                            setChosenHist = {setChosenHist}
                         />
                     })
                 }
             </div>
 
             <div className="chosen-task-info">
-
+                
+                <div className="top">
+                    <section className="sec">
+                        <i className="bi-trophy"></i>
+                        <p className="calculator">0</p>
+                        <p className="calculator-label">Top streak</p>
+                    </section>
+                    <section className="sec">
+                        <i className="bi-fire"></i>
+                        <p className="calculator">0</p>
+                        <p className="calculator-label">current streak</p>
+                    </section>
+                </div>
+                <div className="top">
+                    <section className="sec">
+                        <i className="bi bi-check2-circle"></i>
+                        <p className="calculator">0</p>
+                        <p className="calculator-label">Times Done</p>
+                    </section>
+                    <section className="sec">
+                        <i className="bi-info-circle"></i>
+                        <p className="calculator">0</p>
+                        <p className="calculator-label">Status</p>
+                    </section>
+                </div>
+            
             </div>
         </div> 
     );

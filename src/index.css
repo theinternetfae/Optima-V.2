@@ -400,7 +400,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply border border-20 border-commongrey relative rounded-full h-full w-[60%] shadow-xl;
 
                     & .rating {
-                        @apply text-5xl font-bold absolute top-[120px] left-[58px]
+                        @apply text-4xl font-bold absolute top-[120px] left-[75px]
                     }
 
                     & .rating-title {
@@ -520,7 +520,20 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         & .chosen-task-info {
-            @apply h-[40%] rounded-lg shadow-lg bg-dullblack;
+            @apply h-[40%] rounded-lg shadow-lg bg-dullblack flex flex-col;
+        
+            .top {
+                @apply flex items-center justify-around m-4;
+
+                .sec {
+                    @apply border border-2 text-lg bg-commongrey shadow p-2 w-[40%] h-[110px] rounded-full flex flex-col items-center justify-center;
+                    
+                    & .calculator-label {
+                        @apply text-base text-grey;
+                    }
+
+                }
+            }
         }
     }
 }
