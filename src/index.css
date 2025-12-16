@@ -49,6 +49,7 @@ input[type="number"]::-webkit-outer-spin-button {
     --color-yellow: #FFFF00; 
     --color-grey: #5B6066;
     --color-green: #237414;
+    --color-red: #9C0412;
 }
 
 @utility no-scrollbar {
@@ -245,7 +246,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .task-box {
-        @apply p-2 h-[40px] snap-start cursor-pointer rounded-md shadow no-scrollbar flex items-center transition-all duration-2000 ease-in-out md:p-4 md:border-none md:h-[70px] md:w-full; 
+        @apply p-2 h-[40px] cursor-pointer rounded-md shadow no-scrollbar flex items-center transition-all duration-2000 ease-in-out md:p-4 md:border-none md:h-[70px] md:w-full; 
 
         & .emoji-t-box {
             @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center rounded-lg md:w-[5%] md:h-full md:text-3xl;
@@ -281,6 +282,22 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply bg-gradient-to-b from-bluelight to-bluet;
                 }
             }
+        }
+    }
+
+    .history-box {
+        @apply border border-2 border-transparent cursor-pointer rounded-md shadow m-4 h-[60px] flex items-center duration-2000 ease-in-out;
+
+        & .emoji-t-box {
+            @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center ml-2 rounded-lg md:w-[5%] md:h-[80%] md:text-3xl;
+        }
+
+        & .name-t-box {
+            @apply text-shadow-md ml-2 p-2 w-[90%] text-sm rounded-md  text-neutral-300 md:font-bold md:text-base;
+        }
+        
+        & .bi-trash {
+            @apply cursor-pointer text-lg active:scale-90;
         }
     }
 
@@ -464,13 +481,17 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             .chosen {
-                @apply text-lg font-bold
+                @apply text-lg font-bold cursor-pointer;
             }
 
         }
 
         & .tasks-per-day {
-            @apply h-[40%] rounded-lg shadow-lg bg-commongrey;
+            @apply h-[40%] rounded-lg shadow-lg bg-commongrey no-scrollbar overflow-hidden;
+
+            .no-tasks {
+                @apply text-center mt-4;
+            }
         }
 
         & .chosen-task-info {

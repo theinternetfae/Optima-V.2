@@ -33,7 +33,7 @@
         }
 
         function monthKey(d) {
-            return `${d.getUTCFullYear()}-${d.getUTCMonth()}`;
+            return `${d.getFullYear()}-${d.getMonth()}`;
         }
 
         const uniqueTasks = Object.values(
@@ -51,13 +51,11 @@
 
         const ONE_DAY = 24 * 60 * 60 * 1000;
 
-        function addDaysUTC(date, days) {
+        function addDays(date, days) {
             return new Date(
-                Date.UTC(
-                    date.getUTCFullYear(),
-                    date.getUTCMonth(),
-                    date.getUTCDate() + days
-                )
+                date.getFullYear(),
+                date.getMonth(),
+                date.getDate() + days
             );
         }
 
@@ -68,14 +66,14 @@
         
         const CHUNK = 60;
 
-        const [startDate, setStartDate] = useState(addDaysUTC(today, -CHUNK));
-        const [endDate, setEndDate] = useState(addDaysUTC(today, CHUNK));
+        const [startDate, setStartDate] = useState(addDays(today, -CHUNK));
+        const [endDate, setEndDate] = useState(addDays(today, CHUNK));
 
         const days = useMemo(() => {
             const arr = [];
 
             for (let i = 0; ; i++) {
-                const m = addDaysUTC(startDate, i);
+                const m = addDays(startDate, i);
                 if (m > endDate) break;
                 arr.push(m);
             }
@@ -126,11 +124,11 @@
             
             
             if(distFromStart <= THRESHOLD) {
-                setStartDate(prev => addDaysUTC(prev, -CHUNK));
+                setStartDate(prev => addDays(prev, -CHUNK));
             }
 
             if(distFromEnd <= THRESHOLD) {
-                setEndDate(prev => addDaysUTC(prev, CHUNK));
+                setEndDate(prev => addDays(prev, CHUNK));
             }
 
         }, [startDate, endDate, currentMonth]);
@@ -147,18 +145,18 @@
 
         function generateDayRange(startDate, endDate) {
             const days = [];
-            const start = new Date(Date.UTC(
-                startDate.getUTCFullYear(),
-                startDate.getUTCMonth(),
-                startDate.getUTCDate()
-            ));
-            const end = new Date(Date.UTC(
-                endDate.getUTCFullYear(),
-                endDate.getUTCMonth(),
-                endDate.getUTCDate()
-            ));
+            const start = new Date(
+                startDate.getFullYear(),
+                startDate.getMonth(),
+                startDate.getDate()
+            );
+            const end = new Date(
+                endDate.getFullYear(),
+                endDate.getMonth(),
+                endDate.getDate()
+            );
 
-            for (let d = start; d <= end; d = addDaysUTC(d, 1)) {
+            for (let d = start; d <= end; d = addDays(d, 1)) {
                 days.push(d);
             }
 

@@ -1,9 +1,11 @@
 import { useState, useContext, useEffect, useMemo } from "react";
 import { TaskContext } from "./components/TaskContext.js";
+import TaskDisplay from "./components/TaskDisplay.jsx";
 
 function TaskHistory() {
     
     const { taskList } = useContext(TaskContext);
+    const history = true;
 
     const [month, setMonth] = useState('');
     const [day, setDay] = useState('');
@@ -16,7 +18,7 @@ function TaskHistory() {
     function toDayKey(date) {
         const d = new Date(date);
 
-        return `${months[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
+        return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
     }
 
     function searchDate() {
@@ -27,9 +29,15 @@ function TaskHistory() {
         setYear('');
     }
 
-    useEffect(() => {
-        console.log(chosenDate);
-    }, [chosenDate]);
+    const tasksPerDay = useMemo(() => {
+        const tasks = taskList.filter(t => !chosenDate ? toDayKey(t.id) === toDayKey(today) : toDayKey(t.id) === toDayKey(chosenDate));
+        console.log(tasks);
+        console.log(tasks.length === 0 ? 'NO TASKS' : toDayKey(tasks[0].id));
+        console.log(toDayKey(today));
+        console.log(toDayKey(chosenDate));
+
+        return tasks;
+    }, [chosenDate])
 
     return ( 
         <div className="history-cont">
@@ -42,13 +50,23 @@ function TaskHistory() {
                     <button className="bi bi-search" onClick={() => searchDate()}></button>
                 </div>
                 
-                <div className="chosen">
+                <div className="chosen" onClick={() => setChosenDate(`${today.getFullYear()}-${months[today.getMonth()]}-${today.getDate()}`)}>
                     {!chosenDate ? toDayKey(today) : toDayKey(chosenDate)}
                 </div>
             </div>
 
             <div className="tasks-per-day">
-
+                {
+                    tasksPerDay.length === 0 ? (
+                        <p className="no-tasks">No tasks...</p>
+                    ) : tasksPerDay.map(t => {
+                        return <TaskDisplay 
+                            key={t.keyUUID}
+                            taskE={t}
+                            history={history}
+                        />
+                    })
+                }
             </div>
 
             <div className="chosen-task-info">
