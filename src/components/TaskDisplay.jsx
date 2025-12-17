@@ -25,7 +25,7 @@ function TaskDisplay({taskE, history, chosenHist, setChosenHist}) {
     console.log("Chosen History", chosenHist);
   }, [chosenHist])
 
-  const isChosenHist = chosenHist.keyUUID === taskE.keyUUID;
+  const isChosenHist = chosenHist?.keyUUID === taskE.keyUUID;
 
   return (
 

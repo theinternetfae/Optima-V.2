@@ -144,6 +144,8 @@
 
 
         function generateDayRange(startDate, endDate) {
+            if (!startDate || ! endDate) return;
+
             const days = [];
             const start = new Date(
                 startDate.getFullYear(),
@@ -354,9 +356,10 @@
 
             if(!selectedTask) {
 
-                const start = new Date(taskList[0].start);
+                const start = taskList.length > 0 && new Date(taskList[0].start);
 
                 const validDays = generateDayRange(start, today);
+                if(!validDays) return;
 
                 let count = 0;
 
@@ -409,6 +412,12 @@
             return `${number} ${number === 1 ? 'day' : 'days'}`;
         }
 
+        const formatRate = (rate) => (typeof rate !== 'number' || rate === 0 ? '0.00' : rate);
+
+        useEffect(() => {
+            console.log(generalRate);
+        }, [generalRate])
+
         return ( 
             <div className="full-stats-cont">
 
@@ -439,22 +448,26 @@
 
                 <div className="selected-scroll-cont">
                     <ul className="selected-scroll">
-                        <div className="li-cont">
-                            <li onClick={() => toggleSelected(0)} className={selectedId === 0 ? 'border-bluelight' : ""}>
-                                <span>📚</span> {selectedId === 0 && <span>Overall</span>}
-                            </li>
+                        <div className="li-cont-box">
+                        
+                            <div className="li-cont">
+                                <li onClick={() => toggleSelected(0)} className={selectedId === 0 ? 'border-bluelight' : ""}>
+                                    <span>📚</span> {selectedId === 0 && <span>Overall</span>}
+                                </li>
+                            </div>
+
+
+                            {
+                                uniqueTasks.map((task, index) => (
+                                    <div key={index} className="li-cont">
+                                        <li onClick={() => toggleSelected(task.baseId, task)} style={selectedId === task.baseId ? { border: `2px solid ${task.color}` } : {}}>
+                                            {task.emoji} {selectedId === task.baseId && <span>{cutWords(task.name)}</span>}
+                                        </li>
+                                    </div>
+                                ))
+                            }
+
                         </div>
-
-
-                        {
-                            uniqueTasks.map((task, index) => (
-                                <div key={index} className="li-cont">
-                                    <li onClick={() => toggleSelected(task.baseId, task)} style={selectedId === task.baseId ? { border: `2px solid ${task.color}` } : {}}>
-                                        {task.emoji} {selectedId === task.baseId && <span>{cutWords(task.name)}</span>}
-                                    </li>
-                                </div>
-                            ))
-                        }
 
                     </ul>
                 </div>
@@ -507,7 +520,7 @@
                     <div className="filler-front">
 
                         <div className="average-body">
-                            <p className="rating">{selectedTask ? (selectedRate === 0 ? '0.00' : selectedRate) : (generalRate === 0 ? '0.00' : generalRate)}%</p>
+                            <p className="rating">{selectedTask ? formatRate(selectedRate) : formatRate(generalRate)}%</p>
                             <p className="rating-title">Overall rate</p>
                         </div>
 

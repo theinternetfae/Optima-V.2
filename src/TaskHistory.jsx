@@ -75,25 +75,25 @@ function TaskHistory() {
                     <>
 
                         <div className="top">
-                            <section className="sec">
-                                <i className="bi-trophy"></i>
+                            <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
+                                <i className="bi-trophy bi-bi" style={{color: chosenHist && `${chosenHist.color}`}}></i>
                                 <p className="calculator">0</p>
                                 <p className="calculator-label">Top streak</p>
                             </section>
-                            <section className="sec">
-                                <i className="bi-fire"></i>
+                            <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
+                                <i className="bi-fire bi-bi" style={{color: chosenHist && `${chosenHist.color}`}}></i>
                                 <p className="calculator">0</p>
                                 <p className="calculator-label">current streak</p>
                             </section>
                         </div>
                         <div className="top">
-                            <section className="sec">
-                                <i className="bi bi-check2-circle"></i>
+                            <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
+                                <i className="bi-bi bi-check2-circle" style={{color: chosenHist && `${chosenHist.color}`}}></i>
                                 <p className="calculator">0</p>
                                 <p className="calculator-label">Times Done</p>
                             </section>
-                            <section className="sec">
-                                <i className="bi-info-circle"></i>
+                            <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
+                                <i className="bi-info-circle bi-bi" style={{color: chosenHist && `${chosenHist.color}`}}></i>
                                 <p className="calculator">0</p>
                                 <p className="calculator-label">Status</p>
                             </section>

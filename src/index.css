@@ -246,7 +246,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .task-box {
-        @apply p-2 h-[40px] cursor-pointer rounded-md shadow no-scrollbar flex items-center transition-all duration-2000 ease-in-out md:p-4 md:border-none md:h-[70px] md:w-full; 
+        @apply p-2 h-[40px] cursor-pointer snap-start rounded-md shadow no-scrollbar flex items-center transition-all duration-2000 ease-in-out md:p-4 md:border-none md:h-[70px] md:w-full; 
 
         & .emoji-t-box {
             @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center rounded-lg md:w-[5%] md:h-full md:text-3xl;
@@ -343,12 +343,16 @@ input[type="number"]::-webkit-outer-spin-button {
             & ul {
                 @apply flex gap-2;
 
-                & .li-cont {
-                    @apply w-40 overflow-hidden flex justify-center items-center;
-                }
-
-                & li {
-                    @apply border border-2 border-transparent bg-dullblack p-4 rounded-full cursor-pointer shadow-lg text-lg;
+                & .li-cont-box {
+                    @apply border border-2 flex w-full overflow-hidden;
+                
+                    .li-cont {
+                        @apply border border-2 overflow-hidden flex justify-center items-center w-40;
+                    
+                        li {
+                            @apply border border-2 border-transparent bg-dullblack p-4 rounded-full cursor-pointer shadow-lg text-lg;
+                        }
+                    }
                 }
             }
         }
@@ -530,8 +534,12 @@ input[type="number"]::-webkit-outer-spin-button {
                 @apply flex items-center justify-around m-4;
 
                 .sec {
-                    @apply border border-2 text-lg bg-commongrey shadow p-2 w-[40%] h-[110px] rounded-full flex flex-col items-center justify-center;
+                    @apply border border-2 text-lg bg-commongrey shadow p-2 w-[40%] h-[110px] rounded-full flex flex-col items-center justify-center ease-in-out duration-300;
                     
+                    & .bi-bi {
+                        @apply text-2xl;
+                    }
+
                     & .calculator-label {
                         @apply text-base text-grey;
                     }

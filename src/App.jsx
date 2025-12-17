@@ -73,6 +73,7 @@ function App() {
           ...baseTask,
           keyUUID: crypto.randomUUID(),
           id: d.getTime(),
+          isDone: false
         });
 
         d = new Date(d);
