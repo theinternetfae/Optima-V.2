@@ -23,12 +23,35 @@ function TaskHistory() {
         return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
     }
 
+    function isValidCalendarDate({ year, month, day }) {
+        const y = Number(year);
+        const m = Number(month);
+        const d = Number(day);
+
+        if (!y || !m || !d) return false;
+        if (String(y).length !== 4) return false;
+
+        const date = new Date(y, m - 1, d);
+
+        return (
+            date.getFullYear() === y &&
+            date.getMonth() === m - 1 &&
+            date.getDate() === d
+        );
+    }
+
     function searchDate() {
-        if(!month || !year || !day) return;
-        setChosenDate(`${year}-${month}-${day}`);
-        setMonth('');
-        setDay('');
-        setYear('');
+        
+        if(!isValidCalendarDate({year: year, month: month, day: day})) {
+            alert('Invalid date.');
+            return;
+        } else {
+            setChosenDate(`${year}-${month}-${day}`);
+            setMonth('');
+            setDay('');
+            setYear('');
+        };
+
     }
 
     const tasksPerDay = useMemo(() => {
@@ -66,16 +89,6 @@ function TaskHistory() {
         return days;
     
     }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -151,7 +164,7 @@ function TaskHistory() {
 
         setCurrentHistStreak(count);
 
-    })
+    }, [chosenHist])
 
 
 
@@ -191,11 +204,6 @@ function TaskHistory() {
 
 
 
-
-    useEffect(() =>{
-        console.log('Top Streak', topHistStreak);
-        console.log('Current Streak', currentHistStreak);
-    }, [topHistStreak, currentHistStreak])
 
     return ( 
         <div className="history-cont">

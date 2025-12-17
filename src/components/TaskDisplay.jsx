@@ -21,10 +21,6 @@ function TaskDisplay({taskE, history, chosenHist, setChosenHist}) {
     setDone(taskE.isDone)
   }, [taskE.isDone]);
 
-  useEffect(() => {
-    console.log("Chosen History", chosenHist);
-  }, [chosenHist])
-
   const isChosenHist = chosenHist?.keyUUID === taskE.keyUUID;
 
   return (
