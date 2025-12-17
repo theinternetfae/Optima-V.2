@@ -36,6 +36,167 @@ function TaskHistory() {
         return tasks;
     }, [chosenDate, taskList])
 
+    useEffect(() => {
+        setChosenHist('');
+    }, [chosenDate])
+
+    const normalizeDate = date => new Date(date).toDateString();
+
+    function generateDayRange(startDate, endDate) {
+    
+        if (!startDate || ! endDate) return;
+
+        const days = [];
+        const start = new Date(
+            startDate.getFullYear(),
+            startDate.getMonth(),
+            startDate.getDate()
+        );
+        const end = new Date(
+            endDate.getFullYear(),
+            endDate.getMonth(),
+            endDate.getDate()
+        );
+
+        for (let d = start; d <= end; d++) {
+            const nD = new Date(start) + 1;
+            days.push(nD);
+        }
+
+        return days;
+    
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    const [topHistStreak, setTopHistStreak] = useState(0);
+
+    useEffect(() => {
+
+        if(!chosenHist) return;
+     
+        const tasksToCalculate = taskList.filter(t => t.baseId === chosenHist.baseId)
+
+        const resultStreak = tasksToCalculate.reduce((acc, tc) => {
+            if(tc.isDone) {
+                acc.count++;
+            } else {
+                acc.count > 0 && acc.streaks.push(acc.count);
+                acc.count = 0;
+            }
+
+            return acc;
+        }, {count: 0, streaks: []})
+
+        resultStreak.count > 0 && resultStreak.streaks.push(resultStreak.count);
+
+        setTopHistStreak(resultStreak.streaks);
+
+    }, [chosenHist])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    const [currentHistStreak, setCurrentHistStreak] = useState(0);
+
+    useEffect(() => {
+    
+        if(!chosenHist) return;
+        
+        const tasksToCalculate = taskList.filter(t => t.baseId === chosenHist.baseId);
+
+        const start = new Date(tasksToCalculate[0].start);
+
+        const validDays = generateDayRange(start, today);
+
+        let count = 0;
+
+        for(let i = validDays.length - 1; i >= 0; i--) {
+            const tasksNDays = tasksToCalculate.filter(tl => normalizeDate(tl.id) === normalizeDate(validDays[i]));
+            
+            if(tasksNDays.length > 0 && tasksNDays.some(td => td.isDone)) {
+                count++;
+            } else if (tasksNDays.length > 0 && tasksNDays.some(td => !td.isDone)) {
+                break;
+            }
+        }
+
+        setCurrentHistStreak(count);
+
+    })
+
+
+
+
+    const [histTaskDone, setHistTaskDone] = useState(0);
+    useEffect(() => {
+        
+        if(!chosenHist) return;
+
+        const uniqueDone = taskList.filter(tl => tl.baseId === chosenHist.baseId && tl.isDone === true);
+        setHistTaskDone(uniqueDone.length);
+
+    }, [chosenHist])
+
+
+
+
+
+
+    const [histActiveStatus, setHistActiveStatus] = useState(false)
+
+    useEffect(() => {
+
+        if(!chosenHist) return;
+        
+        const validTasks = taskList.filter(t => t.baseId === chosenHist.baseId);
+
+        const end = validTasks[validTasks.length - 1].end;
+    
+        new Date(end).getTime() > new Date(today).getTime() ? setHistActiveStatus(true) : setHistActiveStatus(false);
+    
+    }, [chosenHist])
+
+
+
+
+
+
+
+
+    useEffect(() =>{
+        console.log('Top Streak', topHistStreak);
+        console.log('Current Streak', currentHistStreak);
+    }, [topHistStreak, currentHistStreak])
+
     return ( 
         <div className="history-cont">
 
@@ -48,8 +209,9 @@ function TaskHistory() {
                 </div>
                 
                 <div className="chosen" onClick={() => setChosenDate(`${today.getFullYear()}-${months[today.getMonth()]}-${today.getDate()}`)}>
-                    {!chosenDate ? toDayKey(today) : toDayKey(chosenDate)}
+                    {!chosenDate ? toDayKey(today) : toDayKey(chosenDate)} [{tasksPerDay.length === 1 ? `${tasksPerDay.length} task` : `${tasksPerDay.length} tasks`}]
                 </div>
+
             </div>
 
             <div className="tasks-per-day">
@@ -77,31 +239,30 @@ function TaskHistory() {
                         <div className="top">
                             <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
                                 <i className="bi-trophy bi-bi" style={{color: chosenHist && `${chosenHist.color}`}}></i>
-                                <p className="calculator">0</p>
+                                <p className="calculator">{topHistStreak.length > 0 ? Math.max(...topHistStreak) : 0}</p>
                                 <p className="calculator-label">Top streak</p>
                             </section>
                             <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
                                 <i className="bi-fire bi-bi" style={{color: chosenHist && `${chosenHist.color}`}}></i>
-                                <p className="calculator">0</p>
+                                <p className="calculator">{currentHistStreak}</p>
                                 <p className="calculator-label">current streak</p>
                             </section>
                         </div>
                         <div className="top">
                             <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
                                 <i className="bi-bi bi-check2-circle" style={{color: chosenHist && `${chosenHist.color}`}}></i>
-                                <p className="calculator">0</p>
-                                <p className="calculator-label">Times Done</p>
+                                <p className="calculator">{histTaskDone}</p>
+                                <p className="calculator-label">Tasks done</p>
                             </section>
                             <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
                                 <i className="bi-info-circle bi-bi" style={{color: chosenHist && `${chosenHist.color}`}}></i>
-                                <p className="calculator">0</p>
+                                <p className="calculator">{histActiveStatus ? 'Active' : 'Inactive'}</p>
                                 <p className="calculator-label">Status</p>
                             </section>
                         </div>
                     
                     </>
                 )}
-
             
             </div>
         </div> 

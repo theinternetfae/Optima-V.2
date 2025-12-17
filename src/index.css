@@ -246,7 +246,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .task-box {
-        @apply p-2 h-[40px] cursor-pointer snap-start rounded-md shadow no-scrollbar flex items-center transition-all duration-2000 ease-in-out md:p-4 md:border-none md:h-[70px] md:w-full; 
+        @apply p-2 h-[40px] cursor-pointer snap-start rounded-md shadow flex items-center transition-all duration-2000 ease-in-out md:p-4 md:border-none md:h-[70px] md:w-full; 
 
         & .emoji-t-box {
             @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center rounded-lg md:w-[5%] md:h-full md:text-3xl;
@@ -311,7 +311,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 
     .history-box {
-        @apply border border-2 border-transparent cursor-pointer rounded-md shadow m-4 h-[60px] flex items-center duration-2000 ease-in-out;
+        @apply border border-2 border-transparent snap-start cursor-pointer rounded-md shadow m-4 h-[60px] flex items-center duration-2000 ease-in-out;
 
         & .emoji-t-box {
             @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center ml-2 rounded-lg md:w-[5%] md:h-[80%] md:text-3xl;
@@ -516,7 +516,7 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         & .tasks-per-day {
-            @apply h-[40%] rounded-lg shadow-lg bg-commongrey no-scrollbar overflow-hidden;
+            @apply h-[280px] rounded-lg shadow-lg flex flex-col bg-commongrey no-scrollbar overflow-y-auto;
 
             .no-tasks {
                 @apply text-center mt-4;

@@ -416,7 +416,8 @@
 
         useEffect(() => {
             console.log(generalRate);
-        }, [generalRate])
+            console.log(selectedRate)
+        }, [generalRate, selectedRate])
 
         return ( 
             <div className="full-stats-cont">
@@ -520,7 +521,7 @@
                     <div className="filler-front">
 
                         <div className="average-body">
-                            <p className="rating">{selectedTask ? formatRate(selectedRate) : formatRate(generalRate)}%</p>
+                            <p className="rating">{selectedTask ? (selectedRate === 0 ? '0.00' : selectedRate) : (generalRate === 0 ? '0.00' : generalRate)}%</p>
                             <p className="rating-title">Overall rate</p>
                         </div>
 
