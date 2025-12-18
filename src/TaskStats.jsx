@@ -26,7 +26,6 @@
 
         const [matchingBorderDay, setMatchingBorderDay] = useState([]);
 
-
         function toggleSelected(id, task) {
             setSelectedId(id);
             setSelectedTask(task);
@@ -256,19 +255,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         /////////////////////////////////////////////////////////
         useEffect(() => {
 
@@ -429,9 +415,9 @@
                         uniqueTasks.forEach(task => {
                             Number(e.target.value) === task.baseId ? toggleSelected(Number(e.target.value), task) : Number(e.target.value) === 0 && toggleSelected(Number(e.target.value));
                         })
-                    
-                    }} className="task-selected">         
                         
+                    }} className="task-selected">         
+
                         <option value={0}>
                             {`📚 Overall`}
                         </option>
@@ -456,7 +442,6 @@
                                     <span>📚</span> {selectedId === 0 && <span>Overall</span>}
                                 </li>
                             </div>
-
 
                             {
                                 uniqueTasks.map((task, index) => (

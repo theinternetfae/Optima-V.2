@@ -30,7 +30,8 @@ function TaskDisplay({taskE, history, chosenHist, setChosenHist}) {
       <div className={!history ? "task-box" : "history-box"} style={{
         backgroundColor: done ? (taskE.color || "#60A5FA") : "#111111",
         border: isChosenHist ? `2px solid ${taskE.color}` : ''
-      }} onClick={() => {
+      }} onClick={(e) => {
+        if(e.target.closest('button')) return;
         if (history) setChosenHist(taskE);
       }}>
 
@@ -68,7 +69,10 @@ function TaskDisplay({taskE, history, chosenHist, setChosenHist}) {
           ) :
          
           (
-            <button className="bi bi-trash" onClick={() => setAlertShow(prev => !prev)}></button>
+            <button className="bi bi-trash" onClick={(e) => {
+              e.stopPropagation();
+              setAlertShow(prev => !prev);
+            }}></button>
           )
         }
 

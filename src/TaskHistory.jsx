@@ -12,7 +12,7 @@ function TaskHistory() {
     const [year, setYear] = useState('');
     const [chosenDate, setChosenDate] = useState('');
     
-    const [chosenHist, setChosenHist] = useState('');
+    const [chosenHist, setChosenHist] = useState(null);
 
     const today = new Date();
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -81,7 +81,7 @@ function TaskHistory() {
             endDate.getDate()
         );
 
-        for (let d = start; d <= end; d++) {
+        for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
             const nD = new Date(start) + 1;
             days.push(nD);
         }
@@ -115,26 +115,7 @@ function TaskHistory() {
 
         setTopHistStreak(resultStreak.streaks);
 
-    }, [chosenHist])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }, [chosenHist]);
 
 
 
