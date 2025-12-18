@@ -92,98 +92,79 @@ function TaskHistory() {
 
 
 
+
+
+
     const [topHistStreak, setTopHistStreak] = useState(0);
-
-    useEffect(() => {
-
-        if(!chosenHist) return;
-     
-        const tasksToCalculate = taskList.filter(t => t.baseId === chosenHist.baseId)
-
-        const resultStreak = tasksToCalculate.reduce((acc, tc) => {
-            if(tc.isDone) {
-                acc.count++;
-            } else {
-                acc.count > 0 && acc.streaks.push(acc.count);
-                acc.count = 0;
-            }
-
-            return acc;
-        }, {count: 0, streaks: []})
-
-        resultStreak.count > 0 && resultStreak.streaks.push(resultStreak.count);
-
-        setTopHistStreak(resultStreak.streaks);
-
-    }, [chosenHist]);
-
-
-
     const [currentHistStreak, setCurrentHistStreak] = useState(0);
+    const [histTaskDone, setHistTaskDone] = useState(0);
+    const [histActiveStatus, setHistActiveStatus] = useState(false);
 
-    useEffect(() => {
-    
-        if(!chosenHist) return;
-        
-        const tasksToCalculate = taskList.filter(t => t.baseId === chosenHist.baseId);
+    const stats = useMemo(() => {
 
-        const start = new Date(tasksToCalculate[0].start);
+        if(!chosenHist) {
+            return {
+                topStreak: 0,
+                currentStreak: 0,
+                doneCount: 0,
+                isActive: false
+            };
+        };
 
+        const chosensTasks = taskList.filter(t => t.baseId === chosenHist.baseId);
+
+        if(chosensTasks.length === 0) {
+            return {
+                topStreak: 0,
+                currentStreak: 0,
+                doneCount: 0,
+                isActive: false
+            };
+        };
+
+        //topHistStreak
+        let count = 0;
+        let topStreak = 0;
+
+        for(const c of chosensTasks) {
+            if(c.isDone) {
+                count++;
+                topStreak = Math.max(topStreak, count);
+            } else {
+                count = 0;
+            }
+        }
+
+        //currentHistStreak
+        const start = new Date(chosensTasks[0].start);
         const validDays = generateDayRange(start, today);
 
-        let count = 0;
+        let currentStreak = 0;
 
         for(let i = validDays.length - 1; i >= 0; i--) {
-            const tasksNDays = tasksToCalculate.filter(tl => normalizeDate(tl.id) === normalizeDate(validDays[i]));
+            const tasksNDays = chosensTasks.filter(
+                c => normalizeDate(c.id) === normalizeDate(validDays[i])
+            );
             
-            if(tasksNDays.length > 0 && tasksNDays.some(td => td.isDone)) {
-                count++;
-            } else if (tasksNDays.length > 0 && tasksNDays.some(td => !td.isDone)) {
+            if(tasksNDays.some(td => td.isDone)) {
+                currentStreak++;
+            } else if (tasksNDays.some(td => !td.isDone)) {
                 break;
             }
         }
 
-        setCurrentHistStreak(count);
 
-    }, [chosenHist])
-
-
+        //histTaskDone
+        const uniqueDone = chosensTasks.filter(tl => tl.isDone).length;
 
 
-    const [histTaskDone, setHistTaskDone] = useState(0);
-    useEffect(() => {
-        
-        if(!chosenHist) return;
-
-        const uniqueDone = taskList.filter(tl => tl.baseId === chosenHist.baseId && tl.isDone === true);
-        setHistTaskDone(uniqueDone.length);
-
-    }, [chosenHist])
+        //hisActive
+        const end = chosensTasks[chosensTasks.length - 1].end;
+        const isActive = new Date(end).getTime() > new Date(today).getTime();
 
 
-
-
-
-
-    const [histActiveStatus, setHistActiveStatus] = useState(false)
-
-    useEffect(() => {
-
-        if(!chosenHist) return;
-        
-        const validTasks = taskList.filter(t => t.baseId === chosenHist.baseId);
-
-        const end = validTasks[validTasks.length - 1].end;
-    
-        new Date(end).getTime() > new Date(today).getTime() ? setHistActiveStatus(true) : setHistActiveStatus(false);
-    
-    }, [chosenHist])
-
-
-
-
-
-
+        return {resultStreak: topStreak, count: currentStreak, uniqueDone: uniqueDone, isActive: isActive}
+    }, [chosenHist, taskList]);
 
 
     return ( 
@@ -228,24 +209,24 @@ function TaskHistory() {
                         <div className="top">
                             <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
                                 <i className="bi-trophy bi-bi" style={{color: chosenHist && `${chosenHist.color}`}}></i>
-                                <p className="calculator">{topHistStreak.length > 0 ? Math.max(...topHistStreak) : 0}</p>
+                                <p className="calculator">{stats.resultStreak === 0 ? '0' : stats.resultStreak}</p>
                                 <p className="calculator-label">Top streak</p>
                             </section>
                             <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
                                 <i className="bi-fire bi-bi" style={{color: chosenHist && `${chosenHist.color}`}}></i>
-                                <p className="calculator">{currentHistStreak}</p>
+                                <p className="calculator">{stats.count === 0 ? '0' : stats.count}</p>
                                 <p className="calculator-label">current streak</p>
                             </section>
                         </div>
                         <div className="top">
                             <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
                                 <i className="bi-bi bi-check2-circle" style={{color: chosenHist && `${chosenHist.color}`}}></i>
-                                <p className="calculator">{histTaskDone}</p>
+                                <p className="calculator">{stats.uniqueDone === 0 ? '0' : stats.uniqueDone}</p>
                                 <p className="calculator-label">Tasks done</p>
                             </section>
                             <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
                                 <i className="bi-info-circle bi-bi" style={{color: chosenHist && `${chosenHist.color}`}}></i>
-                                <p className="calculator">{histActiveStatus ? 'Active' : 'Inactive'}</p>
+                                <p className="calculator">{stats.isActive ? "Active" : 'Inactive'}</p>
                                 <p className="calculator-label">Status</p>
                             </section>
                         </div>
