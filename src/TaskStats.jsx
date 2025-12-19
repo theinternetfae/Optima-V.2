@@ -36,6 +36,7 @@
         }
 
         const uniqueTasks = useMemo(() => {
+            
             const uniqueTasksMap = {};
 
             for (const task of taskList) {
@@ -48,6 +49,7 @@
             uniqueTasks.sort((a, b) => Number(new Date(b.end) > today) - Number(new Date(a.end) > today));
             
             return uniqueTasks;
+
         }, [taskList, today]);
 
         function cutWords(text, limit = 1) {
@@ -436,25 +438,22 @@
 
                 <div className="selected-scroll-cont">
                     <ul className="selected-scroll">
-                        <div className="li-cont-box">
-                        
-                            <div className="li-cont">
-                                <li onClick={() => toggleSelected(0)} className={selectedId === 0 ? 'border-bluelight' : ""}>
-                                    <span>📚</span> {selectedId === 0 && <span>Overall</span>}
-                                </li>
-                            </div>
-
-                            {
-                                uniqueTasks.map((task, index) => (
-                                    <div key={index} className="li-cont">
-                                        <li onClick={() => toggleSelected(task.baseId, task)} style={selectedId === task.baseId ? { border: `2px solid ${task.color}` } : {}}>
-                                            {task.emoji} {selectedId === task.baseId && <span>{cutWords(task.name)}</span>}
-                                        </li>
-                                    </div>
-                                ))
-                            }
-
+                    
+                        <div className="li-cont">
+                            <li onClick={() => toggleSelected(0)} className={selectedId === 0 ? 'border-bluelight' : ""}>
+                                <span>📚</span> {selectedId === 0 && <span>Overall</span>}
+                            </li>
                         </div>
+
+                        {
+                            uniqueTasks.map((task, index) => (
+                                <div key={index} className="li-cont">
+                                    <li onClick={() => toggleSelected(task.baseId, task)} style={selectedId === task.baseId ? { border: `2px solid ${task.color}` } : {}}>
+                                        {task.emoji} {selectedId === task.baseId && <span>{cutWords(task.name)}</span>}
+                                    </li>
+                                </div>
+                            ))
+                        }
 
                     </ul>
                 </div>

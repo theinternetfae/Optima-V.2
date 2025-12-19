@@ -252,7 +252,6 @@ function DateMenu() {
             </div>
 
             <div className="task-display">
-
                 
                 {visibleTasks.length === 0 ? (
                     <p className="no-tasks">{taskFilter === 'all' ? 'No tasks' : taskFilter === 'met' ? 'No tasks completed...' : 'None!'}</p>

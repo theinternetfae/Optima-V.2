@@ -5,6 +5,7 @@ import TaskHistory from "./TaskHistory.jsx";
 import TaskStats from "./TaskStats.jsx";
 import { useState, useEffect } from "react";
 import { TaskContext } from "./components/TaskContext.js";
+import Settings from "./Settings.jsx";
 
 function App() {
 
@@ -150,6 +151,13 @@ function App() {
             <Route path="/taskHistory" element={
               <div className="a-body">
                 <TaskHistory />
+                </div>
+              }
+            />
+
+            <Route path="/settings" element={
+              <div className="a-body">
+                <Settings />
                 </div>
               }
             />

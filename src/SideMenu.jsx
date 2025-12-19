@@ -23,6 +23,11 @@ function SideMenu() {
                 <p>History</p>
             </Link>
 
+            <Link to="/settings" className={`road ${location.pathname === "/settings" && 'border-bluelight'}`}>
+                <i className="bi bi-gear"></i>
+                <p>Settings</p>
+            </Link>
+
         </nav>
     );
 }

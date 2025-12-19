@@ -238,7 +238,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .task-display {
-        @apply p-4 rounded-lg h-[clamp(400px,62vh,640px)] no-scrollbar overflow-y-auto mt-6 flex flex-col gap-4 md:snap-y md:snap-mandatory md:scroll-smooth scroll-pt-4 text-sm md:bg-commongrey md:mt-8 md:p-4 md:gap-6 md:text-base md:w-full md:h-[475px] md:overflow-y-auto;
+        @apply p-4 rounded-lg no-scrollbar overflow-y-auto scroll-py-4 mt-6 flex flex-col gap-4 md:snap-y md:snap-mandatory md:scroll-smooth scroll-pt-4 text-sm md:bg-commongrey md:mt-8 md:p-4 md:gap-6 md:text-base md:w-full md:h-[475px] md:overflow-y-auto;
         
         & .no-tasks {
             @apply text-center;
@@ -340,20 +340,17 @@ input[type="number"]::-webkit-outer-spin-button {
         & .selected-scroll-cont {
             @apply bg-commongrey rounded-lg p-4 w-full sticky top-2 z-99;
 
-            & ul {
-                @apply flex gap-2;
-
-                & .li-cont-box {
-                    @apply border border-2 flex w-full overflow-hidden;
+            & .selected-scroll {
+                @apply flex gap-5 overflow-hidden w-[1120px] overflow-x-auto ml-5 no-scrollbar snap-x snap-mandatory;
                 
-                    .li-cont {
-                        @apply border border-2 overflow-hidden flex justify-center items-center w-40;
-                    
-                        li {
-                            @apply border border-2 border-transparent bg-dullblack p-4 rounded-full cursor-pointer shadow-lg text-lg;
-                        }
+                .li-cont {
+                    @apply flex shrink-0 justify-center items-center w-[140px] snap-start;
+                
+                    li {
+                        @apply border border-2 border-transparent bg-dullblack p-4 rounded-full cursor-pointer shadow-lg text-lg;
                     }
                 }
+                
             }
         }
 
@@ -516,8 +513,11 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         & .tasks-per-day {
-            @apply h-[280px] rounded-lg shadow-lg flex flex-col bg-commongrey no-scrollbar overflow-y-auto;
+            @apply h-[280px] rounded-lg shadow-lg flex justify-center bg-commongrey;
 
+            .tasks-pd-cont {
+                @apply w-full overflow-y-auto no-scrollbar snap-y snap-mandatory scroll-py-4 flex flex-col;
+            }
             .no-tasks {
                 @apply text-center mt-4;
             }

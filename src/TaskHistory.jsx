@@ -184,19 +184,23 @@ function TaskHistory() {
             </div>
 
             <div className="tasks-per-day">
-                {
-                    tasksPerDay.length === 0 ? (
-                        <p className="no-tasks">No tasks...</p>
-                    ) : tasksPerDay.map(t => {
-                        return <TaskDisplay 
-                            key={t.keyUUID}
-                            taskE={t}
-                            history={history}
-                            chosenHist={chosenHist}
-                            setChosenHist = {setChosenHist}
-                        />
-                    })
-                }
+                <div className="tasks-pd-cont">
+
+                    {
+                        tasksPerDay.length === 0 ? (
+                            <p className="no-tasks">No tasks...</p>
+                        ) : tasksPerDay.map(t => {
+                            return <TaskDisplay 
+                                key={t.keyUUID}
+                                taskE={t}
+                                history={history}
+                                chosenHist={chosenHist}
+                                setChosenHist = {setChosenHist}
+                            />
+                        })
+                    }
+
+                </div>
             </div>
 
             <div className="chosen-task-info">
@@ -221,7 +225,7 @@ function TaskHistory() {
                             <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
                                 <i className="bi-bi bi-check2-circle" style={{color: chosenHist && `${chosenHist.color}`}}></i>
                                 <p className="calculator">{stats.uniqueDone === 0 ? '0' : stats.uniqueDone}</p>
-                                <p className="calculator-label">Tasks done</p>
+                                <p className="calculator-label">Times done</p>
                             </section>
                             <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
                                 <i className="bi-info-circle bi-bi" style={{color: chosenHist && `${chosenHist.color}`}}></i>
