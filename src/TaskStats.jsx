@@ -35,12 +35,20 @@
             return `${d.getFullYear()}-${d.getMonth()}`;
         }
 
-        const uniqueTasks = Object.values(
-            taskList.reduce((acc, task) => {
-                if(!acc[task.baseId] && task.days.length > 0) acc[task.baseId] = task;
-                return acc;
-            }, {})
-        )
+        const uniqueTasks = useMemo(() => {
+            const uniqueTasksMap = {};
+
+            for (const task of taskList) {
+                if (task.days.length > 0) {
+                    uniqueTasksMap[task.baseId] = task;
+                }
+            }
+
+            const uniqueTasks = Object.values(uniqueTasksMap);
+            uniqueTasks.sort((a, b) => Number(new Date(b.end) > today) - Number(new Date(a.end) > today));
+            
+            return uniqueTasks;
+        }, [taskList, today]);
 
         function cutWords(text, limit = 1) {
             const words = text.split(" ");
@@ -397,13 +405,6 @@
             const number = selectedTask ? currentStreak : generalCurrentStreak;
             return `${number} ${number === 1 ? 'day' : 'days'}`;
         }
-
-        const formatRate = (rate) => (typeof rate !== 'number' || rate === 0 ? '0.00' : rate);
-
-        useEffect(() => {
-            console.log(generalRate);
-            console.log(selectedRate)
-        }, [generalRate, selectedRate])
 
         return ( 
             <div className="full-stats-cont">

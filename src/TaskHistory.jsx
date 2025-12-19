@@ -162,7 +162,6 @@ function TaskHistory() {
         const end = chosensTasks[chosensTasks.length - 1].end;
         const isActive = new Date(end).getTime() > new Date(today).getTime();
 
-
         return {resultStreak: topStreak, count: currentStreak, uniqueDone: uniqueDone, isActive: isActive}
     }, [chosenHist, taskList]);
 
