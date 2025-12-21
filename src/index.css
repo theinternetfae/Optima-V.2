@@ -548,6 +548,34 @@ input[type="number"]::-webkit-outer-spin-button {
             }
         }
     }
+
+    .settings-main-cont {
+        @apply h-full flex flex-col gap-2; 
+
+        & .settings-header {
+            @apply text-2xl font-bold
+        }
+
+        & .settings-subheader {
+            @apply text-sm text-grey
+        }
+
+        & .settings-body {
+            @apply h-full mt-4 border-t-2 border-commongrey;
+
+            .settings-router {
+                @apply h-15 bg-commongrey rounded-full mt-4;
+ 
+                & ul {
+                    @apply flex items-center h-full justify-around;
+
+                    li {
+                        @apply border border-2 border-transparent p-2 rounded-lg;
+                    }
+                }
+            }
+        }
+    }
 }
 
 @utility shadow-inset-dark {
