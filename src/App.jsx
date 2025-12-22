@@ -1,11 +1,19 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import DateMenu from "./Date.jsx";
-import SideMenu from "./SideMenu.jsx";
 import TaskHistory from "./TaskHistory.jsx";
 import TaskStats from "./TaskStats.jsx";
 import { useState, useEffect } from "react";
 import { TaskContext } from "./components/TaskContext.js";
+import AppLayout from "./AppLayout.jsx";
 import Settings from "./Settings.jsx";
+import Profile from "./settingsComponents/Profile.jsx";
+import Preferences from "./settingsComponents/Preferences.jsx";
+import TaskHandler from "./settingsComponents/TaskHandler.jsx";
+import DataPrivacy from "./settingsComponents/DataPrivacy.jsx";
+import About from "./settingsComponents/About.jsx";
+
+
+
 
 function App() {
 
@@ -129,42 +137,27 @@ function App() {
 
     <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask}}>
       <BrowserRouter>    
-        <div className="named">
-          <SideMenu/>
 
-          <Routes>
+        <Routes>
 
-            <Route path="/" element={
-                <div className="a-body">
-                  <DateMenu />
-                </div>
-              }
-            />
+          <Route element={<AppLayout />}>
+            <Route path="/" element={<DateMenu />} />
+            <Route path="/taskStats" element={<TaskStats />} />
+            <Route path="/taskHistory" element={<TaskHistory />} />
 
-            <Route path="/taskStats" element={
-                <div className="a-body">
-                  <TaskStats />
-                </div>
-              }
-            />
+            <Route path="settings" element={<Settings />}>
+              <Route index element={<Navigate to="profile" replace />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="preferences" element={<Preferences />} />
+              <Route path="taskHandler" element={<TaskHandler />} />
+              <Route path="dataPrivacy" element={<DataPrivacy />} />
+              <Route path="about" element={<About />} />
+            </Route>
 
-            <Route path="/taskHistory" element={
-              <div className="a-body">
-                <TaskHistory />
-                </div>
-              }
-            />
+          </Route>
 
-            <Route path="/settings" element={
-              <div className="a-body">
-                <Settings />
-                </div>
-              }
-            />
-
-          </Routes>
+        </Routes>
         
-        </div>
       </BrowserRouter>
     </TaskContext.Provider>
   )

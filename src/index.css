@@ -84,6 +84,10 @@ input[type="number"]::-webkit-outer-spin-button {
         & .a-body {
             @apply w-full mt-6 md:px-6 lg:px-0 lg:w-[80%] lg:mx-8;
         }
+
+        & .b-body {
+            @apply lg:mx-8 lg:w-[80%] mt-6 border border-2
+        }
     }
 
     .side-menu {
@@ -553,7 +557,11 @@ input[type="number"]::-webkit-outer-spin-button {
         @apply h-full flex flex-col gap-2; 
 
         & .settings-header {
-            @apply text-2xl font-bold
+            @apply text-2xl font-bold;
+            
+            & .checking {
+                @apply text-grey text-base;
+            }
         }
 
         & .settings-subheader {
@@ -564,16 +572,17 @@ input[type="number"]::-webkit-outer-spin-button {
             @apply h-full mt-4 border-t-2 border-commongrey;
 
             .settings-router {
-                @apply h-15 bg-commongrey rounded-full mt-4;
- 
-                & ul {
-                    @apply flex items-center h-full justify-around;
+                @apply h-15 bg-commongrey rounded-lg mt-4 flex items-center justify-around;
 
-                    li {
-                        @apply border border-2 border-transparent p-2 rounded-lg;
-                    }
+                .sett-link {
+                    @apply border border-2 border-transparent p-2 rounded-lg cursor-pointer;
                 }
+            
             }
+        }
+    
+        .sett-body {
+            @apply h-[530px] mt-2 rounded-lg bg-commongrey shadow p-4;
         }
     }
 }
