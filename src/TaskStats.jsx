@@ -37,15 +37,15 @@
 
         const uniqueTasks = useMemo(() => {
             
-            const uniqueTasksMap = {};
+            const uniqueTasksMap = new Map();
 
             for (const task of taskList) {
                 if (task.days.length > 0) {
-                    uniqueTasksMap[task.baseId] = task;
+                    uniqueTasksMap.set(task.baseId, task);
                 }
             }
 
-            const uniqueTasks = Object.values(uniqueTasksMap);
+            const uniqueTasks = [...uniqueTasksMap.values()];
             uniqueTasks.sort((a, b) => Number(new Date(b.end) > today) - Number(new Date(a.end) > today));
             
             return uniqueTasks;

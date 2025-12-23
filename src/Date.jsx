@@ -153,8 +153,8 @@ function DateMenu() {
     }
 
     function toggleTodayDisplay() {
-        if (todayRef.current && containerRef.current) {
-            todayRef.current.scrollIntoView({
+        if (todayRef?.current && containerRef.current) {
+            todayRef?.current.scrollIntoView({
                 behavior: "auto",
                 inline: "center",
                 block: "nearest",
