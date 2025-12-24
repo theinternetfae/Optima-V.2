@@ -46,7 +46,11 @@
             }
 
             const uniqueTasks = [...uniqueTasksMap.values()];
-            uniqueTasks.sort((a, b) => Number(new Date(b.end) > today) - Number(new Date(a.end) > today));
+            uniqueTasks.sort((a, b) => {
+                const aEnd = Number(new Date(b.end) > today);
+                const bEnd = Number(new Date(a.end) > today); 
+                return Number(bEnd) - Number(aEnd);
+            });
             
             return uniqueTasks;
 

@@ -29,6 +29,8 @@ function NewTask({exit, editExit, task}) {
     const [minute, setMinute] = useState(task && task.reminderTime ? parseInt(task.reminderTime.split(':')[1]) : 0);
     const [meridiem, setMeridiem] = useState(task && task.reminderTime ? task.reminderTime.split(' ')[1] : "AM");
 
+    const timeString = `${hour}:${String(minute).padStart(2, "0")} ${meridiem}`;
+
     function clickShowPicker() {
         setShowPicker(prev => !prev);
     }
@@ -57,9 +59,6 @@ function NewTask({exit, editExit, task}) {
             alert("Selected dates cannot be in the past.");
             return;
         }
-
-
-        const timeString = `${hour}:${minute < 10 ? "0" + minute : minute} ${meridiem}`;
 
         const theTask = {
             id: Date.now(),
@@ -97,8 +96,6 @@ function NewTask({exit, editExit, task}) {
             alert("Selected dates cannot be in the past.");
             return;
         }
-
-        const timeString = `${hour}:${minute < 10 ? "0" + minute : minute} ${meridiem}`;
 
         const editedTask = {
             ...task,
