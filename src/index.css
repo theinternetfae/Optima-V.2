@@ -581,8 +581,26 @@ input[type="number"]::-webkit-outer-spin-button {
             }
         }
     
-        .sett-body {
-            @apply h-[530px] mt-2 rounded-lg bg-commongrey shadow p-4;
+        & .sett-body {
+            @apply h-[530px] mt-2 rounded-lg bg-commongrey shadow p-4 overflow-y-auto;
+        
+            /*Profile*/
+            .the-user {
+                @apply border border-2 border-red h-[200px];
+            
+                .pfp-upload {
+                    @apply  w-[190px] overflow-hidden h-full cursor-pointer rounded-full bg-dullblack shadow flex justify-center items-center;
+                
+                    .pfp-plus {
+                        @apply text-6xl;
+                    }
+
+                    .pfp-image {
+                        @apply w-full h-full object-cover;
+                    }
+                }
+
+            }
         }
     }
 }

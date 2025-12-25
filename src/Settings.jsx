@@ -7,9 +7,7 @@ function Settings() {
 
     function checking() {
         if(location.pathname === '/settings/profile') {
-            return "> Profile"
-        } else if(location.pathname === '/settings/preferences') {
-            return "> Preferences"
+            return "> Profile & Preferences"
         } else if(location.pathname === '/settings/taskHandler') {
             return "> Task Handler"
         } else if(location.pathname === '/settings/dataPrivacy') {
@@ -31,11 +29,7 @@ function Settings() {
                 <aside className="settings-router">
                     
                     <Link to="profile" className={`sett-link ${location.pathname === "/settings/profile" && 'border-bluelight'}`}>
-                        <p>Profile</p>
-                    </Link>
-
-                    <Link to="preferences" className={`sett-link ${location.pathname === "/settings/preferences" && 'border-bluelight'}`}>
-                        <p>Preferences</p>
+                        <p>Profile & Preferences</p>
                     </Link>
 
                     <Link to="taskHandler" className={`sett-link ${location.pathname === "/settings/taskHandler" && 'border-bluelight'}`}>

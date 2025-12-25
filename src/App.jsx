@@ -7,7 +7,6 @@ import { TaskContext } from "./components/TaskContext.js";
 import AppLayout from "./AppLayout.jsx";
 import Settings from "./Settings.jsx";
 import Profile from "./settingsComponents/Profile.jsx";
-import Preferences from "./settingsComponents/Preferences.jsx";
 import TaskHandler from "./settingsComponents/TaskHandler.jsx";
 import DataPrivacy from "./settingsComponents/DataPrivacy.jsx";
 import About from "./settingsComponents/About.jsx";
@@ -148,7 +147,6 @@ function App() {
             <Route path="settings" element={<Settings />}>
               <Route index element={<Navigate to="profile" replace />} />
               <Route path="profile" element={<Profile />} />
-              <Route path="preferences" element={<Preferences />} />
               <Route path="taskHandler" element={<TaskHandler />} />
               <Route path="dataPrivacy" element={<DataPrivacy />} />
               <Route path="about" element={<About />} />
