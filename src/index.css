@@ -582,14 +582,14 @@ input[type="number"]::-webkit-outer-spin-button {
         }
     
         & .sett-body {
-            @apply h-[530px] mt-2 rounded-lg bg-commongrey shadow p-4 overflow-y-auto;
+            @apply mt-2 rounded-lg bg-commongrey shadow p-4;
         
             /*Profile*/
             .the-user {
-                @apply border border-2 border-red h-[200px];
+                @apply h-[200px] flex;
             
                 .pfp-upload {
-                    @apply  w-[190px] overflow-hidden h-full cursor-pointer rounded-full bg-dullblack shadow flex justify-center items-center;
+                    @apply  w-[20%] overflow-hidden h-full cursor-pointer rounded-full bg-dullblack shadow flex justify-center items-center;
                 
                     .pfp-plus {
                         @apply text-6xl;
@@ -600,6 +600,40 @@ input[type="number"]::-webkit-outer-spin-button {
                     }
                 }
 
+                .the-user-info {
+                    @apply w-[50%] flex flex-col justify-around p-2;   
+                
+                    .name-title {
+                        @apply w-full flex gap-20 h-[20%];
+
+                        .the-user-name-title {
+                            @apply flex items-center justify-center h-full w-[50%] rounded-lg bg-dullblack p-2 shadow;
+                        }
+
+                    }
+
+                    .the-user-bio {
+                        @apply h-[50%] w-full p-2 gap-2 bg-dullblack rounded-lg shadow;
+
+                        textarea {
+                            @apply h-full w-full;
+                        }
+                    }
+                }
+
+                .user-location {
+                    @apply w-[40%] flex flex-col justify-around p-2;
+
+                    input {
+                        @apply bg-dullblack p-4 w-full rounded-lg
+                    }
+                }
+                
+
+            }
+
+            .user-preferences {
+                @apply border-t-2 border-grey mt-4;
             }
         }
     }

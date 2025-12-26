@@ -33,14 +33,32 @@ function Profile() {
                     />
                 </label>
 
-                {/* <div className="pfp">
-                    <i className="bi bi-plus"></i>
-                    <input type="file" accept="image/*" className="pfp-image"  />
-                </div> */}
+                <div className="the-user-info">
+                    
+                    <div className="name-title">
 
+                        <input type="text" placeholder="Name" className="the-user-name-title"/>
+
+                        <input type="text" placeholder="Title i.e The inventor" className="the-user-name-title"/>
+
+                    </div>
+                    
+                    <div className="the-user-bio">
+                        <textarea name="" id="" placeholder="Who are you?"></textarea>
+                    </div>
+
+                </div>
+                
+                <div className="user-location">
+                    <input type="text" placeholder="Location"/>
+                    <input type="text" placeholder="Time-zone"/>
+                </div>
 
             </div>
 
+            <div className="user-preferences">
+                
+            </div>
 
         </div>
     );
