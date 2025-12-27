@@ -39,10 +39,6 @@ function NewTask({exit, editExit, task}) {
         setTaskDays(t => t.includes(value) ? t.filter(task => task !== value) : [...t, value]);
     }
 
-    function onReminder() {
-        setReminder(prev => !prev);
-    }
-
     function creatingTask() {
         
         const missing = [];
@@ -190,8 +186,8 @@ function NewTask({exit, editExit, task}) {
 
                 <div className="reminder">
                     <h2>{reminder ? "Off reminder?" : "On reminder?"}</h2>
-                    <div className={`switch-cont ${reminder && "bg-bluelight"}`} onClick={() => onReminder()}>
-                        <div className={`switch-ball ease duration-400 ${reminder && "translate-x-9 md:translate-x-14"}`}></div>
+                    <div className={`switch-cont ${reminder && "bg-bluelight"}`} onClick={() => setReminder(prev => !prev)}>
+                        <div className={`switch-ball ease duration-600 ${reminder && "translate-x-9 md:translate-x-16"}`}></div>
                     </div>
                 </div>
 
