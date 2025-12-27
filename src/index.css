@@ -556,16 +556,38 @@ input[type="number"]::-webkit-outer-spin-button {
     .settings-main-cont {
         @apply h-full flex flex-col gap-2; 
 
-        & .settings-header {
-            @apply text-2xl font-bold;
-            
-            & .checking {
-                @apply text-grey text-base;
-            }
-        }
+        & .settings-info-box {
+            @apply flex justify-between;
 
-        & .settings-subheader {
-            @apply text-sm text-grey
+            .settings-info {
+
+                & .settings-header {
+                    @apply text-2xl font-bold;
+            
+                    & .checking {
+                        @apply text-grey text-base;
+                    }
+                }
+
+                & .settings-subheader {
+                    @apply text-sm text-grey;
+                }
+            
+            }
+
+
+            .light-dark {
+                @apply w-[200px] my-2 rounded-lg bg-commongrey shadow flex items-center cursor-pointer transition ease-in-out duration-400;
+
+                .light-dark-ball {
+                    @apply w-[20%] h-[80%] rounded-xl mx-1 bg-gradient-to-b from-white to-gray-400 flex items-center justify-center; 
+                
+                    .bi {
+                        @apply text-red text-xl transition ease-in-out duration-400; 
+                    }
+                }
+            }
+
         }
 
         & .settings-body {
@@ -691,7 +713,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     }
 
                     .quote-toggle {
-                        @apply w-[200px] h-[80%] rounded-xl shadow-inset-dark bg-black flex items-center cursor-pointer;
+                        @apply w-[200px] h-[80%] rounded-xl shadow-inset-dark bg-black flex items-center cursor-pointer transition ease-in-out duration-400;
 
                         .quote-ball {
                             @apply h-[80%] w-[10%] ml-1 rounded-xl bg-gradient-to-b from-white to-gray-400 shadow;  

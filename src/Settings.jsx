@@ -5,6 +5,8 @@ function Settings() {
 
     const location = useLocation();
 
+    const [larkMode, setLarkMode] = useState(false)
+
     function checking() {
         if(location.pathname === '/settings/profile') {
             return "> Profile & Preferences"
@@ -20,9 +22,23 @@ function Settings() {
     return ( 
         <div className="settings-main-cont">
             
-            <h1 className="settings-header">Settings <span className="checking">{`${checking()}`}</span></h1>
+            <div className="settings-info-box">
 
-            <p className="settings-subheader">Manage your account settings and preferences</p>
+                <div className="settings-info">
+    
+                    <h1 className="settings-header">Settings <span className="checking">{`${checking()}`}</span></h1>
+
+                    <p className="settings-subheader">Manage your account settings and preferences</p>
+
+                </div>
+
+                <div className={`light-dark ${larkMode && 'bg-bluelight'}`} onClick={() => setLarkMode(prev => !prev)}>
+                    <div className={`light-dark-ball transition ease duration-600 ${larkMode && 'translate-x-38'}`}> 
+                        <i className={`${larkMode ? "bi bi-sun text-yellow" : "bi bi-moon text-grey"} `}></i>
+                    </div>
+                </div>
+
+            </div>
 
             <div className="settings-body">
 
