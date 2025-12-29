@@ -3,9 +3,9 @@ import NewTask from "./NewTask.jsx";
 import { TaskContext } from "./TaskContext.js";
 import Alert from "./Alert.jsx";
 
-function TaskDisplay({taskE, history, chosenHist, setChosenHist}) {
+function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist}) {
 
-  const { taskList, setTaskList, tasksDone, setTasksDone } = useContext(TaskContext);
+  const { taskList, setTaskList, setTasksDone } = useContext(TaskContext);
   const [done, setDone] = useState(taskE.isDone);
   const[editScreen, setEditScreen] = useState(false);
 
@@ -27,8 +27,8 @@ function TaskDisplay({taskE, history, chosenHist, setChosenHist}) {
 
     <div>
     
-      <div className={!history ? "task-box" : "history-box"} style={{
-        backgroundColor: !history && (done && (taskE.color || "#60A5FA")),
+      <div className={history ? "history-box" : handler ? "handler-box" : "history-box"} style={{
+        backgroundColor: (!history && !handler) && (done && (taskE.color || "#60A5FA")),
         border: isChosenHist ? `2px solid ${taskE.color}` : ''
       }} onClick={(e) => {
         if(e.target.closest('button')) return;
@@ -45,7 +45,7 @@ function TaskDisplay({taskE, history, chosenHist, setChosenHist}) {
         }}>{taskE.name}</p>
         
         {
-          !history ? (
+          history ? (
           
             <input type="checkbox" className="done" checked={done} onChange={() => {
               const newDone = !done
@@ -66,6 +66,13 @@ function TaskDisplay({taskE, history, chosenHist, setChosenHist}) {
               }
             }} disabled={new Date(taskE.id).toDateString() !== new Date().toDateString()}/>
         
+          ) :
+
+          handler ? (
+            <div className="handler-icons">
+              <button className="bi bi-pause-fill" title="Pause task"></button>
+              <button className="bi bi-pencil" title="Edit task"></button>
+            </div>
           ) :
          
           (

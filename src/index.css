@@ -265,6 +265,46 @@ input[type="number"]::-webkit-outer-spin-button {
         }
     }
 
+    .history-box {
+        @apply border border-2 border-transparent snap-start cursor-pointer bg-[#111111] rounded-md shadow m-4 h-[60px] flex items-center duration-2000 ease-in-out;
+
+        & .emoji-t-box {
+            @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center ml-2 rounded-lg md:w-[5%] md:h-[80%] md:text-3xl;
+        }
+
+        & .name-t-box {
+            @apply text-shadow-md ml-2 p-2 w-[90%] text-sm rounded-md  text-neutral-300 md:font-bold md:text-base;
+        }
+        
+        & .bi-trash {
+            @apply cursor-pointer text-lg active:scale-90;
+        }
+    }
+
+    .handler-box {
+        @apply bg-[#111111] h-16 mt-4 rounded-lg flex items-center;
+
+        & .emoji-t-box {
+            @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center ml-2 rounded-lg md:w-[5%] md:h-[70%] md:text-3xl;
+        }
+
+        & .name-t-box {
+            @apply text-shadow-md ml-2 p-2 w-[90%] text-sm rounded-md  text-neutral-300 md:font-bold md:text-base;
+        }
+        
+        & .handler-icons {
+            @apply w-15 mx-4 flex items-center justify-between text-xl;
+
+            .bi-pause-fill {
+                @apply cursor-pointer active:scale-90;
+            }
+
+            .bi-pencil {
+                @apply cursor-pointer active:scale-90;
+            }
+        }
+    }
+
     .alert-container {
         @apply bg-black/1 absolute flex justify-center items-center top-0 z-60 w-[90%] h-full backdrop-blur-sm;
     
@@ -310,23 +350,6 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply bg-gradient-to-b from-bluelight to-bluet;
                 }
             }
-        }
-    }
-
-
-    .history-box {
-        @apply border border-2 border-transparent snap-start cursor-pointer bg-[#111111] rounded-md shadow m-4 h-[60px] flex items-center duration-2000 ease-in-out;
-
-        & .emoji-t-box {
-            @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center ml-2 rounded-lg md:w-[5%] md:h-[80%] md:text-3xl;
-        }
-
-        & .name-t-box {
-            @apply text-shadow-md ml-2 p-2 w-[90%] text-sm rounded-md  text-neutral-300 md:font-bold md:text-base;
-        }
-        
-        & .bi-trash {
-            @apply cursor-pointer text-lg active:scale-90;
         }
     }
 
@@ -711,6 +734,27 @@ input[type="number"]::-webkit-outer-spin-button {
                             @apply h-[80%] w-[10%] ml-1 rounded-xl bg-gradient-to-b from-white to-gray-400 shadow;  
                         }
                     }
+                }
+            }
+
+            /*task handler*/
+            .task-h-header {
+                @apply flex justify-between p-2 items-center;
+
+                select {
+                    @apply bg-dullblack p-2 rounded-lg cursor-pointer;
+                }
+
+                button {
+                    @apply p-2 rounded-lg bg-gradient-to-b from-red to-delDark shadow-lg active:scale-98;
+                }
+            }
+
+            .task-h-body {
+                @apply h-[450px] bg-dullblack rounded-lg mt-2 shadow-lg;
+
+                .task-h-box {
+                    @apply w-full h-full px-4 py-2;
                 }
             }
         }
