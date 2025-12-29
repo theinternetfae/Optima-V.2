@@ -250,7 +250,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .task-box {
-        @apply p-2 h-[40px] cursor-pointer snap-start rounded-md shadow flex items-center transition-all duration-2000 ease-in-out md:p-4 md:border-none md:h-[70px] md:w-full; 
+        @apply p-2 h-[40px] bg-[#111111] cursor-pointer snap-start rounded-md shadow flex items-center transition-all duration-2000 ease-in-out md:p-4 md:border-none md:h-[70px] md:w-full; 
 
         & .emoji-t-box {
             @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center rounded-lg md:w-[5%] md:h-full md:text-3xl;
@@ -315,7 +315,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 
     .history-box {
-        @apply border border-2 border-transparent snap-start cursor-pointer rounded-md shadow m-4 h-[60px] flex items-center duration-2000 ease-in-out;
+        @apply border border-2 border-transparent snap-start cursor-pointer bg-[#111111] rounded-md shadow m-4 h-[60px] flex items-center duration-2000 ease-in-out;
 
         & .emoji-t-box {
             @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center ml-2 rounded-lg md:w-[5%] md:h-[80%] md:text-3xl;
@@ -655,7 +655,7 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             .user-preferences {
-                @apply border-t-2 border-grey mt-4 pt-2 h-[280px] flex flex-col justify-around;
+                @apply border-t-2 border-grey mt-4 pt-2 h-[300px] flex flex-col gap-4 justify-around;
 
                 .preference {
                     @apply h-16 p-2 rounded-lg shadow bg-dullblack flex items-center justify-between;
@@ -704,18 +704,10 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
                     }
 
-                    .quirk-toggle {
+                    .toggle {
                         @apply w-[200px] h-[80%] rounded-xl shadow-inset-dark bg-black flex items-center transition ease-in-out duration-400 cursor-pointer;
 
-                        .quirk-ball {
-                            @apply h-[80%] w-[10%] ml-1 rounded-xl bg-gradient-to-b from-white to-gray-400 shadow;  
-                        }
-                    }
-
-                    .quote-toggle {
-                        @apply w-[200px] h-[80%] rounded-xl shadow-inset-dark bg-black flex items-center cursor-pointer transition ease-in-out duration-400;
-
-                        .quote-ball {
+                        .ball {
                             @apply h-[80%] w-[10%] ml-1 rounded-xl bg-gradient-to-b from-white to-gray-400 shadow;  
                         }
                     }

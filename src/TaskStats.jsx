@@ -316,6 +316,8 @@
 
             if(!selectedTask) {
 
+                if(taskList.length === 0) return;
+
                 const total = taskList.length;
 
                 const totalDone = taskList.filter(t => t.isDone).length;

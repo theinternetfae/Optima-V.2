@@ -6,6 +6,7 @@ function Profile() {
     const [profileImage, setProfileImage] = useState(null);
     const [quirkState, setQuirkState] = useState(true);
     const [quoteState, setQuoteState] = useState(false);
+    const [streakState, setStreakState] = useState(true);
 
     function handleImageChange(e) {
         const file = e.target.files[0];
@@ -89,17 +90,28 @@ function Profile() {
                     
                     <p>Optima Quirk</p>
 
-                    <div className={`quirk-toggle ${quirkState && "bg-bluelight"}`} onClick={() => setQuirkState(prev => !prev)}>
-                        <div className={`quirk-ball ease duration-800 ${quirkState && "translate-x-9 md:translate-x-43"}`}></div>
+                    <div className={`toggle ${quirkState && "bg-bluelight"}`} onClick={() => setQuirkState(prev => !prev)}>
+                        <div className={`ball ease duration-800 ${quirkState && "translate-x-9 md:translate-x-43"}`}></div>
                     </div>
 
                 </div>
+
                 <div className="preference">
                     
                     <p>Daily quote</p>
 
-                    <div className={`quote-toggle ${quoteState && "bg-bluelight"}`} onClick={() => setQuoteState(prev => !prev)}>
-                        <div className={`quote-ball ease duration-800 ${quoteState && "translate-x-9 md:translate-x-43"}`}></div>
+                    <div className={`toggle ${quoteState && "bg-bluelight"}`} onClick={() => setQuoteState(prev => !prev)}>
+                        <div className={`ball ease duration-800 ${quoteState && "translate-x-9 md:translate-x-43"}`}></div>
+                    </div>
+
+                </div>
+
+                <div className="preference">
+                    
+                    <p>Streak</p>
+
+                    <div className={`toggle ${streakState && "bg-bluelight"}`} onClick={() => setStreakState(prev => !prev)}>
+                        <div className={`ball ease duration-800 ${streakState && "translate-x-9 md:translate-x-43"}`}></div>
                     </div>
 
                 </div>
