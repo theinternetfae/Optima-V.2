@@ -27,7 +27,7 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist}) {
 
     <div>
     
-      <div className={history ? "history-box" : handler ? "handler-box" : "history-box"} style={{
+      <div className={history ? "history-box" : handler ? "handler-box" : "task-box"} style={{
         backgroundColor: (!history && !handler) && (done && (taskE.color || "#60A5FA")),
         border: isChosenHist ? `2px solid ${taskE.color}` : ''
       }} onClick={(e) => {
@@ -46,7 +46,23 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist}) {
         
         {
           history ? (
-          
+
+            <button className="bi bi-trash" onClick={(e) => {
+              e.stopPropagation();
+              setAlertShow(prev => !prev);
+            }}></button>
+        
+          ) :
+
+          handler ? (
+            <div className="handler-icons">
+              <button className="bi bi-pause-fill" title="Pause task"></button>
+              <button className="bi bi-pencil" title="Edit task"></button>
+            </div>
+          ) :
+         
+          (
+
             <input type="checkbox" className="done" checked={done} onChange={() => {
               const newDone = !done
               setDone(newDone);
@@ -65,22 +81,8 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist}) {
                 setTasksDone(prev => prev.filter(t => t.id !== taskE.id));
               }
             }} disabled={new Date(taskE.id).toDateString() !== new Date().toDateString()}/>
-        
-          ) :
-
-          handler ? (
-            <div className="handler-icons">
-              <button className="bi bi-pause-fill" title="Pause task"></button>
-              <button className="bi bi-pencil" title="Edit task"></button>
-            </div>
-          ) :
-         
-          (
-            <button className="bi bi-trash" onClick={(e) => {
-              e.stopPropagation();
-              setAlertShow(prev => !prev);
-            }}></button>
           )
+          
         }
 
         {alertShow && <Alert yesDelete={() => deleteTask()} noDelete={() => setAlertShow(prev => !prev)} history={history}/>}

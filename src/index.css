@@ -282,7 +282,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .handler-box {
-        @apply bg-[#111111] h-16 mt-4 rounded-lg flex items-center;
+        @apply bg-[#111111] h-16 mt-4 rounded-lg flex items-center snap-start;
 
         & .emoji-t-box {
             @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center ml-2 rounded-lg md:w-[5%] md:h-[70%] md:text-3xl;
@@ -754,7 +754,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 @apply h-[450px] bg-dullblack rounded-lg mt-2 shadow-lg;
 
                 .task-h-box {
-                    @apply w-full h-full px-4 py-2;
+                    @apply w-full h-full px-4 py-2 overflow-y-auto no-scrollbar snap-y snap-mandatory scroll-py-4;
                 }
             }
         }
