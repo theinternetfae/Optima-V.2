@@ -1,11 +1,13 @@
 import { useState, useContext, useMemo, useEffect } from "react";
-import { TaskContext } from "../components/TaskContext";
-import TaskDisplay from "../components/TaskDisplay";
+import { TaskContext } from "../components/TaskContext.js";
+import TaskDisplay from "../components/TaskDisplay.jsx";
+import Alert from "../components/Alert.jsx";
 
 function TaskHandler() {
 
     const today = new Date();
-    const { taskList } = useContext(TaskContext);
+    const { taskList, setTaskList } = useContext(TaskContext);
+    const [alert, setAlert] = useState(false);
     const handler = true;
 
     
@@ -16,6 +18,8 @@ function TaskHandler() {
             date.getDate() + days
         );
     }
+
+
 
 
     //HELPER FUNCTIONS
@@ -67,17 +71,24 @@ function TaskHandler() {
     }, [taskList])
 
     useEffect(() => {
+        
+        if(!handledTasks) return;
+
         const dates = Object.values(handledTasks).map(ht => {
             const d = new Date(ht.id).toDateString();
             return d;
         })
         console.log(dates);
+
     }, [handledTasks]);
 
+    function yesDelete() {
+        setTaskList([]);
+        setAlert(prev => !prev);
+    }
     
     return ( 
         <div className="sett-body">
-            
 
             <div className="task-h-header">
                 <select name="all-tasks" id="">
@@ -86,26 +97,36 @@ function TaskHandler() {
                     <option value="paused">Paused</option>
                     <option value="inactive">Inactive</option>
                 </select>
-                <button>Delete all</button>
+                <button onClick={() => setAlert(prev => !prev)}>Delete all</button>
             </div>
 
             <div className="task-h-body">
                 
                 <div className="task-h-box">
                     {
-                        Object.values(handledTasks).map(t => {
+                        !handledTasks ? (
+                            <p className="no-tasks">No tasks</p>
+                        ) : (
+                            Object.values(handledTasks).map(t => {
                             return <TaskDisplay 
-                                key={t.keyUUID}
-                                taskE={t}
-                                handler={handler}
-                            />
-                        })
+                                    key={t.keyUUID}
+                                    taskE={t}
+                                    handler={handler}
+                                />
+                            })
+
+                        )
                     }
                 </div>
 
             </div>
         
-        
+            {alert && <Alert
+            
+                yesDelete={() => yesDelete()}
+                noDelete={() => setAlert(prev => !prev)}
+
+            />}
         </div>
     );
 }

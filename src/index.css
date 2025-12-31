@@ -98,6 +98,10 @@ input[type="number"]::-webkit-outer-spin-button {
         }
     }
 
+    .no-tasks {
+        @apply text-center mt-4;
+    }
+
     .full-date-cont {
         @apply border border-2 border-transparent;
 
@@ -243,10 +247,6 @@ input[type="number"]::-webkit-outer-spin-button {
 
     .task-display {
         @apply p-4 rounded-lg no-scrollbar overflow-y-auto scroll-py-4 mt-6 flex flex-col gap-4 md:snap-y md:snap-mandatory md:scroll-smooth scroll-pt-4 text-sm md:bg-commongrey md:mt-8 md:p-4 md:gap-6 md:text-base md:w-full md:h-[475px] md:overflow-y-auto;
-        
-        & .no-tasks {
-            @apply text-center;
-        }
     }
 
     .task-box {
@@ -315,7 +315,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 @apply flex justify-between mt-4;
 
                 & button {
-                    @apply w-[70px] rounded shadow-lg p-2;
+                    @apply w-[70px] rounded shadow-lg p-2 cursor-pointer;
                 }
 
                 & .yes-yes {
@@ -545,9 +545,7 @@ input[type="number"]::-webkit-outer-spin-button {
             .tasks-pd-cont {
                 @apply w-full overflow-y-auto no-scrollbar snap-y snap-mandatory scroll-py-4 flex flex-col;
             }
-            .no-tasks {
-                @apply text-center mt-4;
-            }
+
         }
 
         & .chosen-task-info {
@@ -746,7 +744,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 button {
-                    @apply p-2 rounded-lg bg-gradient-to-b from-red to-delDark shadow-lg active:scale-98;
+                    @apply p-2 rounded-lg bg-gradient-to-b from-red to-delDark cursor-pointer shadow-lg active:scale-90;
                 }
             }
 
