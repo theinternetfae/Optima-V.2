@@ -774,7 +774,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 .controls {
-                    @apply  h-[330px] m-2 p-2 rounded-lg flex flex-col justify-center gap-4;
+                    @apply  h-[330px] m-2 p-2 rounded-lg flex flex-col gap-4;
 
                     h2 {
                         @apply border-y border-y-2 border-y-grey py-2; 
@@ -796,6 +796,71 @@ input[type="number"]::-webkit-outer-spin-button {
                         @apply h-15 rounded-lg mx-60 mt-2 bg-gradient-to-b from-bluelight to-bluet shadow-lg font-bold cursor-pointer active:scale-95 flex gap-2 justify-center items-center;
                     }
                 }
+            }
+
+            /*About*/
+
+            .about-background {
+                @apply h-[500px] bg-dullblack rounded-lg p-2 overflow-y-auto no-scrollbar;
+
+                .dropdown {
+                    @apply flex flex-col;
+
+                    .toggle-dropdown {
+                        @apply p-2 m-2 rounded-lg items-center h-15 flex gap-4 cursor-pointer bg-commongrey shadow-lg
+                    }
+
+                    p {
+                        @apply m-2 p-2 rounded-lg bg-commongrey shadow-lg;
+                    }
+
+                    .contact-us {
+                        @apply ml-8; 
+
+                        .contacting-box {
+                            @apply m-2 rounded-lg h-50 w-[50%] bg-commongrey shadow-lg flex flex-col;
+
+                            textarea {
+                                @apply h-[70%] p-2 focus:outline-none m-2 rounded-lg bg-dullblack;
+                            }
+
+                            button {
+                                @apply p-2 rounded-lg font-bold ml-auto mb-2 mr-2 bg-gradient-to-b from-bluelight to-bluet shadow-lg active:scale-90;
+                            }
+                            
+                        }
+                    }
+                }
+
+                .controls {
+                    @apply h-[250px] m-2 p-2 rounded-lg flex flex-col gap-4;
+
+                    h2 {
+                        @apply border-y border-y-2 border-y-grey py-2; 
+                    }
+
+                    .controller-about {
+                        @apply h-[70px] bg-commongrey rounded-lg shadow flex justify-between items-center p-2;
+
+                        span {
+                            @apply text-grey text-sm
+                        }
+
+                        .btn-icon {
+                            @apply w-30 h-12 rounded-lg bg-gradient-to-b from-bluelight to-bluet shadow-lg active:scale-90 cursor-pointer flex justify-center items-center text-xl;
+                        
+                            .bi {
+                                @apply text-2xl;
+                            }
+                        }
+                    }
+
+                }
+
+                .version-info {
+                    @apply h-[60px] flex items-center justify-center text-grey
+                }
+
             }
         }
     }

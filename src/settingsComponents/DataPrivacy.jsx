@@ -6,7 +6,6 @@ function DataPrivacy() {
     const [toggleOne, setToggleOne] = useState(false);
     const [toggleTwo, setToggleTwo] = useState(false);
 
-
     return ( 
         <div className="sett-body">
 
@@ -25,7 +24,7 @@ function DataPrivacy() {
                         <i className={toggleTwo ? "bi bi-caret-down-fill" : "bi bi-caret-right-fill"}></i>
                         <span>How is it stored?</span>
                     </div>
-                    {toggleTwo && <p>Your data is stored locally in your browser using localStorage. We do not upload or share your data with any servers.</p>}
+                    {toggleTwo && <p>Your data is stored locally in your browser using localStorage. We do not upload or share your data with any servers at the moment.</p>}
                 </section>
                 
 

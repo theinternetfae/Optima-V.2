@@ -145,7 +145,7 @@ function App() {
             <Route path="/taskHistory" element={<TaskHistory />} />
 
             <Route path="settings" element={<Settings />}>
-              <Route index element={<Navigate to="dataPrivacy" replace />} />
+              <Route index element={<Navigate to="profile" replace />} />
               <Route path="profile" element={<Profile />} />
               <Route path="taskHandler" element={<TaskHandler />} />
               <Route path="dataPrivacy" element={<DataPrivacy />} />
