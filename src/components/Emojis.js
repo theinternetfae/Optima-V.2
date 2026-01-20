@@ -161,6 +161,48 @@ const EMOJIS = [
         category: "growth",
         count: 0
     },
+    {
+        id: 28,
+        emoji: "🧍‍♂️",
+        category: "health",
+        count: 0
+    },
+    {
+        id: 29,
+        emoji: "🥗",
+        category: "health",
+        count: 0
+    },
+    {
+        id: 30,
+        emoji: "🍞",
+        category: "home",
+        count: 0
+    },
+    {
+        id: 31,
+        emoji: "💟",
+        category: "people",
+        count: 0
+    },
+    {
+        id: 32,
+        emoji: "🚴‍♂️",
+        category: "health",
+        count: 0
+    },
+    {
+        id: 33,
+        emoji: "🤑",
+        category: "work",
+        count: 0
+    },
+    {
+        id: 34,
+        emoji: "🛌",
+        category: "home",
+        count: 0
+    },
 ];
 
 export default EMOJIS;

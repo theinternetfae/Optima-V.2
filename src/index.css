@@ -93,7 +93,7 @@ input[type="number"]::-webkit-outer-spin-button {
             @apply h-[75%] flex mt-2 flex-wrap shrink-0 rounded-lg bg-dullblack p-2;
             
             ul {
-                @apply flex;
+                @apply flex flex-wrap;
             
                 li {
                    @apply text-xl list-none w-[40px] flex justify-center rounded-lg cursor-pointer;
