@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import EMOJIS from "./Emojis.js";
 
-function Emoji() {
+function Emoji({showing, setting}) {
 
     const [category, setCategory] = useState("History");
     const categoryMatch = category.toLowerCase();
@@ -98,6 +98,9 @@ function Emoji() {
                                             : item
                                         )
                                     );
+
+                                    setting(e.emoji);
+                                    showing();
                                 }}>
                                     {e.emoji}
                                 </li>
@@ -116,6 +119,9 @@ function Emoji() {
                                                 : item
                                             )
                                         );
+
+                                        setting(e.emoji);
+                                        showing();
                                     }}>
                                         {e.emoji}
                                     </li>

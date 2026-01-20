@@ -1,10 +1,9 @@
 import { useState, useContext, useEffect } from "react";
 import Emoji from "./EmojiPicker.jsx";
-import EmojiPicker from "emoji-picker-react";
+// import EmojiPicker from "emoji-picker-react";
 import Alert from "./Alert.jsx";
 import { TaskContext } from "./TaskContext.js";
 
-//TO-DO: Save changes, delete task
 
 function NewTask({exit, editExit, task}) {
 
@@ -108,8 +107,6 @@ function NewTask({exit, editExit, task}) {
         }        
 
         saveEditedTask(editedTask);
-        // updateTasks(editedTask);
-        // setTaskList(prev => prev.map(t => t.id === editedTask.id ? editedTask : t ));
         editExit();
 
     }
@@ -158,7 +155,10 @@ function NewTask({exit, editExit, task}) {
                     <input type="text" placeholder="What to do?" value={nameInput} onChange={e => setNameInput(e.target.value)} className="name-input" />
 
                     {
-                        showPicker && <Emoji />
+                        showPicker && <Emoji 
+                            setting={setEmojiInput}
+                            showing={clickShowPicker}
+                        />
                     }
                     {/* {showPicker && <EmojiPicker onEmojiClick={(emojiData) => {
                         setEmojiInput(emojiData.emoji);
