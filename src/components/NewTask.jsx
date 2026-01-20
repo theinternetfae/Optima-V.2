@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from "react";
+import Emoji from "./EmojiPicker.jsx";
 import EmojiPicker from "emoji-picker-react";
 import Alert from "./Alert.jsx";
 import { TaskContext } from "./TaskContext.js";
@@ -155,11 +156,14 @@ function NewTask({exit, editExit, task}) {
                 <div className="task-desc">
                     <button className={`emoji-cont ${!emojiInput ? " bi bi-plus" : "text-4xl md:text-6xl"}`} value={emojiInput} onClick={clickShowPicker}>{emojiInput || ""}</button>
                     <input type="text" placeholder="What to do?" value={nameInput} onChange={e => setNameInput(e.target.value)} className="name-input" />
-                    
-                    {showPicker && <EmojiPicker onEmojiClick={(emojiData) => {
+
+                    {
+                        showPicker && <Emoji />
+                    }
+                    {/* {showPicker && <EmojiPicker onEmojiClick={(emojiData) => {
                         setEmojiInput(emojiData.emoji);
                         clickShowPicker();
-                    }} />}
+                    }} />} */}
                 </div>
 
                 <div className="color-value">

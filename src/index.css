@@ -78,6 +78,32 @@ input[type="number"]::-webkit-outer-spin-button {
         @apply text-bluet;
     }
 
+    .emoji-picker {
+        @apply h-45 rounded-lg bg-commongrey shadow-lg p-4;
+
+        .emoji-h {
+            @apply h-[25%] flex justify-between rounded-lg bg-dullblack p-2;
+
+            .bi {
+                @apply text-xl w-[40px] flex justify-center items-center rounded-lg cursor-pointer transition ease-in-out duration-300;
+            }
+        }
+
+        .emoji-b {
+            @apply w-[300px] h-[75%] flex mt-2 flex-wrap shrink-0 rounded-lg bg-dullblack p-2;
+            
+            ul {
+                @apply flex;
+            
+                li {
+                   @apply text-xl list-none w-[40px] flex justify-center rounded-lg;
+                }
+            }
+        }
+    }
+
+
+
     .named {
         @apply flex flex-col lg:flex-row;
 

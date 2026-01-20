@@ -11,7 +11,10 @@ function SideMenu() {
         return location.pathname;
     }, [location]);
 
-    console.log(setPath);
+
+
+
+
 
 
     return ( 

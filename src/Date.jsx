@@ -3,6 +3,7 @@ import NewTask from "./components/NewTask.jsx";
 import TaskDisplay from "./components/TaskDisplay.jsx";
 import React, {useContext} from "react";
 import { TaskContext } from "./components/TaskContext.js";
+// import EmojiPicker from "emoji-picker-react";
 
 
 function DateMenu() {
