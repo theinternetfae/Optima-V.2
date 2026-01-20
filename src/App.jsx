@@ -12,8 +12,6 @@ import DataPrivacy from "./settingsComponents/DataPrivacy.jsx";
 import About from "./settingsComponents/About.jsx";
 
 
-
-
 function App() {
 
   //LOCAL STORAGE
@@ -140,6 +138,7 @@ function App() {
         <Routes>
 
           <Route element={<AppLayout />}>
+          
             <Route path="/" element={<DateMenu />} />
             <Route path="/taskStats" element={<TaskStats />} />
             <Route path="/taskHistory" element={<TaskHistory />} />

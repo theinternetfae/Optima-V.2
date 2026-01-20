@@ -92,13 +92,7 @@ function TaskHistory() {
 
 
 
-
-
-
-    const [topHistStreak, setTopHistStreak] = useState(0);
-    const [currentHistStreak, setCurrentHistStreak] = useState(0);
-    const [histTaskDone, setHistTaskDone] = useState(0);
-    const [histActiveStatus, setHistActiveStatus] = useState(false);
+    
 
     const stats = useMemo(() => {
 
