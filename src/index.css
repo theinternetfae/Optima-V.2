@@ -79,7 +79,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .emoji-picker {
-        @apply h-45 rounded-lg bg-commongrey shadow-lg p-4;
+        @apply rounded-lg bg-commongrey shadow-lg p-4 h-45 w-[300px] lg:w-[330px];
 
         .emoji-h {
             @apply h-[25%] flex justify-between rounded-lg bg-dullblack p-2;
@@ -90,7 +90,7 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         .emoji-b {
-            @apply w-[300px] h-[75%] flex mt-2 flex-wrap shrink-0 rounded-lg bg-dullblack p-2;
+            @apply h-[75%] flex mt-2 flex-wrap shrink-0 rounded-lg bg-dullblack p-2;
             
             ul {
                 @apply flex;

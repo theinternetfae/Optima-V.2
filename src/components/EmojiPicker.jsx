@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import EMOJIS from "./Emojis.js";
 
 function Emoji() {
 
@@ -44,171 +45,18 @@ function Emoji() {
         },
 
     ]
+    
 
-    const [emojis, setEmojis] = useState([
-        {
-            id: 1,
-            emoji: "💻",
-            category: "work",
-            count: 0
-        },
-        {
-            id: 2,
-            emoji: "📚",
-            category: "work",
-            count: 0
-        },
-        {
-            id: 3,
-            emoji: "🧠",
-            category: "work",
-            count: 0
-        },
-        {
-            id: 4,
-            emoji: "✏️",
-            category: "work",
-            count: 0
-        },
-        {
-            id: 5,
-            emoji: "💼",
-            category: "work",
-            count: 0
-        },
-        {
-            id: 6,
-            emoji: "🧹",
-            category: "home",
-            count: 0
-        },
-        {
-            id: 7,
-            emoji: "🛒",
-            category: "home",
-            count: 0
-        },
-        {
-            id: 8,
-            emoji: "🏠",
-            category: "home",
-            count: 0
-        },
-        {
-            id: 9,
-            emoji: "🧺",
-            category: "home",
-            count: 0
-        },
-        {
-            id: 10,
-            emoji: "📦",
-            category: "home",
-            count: 0
-        },
-        {
-            id: 11,
-            emoji: "🏃",
-            category: "health",
-            count: 0
-        },
-        {
-            id: 12,
-            emoji: "🧘",
-            category: "health",
-            count: 0
-        },
-        {
-            id: 13,
-            emoji: "🛏️",
-            category: "health",
-            count: 0
-        },
-        {
-            id: 14,
-            emoji: "💊",
-            category: "health",
-            count: 0
-        },
-        {
-            id: 15,
-            emoji: "💪",
-            category: "health",
-            count: 0
-        },
-        {
-            id: 16,
-            emoji: "⏰",
-            category: "important",
-            count: 0
-        },
-        {
-            id: 17,
-            emoji: "📅",
-            category: "important",
-            count: 0
-        },
-        {
-            id: 18,
-            emoji: "⌛",
-            category: "important",
-            count: 0
-        },
-        {
-            id: 19,
-            emoji: "🚨",
-            category: "important",
-            count: 0
-        },
-        {
-            id: 20,
-            emoji: "📞",
-            category: "people",
-            count: 0
-        },
-        {
-            id: 21,
-            emoji: "💬",
-            category: "people",
-            count: 0
-        },
-        {
-            id: 22,
-            emoji: "✉️",
-            category: "people",
-            count: 0
-        },
-        {
-            id: 23,
-            emoji: "👥",
-            category: "people",
-            count: 0
-        },
-        {
-            id: 24,
-            emoji: "🌱",
-            category: "growth",
-            count: 0
-        },
-        {
-            id: 25,
-            emoji: "🎯",
-            category: "growth",
-            count: 0
-        },
-        {
-            id: 26,
-            emoji: "🔥",
-            category: "growth",
-            count: 0
-        },
-        {
-            id: 27,
-            emoji: "✨",
-            category: "growth",
-            count: 0
-        },
-    ]);
+    const [emojis, setEmojis] = useState(() => {
+        const savedEmojis = localStorage.getItem("emojis");
+        return savedEmojis ? JSON.parse(savedEmojis) : EMOJIS;
+    });
+    
+
+    useEffect(() => {
+        localStorage.setItem("emojis", JSON.stringify(emojis));
+    }, [emojis]);
+
 
     const HISTORY = useMemo(() => {
         const histArray = emojis.filter(e => e.count > 0)
