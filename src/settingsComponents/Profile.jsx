@@ -37,19 +37,8 @@ function Profile() {
                 </label>
 
                 <div className="the-user-info">
-                    
-                    <div className="name-title">
-
-                        <input type="text" placeholder="Name" className="the-user-name-title"/>
-
-                        <input type="text" placeholder="Title i.e The inventor" className="the-user-name-title"/>
-
-                    </div>
-                    
-                    <div className="the-user-bio">
-                        <textarea name="" id="" placeholder="Who are you? i.e I am the one of one"></textarea>
-                    </div>
-
+                    <input type="text" placeholder="Name" className="the-user-name-title"/>
+                    <input type="text" placeholder="Title i.e The inventor" className="the-user-name-title"/>
                 </div>
                 
                 <div className="user-location">

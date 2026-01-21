@@ -45,13 +45,11 @@ function Emoji({showing, setting}) {
         },
 
     ]
-    
 
     const [emojis, setEmojis] = useState(() => {
         const savedEmojis = localStorage.getItem("emojis");
         return savedEmojis ? JSON.parse(savedEmojis) : EMOJIS;
     });
-    
 
     useEffect(() => {
         localStorage.setItem("emojis", JSON.stringify(emojis));
@@ -100,7 +98,11 @@ function Emoji({showing, setting}) {
                                     );
 
                                     setting(e.emoji);
-                                    showing();
+
+                                    setTimeout(() => {
+                                        showing();
+                                    }, 0)
+
                                 }}>
                                     {e.emoji}
                                 </li>
@@ -121,7 +123,9 @@ function Emoji({showing, setting}) {
                                         );
 
                                         setting(e.emoji);
-                                        showing();
+                                        setTimeout(() => {
+                                            showing();
+                                        }, 0)
                                     }}>
                                         {e.emoji}
                                     </li>

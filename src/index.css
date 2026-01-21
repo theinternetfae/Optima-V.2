@@ -644,31 +644,19 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 .the-user-info {
-                    @apply w-[50%] flex flex-col justify-around p-2;   
+                    @apply w-[45%] flex flex-col justify-around gap-4 p-2;   
                 
-                    .name-title {
-                        @apply w-full flex gap-20 h-[20%];
-
-                        .the-user-name-title {
-                            @apply flex items-center justify-center h-full w-[50%] rounded-lg bg-dullblack p-2 shadow;
-                        }
-
+                    .the-user-name-title {
+                        @apply flex items-center justify-center w-full rounded-lg bg-dullblack p-4 shadow focus:outline-none;
                     }
-
-                    .the-user-bio {
-                        @apply h-[50%] w-full p-2 gap-2 bg-dullblack rounded-lg shadow;
-
-                        textarea {
-                            @apply h-full w-full;
-                        }
-                    }
+                    
                 }
 
                 .user-location {
-                    @apply w-[40%] flex flex-col justify-around gap-4 p-2;
+                    @apply w-[45%] flex flex-col justify-around gap-4 p-2;
 
                     input {
-                        @apply bg-dullblack p-4 w-full rounded-lg
+                        @apply bg-dullblack p-4 w-full rounded-lg focus:outline-none;
                     }
                 }
                 
