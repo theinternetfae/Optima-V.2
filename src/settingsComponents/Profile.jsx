@@ -47,7 +47,7 @@ function Profile() {
                     </div>
                     
                     <div className="the-user-bio">
-                        <textarea name="" id="" placeholder="Who are you?"></textarea>
+                        <textarea name="" id="" placeholder="Who are you? i.e I am the one of one"></textarea>
                     </div>
 
                 </div>

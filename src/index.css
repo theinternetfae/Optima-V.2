@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-/* "Castoro", serif */
-
 input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
 }
@@ -16,7 +14,7 @@ input[type="number"]::-webkit-outer-spin-button {
     height: 370px;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 1rem; /* adjust if needed */
+    gap: 25px; 
 }
 
 .day-label {
@@ -47,28 +45,32 @@ input[type="number"]::-webkit-outer-spin-button {
 
     /*Theme One (BASE)*/
     --color-bluelight: #60A5FA;
+    --color-bluemain: #2563EB;
 
     /*Theme Two*/
     --color-red: #9C0412;
+    --color-delDark: #650207;
 
     /*Theme Three*/
-    --color-selected: #DA38CD; 
+    --color-pink: #E21C70;
+    --color-pinkdark: #AE0849; 
 
     /*Theme Four*/
     --color-fern: #477023;
+    --color-ferndark: #2D531A;
 
+    /*Reusable colors*/
     --color-bgdark: #0D0D0D; 
     --color-textdark: #E5E7EB;
-    --color-bluemain: #2563EB;
-    --color-dullblack: #171717;
-    --color-commongrey: #262626;
-    --color-backblack: #111111; 
-    --color-delDark: #650207;
-    --color-delLight: #C93631;
     --color-yellow: #FFFF00; 
     --color-grey: #333333;
-    --color-green: #237414;
-    --color-bground: #1A1A1A;
+
+
+    /*Dark mode basics*/
+    --color-dullblack: #171717;
+    --color-commongrey: #262626;
+    --color-backblack: #111111;
+
 
     --font-bodytext: "Atkinson Hyperlegible Mono", sans-serif;
     --font-headtext: "Castoro", serif;
@@ -77,9 +79,9 @@ input[type="number"]::-webkit-outer-spin-button {
 
 @layer components {
 
-    .color-test {
-        @apply h-[50px] rounded-lg shadow-lg bg-backblack ;
-    }
+    /* .color-test {
+        @apply h-[50px] rounded-lg shadow-lg bg-dullblack;
+    } */
 
     
     body {
@@ -87,7 +89,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .add {
-        @apply text-xl text-bluemain cursor-pointer md:text-2xl;
+        @apply text-xl text-bluelight cursor-pointer md:text-2xl;
     }
 
     .tips {
@@ -95,7 +97,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .tips:hover {
-        @apply text-bluemain;
+        @apply text-bluelight;
     }
 
     .emoji-picker {
@@ -130,14 +132,10 @@ input[type="number"]::-webkit-outer-spin-button {
         & .a-body {
             @apply w-full mt-6 md:px-6 lg:px-0 lg:w-[80%] lg:mx-8;
         }
-
-        & .b-body {
-            @apply lg:mx-8 lg:w-[80%] mt-6 border border-2
-        }
     }
 
     .side-menu {
-        @apply  bg-bground w-[100vw] bottom-0 shadow-xl fixed bottom-0 flex flex-col px-4 py-6 gap-6 cursor-pointer lg:w-[20%] lg:sticky lg:h-[100vh] lg:top-0 lg:left-0;
+        @apply  bg-dullblack w-[100vw] bottom-0 shadow-xl fixed bottom-0 flex flex-col px-4 py-6 gap-6 cursor-pointer lg:w-[20%] lg:sticky lg:h-[100vh] lg:top-0 lg:left-0;
 
         & .road {
             @apply cursor-pointer rounded-md bg-commongrey shadow-lg p-3 border border-2 border-transparent flex gap-2;
@@ -170,9 +168,10 @@ input[type="number"]::-webkit-outer-spin-button {
                 @apply w-[100%] flex justify-between p-1 no-scrollbar overflow-x-auto;
 
                 & .test-box-cont {
-                @apply w-[100%] flex justify-between h-[7rem];
+                    @apply w-[100%] flex justify-between h-[7rem];
+                    
                     & .test-box {
-                    @apply border border-2 w-[65px] border-backblack flex flex-col justify-center items-center rounded-2xl p-[3px] gap-4 md:border-commongrey; 
+                    @apply border border-2 border-transparent w-[65px] flex flex-col justify-center items-center rounded-2xl p-[3px] gap-4 md:border-commongrey; 
                 
                     & .d-name {
                         @apply h-[25%] text-xs flex justify-center md:text-base;
@@ -286,7 +285,7 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             & .delete-task {
-                @apply mt-2 bg-gradient-to-b from-delLight to-delDark p-2 rounded-lg text-sm shadow font-bold text-shadow-md cursor-pointer md:text-base;
+                @apply mt-2 bg-gradient-to-b from-red to-delDark p-2 rounded-lg text-sm shadow font-bold text-shadow-md cursor-pointer md:text-base;
             }
         }
     }
@@ -307,7 +306,7 @@ input[type="number"]::-webkit-outer-spin-button {
         }
         
         & .done {
-            @apply w-4 h-4 accent-bluemain mr-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed md:scale-125;
+            @apply w-4 h-4 accent-bluelight mr-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed md:scale-125;
         }
     }
 
@@ -365,7 +364,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 & .yes-yes {
-                    @apply bg-gradient-to-b from-delLight to-delDark;
+                    @apply bg-gradient-to-b from-red to-delDark;
                 }
 
                 & .no-no {
@@ -389,7 +388,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 & .yes-yes {
-                    @apply bg-gradient-to-b from-delLight to-delDark;
+                    @apply bg-gradient-to-b from-red to-delDark;
                 }
 
                 & .no-no {
@@ -414,13 +413,13 @@ input[type="number"]::-webkit-outer-spin-button {
             @apply bg-commongrey rounded-lg p-4 w-full sticky top-2 z-99;
 
             & .selected-scroll {
-                @apply flex gap-5 overflow-hidden w-[1120px] overflow-x-auto ml-5 no-scrollbar snap-x snap-mandatory;
+                @apply flex gap-5 overflow-hidden w-[1095px] overflow-x-auto ml-5 no-scrollbar snap-x snap-mandatory;
                 
                 .li-cont {
                     @apply flex shrink-0 justify-center items-center w-[140px] snap-start;
                 
                     li {
-                        @apply border border-2 border-transparent bg-dullblack p-4 rounded-full cursor-pointer shadow-lg text-lg;
+                        @apply border border-2 border-transparent bg-backblack p-4 rounded-full cursor-pointer shadow-lg text-lg;
                     }
                 }
                 
@@ -443,19 +442,6 @@ input[type="number"]::-webkit-outer-spin-button {
 
                 & .date-box-sub {
                     @apply shadow-lg shadow-inset-dark bg-commongrey rounded flex gap-[20px] justify-center p-2;
-
-
-                    & .date-weekdays-box {
-                        @apply text-center h-[350px];                  
-
-                        & .date-weekdays {
-                            @apply border border-2 flex flex-col gap-[30px];
-                        }
-
-                        & li {
-                            @apply bg-bluemain p-2 rounded shadow cursor-pointer;
-                        }
-                    }
                 }
             }
         }
@@ -489,27 +475,11 @@ input[type="number"]::-webkit-outer-spin-button {
                 .top {
                     @apply h-[50%] flex gap-40 items-center justify-center;
 
-                    & .sec-one {
-                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-dullblack rounded-full shadow-xl text-bluemain hover:text-bluelight transition ease-in duration-300;
+                    & .sec-one-two {
+                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-dullblack rounded-full shadow-xl text-bluelight transition ease-in duration-300;
                     
                         i {
-                            @apply text-4xl;
-                        }
-
-                        .calculator {
-                            @apply text-shadow-md text-white;
-                        }
-
-                        .calculator-label {
-                            @apply text-base text-grey
-                        }
-                    }
-
-                    & .sec-two {
-                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-dullblack rounded-full shadow-xl text-yellow hover:text-bluelight transition ease-in duration-300;
-                    
-                        i {
-                            @apply text-4xl;
+                            @apply text-4xl transition ease-in duration-300;
                         }
 
                         .calculator {
@@ -525,11 +495,11 @@ input[type="number"]::-webkit-outer-spin-button {
                 .bottom {
                     @apply h-[50%] flex gap-40 items-center justify-center;
 
-                    & .sec-one {
-                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-dullblack rounded-full shadow-xl text-green hover:text-bluelight transition ease-in duration-300;
+                    & .sec-one-two {
+                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-dullblack rounded-full shadow-xl text-bluelight transition ease-in duration-300;
                     
                         i {
-                            @apply text-4xl;
+                            @apply text-4xl transition ease-in duration-300;
                         }
 
                         .calculator {
@@ -537,23 +507,7 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         .calculator-label {
-                            @apply text-base text-grey;
-                        }
-                    }
-
-                    & .sec-two {
-                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-dullblack rounded-full shadow-xl text-selected hover:text-bluelight transition ease-in duration-300;
-                    
-                        i {
-                            @apply text-4xl;
-                        }
-
-                        .calculator {
-                            @apply text-shadow-md text-white;
-                        }
-
-                        .calculator-label {
-                            @apply text-base text-grey;
+                            @apply text-base text-grey
                         }
                     }
                 }            
@@ -647,10 +601,10 @@ input[type="number"]::-webkit-outer-spin-button {
                 @apply w-[200px] my-2 rounded-lg bg-commongrey shadow flex items-center cursor-pointer transition ease-in-out duration-400;
 
                 .light-dark-ball {
-                    @apply w-[20%] h-[80%] rounded-xl mx-1 bg-gradient-to-b from-white to-gray-400 flex items-center justify-center; 
+                    @apply w-[20%] h-[80%] rounded-xl mx-1 bg-gradient-to-b from-white to-grey flex items-center justify-center; 
                 
                     .bi {
-                        @apply text-red text-xl transition ease-in-out duration-400; 
+                        @apply text-xl transition ease-in-out duration-400; 
                     }
                 }
             }
@@ -678,7 +632,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 @apply h-[200px] flex;
             
                 .pfp-upload {
-                    @apply  w-[20%] overflow-hidden h-full cursor-pointer rounded-full bg-dullblack shadow flex justify-center items-center;
+                    @apply w-[20%] overflow-hidden h-full cursor-pointer rounded-full bg-dullblack shadow flex justify-center items-center;
                 
                     .pfp-plus {
                         @apply text-6xl;
@@ -742,31 +696,31 @@ input[type="number"]::-webkit-outer-spin-button {
                             @apply bg-dullblack border border-2 border-bluemain z-10 cursor-pointer;
 
                             & .in-one {
-                                @apply h-full rounded-full scale-85 bg-bluemain shadow; 
+                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-bluelight to-bluemain shadow; 
                             }
                         }
 
                         .two {
-                            @apply bg-dullblack border border-2 border-transparent z-10 cursor-pointer;
+                            @apply bg-dullblack border border-2 border-red z-10 cursor-pointer;
 
                             & .in-two {
-                                @apply h-full rounded-full scale-85 bg-red shadow; 
+                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-red to-delDark shadow; 
                             }
                         }
 
                         .three {
-                            @apply bg-dullblack border border-2 border-transparent z-10 cursor-pointer;
+                            @apply bg-dullblack border border-2 border-pink z-10 cursor-pointer;
 
                             & .in-three {
-                                @apply h-full rounded-full scale-85 bg-selected shadow; 
+                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-pinkdark to-pink shadow; 
                             }
                         }
 
                         .four {
-                            @apply bg-dullblack border border-2 border-transparent z-10 cursor-pointer;
+                            @apply bg-dullblack border border-2 border-ferndark z-10 cursor-pointer;
 
                             & .in-four {
-                                @apply h-full rounded-full scale-85 bg-fern shadow; 
+                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-ferndark to-fern shadow; 
                             }
                         }
                     }

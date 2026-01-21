@@ -200,55 +200,53 @@ function DateMenu() {
     return (
         
         <>
-            <div>
-                <div className="full-date-cont">
-                    <div className="task-handler">
-                        <select name="show" className="show" value={taskFilter} onChange={(e) => toggleTaskDisplay(e.target.value)}>
-                            <option value="all">All</option>
-                            <option value="unmet">Unmet</option>
-                            <option value="met">Met</option>
-                        </select>
-                        <p className="nav-date" onClick={() => {
-                            toggleTodayDisplay();
-                            redirectDateTask();
-                        }}>{selectedDate.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}</p>
-                        <button className="bi bi-plus-circle-fill add" onClick={() => openCloseNewTaskSetter()}></button>
-                    </div>
-
-                    <div className="date-menu">
-                        <div className="date-track" ref={containerRef}>
-                            <ul className="test-box-cont">                            
-    
-    
-                                {
-                                    week.map((d, i) => {
-                                        const dateString = dayKey(d);
-                                        const isSelected = isSameDay(d, selectedDate);
-
-                                        return(
-                                            <li 
-                                                key={i} 
-                                                ref={el => {
-                                                if (el) dayRefs.current.set(dateString, el);
-                                                else dayRefs.current.delete(dateString);
-                                                }} 
-                                                className={`test-box ${isSelected ? "border-bluelight" : ""}`} 
-                                                onClick={() => setSelectedDate(new Date(d))}
-                                            >
-
-                                                <span className="d-name">{d.toLocaleDateString(undefined, {weekday: 'short'})}</span>
-                                                <span className="d-other">{d.getDate()}</span>
-
-                                            </li>
-                                        )
-                                    })
-                                }
-                            </ul>
-
-                        </div>
-                    </div>
+            
+            <div className="full-date-cont">
+                <div className="task-handler">
+                    <select name="show" className="show" value={taskFilter} onChange={(e) => toggleTaskDisplay(e.target.value)}>
+                        <option value="all">All</option>
+                        <option value="unmet">Unmet</option>
+                        <option value="met">Met</option>
+                    </select>
+                    <p className="nav-date" onClick={() => {
+                        toggleTodayDisplay();
+                        redirectDateTask();
+                    }}>{selectedDate.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}</p>
+                    <button className="bi bi-plus-circle-fill add" onClick={() => openCloseNewTaskSetter()}></button>
                 </div>
 
+                <div className="date-menu">
+                    <div className="date-track" ref={containerRef}>
+                        <ul className="test-box-cont">                            
+
+
+                            {
+                                week.map((d, i) => {
+                                    const dateString = dayKey(d);
+                                    const isSelected = isSameDay(d, selectedDate);
+
+                                    return(
+                                        <li 
+                                            key={i} 
+                                            ref={el => {
+                                            if (el) dayRefs.current.set(dateString, el);
+                                            else dayRefs.current.delete(dateString);
+                                            }} 
+                                            className={`test-box ${isSelected ? "border-bluelight" : ""}`} 
+                                            onClick={() => setSelectedDate(new Date(d))}
+                                        >
+
+                                            <span className="d-name">{d.toLocaleDateString(undefined, {weekday: 'short'})}</span>
+                                            <span className="d-other">{d.getDate()}</span>
+
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+
+                    </div>
+                </div>
                 {newTaskDisplay ? <NewTask exit={openCloseNewTaskSetter} /> : ""}
             </div>
 
