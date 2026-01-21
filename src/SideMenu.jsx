@@ -40,6 +40,7 @@ function SideMenu() {
                 <p>Settings</p>
             </Link>
 
+            <div className="color-test"></div>
         </nav>
     );
 }

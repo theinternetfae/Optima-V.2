@@ -37,21 +37,6 @@ input[type="number"]::-webkit-outer-spin-button {
     @apply border border-2 border-grey;  
 }
 
-@theme {
-    --color-selected: #DA38CD;
-    --color-bluet: #2563EB;
-    --color-bluelight: #60A5FA;
-    --color-dullblack: #171717;
-    --color-commongrey: #262626;
-    --color-backblack: #0D0D0D; 
-    --color-delDark: #650207;
-    --color-delLight: #C93631;
-    --color-yellow: #FFFF00; 
-    --color-grey: #5B6066;
-    --color-green: #237414;
-    --color-red: #9C0412;
-}
-
 @utility no-scrollbar {
   -ms-overflow-style: none; 
   scrollbar-width: none;   
@@ -63,11 +48,42 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 }
 
+/*DEFAULT THEME / DARK MODE*/
+@theme {
+
+    /*Theme One (BASE)*/
+    --color-bluelight: #60A5FA;
+
+    /*Theme Two*/
+    --color-red: #9C0412;
+
+    /*Theme Three*/
+    --color-selected: #DA38CD; 
+
+    /*Theme Four*/
+    --color-fern: #477023;
+    
+    --color-bluemain: #2563EB;
+    --color-dullblack: #171717;
+    --color-commongrey: #262626;
+    --color-backblack: #111111; 
+    --color-delDark: #650207;
+    --color-delLight: #C93631;
+    --color-yellow: #FFFF00; 
+    --color-grey: #333333;
+    --color-green: #237414;
+    --color-bground: #1A1A1A
+}
+
+
 @layer components {
 
+    .color-test {
+        @apply h-[50px] rounded-lg shadow-lg bg-backblack;
+    }
     
     .add {
-        @apply text-xl text-bluet cursor-pointer md:text-2xl;
+        @apply text-xl text-bluemain cursor-pointer md:text-2xl;
     }
 
     .tips {
@@ -75,7 +91,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .tips:hover {
-        @apply text-bluet;
+        @apply text-bluemain;
     }
 
     .emoji-picker {
@@ -117,7 +133,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .side-menu {
-        @apply  bg-[#1A1A1A] w-[100vw] bottom-0 shadow-xl fixed bottom-0 flex flex-col px-4 py-6 gap-6 cursor-pointer lg:w-[20%] lg:sticky lg:h-[100vh] lg:top-0 lg:left-0;
+        @apply  bg-bground w-[100vw] bottom-0 shadow-xl fixed bottom-0 flex flex-col px-4 py-6 gap-6 cursor-pointer lg:w-[20%] lg:sticky lg:h-[100vh] lg:top-0 lg:left-0;
 
         & .road {
             @apply cursor-pointer rounded-md bg-commongrey shadow-lg p-3 border border-2 border-transparent flex gap-2;
@@ -159,7 +175,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     }
 
                     & .d-other {
-                        @apply h-[75%] text-[10px] border-bluelight p-[12px] rounded-full bg-[#333333] shadow-lg flex items-center justify-center cursor-pointer md:text-base md:border-[3px] md:h-[10px] md:w-[10px] md:p-6;
+                        @apply h-[75%] text-[10px] border-bluelight p-[12px] rounded-full bg-grey shadow-lg flex items-center justify-center cursor-pointer md:text-base md:border-[3px] md:h-[10px] md:w-[10px] md:p-6;
                     }
                 }
                 }
@@ -262,7 +278,7 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             & .addTask {
-                @apply mt-2 bg-gradient-to-b from-bluelight to-bluet p-2 rounded-lg text-sm shadow font-bold text-shadow-md cursor-pointer md:text-base;
+                @apply mt-2 bg-gradient-to-b from-bluelight to-bluemain p-2 rounded-lg text-sm shadow font-bold text-shadow-md cursor-pointer md:text-base;
             }
 
             & .delete-task {
@@ -276,7 +292,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .task-box {
-        @apply p-2 h-[40px] bg-[#111111] cursor-pointer snap-start rounded-md shadow flex items-center transition-all duration-2000 ease-in-out md:p-4 md:border-none md:h-[70px] md:w-full; 
+        @apply p-2 h-[40px] bg-backblack cursor-pointer snap-start rounded-md shadow flex items-center transition-all duration-2000 ease-in-out md:p-4 md:border-none md:h-[70px] md:w-full; 
 
         & .emoji-t-box {
             @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center rounded-lg md:w-[5%] md:h-full md:text-3xl;
@@ -287,12 +303,12 @@ input[type="number"]::-webkit-outer-spin-button {
         }
         
         & .done {
-            @apply w-4 h-4 accent-bluet mr-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed md:scale-125;
+            @apply w-4 h-4 accent-bluemain mr-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed md:scale-125;
         }
     }
 
     .history-box {
-        @apply border border-2 border-transparent snap-start cursor-pointer bg-[#111111] rounded-md shadow m-4 h-[60px] flex items-center duration-2000 ease-in-out;
+        @apply border border-2 border-transparent snap-start cursor-pointer bg-backblack rounded-md shadow m-4 h-[60px] flex items-center duration-2000 ease-in-out;
 
         & .emoji-t-box {
             @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center ml-2 rounded-lg md:w-[5%] md:h-[80%] md:text-3xl;
@@ -308,7 +324,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .handler-box {
-        @apply bg-[#111111] h-16 mt-4 rounded-lg flex items-center snap-start;
+        @apply bg-backblack h-16 mt-4 rounded-lg flex items-center snap-start;
 
         & .emoji-t-box {
             @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center ml-2 rounded-lg md:w-[5%] md:h-[70%] md:text-3xl;
@@ -349,7 +365,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 & .no-no {
-                    @apply bg-gradient-to-b from-bluelight to-bluet;
+                    @apply bg-gradient-to-b from-bluelight to-bluemain;
                 }
             }
         }
@@ -373,7 +389,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 & .no-no {
-                    @apply bg-gradient-to-b from-bluelight to-bluet;
+                    @apply bg-gradient-to-b from-bluelight to-bluemain;
                 }
             }
         }
@@ -433,7 +449,7 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         & li {
-                            @apply bg-bluet p-2 rounded shadow cursor-pointer;
+                            @apply bg-bluemain p-2 rounded shadow cursor-pointer;
                         }
                     }
                 }
@@ -470,7 +486,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply h-[50%] flex gap-40 items-center justify-center;
 
                     & .sec-one {
-                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-dullblack rounded-full shadow-xl text-bluet hover:text-bluelight transition ease-in duration-300;
+                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-dullblack rounded-full shadow-xl text-bluemain hover:text-bluelight transition ease-in duration-300;
                     
                         i {
                             @apply text-4xl;
@@ -719,10 +735,10 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         .one {
-                            @apply bg-dullblack border border-2 border-bluet z-10 cursor-pointer;
+                            @apply bg-dullblack border border-2 border-bluemain z-10 cursor-pointer;
 
                             & .in-one {
-                                @apply h-full rounded-full scale-85 bg-bluet shadow; 
+                                @apply h-full rounded-full scale-85 bg-bluemain shadow; 
                             }
                         }
 
@@ -746,7 +762,7 @@ input[type="number"]::-webkit-outer-spin-button {
                             @apply bg-dullblack border border-2 border-transparent z-10 cursor-pointer;
 
                             & .in-four {
-                                @apply h-full rounded-full scale-85 bg-bluelight shadow; 
+                                @apply h-full rounded-full scale-85 bg-fern shadow; 
                             }
                         }
                     }
@@ -819,7 +835,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     }
 
                     .download-data {
-                        @apply h-15 rounded-lg mx-60 mt-2 bg-gradient-to-b from-bluelight to-bluet shadow-lg font-bold cursor-pointer active:scale-95 flex gap-2 justify-center items-center;
+                        @apply h-15 rounded-lg mx-60 mt-2 bg-gradient-to-b from-bluelight to-bluemain shadow-lg font-bold cursor-pointer active:scale-95 flex gap-2 justify-center items-center;
                     }
                 }
             }
@@ -851,7 +867,7 @@ input[type="number"]::-webkit-outer-spin-button {
                             }
 
                             button {
-                                @apply p-2 rounded-lg font-bold ml-auto mb-2 mr-2 bg-gradient-to-b from-bluelight to-bluet shadow-lg active:scale-90;
+                                @apply p-2 rounded-lg font-bold ml-auto mb-2 mr-2 bg-gradient-to-b from-bluelight to-bluemain shadow-lg active:scale-90;
                             }
                             
                         }
@@ -873,7 +889,7 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         .btn-icon {
-                            @apply w-30 h-12 rounded-lg bg-gradient-to-b from-bluelight to-bluet shadow-lg active:scale-90 cursor-pointer flex justify-center items-center text-xl;
+                            @apply w-30 h-12 rounded-lg bg-gradient-to-b from-bluelight to-bluemain shadow-lg active:scale-90 cursor-pointer flex justify-center items-center text-xl;
                         
                             .bi {
                                 @apply text-2xl;
