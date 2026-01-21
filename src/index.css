@@ -1,12 +1,6 @@
 @import "tailwindcss";
 
-body {
-    background-color: #0D0D0D;
-    color: #E5E7EB;
-    width: 100vw;
-    height: 100vh;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
+/* "Castoro", serif */
 
 input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
@@ -62,7 +56,9 @@ input[type="number"]::-webkit-outer-spin-button {
 
     /*Theme Four*/
     --color-fern: #477023;
-    
+
+    --color-bgdark: #0D0D0D; 
+    --color-textdark: #E5E7EB;
     --color-bluemain: #2563EB;
     --color-dullblack: #171717;
     --color-commongrey: #262626;
@@ -72,16 +68,24 @@ input[type="number"]::-webkit-outer-spin-button {
     --color-yellow: #FFFF00; 
     --color-grey: #333333;
     --color-green: #237414;
-    --color-bground: #1A1A1A
+    --color-bground: #1A1A1A;
+
+    --font-bodytext: "Atkinson Hyperlegible Mono", sans-serif;
+    --font-headtext: "Castoro", serif;
 }
 
 
 @layer components {
 
     .color-test {
-        @apply h-[50px] rounded-lg shadow-lg bg-backblack;
+        @apply h-[50px] rounded-lg shadow-lg bg-backblack ;
     }
+
     
+    body {
+        @apply bg-bgdark text-textdark font-bodytext;
+    }
+
     .add {
         @apply text-xl text-bluemain cursor-pointer md:text-2xl;
     }
@@ -155,7 +159,7 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             & .nav-date {
-                @apply text-sm font-semibold w-[30%] text-center relative left-[-20px] text-center px-10 cursor-pointer md:left-[-30px] md:text-xl;
+                @apply text-sm w-[30%] text-center relative left-[-20px] text-center font-bold font-headtext px-10 cursor-pointer md:left-[-30px] md:text-xl;
             }
         }
 
@@ -402,7 +406,7 @@ input[type="number"]::-webkit-outer-spin-button {
             @apply w-full flex justify-between;
 
             & .task-selected {
-                @apply cursor-pointer outline-none text-lg bg-commongrey p-2 rounded-lg;
+                @apply cursor-pointer outline-none text-lg bg-commongrey p-2 rounded-lg font-headtext;
             }
         }
 
@@ -576,7 +580,7 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             .chosen {
-                @apply text-lg font-bold cursor-pointer;
+                @apply text-lg font-bold cursor-pointer font-headtext;
             }
 
         }
@@ -625,7 +629,7 @@ input[type="number"]::-webkit-outer-spin-button {
             .settings-info {
 
                 & .settings-header {
-                    @apply text-2xl font-bold;
+                    @apply text-2xl font-bold font-headtext;
             
                     & .checking {
                         @apply text-grey text-base;
