@@ -29,6 +29,7 @@ function Emoji({showing, setting}) {
             label: 'Health'
         },
 
+
         {
             icon: 'bi-star-fill',
             label: 'Important'

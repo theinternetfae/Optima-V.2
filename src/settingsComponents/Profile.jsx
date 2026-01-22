@@ -79,7 +79,7 @@ function Profile() {
                     
                     <p>Optima Quirk</p>
 
-                    <div className={`toggle ${quirkState && "bg-bluelight"}`} onClick={() => setQuirkState(prev => !prev)}>
+                    <div className={`toggle ${quirkState && "bg-accentlight"}`} onClick={() => setQuirkState(prev => !prev)}>
                         <div className={`ball ease duration-800 ${quirkState && "translate-x-9 md:translate-x-43"}`}></div>
                     </div>
 
@@ -89,7 +89,7 @@ function Profile() {
                     
                     <p>Daily quote</p>
 
-                    <div className={`toggle ${quoteState && "bg-bluelight"}`} onClick={() => setQuoteState(prev => !prev)}>
+                    <div className={`toggle ${quoteState && "bg-accentlight"}`} onClick={() => setQuoteState(prev => !prev)}>
                         <div className={`ball ease duration-800 ${quoteState && "translate-x-9 md:translate-x-43"}`}></div>
                     </div>
 
@@ -99,7 +99,7 @@ function Profile() {
                     
                     <p>Streak</p>
 
-                    <div className={`toggle ${streakState && "bg-bluelight"}`} onClick={() => setStreakState(prev => !prev)}>
+                    <div className={`toggle ${streakState && "bg-accentlight"}`} onClick={() => setStreakState(prev => !prev)}>
                         <div className={`ball ease duration-800 ${streakState && "translate-x-9 md:translate-x-43"}`}></div>
                     </div>
 

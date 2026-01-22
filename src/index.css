@@ -22,7 +22,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .date-cell, .blank {
-  @apply h-10 flex items-center justify-center bg-commongrey rounded-full cursor-pointer;
+  @apply h-10 flex items-center justify-center bg-surfacetwo rounded-full cursor-pointer;
 }
 
 .date-cell {
@@ -40,56 +40,65 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 }
 
-/*DEFAULT THEME / DARK MODE*/
+
+
+
 @theme {
+    /*Fonts*/
+    --font-bodytext: "Atkinson Hyperlegible Mono", sans-serif;
+    --font-headtext: "Castoro", serif;
 
-    /*Theme One (BASE)*/
-    --color-bluelight: #60A5FA;
-    --color-bluemain: #2563EB;
 
-    /*Theme Two*/
+    /* Theme Two */
     --color-red: #9C0412;
     --color-delDark: #650207;
 
-    /*Theme Three*/
+    /* Theme Three */
     --color-pink: #E21C70;
     --color-pinkdark: #AE0849; 
 
-    /*Theme Four*/
+    /* Theme Four */
     --color-fern: #477023;
-    --color-ferndark: #2D531A;
+    --color-ferndark: #2D531A; 
 
-    /*Reusable colors*/
-    --color-bgdark: #0D0D0D; 
-    --color-textdark: #E5E7EB;
+
+    /*DEFAULT: Dark mode + DEFAULT THEME: Blue*/
+    --color-bg: #0D0D0D;
+    --color-text: #E5E7EB; 
+    --color-surfaceone: #171717;
+    --color-surfacetwo: #262626;
+    --color-muted: #111111;
+    --color-accentlight: #60A5FA;
+    --color-accentdark: #2563EB;
+
+    /*Trivial colors*/
     --color-yellow: #FFFF00; 
     --color-grey: #333333;
 
+}
 
-    /*Dark mode basics*/
-    --color-dullblack: #171717;
-    --color-commongrey: #262626;
-    --color-backblack: #111111;
-
-
-    --font-bodytext: "Atkinson Hyperlegible Mono", sans-serif;
-    --font-headtext: "Castoro", serif;
+.light {
+    --color-bg: #E8E8E8;
+    --color-text: #090F15; 
+    --color-surfaceone: #5B6066;
+    --color-surfacetwo: #848484;
+    --color-muted: #575764;
 }
 
 
 @layer components {
 
-    /* .color-test {
-        @apply h-[50px] rounded-lg shadow-lg bg-dullblack;
-    } */
+    .color-test {
+        @apply h-[50px] rounded-lg shadow-lg bg-surfaceone;
+    }
 
     
     body {
-        @apply bg-bgdark text-textdark font-bodytext;
+        @apply bg-bg text-text font-bodytext;
     }
 
     .add {
-        @apply text-xl text-bluelight cursor-pointer md:text-2xl;
+        @apply text-xl text-accentlight cursor-pointer md:text-2xl;
     }
 
     .tips {
@@ -97,14 +106,14 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .tips:hover {
-        @apply text-bluelight;
+        @apply text-accentlight;
     }
 
     .emoji-picker {
-        @apply rounded-lg bg-commongrey shadow-lg p-4 h-45 w-[300px] lg:w-[330px];
+        @apply rounded-lg bg-surfacetwo shadow-lg p-4 h-45 w-[300px] lg:w-[330px];
 
         .emoji-h {
-            @apply h-[25%] flex justify-between rounded-lg bg-dullblack p-2;
+            @apply h-[25%] flex justify-between rounded-lg bg-surfaceone p-2;
 
             .bi {
                 @apply text-xl w-[40px] flex justify-center items-center rounded-lg cursor-pointer transition ease-in-out duration-300;
@@ -112,7 +121,7 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         .emoji-b {
-            @apply h-[75%] flex mt-2 flex-wrap shrink-0 rounded-lg bg-dullblack p-2;
+            @apply h-[75%] flex mt-2 flex-wrap shrink-0 rounded-lg bg-surfaceone p-2;
             
             ul {
                 @apply flex flex-wrap;
@@ -135,10 +144,10 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .side-menu {
-        @apply  bg-dullblack w-[100vw] bottom-0 shadow-xl fixed bottom-0 flex flex-col px-4 py-6 gap-6 cursor-pointer lg:w-[20%] lg:sticky lg:h-[100vh] lg:top-0 lg:left-0;
+        @apply  bg-surfaceone w-[100vw] bottom-0 shadow-xl fixed bottom-0 flex flex-col px-4 py-6 gap-6 cursor-pointer lg:w-[20%] lg:sticky lg:h-[100vh] lg:top-0 lg:left-0;
 
         & .road {
-            @apply cursor-pointer rounded-md bg-commongrey shadow-lg p-3 border border-2 border-transparent flex gap-2;
+            @apply cursor-pointer rounded-md bg-surfacetwo shadow-lg p-3 border border-2 border-transparent flex gap-2;
         }
     }
 
@@ -153,7 +162,7 @@ input[type="number"]::-webkit-outer-spin-button {
             @apply flex items-center mb-6 mx-2 flex justify-between relative lg:mx-0;
 
             & .show {
-                @apply bg-commongrey text-xs p-2 rounded-lg outline-none w-[60px] cursor-pointer md:w-[100px] md:text-base;
+                @apply bg-surfacetwo text-xs p-2 rounded-lg outline-none w-[60px] cursor-pointer md:w-[100px] md:text-base;
             }
 
             & .nav-date {
@@ -162,7 +171,7 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         & .date-menu {
-            @apply h-[10%] w-full rounded-lg flex justify-center items-center md:bg-commongrey md:p-2 md:h-[15%];
+            @apply h-[10%] w-full rounded-lg flex justify-center items-center md:bg-surfacetwo md:p-2 md:h-[15%];
 
             & .date-track {
                 @apply w-[100%] flex justify-between p-1 no-scrollbar overflow-x-auto;
@@ -171,14 +180,14 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply w-[100%] flex justify-between h-[7rem];
                     
                     & .test-box {
-                    @apply border border-2 border-transparent w-[65px] flex flex-col justify-center items-center rounded-2xl p-[3px] gap-4 md:border-commongrey; 
+                    @apply border border-2 border-transparent w-[65px] flex flex-col justify-center items-center rounded-2xl p-[3px] gap-4 md:border-surfacetwo; 
                 
                     & .d-name {
                         @apply h-[25%] text-xs flex justify-center md:text-base;
                     }
 
                     & .d-other {
-                        @apply h-[75%] text-[10px] border-bluelight p-[12px] rounded-full bg-grey shadow-lg flex items-center justify-center cursor-pointer md:text-base md:border-[3px] md:h-[10px] md:w-[10px] md:p-6;
+                        @apply h-[75%] text-[10px] border-accentlight p-[12px] rounded-full bg-grey shadow-lg flex items-center justify-center cursor-pointer md:text-base md:border-[3px] md:h-[10px] md:w-[10px] md:p-6;
                     }
                 }
                 }
@@ -198,13 +207,13 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         & .new-task-container {
-            @apply bg-commongrey mx-auto w-[80%] p-4 rounded-xl flex flex-col gap-4 shadow-md md:w-[50%] md:right-[320px] absolute  md:p-10;
+            @apply bg-surfacetwo mx-auto w-[80%] p-4 rounded-xl flex flex-col gap-4 shadow-md md:w-[50%] md:right-[320px] absolute  md:p-10;
 
             .task-desc {
-                @apply bg-dullblack rounded-md p-2 flex flex-col gap-2 justify-center items-center md:grid md:p-4 md:place-items-center;
+                @apply bg-surfaceone rounded-md p-2 flex flex-col gap-2 justify-center items-center md:grid md:p-4 md:place-items-center;
 
                 & .emoji-cont {
-                    @apply bg-commongrey w-15 h-[60px] flex items-center justify-center shadow-lg text-6xl rounded-md cursor-pointer md:text-8xl md:w-[30%] md:h-[100px];
+                    @apply bg-surfacetwo w-15 h-[60px] flex items-center justify-center shadow-lg text-6xl rounded-md cursor-pointer md:text-8xl md:w-[30%] md:h-[100px];
                 } 
 
                 & .name-input {
@@ -213,7 +222,7 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             .color-value {
-                @apply bg-dullblack p-2 flex justify-between gap-6 rounded-lg md:p-4;
+                @apply bg-surfaceone p-2 flex justify-between gap-6 rounded-lg md:p-4;
 
                 & h2 {
                     @apply text-sm md:font-bold md:text-lg;
@@ -225,7 +234,7 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             .goal-value {
-                @apply bg-dullblack p-2 flex flex-col gap-4 rounded-lg md:p-4;
+                @apply bg-surfaceone p-2 flex flex-col gap-4 rounded-lg md:p-4;
                 
                 & h2 {
                     @apply text-sm md:font-bold md:text-lg; 
@@ -235,13 +244,13 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply flex justify-between items-center md:gap-10;
 
                     & li {
-                        @apply border border-2 text-sm border-commongrey bg-commongrey transition p-[2px] ease-in-out duration-300 shadow-md rounded-md cursor-pointer hover:border-bluelight md:p-2 md:text-base;
+                        @apply border border-2 text-sm border-surfacetwo bg-surfacetwo transition p-[2px] ease-in-out duration-300 shadow-md rounded-md cursor-pointer hover:border-accentlight md:p-2 md:text-base;
                     }
                 }
             }
 
             .when-to-when {
-                @apply bg-dullblack p-2 flex justify-between items-center rounded-lg md:p-4;
+                @apply bg-surfaceone p-2 flex justify-between items-center rounded-lg md:p-4;
 
                 & input {
                     @apply bg-black p-2 rounded w-[35px] text-sm md:text-base md:w-[180px];
@@ -249,7 +258,7 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             & .reminder-selection {
-                @apply bg-dullblack p-2 flex justify-between items-center rounded-lg md:p-4;
+                @apply bg-surfaceone p-2 flex justify-between items-center rounded-lg md:p-4;
                 
                 & h2 {
                     @apply text-sm md:font-bold md:text-lg; 
@@ -265,7 +274,7 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             & .reminder {
-                @apply bg-dullblack p-2 flex justify-between rounded-lg md:p-4;
+                @apply bg-surfaceone p-2 flex justify-between rounded-lg md:p-4;
                 
                 & h2 {
                     @apply text-sm flex md:text-lg md:font-bold; 
@@ -281,7 +290,7 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             & .addTask {
-                @apply mt-2 bg-gradient-to-b from-bluelight to-bluemain p-2 rounded-lg text-sm shadow font-bold text-shadow-md cursor-pointer md:text-base;
+                @apply mt-2 bg-gradient-to-b from-accentlight to-accentdark p-2 rounded-lg text-sm shadow font-bold text-shadow-md cursor-pointer md:text-base;
             }
 
             & .delete-task {
@@ -291,14 +300,14 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .task-display {
-        @apply p-4 rounded-lg no-scrollbar overflow-y-auto scroll-py-4 mt-6 flex flex-col gap-4 md:snap-y md:snap-mandatory md:scroll-smooth scroll-pt-4 text-sm md:bg-commongrey md:mt-8 md:p-4 md:gap-6 md:text-base md:w-full md:h-[475px] md:overflow-y-auto;
+        @apply p-4 rounded-lg no-scrollbar overflow-y-auto scroll-py-4 mt-6 flex flex-col gap-4 md:snap-y md:snap-mandatory md:scroll-smooth scroll-pt-4 text-sm md:bg-surfacetwo md:mt-8 md:p-4 md:gap-6 md:text-base md:w-full md:h-[475px] md:overflow-y-auto;
     }
 
     .task-box {
-        @apply p-2 h-[40px] bg-backblack cursor-pointer snap-start rounded-md shadow flex items-center transition-all duration-2000 ease-in-out md:p-4 md:border-none md:h-[70px] md:w-full; 
+        @apply p-2 h-[40px] bg-muted cursor-pointer snap-start rounded-md shadow flex items-center transition-all duration-2000 ease-in-out md:p-4 md:border-none md:h-[70px] md:w-full; 
 
         & .emoji-t-box {
-            @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center rounded-lg md:w-[5%] md:h-full md:text-3xl;
+            @apply h-[30px] w-[8%] bg-surfacetwo text-lg flex items-center justify-center rounded-lg md:w-[5%] md:h-full md:text-3xl;
         }
 
         & .name-t-box {
@@ -306,15 +315,15 @@ input[type="number"]::-webkit-outer-spin-button {
         }
         
         & .done {
-            @apply w-4 h-4 accent-bluelight mr-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed md:scale-125;
+            @apply w-4 h-4 accent-accentlight mr-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed md:scale-125;
         }
     }
 
     .history-box {
-        @apply border border-2 border-transparent snap-start cursor-pointer bg-backblack rounded-md shadow m-4 h-[60px] flex items-center duration-2000 ease-in-out;
+        @apply border border-2 border-transparent snap-start cursor-pointer bg-muted rounded-md shadow m-4 h-[60px] flex items-center duration-2000 ease-in-out;
 
         & .emoji-t-box {
-            @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center ml-2 rounded-lg md:w-[5%] md:h-[80%] md:text-3xl;
+            @apply h-[30px] w-[8%] bg-surfacetwo text-lg flex items-center justify-center ml-2 rounded-lg md:w-[5%] md:h-[80%] md:text-3xl;
         }
 
         & .name-t-box {
@@ -327,10 +336,10 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .handler-box {
-        @apply bg-backblack h-16 mt-4 rounded-lg flex items-center snap-start;
+        @apply bg-muted h-16 mt-4 rounded-lg flex items-center snap-start;
 
         & .emoji-t-box {
-            @apply h-[30px] w-[8%] bg-commongrey text-lg flex items-center justify-center ml-2 rounded-lg md:w-[5%] md:h-[70%] md:text-3xl;
+            @apply h-[30px] w-[8%] bg-surfacetwo text-lg flex items-center justify-center ml-2 rounded-lg md:w-[5%] md:h-[70%] md:text-3xl;
         }
 
         & .name-t-box {
@@ -354,7 +363,7 @@ input[type="number"]::-webkit-outer-spin-button {
         @apply bg-black/1 absolute flex justify-center items-center top-0 z-60 w-[90%] h-full backdrop-blur-sm;
     
         & .alert-box {
-            @apply border border-2 border-white bg-commongrey p-4 text-base text-center rounded-md md:fixed md:right-[200px] md:w-[40%];
+            @apply border border-2 border-white bg-surfacetwo p-4 text-base text-center rounded-md md:fixed md:right-[200px] md:w-[40%];
         
             & .choice {
                 @apply flex justify-between mt-4;
@@ -368,7 +377,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 & .no-no {
-                    @apply bg-gradient-to-b from-bluelight to-bluemain;
+                    @apply bg-gradient-to-b from-accentlight to-accentdark;
                 }
             }
         }
@@ -378,7 +387,7 @@ input[type="number"]::-webkit-outer-spin-button {
         @apply bg-black/1 absolute flex justify-center items-center top-0 z-90 w-full h-full backdrop-blur-sm;
     
         & .alert-box {
-            @apply border border-2 border-white bg-commongrey p-4 text-base text-center rounded-md md:w-[40%];
+            @apply border border-2 border-white bg-surfacetwo p-4 text-base text-center rounded-md md:w-[40%];
         
             & .choice {
                 @apply flex justify-between mt-4;
@@ -392,7 +401,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 & .no-no {
-                    @apply bg-gradient-to-b from-bluelight to-bluemain;
+                    @apply bg-gradient-to-b from-accentlight to-accentdark;
                 }
             }
         }
@@ -405,12 +414,12 @@ input[type="number"]::-webkit-outer-spin-button {
             @apply w-full flex justify-between;
 
             & .task-selected {
-                @apply cursor-pointer outline-none text-lg bg-commongrey p-2 rounded-lg font-headtext;
+                @apply cursor-pointer outline-none text-lg bg-surfacetwo p-2 rounded-lg font-headtext;
             }
         }
 
         & .selected-scroll-cont {
-            @apply bg-commongrey rounded-lg p-4 w-full sticky top-2 z-99;
+            @apply bg-surfacetwo rounded-lg p-4 w-full sticky top-2 z-99;
 
             & .selected-scroll {
                 @apply flex gap-5 overflow-hidden w-[1095px] overflow-x-auto ml-5 no-scrollbar snap-x snap-mandatory;
@@ -419,7 +428,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply flex shrink-0 justify-center items-center w-[140px] snap-start;
                 
                     li {
-                        @apply border border-2 border-transparent bg-backblack p-4 rounded-full cursor-pointer shadow-lg text-lg;
+                        @apply border border-2 border-transparent bg-muted p-4 rounded-full cursor-pointer shadow-lg text-lg;
                     }
                 }
                 
@@ -427,21 +436,21 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         & .date-box-main {
-            @apply w-[50%] h-[500px] bg-commongrey rounded-lg p-6 flex gap-2 justify-center font-bold;
+            @apply w-[50%] h-[500px] bg-surfacetwo rounded-lg p-6 flex gap-2 justify-center font-bold;
 
             & .bi-chevron {
                 @apply cursor-pointer;
             }
 
             & .date-box-cont {
-                @apply rounded-lg bg-dullblack w-[90%] p-4;
+                @apply rounded-lg bg-surfaceone w-[90%] p-4;
                 
                 & p {
                     @apply mb-4 text-base font-bold;
                 }
 
                 & .date-box-sub {
-                    @apply shadow-lg shadow-inset-dark bg-commongrey rounded flex gap-[20px] justify-center p-2;
+                    @apply shadow-lg shadow-inset-dark bg-surfacetwo rounded flex gap-[20px] justify-center p-2;
                 }
             }
         }
@@ -457,14 +466,14 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 & .average-body {
-                    @apply border border-20 border-commongrey relative rounded-full h-full w-[60%] shadow-xl;
+                    @apply border border-20 border-surfacetwo relative rounded-full h-full w-[60%] shadow-xl;
 
                     & .rating {
                         @apply text-4xl font-bold absolute top-[120px] left-[75px]
                     }
 
                     & .rating-title {
-                        @apply text-2xl absolute top-[180px] left-[69px] text-commongrey
+                        @apply text-2xl absolute top-[180px] left-[69px] text-surfacetwo
                     }
                 }
             }
@@ -476,7 +485,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply h-[50%] flex gap-40 items-center justify-center;
 
                     & .sec-one-two {
-                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-dullblack rounded-full shadow-xl text-bluelight transition ease-in duration-300;
+                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-surfaceone rounded-full shadow-xl text-accentlight transition ease-in duration-300;
                     
                         i {
                             @apply text-4xl transition ease-in duration-300;
@@ -496,7 +505,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply h-[50%] flex gap-40 items-center justify-center;
 
                     & .sec-one-two {
-                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-dullblack rounded-full shadow-xl text-bluelight transition ease-in duration-300;
+                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-surfaceone rounded-full shadow-xl text-accentlight transition ease-in duration-300;
                     
                         i {
                             @apply text-4xl transition ease-in duration-300;
@@ -525,11 +534,11 @@ input[type="number"]::-webkit-outer-spin-button {
                 @apply flex gap-2;
 
                 & .selecting {
-                    @apply bg-commongrey p-2 rounded-lg w-[70px];
+                    @apply bg-surfacetwo p-2 rounded-lg w-[70px];
                 }
 
                 & button {
-                    @apply p-2 border border-2 border-transparent w-15 rounded-lg font-bold hover:border-bluelight bg-dullblack active:scale-90 ease-in-out duration-300;
+                    @apply p-2 border border-2 border-transparent w-15 rounded-lg font-bold hover:border-accentlight bg-surfaceone active:scale-90 ease-in-out duration-300;
                 }
             }
 
@@ -540,7 +549,7 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         & .tasks-per-day {
-            @apply h-[280px] rounded-lg shadow-lg flex justify-center bg-commongrey;
+            @apply h-[280px] rounded-lg shadow-lg flex justify-center bg-surfacetwo;
 
             .tasks-pd-cont {
                 @apply w-full overflow-y-auto no-scrollbar snap-y snap-mandatory scroll-py-4 flex flex-col;
@@ -549,7 +558,7 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         & .chosen-task-info {
-            @apply h-[40%] rounded-lg shadow-lg bg-dullblack flex flex-col;
+            @apply h-[40%] rounded-lg shadow-lg bg-surfaceone flex flex-col;
         
             .no-chosen {
                 @apply text-center m-4
@@ -559,7 +568,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 @apply flex items-center justify-around m-4;
 
                 .sec {
-                    @apply border border-2 text-lg bg-commongrey shadow p-2 w-[40%] h-[110px] rounded-full flex flex-col items-center justify-center ease-in-out duration-300;
+                    @apply border border-2 text-lg bg-surfacetwo shadow p-2 w-[40%] h-[110px] rounded-full flex flex-col items-center justify-center ease-in-out duration-300;
                     
                     & .bi-bi {
                         @apply text-2xl;
@@ -598,7 +607,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 
             .light-dark {
-                @apply w-[200px] my-2 rounded-lg bg-commongrey shadow flex items-center cursor-pointer transition ease-in-out duration-400;
+                @apply w-[200px] my-2 rounded-lg bg-surfacetwo shadow flex items-center cursor-pointer transition ease-in-out duration-400;
 
                 .light-dark-ball {
                     @apply w-[20%] h-[80%] rounded-xl mx-1 bg-gradient-to-b from-white to-grey flex items-center justify-center; 
@@ -612,10 +621,10 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         & .settings-body {
-            @apply h-full mt-4 border-t-2 border-commongrey;
+            @apply h-full mt-4 border-t-2 border-surfacetwo;
 
             .settings-router {
-                @apply h-15 bg-commongrey rounded-lg mt-4 flex items-center justify-around;
+                @apply h-15 bg-surfacetwo rounded-lg mt-4 flex items-center justify-around;
 
                 .sett-link {
                     @apply border border-2 border-transparent p-2 rounded-lg cursor-pointer;
@@ -625,14 +634,14 @@ input[type="number"]::-webkit-outer-spin-button {
         }
     
         & .sett-body {
-            @apply mt-2 rounded-lg bg-commongrey shadow p-4;
+            @apply mt-2 rounded-lg bg-surfacetwo shadow p-4;
         
             /*Profile*/
             .the-user {
                 @apply h-[200px] flex;
             
                 .pfp-upload {
-                    @apply w-[20%] overflow-hidden h-full cursor-pointer rounded-full bg-dullblack shadow flex justify-center items-center;
+                    @apply w-[20%] overflow-hidden h-full cursor-pointer rounded-full bg-surfaceone shadow flex justify-center items-center;
                 
                     .pfp-plus {
                         @apply text-6xl;
@@ -647,7 +656,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply w-[45%] flex flex-col justify-around gap-4 p-2;   
                 
                     .the-user-name-title {
-                        @apply flex items-center justify-center w-full rounded-lg bg-dullblack p-4 shadow focus:outline-none;
+                        @apply flex items-center justify-center w-full rounded-lg bg-surfaceone p-4 shadow focus:outline-none;
                     }
                     
                 }
@@ -656,7 +665,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply w-[45%] flex flex-col justify-around gap-4 p-2;
 
                     input {
-                        @apply bg-dullblack p-4 w-full rounded-lg focus:outline-none;
+                        @apply bg-surfaceone p-4 w-full rounded-lg focus:outline-none;
                     }
                 }
                 
@@ -667,7 +676,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 @apply border-t-2 border-grey mt-4 pt-2 h-[300px] flex flex-col gap-4 justify-around;
 
                 .preference {
-                    @apply h-16 p-2 rounded-lg shadow bg-dullblack flex items-center justify-between;
+                    @apply h-16 p-2 rounded-lg shadow bg-surfaceone flex items-center justify-between;
                 
                     p {
                         @apply font-bold;
@@ -681,15 +690,15 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         .one {
-                            @apply bg-dullblack border border-2 border-bluemain z-10 cursor-pointer;
+                            @apply bg-surfaceone border border-2 border-accentdark z-10 cursor-pointer;
 
                             & .in-one {
-                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-bluelight to-bluemain shadow; 
+                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-accentlight to-accentdark shadow; 
                             }
                         }
 
                         .two {
-                            @apply bg-dullblack border border-2 border-red z-10 cursor-pointer;
+                            @apply bg-surfaceone border border-2 border-red z-10 cursor-pointer;
 
                             & .in-two {
                                 @apply h-full rounded-full scale-85 bg-gradient-to-b from-red to-delDark shadow; 
@@ -697,7 +706,7 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         .three {
-                            @apply bg-dullblack border border-2 border-pink z-10 cursor-pointer;
+                            @apply bg-surfaceone border border-2 border-pink z-10 cursor-pointer;
 
                             & .in-three {
                                 @apply h-full rounded-full scale-85 bg-gradient-to-b from-pinkdark to-pink shadow; 
@@ -705,7 +714,7 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         .four {
-                            @apply bg-dullblack border border-2 border-ferndark z-10 cursor-pointer;
+                            @apply bg-surfaceone border border-2 border-ferndark z-10 cursor-pointer;
 
                             & .in-four {
                                 @apply h-full rounded-full scale-85 bg-gradient-to-b from-ferndark to-fern shadow; 
@@ -728,7 +737,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 @apply flex justify-between p-2 items-center;
 
                 select {
-                    @apply bg-dullblack p-2 rounded-lg cursor-pointer;
+                    @apply bg-surfaceone p-2 rounded-lg cursor-pointer;
                 }
 
                 button {
@@ -737,7 +746,7 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             .task-h-body {
-                @apply h-[450px] bg-dullblack rounded-lg mt-2 shadow-lg;
+                @apply h-[450px] bg-surfaceone rounded-lg mt-2 shadow-lg;
 
                 .task-h-box {
                     @apply w-full h-full px-4 py-2 overflow-y-auto no-scrollbar snap-y snap-mandatory scroll-py-4;
@@ -747,17 +756,17 @@ input[type="number"]::-webkit-outer-spin-button {
             /*Data and Pivacy*/
 
             .data-background {
-                @apply h-[500px] bg-dullblack rounded-lg p-2 overflow-y-auto no-scrollbar;
+                @apply h-[500px] bg-surfaceone rounded-lg p-2 overflow-y-auto no-scrollbar;
 
                 .dropdown {
                     @apply flex flex-col;
 
                     .toggle-dropdown {
-                        @apply p-2 m-2 rounded-lg items-center h-15 flex gap-4 cursor-pointer bg-commongrey shadow-lg
+                        @apply p-2 m-2 rounded-lg items-center h-15 flex gap-4 cursor-pointer bg-surfacetwo shadow-lg
                     }
 
                     p {
-                        @apply m-2 p-2 rounded-lg bg-commongrey shadow-lg;
+                        @apply m-2 p-2 rounded-lg bg-surfacetwo shadow-lg;
                     }
                 }
 
@@ -769,7 +778,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     }
 
                     .controller {
-                        @apply h-[70px] bg-commongrey rounded-lg shadow flex justify-between items-center p-2;
+                        @apply h-[70px] bg-surfacetwo rounded-lg shadow flex justify-between items-center p-2;
 
                         span {
                             @apply text-grey text-sm
@@ -781,7 +790,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     }
 
                     .download-data {
-                        @apply h-15 rounded-lg mx-60 mt-2 bg-gradient-to-b from-bluelight to-bluemain shadow-lg font-bold cursor-pointer active:scale-95 flex gap-2 justify-center items-center;
+                        @apply h-15 rounded-lg mx-60 mt-2 bg-gradient-to-b from-accentlight to-accentdark shadow-lg font-bold cursor-pointer active:scale-95 flex gap-2 justify-center items-center;
                     }
                 }
             }
@@ -789,31 +798,31 @@ input[type="number"]::-webkit-outer-spin-button {
             /*About*/
 
             .about-background {
-                @apply h-[500px] bg-dullblack rounded-lg p-2 overflow-y-auto no-scrollbar;
+                @apply h-[500px] bg-surfaceone rounded-lg p-2 overflow-y-auto no-scrollbar;
 
                 .dropdown {
                     @apply flex flex-col;
 
                     .toggle-dropdown {
-                        @apply p-2 m-2 rounded-lg items-center h-15 flex gap-4 cursor-pointer bg-commongrey shadow-lg
+                        @apply p-2 m-2 rounded-lg items-center h-15 flex gap-4 cursor-pointer bg-surfacetwo shadow-lg
                     }
 
                     p {
-                        @apply m-2 p-2 rounded-lg bg-commongrey shadow-lg;
+                        @apply m-2 p-2 rounded-lg bg-surfacetwo shadow-lg;
                     }
 
                     .contact-us {
                         @apply ml-8; 
 
                         .contacting-box {
-                            @apply m-2 rounded-lg h-50 w-[50%] bg-commongrey shadow-lg flex flex-col;
+                            @apply m-2 rounded-lg h-50 w-[50%] bg-surfacetwo shadow-lg flex flex-col;
 
                             textarea {
-                                @apply h-[70%] p-2 focus:outline-none m-2 rounded-lg bg-dullblack;
+                                @apply h-[70%] p-2 focus:outline-none m-2 rounded-lg bg-surfaceone;
                             }
 
                             button {
-                                @apply p-2 rounded-lg font-bold ml-auto mb-2 mr-2 bg-gradient-to-b from-bluelight to-bluemain shadow-lg active:scale-90;
+                                @apply p-2 rounded-lg font-bold ml-auto mb-2 mr-2 bg-gradient-to-b from-accentlight to-accentdark shadow-lg active:scale-90;
                             }
                             
                         }
@@ -828,14 +837,14 @@ input[type="number"]::-webkit-outer-spin-button {
                     }
 
                     .controller-about {
-                        @apply h-[70px] bg-commongrey rounded-lg shadow flex justify-between items-center p-2;
+                        @apply h-[70px] bg-surfacetwo rounded-lg shadow flex justify-between items-center p-2;
 
                         span {
                             @apply text-grey text-sm
                         }
 
                         .btn-icon {
-                            @apply w-30 h-12 rounded-lg bg-gradient-to-b from-bluelight to-bluemain shadow-lg active:scale-90 cursor-pointer flex justify-center items-center text-xl;
+                            @apply w-30 h-12 rounded-lg bg-gradient-to-b from-accentlight to-accentdark shadow-lg active:scale-90 cursor-pointer flex justify-center items-center text-xl;
                         
                             .bi {
                                 @apply text-2xl;
@@ -855,7 +864,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 @utility shadow-inset-dark {
-  box-shadow: inset 0 4px 15px commongrey;
+  box-shadow: inset 0 4px 15px surfacetwo;
 }
 
 @utility text-shadow-md {

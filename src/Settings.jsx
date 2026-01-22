@@ -32,7 +32,7 @@ function Settings() {
 
                 </div>
 
-                <div className={`light-dark ${larkMode && 'bg-bluelight'}`} onClick={() => setLarkMode(prev => !prev)}>
+                <div className={`light-dark ${larkMode && 'bg-accentlight'}`} onClick={() => setLarkMode(prev => !prev)}>
                     <div className={`light-dark-ball transition ease duration-600 ${larkMode && 'translate-x-38'}`}> 
                         <i className={`${larkMode ? "bi bi-sun text-yellow" : "bi bi-moon text-grey"} `}></i>
                     </div>
@@ -44,19 +44,19 @@ function Settings() {
 
                 <aside className="settings-router">
                     
-                    <Link to="profile" className={`sett-link ${location.pathname === "/settings/profile" && 'border-bluelight'}`}>
+                    <Link to="profile" className={`sett-link ${location.pathname === "/settings/profile" && 'border-accentlight'}`}>
                         <p>Profile & Preferences</p>
                     </Link>
 
-                    <Link to="taskHandler" className={`sett-link ${location.pathname === "/settings/taskHandler" && 'border-bluelight'}`}>
+                    <Link to="taskHandler" className={`sett-link ${location.pathname === "/settings/taskHandler" && 'border-accentlight'}`}>
                         <p>Task Handler</p>
                     </Link>
 
-                    <Link to="dataPrivacy" className={`sett-link ${location.pathname === "/settings/dataPrivacy" && 'border-bluelight'}`}>
+                    <Link to="dataPrivacy" className={`sett-link ${location.pathname === "/settings/dataPrivacy" && 'border-accentlight'}`}>
                         <p>Data & Privacy</p>
                     </Link>
 
-                    <Link to="about" className={`sett-link ${location.pathname === "/settings/about" && 'border-bluelight'}`}>
+                    <Link to="about" className={`sett-link ${location.pathname === "/settings/about" && 'border-accentlight'}`}>
                         <p>About</p>
                     </Link>
 
