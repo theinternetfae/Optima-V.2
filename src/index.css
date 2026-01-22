@@ -40,7 +40,10 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 }
 
-
+:root {
+    --accent-strong: #2563EB;
+    --accent-soft: #60A5FA;
+}
 
 
 @theme {
@@ -50,16 +53,16 @@ input[type="number"]::-webkit-outer-spin-button {
 
 
     /* Theme Two */
-    --color-red: #9C0412;
-    --color-delDark: #650207;
+    --color-accentprimaryr: #9C0412;
+    --color-accentsecondaryr: #650207;
 
     /* Theme Three */
-    --color-pink: #E21C70;
-    --color-pinkdark: #AE0849; 
+    --color-accentprimaryp: #E21C70;
+    --color-accentsecondaryp: #AE0849; 
 
     /* Theme Four */
-    --color-fern: #477023;
-    --color-ferndark: #2D531A; 
+    --color-accentprimaryg: #477023;
+    --color-accentsecondaryg: #2D531A; 
 
     /*Button order*/
     --color-fromcolorb: #60A5FA;
@@ -75,8 +78,8 @@ input[type="number"]::-webkit-outer-spin-button {
     --color-muted: #111111;
 
     /*Accents DEFAULT THEME: Blue*/
-    --color-accentmain: #60A5FA;
-    --color-accentsub: #2563EB;
+    --color-accentprimary: var(--accent-soft);
+    --color-accentsecondary: var(--accent-strong);
 
     /*Trivial colors*/
     --color-grey: #A9AAA9;
@@ -89,8 +92,8 @@ input[type="number"]::-webkit-outer-spin-button {
     --color-surfaceone: #F3F4F6;
     --color-surfacetwo: #F9FAFB;
     --color-muted: #B2B0AC;
-    --color-accentmain: #2563EB;
-    --color-accentsub: #60A5FA;
+    --color-accentprimary: var(--accent-strong);
+    --color-accentsecondary: var(--accent-soft);
 }
 
 
@@ -106,7 +109,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .add {
-        @apply text-xl text-accentmain cursor-pointer md:text-2xl;
+        @apply text-xl text-accentprimary cursor-pointer md:text-2xl;
     }
 
     .tips {
@@ -114,7 +117,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .tips:hover {
-        @apply text-accentmain;
+        @apply text-accentprimary;
     }
 
     .emoji-picker {
@@ -195,7 +198,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     }
 
                     & .d-other {
-                        @apply h-[75%] text-[10px] border-accentmain p-[12px] rounded-full shadow-lg flex items-center justify-center cursor-pointer md:text-base md:border-[3px] md:h-[10px] md:w-[10px] md:p-6;
+                        @apply h-[75%] text-[10px] border-accentprimary p-[12px] rounded-full shadow-lg flex items-center justify-center cursor-pointer md:text-base md:border-[3px] md:h-[10px] md:w-[10px] md:p-6;
                     }
                 }
                 }
@@ -252,7 +255,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply flex justify-between items-center md:gap-10;
 
                     & li {
-                        @apply border border-2 text-sm border-surfacetwo bg-surfacetwo transition p-[2px] ease-in-out duration-300 shadow-md rounded-md cursor-pointer hover:border-accentmain md:p-2 md:text-base;
+                        @apply border border-2 text-sm border-surfacetwo bg-surfacetwo transition p-[2px] ease-in-out duration-300 shadow-md rounded-md cursor-pointer hover:border-accentprimary md:p-2 md:text-base;
                     }
                 }
             }
@@ -323,7 +326,7 @@ input[type="number"]::-webkit-outer-spin-button {
         }
         
         & .done {
-            @apply w-4 h-4 accent-accentmain mr-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed md:scale-125;
+            @apply w-4 h-4 accent-accentprimary mr-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed md:scale-125;
         }
     }
 
@@ -339,7 +342,7 @@ input[type="number"]::-webkit-outer-spin-button {
         }
         
         & .bi-trash {
-            @apply cursor-pointer text-lg active:scale-90 text-red;
+            @apply cursor-pointer text-lg active:scale-90 text-accentprimaryr;
         }
     }
 
@@ -493,7 +496,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply h-[50%] flex gap-40 items-center justify-center;
 
                     & .sec-one-two {
-                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-surfaceone rounded-full shadow-xl text-accentmain transition ease-in duration-300;
+                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-surfaceone rounded-full shadow-xl text-accentprimary transition ease-in duration-300;
                     
                         i {
                             @apply text-4xl transition ease-in duration-300;
@@ -513,7 +516,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply h-[50%] flex gap-40 items-center justify-center;
 
                     & .sec-one-two {
-                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-surfaceone rounded-full shadow-xl text-accentmain transition ease-in duration-300;
+                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-surfaceone rounded-full shadow-xl text-accentprimary transition ease-in duration-300;
                     
                         i {
                             @apply text-4xl transition ease-in duration-300;
@@ -546,7 +549,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 & button {
-                    @apply p-2 border border-2 border-transparent w-15 rounded-lg font-bold hover:border-accentmain bg-surfaceone active:scale-90 ease-in-out duration-300;
+                    @apply p-2 border border-2 border-transparent w-15 rounded-lg font-bold hover:border-accentprimary bg-surfaceone active:scale-90 ease-in-out duration-300;
                 }
             }
 
@@ -698,7 +701,7 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         .one {
-                            @apply bg-surfaceone border border-2 border-accentsub z-10 cursor-pointer;
+                            @apply bg-surfaceone border border-2 border-accentsecondary z-10 cursor-pointer;
 
                             & .in-one {
                                 @apply h-full rounded-full scale-85 bg-gradient-to-b from-fromcolorb to-tocolorb shadow; 
@@ -706,7 +709,7 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         .two {
-                            @apply bg-surfaceone border border-2 border-red z-10 cursor-pointer;
+                            @apply bg-surfaceone border border-2 border-accentprimaryr z-10 cursor-pointer;
 
                             & .in-two {
                                 @apply h-full rounded-full scale-85 bg-gradient-to-b from-fromcolorr to-tocolorr shadow; 
@@ -714,18 +717,18 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         .three {
-                            @apply bg-surfaceone border border-2 border-pink z-10 cursor-pointer;
+                            @apply bg-surfaceone border border-2 border-accentprimaryp z-10 cursor-pointer;
 
                             & .in-three {
-                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-pinkdark to-pink shadow; 
+                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-accentsecondaryp to-accentprimaryp shadow; 
                             }
                         }
 
                         .four {
-                            @apply bg-surfaceone border border-2 border-ferndark z-10 cursor-pointer;
+                            @apply bg-surfaceone border border-2 border-accentsecondaryg z-10 cursor-pointer;
 
                             & .in-four {
-                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-ferndark to-fern shadow; 
+                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-accentsecondaryg to-accentprimaryg shadow; 
                             }
                         }
                     }

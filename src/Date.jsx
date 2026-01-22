@@ -232,7 +232,7 @@ function DateMenu() {
                                             if (el) dayRefs.current.set(dateString, el);
                                             else dayRefs.current.delete(dateString);
                                             }} 
-                                            className={`test-box ${isSelected ? "border-accentmain" : ""}`} 
+                                            className={`test-box ${isSelected ? "border-[var(--color-accentprimary)]" : ""}`} 
                                             onClick={() => setSelectedDate(new Date(d))}
                                         >
 

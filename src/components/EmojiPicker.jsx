@@ -75,7 +75,7 @@ function Emoji({showing, setting}) {
 
                 {
                     EMOJI_CATEGORIES.map(({icon, label}) => (
-                        <i className={`bi ${icon} ${category === label && 'text-accentmain'}`} key={label} title={label} onClick={() => setCategory(label)}></i>
+                        <i className={`bi ${icon} ${category === label && 'text-[var(--color-accentprimary)]'}`} key={label} title={label} onClick={() => setCategory(label)}></i>
                     ))
                 }
 

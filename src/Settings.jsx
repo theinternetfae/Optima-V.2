@@ -59,11 +59,11 @@ function Settings() {
 
                 </div>
 
-                <div className={`light-dark ${larkMode && 'bg-accentmain'}`} onClick={() => {
+                <div className={`light-dark ${larkMode && 'bg-[var(--color-accentprimary)]'}`} onClick={() => {
                     settingTheme()
                 }}>
                     <div className={`light-dark-ball transition ease duration-600 ${larkMode && 'translate-x-38'}`}> 
-                        <i className={`${larkMode ? "bi bi-sun text-accentmain" : "bi bi-moon text-black"} `}></i>
+                        <i className={`${larkMode ? "bi bi-sun text-[var(--color-accentprimary)]" : "bi bi-moon text-black"} `}></i>
                     </div>
                 </div>
 
@@ -73,19 +73,19 @@ function Settings() {
 
                 <aside className="settings-router">
                     
-                    <Link to="profile" className={`sett-link ${location.pathname === "/settings/profile" && 'border-accentmain'}`}>
+                    <Link to="profile" className={`sett-link ${location.pathname === "/settings/profile" && 'border-[var(--color-accentprimary)]'}`}>
                         <p>Profile & Preferences</p>
                     </Link>
 
-                    <Link to="taskHandler" className={`sett-link ${location.pathname === "/settings/taskHandler" && 'border-accentmain'}`}>
+                    <Link to="taskHandler" className={`sett-link ${location.pathname === "/settings/taskHandler" && 'border-[var(--color-accentprimary)]'}`}>
                         <p>Task Handler</p>
                     </Link>
 
-                    <Link to="dataPrivacy" className={`sett-link ${location.pathname === "/settings/dataPrivacy" && 'border-accentmain'}`}>
+                    <Link to="dataPrivacy" className={`sett-link ${location.pathname === "/settings/dataPrivacy" && 'border-[var(--color-accentprimary)]'}`}>
                         <p>Data & Privacy</p>
                     </Link>
 
-                    <Link to="about" className={`sett-link ${location.pathname === "/settings/about" && 'border-accentmain'}`}>
+                    <Link to="about" className={`sett-link ${location.pathname === "/settings/about" && 'border-[var(--color-accentprimary)]'}`}>
                         <p>About</p>
                     </Link>
 

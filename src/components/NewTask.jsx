@@ -175,7 +175,7 @@ function NewTask({exit, editExit, task}) {
                     <h2>Task days</h2>
                     <ul>
                         {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(day => (
-                            <li key={day} onClick={() => selectDays(day)} className={taskDays.includes(day) ? "border-accentmain" : ""}>{day}</li>
+                            <li key={day} onClick={() => selectDays(day)} className={taskDays.includes(day) ? "border-[var(--color-accentprimary)]" : ""}>{day}</li>
                         ))}
                     </ul>
                 </div>
@@ -190,7 +190,7 @@ function NewTask({exit, editExit, task}) {
 
                 <div className="reminder">
                     <h2>{reminder ? "Off reminder?" : "On reminder?"}</h2>
-                    <div className={`switch-cont ${reminder && "bg-accentmain"}`} onClick={() => setReminder(prev => !prev)}>
+                    <div className={`switch-cont ${reminder && "bg-[var(--color-accentprimary)]"}`} onClick={() => setReminder(prev => !prev)}>
                         <div className={`switch-ball ease duration-600 ${reminder && "translate-x-9 md:translate-x-16"}`}></div>
                     </div>
                 </div>
