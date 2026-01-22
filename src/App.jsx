@@ -74,13 +74,13 @@ function App() {
 
     if(accent === 'blue') {
     
-      root.classList.remove('accent-red');
+      root.classList.remove('accent-purple');
       root.classList.remove('accent-pink');
       root.classList.remove('accent-green');    
     
     } else if (accent === 'red') {
 
-      root.classList.add('accent-red');
+      root.classList.add('accent-purple');
 
       root.classList.remove('accent-pink');
       root.classList.remove('accent-green');
@@ -89,7 +89,7 @@ function App() {
 
       root.classList.add('accent-pink');
 
-      root.classList.remove('accent-red');
+      root.classList.remove('accent-purple');
       root.classList.remove('accent-green');
 
     } else {
@@ -97,7 +97,7 @@ function App() {
       root.classList.add('accent-green');
       
       root.classList.remove('accent-pink');
-      root.classList.remove('accent-red');
+      root.classList.remove('accent-purple');
 
     }
 

@@ -46,9 +46,9 @@ input[type="number"]::-webkit-outer-spin-button {
     --accent-soft: #60A5FA;
 }
 
-.accent-red {
-    --accent-strong: #650207;
-    --accent-soft: #9C0412;
+.accent-purple {
+    --accent-strong: #491AB1;
+    --accent-soft: #6631DB;
 }
 
 .accent-pink {
@@ -74,13 +74,14 @@ input[type="number"]::-webkit-outer-spin-button {
     /*Button order*/
     --color-fromcolorb: #60A5FA;
     --color-tocolorb: #2563EB;
+    --color-fromcolorpur: #491AB1;
+    --color-tocolorpur: #6631DB;
     --color-fromcolorr: #9C0412;
     --color-tocolorr: #650207;
     --color-fromcolorp: #AE0849; 
     --color-tocolorp: #E21C70;
     --color-fromcolorg: #2D531A; 
     --color-tocolorg: #477023;
-    
 
     /*DEFAULT: Dark mode*/
     --color-bgcolor: #0D0D0D;
@@ -724,7 +725,7 @@ input[type="number"]::-webkit-outer-spin-button {
                             @apply bg-surfaceone border border-2 border-transparent z-10 cursor-pointer;
 
                             & .in-two {
-                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-fromcolorr to-tocolorr shadow; 
+                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-fromcolorpur to-tocolorpur shadow; 
                             }
                         }
 
