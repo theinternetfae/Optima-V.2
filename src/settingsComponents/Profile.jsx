@@ -1,5 +1,5 @@
-import { useState } from "react";
-
+import { useContext, useState } from "react";
+import { TaskContext } from "../components/TaskContext";
 
 function Profile() {
     
@@ -7,6 +7,8 @@ function Profile() {
     const [quirkState, setQuirkState] = useState(true);
     const [quoteState, setQuoteState] = useState(false);
     const [streakState, setStreakState] = useState(true);
+
+    const {accent, setAccent} = useContext(TaskContext);
 
     function handleImageChange(e) {
         const file = e.target.files[0];
@@ -55,19 +57,19 @@ function Profile() {
 
                     <div className="themes">
                         
-                        <div className="theme-box one">
+                        <div className={`theme-box one ${accent === 'blue' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => setAccent('blue')}>
                             <div className="in-one"></div>
                         </div>
 
-                        <div className="theme-box two">
+                        <div className={`theme-box two ${accent === 'red' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => setAccent('red')}>
                             <div className="in-two"></div>
                         </div>
                         
-                        <div className="theme-box three">
+                        <div className={`theme-box three ${accent === 'pink' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => setAccent('pink')}>
                             <div className="in-three"></div>
                         </div>
                         
-                        <div className="theme-box four">
+                        <div className={`theme-box four ${accent === 'green' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => setAccent('green')}>
                             <div className="in-four"></div>
                         </div>
                         

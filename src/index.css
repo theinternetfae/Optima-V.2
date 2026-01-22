@@ -18,16 +18,17 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .day-label {
-  @apply font-bold text-center;
+    @apply font-bold text-center;
 }
 
 .date-cell, .blank {
-  @apply h-10 flex items-center justify-center bg-surfacetwo rounded-full cursor-pointer;
+    @apply h-10 flex items-center justify-center bg-surfacetwo rounded-full cursor-pointer;
 }
 
 .date-cell {
-    @apply border border-2 border-grey;  
+    @apply border border-2 border-accentprimary;
 }
+
 
 @utility no-scrollbar {
   -ms-overflow-style: none; 
@@ -45,30 +46,41 @@ input[type="number"]::-webkit-outer-spin-button {
     --accent-soft: #60A5FA;
 }
 
+.accent-red {
+    --accent-strong: #650207;
+    --accent-soft: #9C0412;
+}
+
+.accent-pink {
+    --accent-strong: #AE0849;
+    --accent-soft: #E21C70;
+}
+
+.accent-green {
+    --accent-strong: #2D531A;
+    --accent-soft: #477023;
+}
+
 
 @theme {
     /*Fonts*/
     --font-bodytext: "Atkinson Hyperlegible Mono", sans-serif;
     --font-headtext: "Castoro", serif;
 
-
-    /* Theme Two */
-    --color-accentprimaryr: #9C0412;
-    --color-accentsecondaryr: #650207;
-
-    /* Theme Three */
-    --color-accentprimaryp: #E21C70;
-    --color-accentsecondaryp: #AE0849; 
-
+    
     /* Theme Four */
-    --color-accentprimaryg: #477023;
-    --color-accentsecondaryg: #2D531A; 
-
+    
+    
     /*Button order*/
     --color-fromcolorb: #60A5FA;
     --color-tocolorb: #2563EB;
     --color-fromcolorr: #9C0412;
     --color-tocolorr: #650207;
+    --color-fromcolorp: #AE0849; 
+    --color-tocolorp: #E21C70;
+    --color-fromcolorg: #2D531A; 
+    --color-tocolorg: #477023;
+    
 
     /*DEFAULT: Dark mode*/
     --color-bgcolor: #0D0D0D;
@@ -198,7 +210,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     }
 
                     & .d-other {
-                        @apply h-[75%] text-[10px] border-accentprimary p-[12px] rounded-full shadow-lg flex items-center justify-center cursor-pointer md:text-base md:border-[3px] md:h-[10px] md:w-[10px] md:p-6;
+                        @apply h-[75%] text-[10px] border-accentprimary bg-muted p-[12px] rounded-full shadow-lg flex items-center justify-center cursor-pointer md:text-base md:border-[3px] md:h-[10px] md:w-[10px] md:p-6;
                     }
                 }
                 }
@@ -301,7 +313,7 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             & .addTask {
-                @apply mt-2 bg-gradient-to-b from-fromcolorb to-tocolorb p-2 rounded-lg text-sm shadow font-bold text-white text-shadow-md cursor-pointer md:text-base;
+                @apply mt-2 bg-gradient-to-b from-accentsecondary to-accentprimary p-2 rounded-lg text-sm shadow font-bold text-white text-shadow-md cursor-pointer md:text-base;
             }
 
             & .delete-task {
@@ -342,7 +354,7 @@ input[type="number"]::-webkit-outer-spin-button {
         }
         
         & .bi-trash {
-            @apply cursor-pointer text-lg active:scale-90 text-accentprimaryr;
+            @apply cursor-pointer text-lg active:scale-90 text-tocolorr;
         }
     }
 
@@ -388,7 +400,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 & .no-no {
-                    @apply bg-gradient-to-b from-fromcolorb to-tocolorb text-white;
+                    @apply bg-gradient-to-b from-accentsecondary to-accentprimary text-white;
                 }
             }
         }
@@ -412,7 +424,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 & .no-no {
-                    @apply bg-gradient-to-b from-fromcolorb to-tocolorb text-white;
+                    @apply bg-gradient-to-b from-accentsecondary to-accentprimary text-white;
                 }
             }
         }
@@ -701,7 +713,7 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         .one {
-                            @apply bg-surfaceone border border-2 border-accentsecondary z-10 cursor-pointer;
+                            @apply bg-surfaceone border border-2 border-transparent z-10 cursor-pointer;
 
                             & .in-one {
                                 @apply h-full rounded-full scale-85 bg-gradient-to-b from-fromcolorb to-tocolorb shadow; 
@@ -709,7 +721,7 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         .two {
-                            @apply bg-surfaceone border border-2 border-accentprimaryr z-10 cursor-pointer;
+                            @apply bg-surfaceone border border-2 border-transparent z-10 cursor-pointer;
 
                             & .in-two {
                                 @apply h-full rounded-full scale-85 bg-gradient-to-b from-fromcolorr to-tocolorr shadow; 
@@ -717,18 +729,18 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         .three {
-                            @apply bg-surfaceone border border-2 border-accentprimaryp z-10 cursor-pointer;
+                            @apply bg-surfaceone border border-2 border-transparent z-10 cursor-pointer;
 
                             & .in-three {
-                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-accentsecondaryp to-accentprimaryp shadow; 
+                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-fromcolorp to-tocolorp shadow; 
                             }
                         }
 
                         .four {
-                            @apply bg-surfaceone border border-2 border-accentsecondaryg z-10 cursor-pointer;
+                            @apply bg-surfaceone border border-2 border-transparent z-10 cursor-pointer;
 
                             & .in-four {
-                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-accentsecondaryg to-accentprimaryg shadow; 
+                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-fromcolorg to-tocolorg shadow; 
                             }
                         }
                     }
@@ -801,7 +813,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     }
 
                     .download-data {
-                        @apply h-15 rounded-lg mx-60 mt-2 bg-gradient-to-b from-fromcolorb to-tocolorb text-white shadow-lg font-bold cursor-pointer active:scale-95 flex gap-2 justify-center items-center;
+                        @apply h-15 rounded-lg mx-60 mt-2 bg-gradient-to-b from-accentsecondary to-accentprimary text-white shadow-lg font-bold cursor-pointer active:scale-95 flex gap-2 justify-center items-center;
                     }
                 }
             }
@@ -833,7 +845,7 @@ input[type="number"]::-webkit-outer-spin-button {
                             }
 
                             button {
-                                @apply p-2 rounded-lg font-bold ml-auto mb-2 mr-2 bg-gradient-to-b from-fromcolorb to-tocolorb text-white shadow-lg active:scale-90;
+                                @apply p-2 rounded-lg font-bold ml-auto mb-2 mr-2 bg-gradient-to-b from-accentsecondary to-accentprimary text-white shadow-lg active:scale-90;
                             }
                             
                         }
@@ -855,7 +867,7 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         .btn-icon {
-                            @apply w-30 h-12 rounded-lg bg-gradient-to-b from-fromcolorb to-tocolorb text-white shadow-lg active:scale-90 cursor-pointer flex justify-center items-center text-xl;
+                            @apply w-30 h-12 rounded-lg bg-gradient-to-b from-accentsecondary to-accentprimary text-white shadow-lg active:scale-90 cursor-pointer flex justify-center items-center text-xl;
                         
                             .bi {
                                 @apply text-2xl;

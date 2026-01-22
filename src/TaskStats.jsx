@@ -488,10 +488,10 @@ function TaskStats() {
                                     const isMatch = matchingBorderDay.some(border => border.toDateString() === day.toDateString());
 
                                     const borderStyle = !selectedTask
-                                    ? { border: "2px solid #60A5FA" }
+                                    ? {}
                                     : isMatch
                                         ? {border: `2px solid ${selectedTask.color}`}
-                                        : {};
+                                        : {border: 'grey'};
 
                                     return (
                                         <div key={i} title={day.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })} className="date-cell" style={borderStyle}>

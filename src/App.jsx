@@ -35,7 +35,7 @@ function App() {
   }, [tasksDone]);
 
 
-  //THEME
+  //THEMES
   const [theme, setTheme] = useState(() => {
       const savedTheme = localStorage.getItem('theme'); 
       return savedTheme ? savedTheme : 'dark';
@@ -46,17 +46,68 @@ function App() {
   }, [theme]);
 
 
-    useEffect(() => {
+  const root = document.documentElement;
+
+  useEffect(() => {
+
+    if(theme === 'light') {
+        root.classList.add('light');
+    } else {
+        root.classList.remove('light');
+    }
+
+  }, [theme])
+
+  
+  
+  //ACCENTS
+  const [accent, setAccent] = useState(() => {
+    const savedAccent = localStorage.getItem("accent");
+    return savedAccent ? savedAccent : 'blue';
+  });
+  
+  useEffect(() => {
+    localStorage.setItem("accent", accent);
+  })
+
+  useEffect(() => {
+
+    if(accent === 'blue') {
+    
+      root.classList.remove('accent-red');
+      root.classList.remove('accent-pink');
+      root.classList.remove('accent-green');    
+    
+    } else if (accent === 'red') {
+
+      root.classList.add('accent-red');
+
+      root.classList.remove('accent-pink');
+      root.classList.remove('accent-green');
+
+    } else if (accent === 'pink') {
+
+      root.classList.add('accent-pink');
+
+      root.classList.remove('accent-red');
+      root.classList.remove('accent-green');
+
+    } else {
+
+      root.classList.add('accent-green');
       
-      const root = document.documentElement;
+      root.classList.remove('accent-pink');
+      root.classList.remove('accent-red');
 
-      if(theme === 'light') {
-          root.classList.add('light');
-      } else {
-          root.classList.remove('light');
-      }
+    }
 
-    }, [theme])
+  }, [accent])
+
+
+
+
+
+
 
 
   //REPEATING TASKS LOGIC
@@ -157,7 +208,7 @@ function App() {
 
   return (
 
-    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask, theme, setTheme}}>
+    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask, theme, setTheme, accent, setAccent}}>
       <BrowserRouter>    
 
         <Routes>
