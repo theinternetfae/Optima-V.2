@@ -1,12 +1,39 @@
-import { useState } from "react";
+import { useMemo, useContext } from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
+import { TaskContext } from "./components/TaskContext.js";
 
 function Settings() {
 
     const location = useLocation();
+    const { theme, setTheme } = useContext(TaskContext); 
+    
 
-    const [larkMode, setLarkMode] = useState(false)
 
+    const larkMode = useMemo(() => {
+        let larkMode = '';
+
+        if(theme === 'light') {
+            larkMode = true;
+        } else {
+            larkMode = false;
+        }
+
+        return larkMode;
+    }, [theme])
+
+
+
+    function settingTheme() {
+
+        if(theme === 'dark') {
+            setTheme('light');
+        } else {
+            setTheme('dark');
+        }
+    
+    }
+
+    
     function checking() {
         if(location.pathname === '/settings/profile') {
             return "> Profile & Preferences"
@@ -32,9 +59,11 @@ function Settings() {
 
                 </div>
 
-                <div className={`light-dark ${larkMode && 'bg-accentlight'}`} onClick={() => setLarkMode(prev => !prev)}>
+                <div className={`light-dark ${larkMode && 'bg-accentmain'}`} onClick={() => {
+                    settingTheme()
+                }}>
                     <div className={`light-dark-ball transition ease duration-600 ${larkMode && 'translate-x-38'}`}> 
-                        <i className={`${larkMode ? "bi bi-sun text-yellow" : "bi bi-moon text-grey"} `}></i>
+                        <i className={`${larkMode ? "bi bi-sun text-accentmain" : "bi bi-moon text-black"} `}></i>
                     </div>
                 </div>
 
@@ -44,19 +73,19 @@ function Settings() {
 
                 <aside className="settings-router">
                     
-                    <Link to="profile" className={`sett-link ${location.pathname === "/settings/profile" && 'border-accentlight'}`}>
+                    <Link to="profile" className={`sett-link ${location.pathname === "/settings/profile" && 'border-accentmain'}`}>
                         <p>Profile & Preferences</p>
                     </Link>
 
-                    <Link to="taskHandler" className={`sett-link ${location.pathname === "/settings/taskHandler" && 'border-accentlight'}`}>
+                    <Link to="taskHandler" className={`sett-link ${location.pathname === "/settings/taskHandler" && 'border-accentmain'}`}>
                         <p>Task Handler</p>
                     </Link>
 
-                    <Link to="dataPrivacy" className={`sett-link ${location.pathname === "/settings/dataPrivacy" && 'border-accentlight'}`}>
+                    <Link to="dataPrivacy" className={`sett-link ${location.pathname === "/settings/dataPrivacy" && 'border-accentmain'}`}>
                         <p>Data & Privacy</p>
                     </Link>
 
-                    <Link to="about" className={`sett-link ${location.pathname === "/settings/about" && 'border-accentlight'}`}>
+                    <Link to="about" className={`sett-link ${location.pathname === "/settings/about" && 'border-accentmain'}`}>
                         <p>About</p>
                     </Link>
 

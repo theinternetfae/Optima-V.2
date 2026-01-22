@@ -61,44 +61,52 @@ input[type="number"]::-webkit-outer-spin-button {
     --color-fern: #477023;
     --color-ferndark: #2D531A; 
 
+    /*Button order*/
+    --color-fromcolorb: #60A5FA;
+    --color-tocolorb: #2563EB;
+    --color-fromcolorr: #9C0412;
+    --color-tocolorr: #650207;
 
-    /*DEFAULT: Dark mode + DEFAULT THEME: Blue*/
-    --color-bg: #0D0D0D;
-    --color-text: #E5E7EB; 
+    /*DEFAULT: Dark mode*/
+    --color-bgcolor: #0D0D0D;
+    --color-textcolor: #E5E7EB; 
     --color-surfaceone: #171717;
     --color-surfacetwo: #262626;
     --color-muted: #111111;
-    --color-accentlight: #60A5FA;
-    --color-accentdark: #2563EB;
+
+    /*Accents DEFAULT THEME: Blue*/
+    --color-accentmain: #60A5FA;
+    --color-accentsub: #2563EB;
 
     /*Trivial colors*/
-    --color-yellow: #FFFF00; 
-    --color-grey: #333333;
+    --color-grey: #A9AAA9;
 
 }
 
 .light {
-    --color-bg: #E8E8E8;
-    --color-text: #090F15; 
-    --color-surfaceone: #5B6066;
-    --color-surfacetwo: #848484;
-    --color-muted: #575764;
+    --color-bgcolor: #E0E0DE;
+    --color-textcolor: #111827; 
+    --color-surfaceone: #F3F4F6;
+    --color-surfacetwo: #F9FAFB;
+    --color-muted: #B2B0AC;
+    --color-accentmain: #2563EB;
+    --color-accentsub: #60A5FA;
 }
 
 
 @layer components {
 
-    .color-test {
+    /* .color-test {
         @apply h-[50px] rounded-lg shadow-lg bg-surfaceone;
-    }
+    } */
 
     
     body {
-        @apply bg-bg text-text font-bodytext;
+        @apply bg-bgcolor text-textcolor font-bodytext;
     }
 
     .add {
-        @apply text-xl text-accentlight cursor-pointer md:text-2xl;
+        @apply text-xl text-accentmain cursor-pointer md:text-2xl;
     }
 
     .tips {
@@ -106,7 +114,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .tips:hover {
-        @apply text-accentlight;
+        @apply text-accentmain;
     }
 
     .emoji-picker {
@@ -187,7 +195,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     }
 
                     & .d-other {
-                        @apply h-[75%] text-[10px] border-accentlight p-[12px] rounded-full bg-grey shadow-lg flex items-center justify-center cursor-pointer md:text-base md:border-[3px] md:h-[10px] md:w-[10px] md:p-6;
+                        @apply h-[75%] text-[10px] border-accentmain p-[12px] rounded-full shadow-lg flex items-center justify-center cursor-pointer md:text-base md:border-[3px] md:h-[10px] md:w-[10px] md:p-6;
                     }
                 }
                 }
@@ -244,7 +252,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply flex justify-between items-center md:gap-10;
 
                     & li {
-                        @apply border border-2 text-sm border-surfacetwo bg-surfacetwo transition p-[2px] ease-in-out duration-300 shadow-md rounded-md cursor-pointer hover:border-accentlight md:p-2 md:text-base;
+                        @apply border border-2 text-sm border-surfacetwo bg-surfacetwo transition p-[2px] ease-in-out duration-300 shadow-md rounded-md cursor-pointer hover:border-accentmain md:p-2 md:text-base;
                     }
                 }
             }
@@ -253,7 +261,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 @apply bg-surfaceone p-2 flex justify-between items-center rounded-lg md:p-4;
 
                 & input {
-                    @apply bg-black p-2 rounded w-[35px] text-sm md:text-base md:w-[180px];
+                    @apply bg-black p-2 rounded w-[35px] bg-muted text-sm md:text-base md:w-[180px];
                 }
             }
 
@@ -268,7 +276,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply flex gap-2;
                 
                     & select {
-                        @apply appearance-none no-scrollbar bg-black p-[2px] text-sm text-center outline-none md:p-2 md:text-base;
+                        @apply bg-muted rounded-lg appearance-none no-scrollbar bg-black p-[2px] text-sm text-center outline-none md:p-2 md:text-base;
                     }
                 }
             }
@@ -281,7 +289,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 & .switch-cont {
-                    @apply bg-black w-[25%] rounded-lg p-1 shadow-inset-dark cursor-pointer transition ease-in-out duration-400 md:w-[15%];
+                    @apply bg-black w-[25%] rounded-lg p-1 shadow-inset-dark bg-muted cursor-pointer transition ease-in-out duration-400 md:w-[15%];
                 }
 
                 & .switch-ball {
@@ -290,11 +298,11 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             & .addTask {
-                @apply mt-2 bg-gradient-to-b from-accentlight to-accentdark p-2 rounded-lg text-sm shadow font-bold text-shadow-md cursor-pointer md:text-base;
+                @apply mt-2 bg-gradient-to-b from-fromcolorb to-tocolorb p-2 rounded-lg text-sm shadow font-bold text-white text-shadow-md cursor-pointer md:text-base;
             }
 
             & .delete-task {
-                @apply mt-2 bg-gradient-to-b from-red to-delDark p-2 rounded-lg text-sm shadow font-bold text-shadow-md cursor-pointer md:text-base;
+                @apply mt-2 bg-gradient-to-b from-fromcolorr to-tocolorr p-2 rounded-lg text-sm shadow font-bold text-shadow-md text-white cursor-pointer md:text-base;
             }
         }
     }
@@ -311,11 +319,11 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         & .name-t-box {
-            @apply text-shadow-md ml-2 p-2 w-[90%] text-sm rounded-md text-neutral-300 md:font-bold md:text-base;
+            @apply text-shadow-md ml-2 p-2 w-[90%] text-sm rounded-md text-white md:font-bold md:text-base;
         }
         
         & .done {
-            @apply w-4 h-4 accent-accentlight mr-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed md:scale-125;
+            @apply w-4 h-4 accent-accentmain mr-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed md:scale-125;
         }
     }
 
@@ -327,11 +335,11 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         & .name-t-box {
-            @apply text-shadow-md ml-2 p-2 w-[90%] text-sm rounded-md  text-neutral-300 md:font-bold md:text-base;
+            @apply text-shadow-md ml-2 p-2 w-[90%] text-sm rounded-md text-white md:font-bold md:text-base;
         }
         
         & .bi-trash {
-            @apply cursor-pointer text-lg active:scale-90;
+            @apply cursor-pointer text-lg active:scale-90 text-red;
         }
     }
 
@@ -373,11 +381,11 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 & .yes-yes {
-                    @apply bg-gradient-to-b from-red to-delDark;
+                    @apply bg-gradient-to-b from-fromcolorr to-tocolorr text-white;
                 }
 
                 & .no-no {
-                    @apply bg-gradient-to-b from-accentlight to-accentdark;
+                    @apply bg-gradient-to-b from-fromcolorb to-tocolorb text-white;
                 }
             }
         }
@@ -397,11 +405,11 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 & .yes-yes {
-                    @apply bg-gradient-to-b from-red to-delDark;
+                    @apply bg-gradient-to-b from-fromcolorr to-tocolorr text-white;
                 }
 
                 & .no-no {
-                    @apply bg-gradient-to-b from-accentlight to-accentdark;
+                    @apply bg-gradient-to-b from-fromcolorb to-tocolorb text-white;
                 }
             }
         }
@@ -428,7 +436,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply flex shrink-0 justify-center items-center w-[140px] snap-start;
                 
                     li {
-                        @apply border border-2 border-transparent bg-muted p-4 rounded-full cursor-pointer shadow-lg text-lg;
+                        @apply border border-2 border-transparent bg-muted p-4 rounded-xl cursor-pointer shadow-lg text-lg;
                     }
                 }
                 
@@ -485,14 +493,14 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply h-[50%] flex gap-40 items-center justify-center;
 
                     & .sec-one-two {
-                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-surfaceone rounded-full shadow-xl text-accentlight transition ease-in duration-300;
+                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-surfaceone rounded-full shadow-xl text-accentmain transition ease-in duration-300;
                     
                         i {
                             @apply text-4xl transition ease-in duration-300;
                         }
 
                         .calculator {
-                            @apply text-shadow-md text-white;
+                            @apply text-shadow-md text-textcolor;
                         }
 
                         .calculator-label {
@@ -505,14 +513,14 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply h-[50%] flex gap-40 items-center justify-center;
 
                     & .sec-one-two {
-                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-surfaceone rounded-full shadow-xl text-accentlight transition ease-in duration-300;
+                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-surfaceone rounded-full shadow-xl text-accentmain transition ease-in duration-300;
                     
                         i {
                             @apply text-4xl transition ease-in duration-300;
                         }
 
                         .calculator {
-                            @apply text-shadow-md text-white;
+                            @apply text-shadow-md text-textcolor;
                         }
 
                         .calculator-label {
@@ -538,7 +546,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 & button {
-                    @apply p-2 border border-2 border-transparent w-15 rounded-lg font-bold hover:border-accentlight bg-surfaceone active:scale-90 ease-in-out duration-300;
+                    @apply p-2 border border-2 border-transparent w-15 rounded-lg font-bold hover:border-accentmain bg-surfaceone active:scale-90 ease-in-out duration-300;
                 }
             }
 
@@ -690,10 +698,10 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         .one {
-                            @apply bg-surfaceone border border-2 border-accentdark z-10 cursor-pointer;
+                            @apply bg-surfaceone border border-2 border-accentsub z-10 cursor-pointer;
 
                             & .in-one {
-                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-accentlight to-accentdark shadow; 
+                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-fromcolorb to-tocolorb shadow; 
                             }
                         }
 
@@ -701,7 +709,7 @@ input[type="number"]::-webkit-outer-spin-button {
                             @apply bg-surfaceone border border-2 border-red z-10 cursor-pointer;
 
                             & .in-two {
-                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-red to-delDark shadow; 
+                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-fromcolorr to-tocolorr shadow; 
                             }
                         }
 
@@ -723,7 +731,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     }
 
                     .toggle {
-                        @apply w-[200px] h-[80%] rounded-xl shadow-inset-dark bg-black flex items-center transition ease-in-out duration-400 cursor-pointer;
+                        @apply w-[200px] h-[80%] rounded-xl bg-muted shadow-inset-dark bg-black flex items-center transition ease-in-out duration-400 cursor-pointer;
 
                         .ball {
                             @apply h-[80%] w-[10%] ml-1 rounded-xl bg-gradient-to-b from-white to-gray-400 shadow;  
@@ -741,7 +749,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 button {
-                    @apply p-2 rounded-lg bg-gradient-to-b from-red to-delDark cursor-pointer shadow-lg active:scale-90;
+                    @apply p-2 rounded-lg bg-gradient-to-b from-fromcolorr to-tocolorr cursor-pointer text-white shadow-lg active:scale-90;
                 }
             }
 
@@ -785,12 +793,12 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         button {
-                            @apply w-30 h-12 rounded-lg bg-gradient-to-b from-red to-delDark shadow-lg active:scale-90 cursor-pointer
+                            @apply w-30 h-12 rounded-lg bg-gradient-to-b from-fromcolorr to-tocolorr shadow-lg text-white active:scale-90 cursor-pointer
                         }
                     }
 
                     .download-data {
-                        @apply h-15 rounded-lg mx-60 mt-2 bg-gradient-to-b from-accentlight to-accentdark shadow-lg font-bold cursor-pointer active:scale-95 flex gap-2 justify-center items-center;
+                        @apply h-15 rounded-lg mx-60 mt-2 bg-gradient-to-b from-fromcolorb to-tocolorb text-white shadow-lg font-bold cursor-pointer active:scale-95 flex gap-2 justify-center items-center;
                     }
                 }
             }
@@ -822,7 +830,7 @@ input[type="number"]::-webkit-outer-spin-button {
                             }
 
                             button {
-                                @apply p-2 rounded-lg font-bold ml-auto mb-2 mr-2 bg-gradient-to-b from-accentlight to-accentdark shadow-lg active:scale-90;
+                                @apply p-2 rounded-lg font-bold ml-auto mb-2 mr-2 bg-gradient-to-b from-fromcolorb to-tocolorb text-white shadow-lg active:scale-90;
                             }
                             
                         }
@@ -844,7 +852,7 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         .btn-icon {
-                            @apply w-30 h-12 rounded-lg bg-gradient-to-b from-accentlight to-accentdark shadow-lg active:scale-90 cursor-pointer flex justify-center items-center text-xl;
+                            @apply w-30 h-12 rounded-lg bg-gradient-to-b from-fromcolorb to-tocolorb text-white shadow-lg active:scale-90 cursor-pointer flex justify-center items-center text-xl;
                         
                             .bi {
                                 @apply text-2xl;

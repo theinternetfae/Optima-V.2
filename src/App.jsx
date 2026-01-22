@@ -14,7 +14,7 @@ import About from "./settingsComponents/About.jsx";
 
 function App() {
 
-  //LOCAL STORAGE
+  //TASKLIST
   const [taskList, setTaskList] = useState(() => {
     const saved = localStorage.getItem("tasks");
     return saved ? JSON.parse(saved) : [];
@@ -24,6 +24,7 @@ function App() {
       localStorage.setItem("tasks", JSON.stringify(taskList));
   }, [taskList]);
 
+  //TASKDONE
   const [tasksDone, setTasksDone] = useState(() => {
     const savedTD = localStorage.getItem("tasksDone");
     return savedTD ? JSON.parse(savedTD) : [];
@@ -32,6 +33,30 @@ function App() {
   useEffect(() => {
       localStorage.setItem("tasksDone", JSON.stringify(tasksDone));
   }, [tasksDone]);
+
+
+  //THEME
+  const [theme, setTheme] = useState(() => {
+      const savedTheme = localStorage.getItem('theme'); 
+      return savedTheme ? savedTheme : 'dark';
+  });
+
+  useEffect(() => {
+      localStorage.setItem('theme', theme);
+  }, [theme]);
+
+
+    useEffect(() => {
+      
+      const root = document.documentElement;
+
+      if(theme === 'light') {
+          root.classList.add('light');
+      } else {
+          root.classList.remove('light');
+      }
+
+    }, [theme])
 
 
   //REPEATING TASKS LOGIC
@@ -132,7 +157,7 @@ function App() {
 
   return (
 
-    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask}}>
+    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask, theme, setTheme}}>
       <BrowserRouter>    
 
         <Routes>

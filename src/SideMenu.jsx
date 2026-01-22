@@ -20,22 +20,22 @@ function SideMenu() {
     return ( 
         <nav className="side-menu">
 
-            <Link to="/" className={`road ${setPath === "/" && 'border-accentlight'}`}>
+            <Link to="/" className={`road ${setPath === "/" && 'border-accentmain'}`}>
                 <i className="bi-house-fill"></i>
                 <p>Home</p>
             </Link>
 
-            <Link to="/taskStats" className={`road ${setPath === "/taskStats" && 'border-accentlight'}`}>
+            <Link to="/taskStats" className={`road ${setPath === "/taskStats" && 'border-accentmain'}`}>
                 <i className="bi-bar-chart-line"></i>
                 <p>Task Stats</p>
             </Link>
 
-            <Link to="/taskHistory" className={`road ${setPath === "/taskHistory" && 'border-accentlight'}`}>
+            <Link to="/taskHistory" className={`road ${setPath === "/taskHistory" && 'border-accentmain'}`}>
                 <i className="bi-clock-history"></i>
                 <p>History</p>
             </Link>
 
-            <Link to="/settings" className={`road ${setPath === "/settings" && 'border-accentlight'}`}>
+            <Link to="/settings" className={`road ${setPath === "/settings" && 'border-accentmain'}`}>
                 <i className="bi bi-gear"></i>
                 <p>Settings</p>
             </Link>

@@ -446,7 +446,7 @@ function TaskStats() {
                 <ul className="selected-scroll">
                 
                     <div className="li-cont">
-                        <li onClick={() => toggleSelected(0)} className={selectedId === 0 ? 'border-bluelight' : ""}>
+                        <li onClick={() => toggleSelected(0)} className={selectedId === 0 ? 'border-accentmain' : ""}>
                             <span>📚</span> {selectedId === 0 && <span>Overall</span>}
                         </li>
                     </div>
