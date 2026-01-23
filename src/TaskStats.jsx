@@ -1,11 +1,17 @@
 import React, {useContext, useState, useEffect, useMemo} from "react";
 import { TaskContext } from "./components/TaskContext.js";
+import NewTask from "./components/NewTask.jsx";
 
 function TaskStats() {
     const today = new Date();
     const normalizeDate = date => new Date(date).toDateString();
 
     const { taskList, setTaskList, tasksDone, setTasksDone } = useContext(TaskContext);
+    const [ statsNew, setStatsNew ] = useState(false);
+
+    function addNewTask() {
+        setStatsNew(prev => !prev);
+    }
 
     const [selectedId, setSelectedId] = useState(0);
 
@@ -428,7 +434,7 @@ function TaskStats() {
                 }} className="task-selected">         
 
                     <option value={0}>
-                        {`📚 Overall`}
+                        {`📊 Overall`}
                     </option>
                     
                     {
@@ -439,7 +445,7 @@ function TaskStats() {
                         ))
                     }                    
                 </select>
-                <button className="bi bi-plus-circle-fill add"></button>
+                <button className="bi bi-plus-circle-fill add" onClick={() => addNewTask()}></button>
             </div>
 
             <div className="selected-scroll-cont">
@@ -447,7 +453,7 @@ function TaskStats() {
                 
                     <div className="li-cont">
                         <li onClick={() => toggleSelected(0)} className={selectedId === 0 ? 'border-[var(--color-accentprimary)]' : ""}>
-                            <span>📚</span> {selectedId === 0 && <span>Overall</span>}
+                            <span>📊</span> {selectedId === 0 && <span>Overall</span>}
                         </li>
                     </div>
 
@@ -549,6 +555,8 @@ function TaskStats() {
                 </div>
 
             </div>
+
+            {statsNew && <NewTask statsNew={addNewTask}/>}
 
         </div> 
     );

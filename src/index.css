@@ -223,11 +223,11 @@ input[type="number"]::-webkit-outer-spin-button {
         @apply bg-black/1 absolute flex justify-center items-center top-0 left-[-2px] z-50 w-full h-full backdrop-blur-sm;
 
         & .exit-new-screen {
-            @apply absolute text-xl right-[7px] top-7 md:text-2xl md:right-[15px];
+            @apply absolute text-xl right-[7px] top-7 md:text-2xl md:right-[30px];
         }
 
         & .exit-edit-screen {
-            @apply absolute text-xl right-[7px] top-7 md:text-2xl md:right-[15px] cursor-pointer;
+            @apply absolute text-xl right-[7px] top-7 md:text-2xl md:right-[30px] cursor-pointer;
         }
 
         & .new-task-container {
@@ -355,7 +355,7 @@ input[type="number"]::-webkit-outer-spin-button {
         }
         
         & .bi-trash {
-            @apply cursor-pointer text-lg active:scale-90 text-tocolorr;
+            @apply cursor-pointer text-xl active:scale-90 text-white border border-2 border-tocolorr p-2 px-4 mr-2 rounded-lg bg-gradient-to-b from-fromcolorr to-tocolorr active:scale-90;
         }
     }
 
@@ -443,7 +443,7 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         & .selected-scroll-cont {
-            @apply bg-surfacetwo rounded-lg p-4 w-full sticky top-2 z-99;
+            @apply bg-surfacetwo rounded-lg p-4 w-full sticky top-2 z-40;
 
             & .selected-scroll {
                 @apply flex gap-5 overflow-hidden w-[1095px] overflow-x-auto ml-5 no-scrollbar snap-x snap-mandatory;
@@ -452,7 +452,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply flex shrink-0 justify-center items-center w-[140px] snap-start;
                 
                     li {
-                        @apply border border-2 border-transparent bg-muted p-4 rounded-xl cursor-pointer shadow-lg text-lg;
+                        @apply border border-2 border-transparent bg-muted p-4 rounded-xl cursor-pointer shadow-lg text-lg flex gap-[5px];
                     }
                 }
                 

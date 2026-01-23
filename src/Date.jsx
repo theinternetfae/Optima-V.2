@@ -150,7 +150,7 @@ function DateMenu() {
     ///////////////////////////////////////////////////
     
     function openCloseNewTaskSetter() {
-        setNewTaskDisplay(!newTaskDisplay);
+        setNewTaskDisplay(prev => !prev);
     }
 
     function toggleTodayDisplay() {

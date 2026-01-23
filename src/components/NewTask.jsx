@@ -5,7 +5,7 @@ import Alert from "./Alert.jsx";
 import { TaskContext } from "./TaskContext.js";
 
 
-function NewTask({exit, editExit, task}) {
+function NewTask({exit, editExit, statsNew, task}) {
 
     const { taskList, setTaskList, saveEditedTask } = useContext(TaskContext);
 
@@ -73,7 +73,7 @@ function NewTask({exit, editExit, task}) {
 
         saveEditedTask(theTask);
         // setTaskList(prev => [...prev, theTask])
-        exit();
+        exit ? exit() : statsNew();
     }
 
     function editingTask() {
@@ -146,7 +146,7 @@ function NewTask({exit, editExit, task}) {
     return ( 
         <div className="new-task">
             
-            {isEditingMode ? <i className="bi bi-x-circle-fill exit-edit-screen cursor-pointer" onClick={editExit}></i> : <i className="bi bi-x-circle-fill exit-new-screen cursor-pointer" onClick={exit}></i>}
+            {isEditingMode ? <i className="bi bi-x-circle-fill exit-edit-screen cursor-pointer" onClick={editExit}></i> : <i className="bi bi-x-circle-fill exit-new-screen cursor-pointer" onClick={exit ? exit : statsNew}></i>}
 
             <div className="new-task-container">
 
