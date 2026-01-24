@@ -104,7 +104,8 @@ function App() {
   }, [accent])
 
 
-
+  //LEVEL
+  const [level, setLevel] = useState(1);
 
 
 
@@ -208,7 +209,7 @@ function App() {
 
   return (
 
-    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask, theme, setTheme, accent, setAccent}}>
+    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask, theme, setTheme, accent, setAccent, level, setLevel}}>
       <BrowserRouter>    
 
         <Routes>
