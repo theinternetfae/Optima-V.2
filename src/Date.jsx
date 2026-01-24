@@ -190,6 +190,7 @@ function DateMenu() {
     const visibleTasks = useMemo(() => {
         if (taskFilter === 'all') return tasksForSelectedDate;
         if (taskFilter === 'met') return tasksForSelectedDate.filter(ta => ta.isDone);
+        if (taskFilter === 'commitments') return tasksForSelectedDate.filter(ta => ta.isCommited);
         return tasksForSelectedDate.filter(ta => !ta.isDone);
     }, [tasksForSelectedDate, taskFilter])
 
@@ -207,6 +208,7 @@ function DateMenu() {
                         <option value="all">All</option>
                         <option value="unmet">Unmet</option>
                         <option value="met">Met</option>
+                        <option value="commitments">Commitments</option>
                     </select>
                     <p className="nav-date" onClick={() => {
                         toggleTodayDisplay();
@@ -252,16 +254,8 @@ function DateMenu() {
 
             <div className="task-display">
                 
-                <div className="commitments">
-                    <p>Commitments</p>
-                </div>
-
-                <div className="basic-tasks">
-                    <p>Other</p>
-                </div>
-
                 {visibleTasks.length === 0 ? (
-                    <p className="no-tasks">{taskFilter === 'all' ? 'No tasks' : taskFilter === 'met' ? 'No tasks completed...' : 'None!'}</p>
+                    <p className="no-tasks">{taskFilter === 'all' ? 'No tasks' : taskFilter === 'met' ? 'No tasks completed...' : taskFilter === 'commitments' ? 'No commitments' :'None!'}</p>
                 ) : (
                     visibleTasks.map(task => {
                         return <TaskDisplay

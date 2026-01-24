@@ -34,6 +34,7 @@ function App() {
       localStorage.setItem("tasksDone", JSON.stringify(tasksDone));
   }, [tasksDone]);
 
+  //TASKS COMMITED
 
   //THEMES
   const [theme, setTheme] = useState(() => {

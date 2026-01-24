@@ -1,12 +1,16 @@
 import { useEffect, useState, useContext } from "react";
 import NewTask from "./NewTask.jsx";
-import { TaskContext } from "./TaskContext.js";
+import { TaskContext, SettingsContext } from "./TaskContext.js";
 import Alert from "./Alert.jsx";
 
 function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist}) {
 
   const { taskList, setTaskList, setTasksDone } = useContext(TaskContext);
+  const { optimaQuirk } = useContext(SettingsContext);
+  
+
   const [done, setDone] = useState(taskE.isDone);
+  const [commited, setCommited] = useState(taskE.isCommited);
   const[editScreen, setEditScreen] = useState(false);
 
   const [alertShow, setAlertShow] = useState(false);
@@ -22,6 +26,8 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist}) {
   }, [taskE.isDone]);
 
   const isChosenHist = chosenHist?.keyUUID === taskE.keyUUID;
+
+  console.log(taskList)
 
   return (
 
@@ -62,9 +68,30 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist}) {
           ) :
          
           (
-            <div className="done-box">
+            <div className={`done-box ${!optimaQuirk && 'justify-end'}`}>
 
-              <button className="bi bi-star"></button>
+              {optimaQuirk && 
+                <button className={`bi bi-star-fill commit ${commited && 'text-yellow'} ${new Date(taskE.id).toDateString() !== new Date().toDateString() && !commited ? 'text-grey cursor-not-allowed' : ''}`}
+                
+                  onClick={() => {
+
+                    if (new Date(taskE.id).toDateString() !== new Date().toDateString()) return;
+
+                    const newCommited = !commited;
+                    setCommited(newCommited);
+
+                    const updatedCommitment = { ...taskE, isCommited: newCommited };
+
+                    setTaskList(prev => 
+                      prev.map(c => 
+                        c.keyUUID === taskE.keyUUID ? updatedCommitment : c
+                      )
+                    );
+
+                  }}
+
+                ></button>
+              }
 
               <input type="checkbox" className="done" checked={done} onChange={() => {
                 const newDone = !done
