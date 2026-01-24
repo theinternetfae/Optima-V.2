@@ -3,7 +3,7 @@ import DateMenu from "./Date.jsx";
 import TaskHistory from "./TaskHistory.jsx";
 import TaskStats from "./TaskStats.jsx";
 import { useState, useEffect } from "react";
-import { TaskContext } from "./components/TaskContext.js";
+import { TaskContext, SettingsContext } from "./components/TaskContext.js";
 import AppLayout from "./AppLayout.jsx";
 import Settings from "./Settings.jsx";
 import Profile from "./settingsComponents/Profile.jsx";
@@ -209,31 +209,36 @@ function App() {
 
   return (
 
-    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask, theme, setTheme, accent, setAccent, level, setLevel}}>
-      <BrowserRouter>    
+    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask}}>
+      <SettingsContext.Provider value={{theme, setTheme, accent, setAccent, level, setLevel}}>
 
-        <Routes>
+        <BrowserRouter>    
 
-          <Route element={<AppLayout />}>
-          
-            <Route path="/" element={<DateMenu />} />
-            <Route path="/taskStats" element={<TaskStats />} />
-            <Route path="/taskHistory" element={<TaskHistory />} />
+          <Routes>
 
-            <Route path="settings" element={<Settings />}>
-              <Route index element={<Navigate to="profile" replace />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="taskHandler" element={<TaskHandler />} />
-              <Route path="dataPrivacy" element={<DataPrivacy />} />
-              <Route path="about" element={<About />} />
+            <Route element={<AppLayout />}>
+            
+              <Route path="/" element={<DateMenu />} />
+              <Route path="/taskStats" element={<TaskStats />} />
+              <Route path="/taskHistory" element={<TaskHistory />} />
+
+              <Route path="settings" element={<Settings />}>
+                <Route index element={<Navigate to="profile" replace />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="taskHandler" element={<TaskHandler />} />
+                <Route path="dataPrivacy" element={<DataPrivacy />} />
+                <Route path="about" element={<About />} />
+              </Route>
+
             </Route>
 
-          </Route>
+          </Routes>
+          
+        </BrowserRouter>
 
-        </Routes>
-        
-      </BrowserRouter>
+      </SettingsContext.Provider>
     </TaskContext.Provider>
+
   )
 }
 

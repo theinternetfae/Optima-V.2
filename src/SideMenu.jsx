@@ -1,12 +1,12 @@
 import { useMemo, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { TaskContext } from "./components/TaskContext.js";
+import { SettingsContext } from "./components/TaskContext.js";
 
 function SideMenu() {
 
     const location = useLocation();
 
-    const { level, setLevel } = useContext(TaskContext);
+    const { level, setLevel } = useContext(SettingsContext);
 
     const setPath = useMemo(() => {
         if(location.pathname !== "/" && location.pathname !== "/taskStats" && location.pathname !== "/taskHistory" && location.pathname !== "/settings") return "/settings";

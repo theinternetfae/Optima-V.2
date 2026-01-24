@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { TaskContext } from "../components/TaskContext";
+import { SettingsContext } from "../components/TaskContext";
 
 function Profile() {
     
@@ -8,7 +8,7 @@ function Profile() {
     const [quoteState, setQuoteState] = useState(false);
     const [streakState, setStreakState] = useState(true);
 
-    const {accent, setAccent} = useContext(TaskContext);
+    const {accent, setAccent} = useContext(SettingsContext);
 
     function handleImageChange(e) {
         const file = e.target.files[0];

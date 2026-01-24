@@ -1,11 +1,11 @@
 import { useMemo, useContext } from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
-import { TaskContext } from "./components/TaskContext.js";
+import { SettingsContext } from "./components/TaskContext.js";
 
 function Settings() {
 
     const location = useLocation();
-    const { theme, setTheme } = useContext(TaskContext); 
+    const { theme, setTheme } = useContext(SettingsContext); 
     
 
 
