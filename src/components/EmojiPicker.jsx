@@ -62,11 +62,6 @@ function Emoji({showing, setting}) {
         return histArray;
     }, [emojis])
 
-    
-    console.log(emojis);
-    console.log("History count:", HISTORY);
-    console.log(categoryMatch);
-
     return ( 
 
         <section className="emoji-picker">

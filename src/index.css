@@ -185,17 +185,17 @@ input[type="number"]::-webkit-outer-spin-button {
                 @apply w-[85%] h-full;
 
                 & .level-loader {
-                   @apply h-[80%] mt-1 rounded-full bg-muted shadow-lg flex;
+                   @apply h-[80%] mt-1 rounded-full bg-muted shadow-lg flex gap-1;
                 
                     span {
                         @apply border border-2 border-transparent h-full w-[33.4%];
                     }
 
-                    .level-start {
+                    & .level-start {
                         @apply rounded-tl-lg rounded-bl-lg;
                     }
 
-                    .level-end {
+                    & .level-end {
                         @apply rounded-tr-lg rounded-br-lg;
                     }
                 }

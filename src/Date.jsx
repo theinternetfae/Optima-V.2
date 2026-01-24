@@ -2,8 +2,7 @@ import { useEffect, useState, useRef, useMemo} from "react";
 import NewTask from "./components/NewTask.jsx";
 import TaskDisplay from "./components/TaskDisplay.jsx";
 import React, {useContext} from "react";
-import { TaskContext } from "./components/TaskContext.js";
-// import EmojiPicker from "emoji-picker-react";
+import { TaskContext, SettingsContext } from "./components/TaskContext.js";
 
 
 function DateMenu() {
@@ -27,9 +26,6 @@ function DateMenu() {
 
 
 
-
-
-    
     const ONE_DAY = 24 * 60 * 60 * 1000;
 
     function addDaysUTC(date, days) {
@@ -198,6 +194,27 @@ function DateMenu() {
         setTaskFilter(operator);
     }
 
+
+    const { level, setLevel } = useContext(SettingsContext); 
+    const levelLimit = useMemo(() => {
+        if (level === 1) {
+            return 3;
+        } else if (level === 2) {
+            return 5;
+        } else {
+            return 8;
+        }
+    }, [level]);
+
+    const limitReached = useMemo(() => {
+        
+        const todaysTasks = taskList.filter(t => new Date(t.id).toDateString() === new Date(today).toDateString());
+        const commitedTasks = todaysTasks.filter(t => t.isCommited);
+        const limitReached = commitedTasks.length >= levelLimit;
+        return limitReached;
+
+    }, [taskList, today, levelLimit])
+
     return (
         
         <>
@@ -254,6 +271,11 @@ function DateMenu() {
 
             <div className="task-display">
                 
+                {/* <button className="border border-2 h-20 cursor-pointer" onClick={() => setLevel(prev => {
+                    if(prev === 3) return 3;
+                    return prev + 1;
+                })}>{`Level ${level} - ${levelLimit} Tasks`}</button> */}
+
                 {visibleTasks.length === 0 ? (
                     <p className="no-tasks">{taskFilter === 'all' ? 'No tasks' : taskFilter === 'met' ? 'No tasks completed...' : taskFilter === 'commitments' ? 'No commitments' :'None!'}</p>
                 ) : (
@@ -261,6 +283,7 @@ function DateMenu() {
                         return <TaskDisplay
                             key={task.keyUUID}
                             taskE={task}
+                            limitReached={limitReached}
                         />
                     })
                 )}

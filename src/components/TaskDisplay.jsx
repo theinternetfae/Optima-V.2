@@ -3,14 +3,13 @@ import NewTask from "./NewTask.jsx";
 import { TaskContext, SettingsContext } from "./TaskContext.js";
 import Alert from "./Alert.jsx";
 
-function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist}) {
+function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitReached}) {
 
   const { taskList, setTaskList, setTasksDone } = useContext(TaskContext);
-  const { optimaQuirk } = useContext(SettingsContext);
+  const { optimaQuirk, level } = useContext(SettingsContext);
   
 
   const [done, setDone] = useState(taskE.isDone);
-  const [commited, setCommited] = useState(taskE.isCommited);
   const[editScreen, setEditScreen] = useState(false);
 
   const [alertShow, setAlertShow] = useState(false);
@@ -26,8 +25,6 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist}) {
   }, [taskE.isDone]);
 
   const isChosenHist = chosenHist?.keyUUID === taskE.keyUUID;
-
-  console.log(taskList)
 
   return (
 
@@ -71,14 +68,29 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist}) {
             <div className={`done-box ${!optimaQuirk && 'justify-end'}`}>
 
               {optimaQuirk && 
-                <button className={`bi bi-star-fill commit ${commited && 'text-yellow'} ${new Date(taskE.id).toDateString() !== new Date().toDateString() && !commited ? 'text-grey cursor-not-allowed' : ''}`}
+                <button className={`bi bi-star-fill commit ${taskE.isCommited && 'text-yellow'} ${new Date(taskE.id).toDateString() !== new Date().toDateString() && !taskE.isCommited || limitReached && !taskE.isCommited ? 'text-grey cursor-not-allowed' : ''}`}
                 
                   onClick={() => {
+                    
+                    if (limitReached && !taskE.isCommited && new Date(taskE.id).toDateString() === new Date().toDateString()) {
+         
+                      if (level === 3) {
+                        alert('You are at the highest level! Optima advises commiting to a maximum of eight tasks a day. Doing great.')
+                      } else {
+                        alert('You can not commit to any more tasks today. Finish your tasks consistently to level up!');
+                      }
+                      
+                      return;
+                    }
 
-                    if (new Date(taskE.id).toDateString() !== new Date().toDateString()) return;
-
-                    const newCommited = !commited;
-                    setCommited(newCommited);
+                    if (new Date(taskE.id).toDateString() !== new Date().toDateString()) {
+                      
+                      alert('You can not commit to tasks that are not set for today.')
+                      
+                      return;
+                    };
+                  
+                    const newCommited = !taskE.isCommited;
 
                     const updatedCommitment = { ...taskE, isCommited: newCommited };
 
@@ -93,23 +105,26 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist}) {
                 ></button>
               }
 
-              <input type="checkbox" className="done" checked={done} onChange={() => {
-                const newDone = !done
-                setDone(newDone);
+              <input type="checkbox"
+                className="done"
+                checked={taskE.isDone}
+                onChange={() => {
+  
+                  const newDone = !taskE.isDone;
 
-                const updatedTask = { ...taskE, isDone: newDone };
+                  const updatedTask = { ...taskE, isDone: newDone };
 
-                setTaskList(prev =>
-                  prev.map(t =>
-                    t.keyUUID === taskE.keyUUID ? updatedTask : t
-                  )
-                );
+                  setTaskList(prev =>
+                    prev.map(t =>
+                      t.keyUUID === taskE.keyUUID ? updatedTask : t
+                    )
+                  );
 
-                if (newDone === true) { 
-                  setTasksDone(prev => [...prev, updatedTask])
-                } else {
-                  setTasksDone(prev => prev.filter(t => t.id !== taskE.id));
-                }
+                  if (newDone === true) { 
+                    setTasksDone(prev => [...prev, updatedTask])
+                  } else {
+                    setTasksDone(prev => prev.filter(t => t.id !== taskE.id));
+                  }
               }} disabled={new Date(taskE.id).toDateString() !== new Date().toDateString()}/>
 
             </div>

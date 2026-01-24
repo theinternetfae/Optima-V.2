@@ -53,8 +53,8 @@ function SideMenu() {
                     <div className="level">
                         <div className="level-loader">
                             <span className={`level-start ${level > 0 ? 'border-[var(--color-accentprimary)] bg-[var(--color-accentprimary)]' : ''}`}></span>
-                            <span></span>
-                            <span className="level-end"></span>
+                            <span className={`${level >= 2  ? 'border-[var(--color-accentprimary)] bg-[var(--color-accentprimary)]' : ''}`}></span>
+                            <span className={`level-end ${level === 3 ? 'border-[var(--color-accentprimary)] bg-[var(--color-accentprimary)]' : ''}`}></span>
                         </div>
                     </div>
                 </div>
