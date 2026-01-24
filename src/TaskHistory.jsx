@@ -1,10 +1,11 @@
 import { useState, useContext, useEffect, useMemo } from "react";
-import { TaskContext } from "./components/TaskContext.js";
+import { TaskContext, SettingsContext } from "./components/TaskContext.js";
 import TaskDisplay from "./components/TaskDisplay.jsx";
 
 function TaskHistory() {
     
     const { taskList } = useContext(TaskContext);
+    const { streakState } = useContext(SettingsContext);
     const history = true;
 
     const [month, setMonth] = useState('');
@@ -177,7 +178,7 @@ function TaskHistory() {
 
             </div>
 
-            <div className="tasks-per-day">
+            <div className={`tasks-per-day ${!streakState && 'h-[550px]'}`}>
                 <div className="tasks-pd-cont">
 
                     {
@@ -197,41 +198,44 @@ function TaskHistory() {
                 </div>
             </div>
 
-            <div className="chosen-task-info">
-                {chosenHist === '' ? (
-                    <p className="no-chosen">Choose task to see stats...</p>
-                ) : (
-                    <>
+            { streakState &&             
+                <div className="chosen-task-info">
+                
+                    {chosenHist === '' ? (
+                        <p className="no-chosen">Choose task to see stats...</p>
+                    ) : (
+                        <>
 
-                        <div className="top">
-                            <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
-                                <i className="bi-trophy bi-bi" style={{color: chosenHist && `${chosenHist.color}`}}></i>
-                                <p className="calculator">{stats.resultStreak === 0 ? '0' : stats.resultStreak}</p>
-                                <p className="calculator-label">Top streak</p>
-                            </section>
-                            <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
-                                <i className="bi-fire bi-bi" style={{color: chosenHist && `${chosenHist.color}`}}></i>
-                                <p className="calculator">{stats.count === 0 ? '0' : stats.count}</p>
-                                <p className="calculator-label">current streak</p>
-                            </section>
-                        </div>
-                        <div className="top">
-                            <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
-                                <i className="bi-bi bi-check2-circle" style={{color: chosenHist && `${chosenHist.color}`}}></i>
-                                <p className="calculator">{stats.uniqueDone === 0 ? '0' : stats.uniqueDone}</p>
-                                <p className="calculator-label">Times done</p>
-                            </section>
-                            <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
-                                <i className="bi-info-circle bi-bi" style={{color: chosenHist && `${chosenHist.color}`}}></i>
-                                <p className="calculator">{stats.isActive ? "Active" : 'Inactive'}</p>
-                                <p className="calculator-label">Status</p>
-                            </section>
-                        </div>
-                    
-                    </>
-                )}
+                            <div className="top">
+                                <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
+                                    <i className="bi-trophy bi-bi" style={{color: chosenHist && `${chosenHist.color}`}}></i>
+                                    <p className="calculator">{stats.resultStreak === 0 ? '0' : stats.resultStreak}</p>
+                                    <p className="calculator-label">Top streak</p>
+                                </section>
+                                <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
+                                    <i className="bi-fire bi-bi" style={{color: chosenHist && `${chosenHist.color}`}}></i>
+                                    <p className="calculator">{stats.count === 0 ? '0' : stats.count}</p>
+                                    <p className="calculator-label">current streak</p>
+                                </section>
+                            </div>
+                            <div className="top">
+                                <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
+                                    <i className="bi-bi bi-check2-circle" style={{color: chosenHist && `${chosenHist.color}`}}></i>
+                                    <p className="calculator">{stats.uniqueDone === 0 ? '0' : stats.uniqueDone}</p>
+                                    <p className="calculator-label">Times done</p>
+                                </section>
+                                <section className="sec" style={{border: chosenHist && `2px solid ${chosenHist.color}`}}>
+                                    <i className="bi-info-circle bi-bi" style={{color: chosenHist && `${chosenHist.color}`}}></i>
+                                    <p className="calculator">{stats.isActive ? "Active" : 'Inactive'}</p>
+                                    <p className="calculator-label">Status</p>
+                                </section>
+                            </div>
+                        
+                        </>
+                    )}
             
-            </div>
+                </div>
+            }
         </div> 
     );
 }

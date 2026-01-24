@@ -50,10 +50,14 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
         {
           history ? (
 
-            <button className="bi bi-trash" onClick={(e) => {
-              e.stopPropagation();
-              setAlertShow(prev => !prev);
-            }}></button>
+            <div className="done-box">
+              <button className={`bi bi-star-fill commit ${taskE.isCommited ? 'text-yellow' : 'text-grey'}`} onClick={(() => alert('Go to home to edit commitments'))}></button>
+              <button className="bi bi-trash" onClick={(e) => {
+                e.stopPropagation();
+                setAlertShow(prev => !prev);
+              }}></button>
+            </div>
+            
         
           ) :
 

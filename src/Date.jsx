@@ -195,8 +195,11 @@ function DateMenu() {
     }
 
 
-    const { level, setLevel } = useContext(SettingsContext); 
+    const { level } = useContext(SettingsContext); 
     const levelLimit = useMemo(() => {
+        
+        if(!level) return;
+
         if (level === 1) {
             return 3;
         } else if (level === 2) {
@@ -204,10 +207,11 @@ function DateMenu() {
         } else {
             return 8;
         }
+
     }, [level]);
 
     const limitReached = useMemo(() => {
-        
+
         const todaysTasks = taskList.filter(t => new Date(t.id).toDateString() === new Date(today).toDateString());
         const commitedTasks = todaysTasks.filter(t => t.isCommited);
         const limitReached = commitedTasks.length >= levelLimit;

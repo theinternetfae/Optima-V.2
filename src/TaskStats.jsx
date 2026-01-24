@@ -1,12 +1,13 @@
 import React, {useContext, useState, useEffect, useMemo} from "react";
-import { TaskContext } from "./components/TaskContext.js";
+import { TaskContext, SettingsContext } from "./components/TaskContext.js";
 import NewTask from "./components/NewTask.jsx";
 
 function TaskStats() {
     const today = new Date();
     const normalizeDate = date => new Date(date).toDateString();
 
-    const { taskList, setTaskList, tasksDone, setTasksDone } = useContext(TaskContext);
+    const { taskList, tasksDone } = useContext(TaskContext);
+    const { streakState } = useContext(SettingsContext);
     const [ statsNew, setStatsNew ] = useState(false);
 
     function addNewTask() {
@@ -513,48 +514,50 @@ function TaskStats() {
                 <button className="bi-chevron-right bi-chevron" onClick={(() => oneMonthForward())}></button>
             </div>
 
-            <div className="average-display">
+            { streakState && 
+                <div className="average-display">
                 
-                <div className="filler-front">
+                    <div className="filler-front">
 
-                    <div className="average-body">
-                        <p className="rating">{selectedTask ? (selectedRate === 0 ? '0.00' : selectedRate) : (generalRate === 0 ? '0.00' : generalRate)}%</p>
-                        <p className="rating-title">Overall rate</p>
+                        <div className="average-body">
+                            <p className="rating">{selectedTask ? (selectedRate === 0 ? '0.00' : selectedRate) : (generalRate === 0 ? '0.00' : generalRate)}%</p>
+                            <p className="rating-title">Overall rate</p>
+                        </div>
+
+                        <div className="average-loader">
+                        </div>
+
                     </div>
 
-                    <div className="average-loader">
+                    <div className="the-four">
+                        <div className="top">
+                            <section title="Top streak" className="sec-one-two" style={uniqueTasks.some(task => selectedId === task.baseId) ? { border: `2px solid ${selectedTask.color}`} : {}}>
+                                <i className="bi-trophy" style={uniqueTasks.some(task => selectedId === task.baseId) ? { color: `${selectedTask.color}`} : {}}></i>
+                                <p className="calculator">{amountGeneralStreak()}</p>
+                                <p className="calculator-label">Top streak</p>
+                            </section>
+                            <section title="Current streak" className="sec-one-two" style={uniqueTasks.some(task => selectedId === task.baseId) ? { border: `2px solid ${selectedTask.color}`} : {}}>
+                                <i className="bi-fire" style={uniqueTasks.some(task => selectedId === task.baseId) ? { color: `${selectedTask.color}`} : {}}></i>
+                                <p className="calculator">{amountGeneralCurrentStreak()}</p>
+                                <p className="calculator-label">current streak</p>
+                            </section>
+                        </div>
+                        <div className="bottom">
+                            <section title="Tasks done" className="sec-one-two" style={uniqueTasks.some(task => selectedId === task.baseId) ? { border: `2px solid ${selectedTask.color}`} : {}}>
+                                <i className="bi bi-check2-circle" style={uniqueTasks.some(task => selectedId === task.baseId) ? { color: `${selectedTask.color}`} : {}}></i>
+                                <p className="calculator">{selectedTaskCount}</p>
+                                <p className="calculator-label">{selectedTask ? 'Times Done' : 'Habits done'}</p>
+                            </section>
+                                <section title="Active status" className="sec-one-two" style={uniqueTasks.some(task => selectedId === task.baseId) ? { border: `2px solid ${selectedTask.color}`} : {}}>
+                                <i className="bi-info-circle" style={uniqueTasks.some(task => selectedId === task.baseId) ? { color: `${selectedTask.color}`} : {}}></i>
+                                <p className="calculator">{selectedTask ? (activeStatus ? 'Active' : 'Inactive') : `${activeCount} Active`}</p>
+                                <p className="calculator-label">Status</p>
+                            </section>
+                        </div>
                     </div>
 
                 </div>
-
-                <div className="the-four">
-                    <div className="top">
-                        <section title="Top streak" className="sec-one-two" style={uniqueTasks.some(task => selectedId === task.baseId) ? { border: `2px solid ${selectedTask.color}`} : {}}>
-                            <i className="bi-trophy" style={uniqueTasks.some(task => selectedId === task.baseId) ? { color: `${selectedTask.color}`} : {}}></i>
-                            <p className="calculator">{amountGeneralStreak()}</p>
-                            <p className="calculator-label">Top streak</p>
-                        </section>
-                        <section title="Current streak" className="sec-one-two" style={uniqueTasks.some(task => selectedId === task.baseId) ? { border: `2px solid ${selectedTask.color}`} : {}}>
-                            <i className="bi-fire" style={uniqueTasks.some(task => selectedId === task.baseId) ? { color: `${selectedTask.color}`} : {}}></i>
-                            <p className="calculator">{amountGeneralCurrentStreak()}</p>
-                            <p className="calculator-label">current streak</p>
-                        </section>
-                    </div>
-                    <div className="bottom">
-                        <section title="Tasks done" className="sec-one-two" style={uniqueTasks.some(task => selectedId === task.baseId) ? { border: `2px solid ${selectedTask.color}`} : {}}>
-                            <i className="bi bi-check2-circle" style={uniqueTasks.some(task => selectedId === task.baseId) ? { color: `${selectedTask.color}`} : {}}></i>
-                            <p className="calculator">{selectedTaskCount}</p>
-                            <p className="calculator-label">{selectedTask ? 'Times Done' : 'Habits done'}</p>
-                        </section>
-                            <section title="Active status" className="sec-one-two" style={uniqueTasks.some(task => selectedId === task.baseId) ? { border: `2px solid ${selectedTask.color}`} : {}}>
-                            <i className="bi-info-circle" style={uniqueTasks.some(task => selectedId === task.baseId) ? { color: `${selectedTask.color}`} : {}}></i>
-                            <p className="calculator">{selectedTask ? (activeStatus ? 'Active' : 'Inactive') : `${activeCount} Active`}</p>
-                            <p className="calculator-label">Status</p>
-                        </section>
-                    </div>
-                </div>
-
-            </div>
+            }
 
             {statsNew && <NewTask statsNew={addNewTask}/>}
 

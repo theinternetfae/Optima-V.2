@@ -5,9 +5,8 @@ function Profile() {
     
     const [profileImage, setProfileImage] = useState(null);
     const [quoteState, setQuoteState] = useState(false);
-    const [streakState, setStreakState] = useState(true);
 
-    const {accent, setAccent, optimaQuirk, setOptimaQuirk} = useContext(SettingsContext);
+    const {accent, setAccent, optimaQuirk, setOptimaQuirk, streakState, setStreakState} = useContext(SettingsContext);
 
     function handleImageChange(e) {
         const file = e.target.files[0];

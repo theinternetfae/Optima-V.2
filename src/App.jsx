@@ -106,11 +106,12 @@ function App() {
 
 
   //LEVEL
-  const [level, setLevel] = useState(1);
   const [optimaQuirk, setOptimaQuirk] = useState(true);
+  const [level, setLevel] = useState(1);
 
 
-
+  //STREAK
+  const [streakState, setStreakState] = useState(true);
 
 
   //REPEATING TASKS LOGIC
@@ -212,7 +213,7 @@ function App() {
   return (
 
     <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask}}>
-      <SettingsContext.Provider value={{theme, setTheme, accent, setAccent, level, setLevel, optimaQuirk, setOptimaQuirk}}>
+      <SettingsContext.Provider value={{theme, setTheme, accent, setAccent, level, setLevel, optimaQuirk, setOptimaQuirk, streakState, setStreakState}}>
 
         <BrowserRouter>    
 
