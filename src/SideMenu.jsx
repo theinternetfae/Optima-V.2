@@ -6,7 +6,7 @@ function SideMenu() {
 
     const location = useLocation();
 
-    const { level, setLevel } = useContext(SettingsContext);
+    const { level, optimaQuirk } = useContext(SettingsContext);
 
     const setPath = useMemo(() => {
         if(location.pathname !== "/" && location.pathname !== "/taskStats" && location.pathname !== "/taskHistory" && location.pathname !== "/settings") return "/settings";
@@ -47,18 +47,19 @@ function SideMenu() {
 
             </div>
 
-            <div className="progress-bar-cont" title=" Level One">
-                <div className="level-counter">1</div>
-                <div className="level">
-                    <div className="level-loader">
-                        <span className={`level-start ${level > 0 ? 'border-[var(--color-accentprimary)] bg-[var(--color-accentprimary)]' : ''}`}></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span className="level-end"></span>
+            {optimaQuirk && 
+                <div className="progress-bar-cont" title=" Level One">
+                    <div className="level-counter">1</div>
+                    <div className="level">
+                        <div className="level-loader">
+                            <span className={`level-start ${level > 0 ? 'border-[var(--color-accentprimary)] bg-[var(--color-accentprimary)]' : ''}`}></span>
+                            <span></span>
+                            <span className="level-end"></span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+
         </nav>
     );
 }

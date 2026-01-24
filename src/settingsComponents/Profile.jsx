@@ -4,11 +4,10 @@ import { SettingsContext } from "../components/TaskContext";
 function Profile() {
     
     const [profileImage, setProfileImage] = useState(null);
-    const [quirkState, setQuirkState] = useState(true);
     const [quoteState, setQuoteState] = useState(false);
     const [streakState, setStreakState] = useState(true);
 
-    const {accent, setAccent} = useContext(SettingsContext);
+    const {accent, setAccent, optimaQuirk, setOptimaQuirk} = useContext(SettingsContext);
 
     function handleImageChange(e) {
         const file = e.target.files[0];
@@ -81,8 +80,8 @@ function Profile() {
                     
                     <p>Optima Quirk</p>
 
-                    <div className={`toggle ${quirkState && "bg-[var(--color-accentprimary)]"}`} onClick={() => setQuirkState(prev => !prev)}>
-                        <div className={`ball ease duration-800 ${quirkState && "translate-x-9 md:translate-x-43"}`}></div>
+                    <div className={`toggle ${optimaQuirk && "bg-[var(--color-accentprimary)]"}`} onClick={() => setOptimaQuirk(prev => !prev)}>
+                        <div className={`ball ease duration-800 ${optimaQuirk && "translate-x-9 md:translate-x-43"}`}></div>
                     </div>
 
                 </div>

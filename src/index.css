@@ -188,7 +188,7 @@ input[type="number"]::-webkit-outer-spin-button {
                    @apply h-[80%] mt-1 rounded-full bg-muted shadow-lg flex;
                 
                     span {
-                        @apply border border-2 border-transparent h-full w-[40px]
+                        @apply border border-2 border-transparent h-full w-[33.4%];
                     }
 
                     .level-start {
@@ -261,7 +261,7 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         & .new-task-container {
-            @apply bg-surfacetwo mx-auto w-[80%] p-4 rounded-xl flex flex-col gap-4 shadow-md md:w-[50%] md:right-[320px] absolute  md:p-10;
+            @apply bg-surfacetwo border border-2 border-accentprimary mx-auto w-[80%] p-4 rounded-xl flex flex-col gap-4 shadow-md md:w-[50%] md:right-[320px] absolute  md:p-10;
 
             .task-desc {
                 @apply bg-surfaceone rounded-md p-2 flex flex-col gap-2 justify-center items-center md:grid md:p-4 md:place-items-center;
@@ -360,7 +360,7 @@ input[type="number"]::-webkit-outer-spin-button {
     .task-box {
         @apply p-2 h-[40px] bg-muted cursor-pointer snap-start rounded-md shadow flex items-center transition-all duration-2000 ease-in-out md:p-4 md:border-none md:h-[70px] md:w-full; 
 
-        & .emoji-t-box {
+        .emoji-t-box {
             @apply h-[30px] w-[8%] bg-surfacetwo text-lg flex items-center justify-center rounded-lg md:w-[5%] md:h-full md:text-3xl;
         }
 
@@ -368,8 +368,16 @@ input[type="number"]::-webkit-outer-spin-button {
             @apply text-shadow-md ml-2 p-2 w-[90%] text-sm rounded-md text-white md:font-bold md:text-base;
         }
         
-        & .done {
-            @apply w-4 h-4 accent-accentprimary mr-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed md:scale-125;
+        & .done-box {
+            @apply w-[70px] flex items-center justify-between;
+        
+            .bi-star {
+                @apply text-lg cursor-pointer;
+            }
+
+            & .done {
+               @apply w-4 h-4 accent-accentprimary mr-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed md:scale-125;
+            }
         }
     }
 

@@ -62,25 +62,30 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist}) {
           ) :
          
           (
+            <div className="done-box">
 
-            <input type="checkbox" className="done" checked={done} onChange={() => {
-              const newDone = !done
-              setDone(newDone);
+              <button className="bi bi-star"></button>
 
-              const updatedTask = { ...taskE, isDone: newDone };
+              <input type="checkbox" className="done" checked={done} onChange={() => {
+                const newDone = !done
+                setDone(newDone);
 
-              setTaskList(prev =>
-                prev.map(t =>
-                  t.keyUUID === taskE.keyUUID ? updatedTask : t
-                )
-              );
+                const updatedTask = { ...taskE, isDone: newDone };
 
-              if (newDone === true) { 
-                setTasksDone(prev => [...prev, updatedTask])
-              } else {
-                setTasksDone(prev => prev.filter(t => t.id !== taskE.id));
-              }
-            }} disabled={new Date(taskE.id).toDateString() !== new Date().toDateString()}/>
+                setTaskList(prev =>
+                  prev.map(t =>
+                    t.keyUUID === taskE.keyUUID ? updatedTask : t
+                  )
+                );
+
+                if (newDone === true) { 
+                  setTasksDone(prev => [...prev, updatedTask])
+                } else {
+                  setTasksDone(prev => prev.filter(t => t.id !== taskE.id));
+                }
+              }} disabled={new Date(taskE.id).toDateString() !== new Date().toDateString()}/>
+
+            </div>
           )
           
         }

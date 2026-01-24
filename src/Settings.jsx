@@ -5,7 +5,7 @@ import { SettingsContext } from "./components/TaskContext.js";
 function Settings() {
 
     const location = useLocation();
-    const { theme, setTheme } = useContext(SettingsContext); 
+    const { theme, setTheme} = useContext(SettingsContext); 
     
 
 

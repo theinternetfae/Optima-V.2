@@ -106,7 +106,7 @@ function App() {
 
   //LEVEL
   const [level, setLevel] = useState(1);
-
+  const [optimaQuirk, setOptimaQuirk] = useState(true);
 
 
 
@@ -210,7 +210,7 @@ function App() {
   return (
 
     <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask}}>
-      <SettingsContext.Provider value={{theme, setTheme, accent, setAccent, level, setLevel}}>
+      <SettingsContext.Provider value={{theme, setTheme, accent, setAccent, level, setLevel, optimaQuirk, setOptimaQuirk}}>
 
         <BrowserRouter>    
 
