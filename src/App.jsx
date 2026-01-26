@@ -80,7 +80,7 @@ function App() {
       root.classList.remove('accent-green');    
     
     } else if (accent === 'red') {
-
+// CHECKING
       root.classList.add('accent-purple');
 
       root.classList.remove('accent-pink');
