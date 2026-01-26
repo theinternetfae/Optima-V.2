@@ -157,17 +157,21 @@ function App() {
 
   const [levelCounter, setLevelCounter] = useState(0);
 
-  function dayKey(date) {
-    return new Date(date).toDateString();
-  }
+  function normalizeDate(d) {
+    return new Date(
+      d.getFullYear(),
+      d.getMonth(),
+      d.getDate()
+    )
+  };
 
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
 
 
   useEffect(() => {
-    const todayKey = dayKey(new Date()); 
-    const LAST_EVAL = localStorage.getItem('lastLevelEvaluation') || dayKey(yesterday);
+    const todayKey = normalizeDate(new Date()); 
+    const LAST_EVAL = localStorage.getItem('lastLevelEvaluation') || normalizeDate(yesterday);
     
     if (LAST_EVAL === todayKey) return;
 
@@ -181,8 +185,8 @@ function App() {
 
     for(let day of calculatedDays) {
 
-      const taskToDay = taskList.filter(t => new Date(t.id).toDateString() === day.toDateString());
-
+      const taskToDay = taskList.filter(t => normalizeDate(t.id) === normalizeDate(day));
+      console.log(taskToDay);
       const taskExists = taskToDay.length > 0;
       const moreThanOne =  taskToDay.filter(t => t.isCommited).length > 1;
       const requiredDone = level === 1 ? 2 : level === 2 ? 3 : 4;
