@@ -1,10 +1,21 @@
 import { useState, useEffect, useContext } from "react";
-
+import { TaskContext } from "../components/TaskContext.js";
 
 function DataPrivacy() {
 
     const [toggleOne, setToggleOne] = useState(false);
     const [toggleTwo, setToggleTwo] = useState(false);
+    const { setTaskList } = useContext(TaskContext);
+
+    function resetAllData() {
+        localStorage.clear();
+        window.location.reload();
+    }
+
+    function clearTaskHistory() {
+        localStorage.removeItem("tasks");
+        setTaskList([]);
+    }
 
     return ( 
         <div className="sett-body">
@@ -36,7 +47,7 @@ function DataPrivacy() {
                             <p>Clear task history</p>
                             <span>Deletes all tasks except active tasks</span>
                         </div>
-                        <button className="bi bi-trash"></button>
+                        <button className="bi bi-trash" onClick={() => clearTaskHistory()}></button>
                     </div>
 
                     <div className="controller">
@@ -44,7 +55,7 @@ function DataPrivacy() {
                             <p>Reset all data</p>
                             <span>Resets the whole app and deletes all data</span>
                         </div>
-                        <button className="bi bi-trash"></button>
+                        <button className="bi bi-trash" onClick={() => resetAllData()}></button>
                     </div>
                     
                     <button className="download-data">
