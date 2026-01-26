@@ -201,11 +201,11 @@ function DateMenu() {
         if(!level) return;
 
         if (level === 1) {
-            return 3;
+            return 2;
         } else if (level === 2) {
-            return 5;
+            return 4;
         } else {
-            return 8;
+            return 6;
         }
 
     }, [level]);

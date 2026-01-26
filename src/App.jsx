@@ -86,16 +86,11 @@ function App() {
 
 
 
+
+  
+
+
   //LEVEL
-  const [optimaQuirk, setOptimaQuirk] = useState(() => {
-    const savedQuirk = localStorage.getItem("optimaQuirk");
-    return savedQuirk ? JSON.parse(savedQuirk) : true;
-  });
-
-  useEffect(() => {
-    localStorage.setItem("optimaQuirk", JSON.stringify(optimaQuirk));
-  }, [optimaQuirk])
-
   const [level, setLevel] = useState(() => {
     const savedLevel = localStorage.getItem("level");
     return savedLevel ? JSON.parse(savedLevel) : 1;
@@ -106,7 +101,161 @@ function App() {
   }, [level])
 
 
-  //STREAK
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //LEVEL CALCULATIONS
+
+  function addDays(date, days) {
+    return new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate() + days
+    );
+  }
+
+  function generateDayRange(startDate, endDate) {
+    if (!startDate || ! endDate) return;
+
+    const days = [];
+    const start = new Date(
+      startDate.getFullYear(),
+      startDate.getMonth(),
+      startDate.getDate()
+    );
+    const end = new Date(
+      endDate.getFullYear(),
+      endDate.getMonth(),
+      endDate.getDate()
+    );
+
+    for (let d = start; d <= end; d = addDays(d, 1)) {
+      days.push(d);
+    }
+
+    return days;
+  }
+
+  const [levelCounter, setLevelCounter] = useState(0);
+
+  function dayKey(date) {
+    return new Date(date).toDateString();
+  }
+
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
+
+  useEffect(() => {
+    const todayKey = dayKey(new Date()); 
+    const LAST_EVAL = localStorage.getItem('lastLevelEvaluation') || dayKey(yesterday);
+    
+    if (LAST_EVAL === todayKey) return;
+
+    let counter = 0;
+
+    const startDate = taskList.length > 0 && taskList[0].start;
+  
+    if(!startDate) return;
+
+    const calculatedDays = generateDayRange(new Date(startDate), new Date(yesterday));
+
+    for(let day of calculatedDays) {
+
+      const taskToDay = taskList.filter(t => new Date(t.id).toDateString() === day.toDateString());
+
+      const taskExists = taskToDay.length > 0;
+      const moreThanOne =  taskToDay.filter(t => t.isCommited).length > 1;
+      const requiredDone = level === 1 ? 2 : level === 2 ? 3 : 4;
+      const isDoneCommited = taskToDay.filter(t => t.isCommited && t.isDone).length >= requiredDone;
+
+      if(moreThanOne && isDoneCommited && taskExists){
+        counter = Math.min(14, counter + 1);
+      } else if (taskExists && moreThanOne && !isDoneCommited) {
+        counter = Math.max(0, counter - 1);
+      }
+    }
+
+    console.log(counter);
+
+    setLevelCounter(counter);
+
+    localStorage.setItem('lastLevelEvaluation', todayKey);
+  }, [taskList, level])
+
+  useEffect(() => {
+    console.log(levelCounter);
+  }, [levelCounter])
+
+
+  useEffect(() => {
+    if (level === 1 && levelCounter >= 7) setLevel(2);
+    if (level === 2 && levelCounter >= 14) setLevel(3);
+    if (level === 2 && levelCounter < 7) setLevel(1);
+    if (level === 3 && levelCounter < 14) setLevel(2);
+  }, [levelCounter]);
+
+
+  useEffect(() => {
+
+    if (level === 1) {
+      alert('You are now at level one. You can commit to two tasks in a day. Optima recommends committing to at least two tasks a day to get the ball rolling. Complete tasks consistently to level up!');
+    }
+
+    if(level === 2) {
+      alert('You are now at level two. You can commit to four tasks in a day. Optima recommends committing to at least three tasks a day to keep the ball rolling. Complete tasks consistently to level up!');
+    }
+
+    if(level === 3) {  
+      alert('You are now at level three, the max level! You can commit to six tasks in a day. At this stage, Optima recommends committing to at least four tasks a day and no more than six a day. Congratulations.');
+    };
+  
+  }, [level])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //OPTIONAL QUIRKS
+
+  const [optimaQuirk, setOptimaQuirk] = useState(() => {
+    const savedQuirk = localStorage.getItem("optimaQuirk");
+    return savedQuirk ? JSON.parse(savedQuirk) : true;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("optimaQuirk", JSON.stringify(optimaQuirk));
+  }, [optimaQuirk])
+
+
   const [streakState, setStreakState] = useState(() => {
     const savedStreakState = localStorage.getItem("streakState");
     return savedStreakState ? JSON.parse(savedStreakState) : true;

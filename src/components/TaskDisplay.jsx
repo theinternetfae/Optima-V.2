@@ -81,18 +81,13 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
                       if (level === 3) {
                         alert('You are at the highest level! Optima advises commiting to a maximum of eight tasks a day. Doing great.')
                       } else {
-                        alert('You can not commit to any more tasks today. Finish your tasks consistently to level up!');
+                        alert('At level one you can only commit to two tasks a day. Finish your tasks consistently to level up!');
                       }
                       
                       return;
                     }
 
-                    if (new Date(taskE.id).toDateString() !== new Date().toDateString()) {
-                      
-                      alert('You can not commit to tasks that are not set for today.')
-                      
-                      return;
-                    };
+                    if (new Date(taskE.id).toDateString() !== new Date().toDateString()) return;
                   
                     const newCommited = !taskE.isCommited;
 
