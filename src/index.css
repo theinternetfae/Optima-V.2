@@ -398,7 +398,6 @@ input[type="number"]::-webkit-outer-spin-button {
             .commit {
                 @apply text-xl cursor-pointer;
             }
-
                     
             & .bi-trash {
                 @apply cursor-pointer text-xl active:scale-90 text-white border border-2 border-tocolorr p-2 px-4 mr-2 rounded-lg bg-gradient-to-b from-fromcolorr to-tocolorr active:scale-90;

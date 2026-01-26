@@ -1,4 +1,4 @@
-import { useMemo, useContext } from "react";
+import { useContext } from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
 import { SettingsContext } from "./components/TaskContext.js";
 
@@ -6,21 +6,6 @@ function Settings() {
 
     const location = useLocation();
     const { theme, setTheme} = useContext(SettingsContext); 
-    
-
-
-    const larkMode = useMemo(() => {
-        let larkMode = '';
-
-        if(theme === 'light') {
-            larkMode = true;
-        } else {
-            larkMode = false;
-        }
-
-        return larkMode;
-    }, [theme])
-
 
 
     function settingTheme() {
@@ -59,11 +44,11 @@ function Settings() {
 
                 </div>
 
-                <div className={`light-dark ${larkMode && 'bg-[var(--color-accentprimary)]'}`} onClick={() => {
+                <div className="light-dark 'bg-[var(--color-accentprimary)]'}" onClick={() => {
                     settingTheme()
                 }}>
-                    <div className={`light-dark-ball transition ease duration-600 ${larkMode && 'translate-x-38'}`}> 
-                        <i className={`${larkMode ? "bi bi-sun text-[var(--color-accentprimary)]" : "bi bi-moon text-black"} `}></i>
+                    <div className={`light-dark-ball transition ease duration-600 ${theme === "light" && 'translate-x-38'}`}> 
+                        <i className={`${theme === "light" ? "bi bi-sun text-[var(--color-accentprimary)]" : "bi bi-moon text-black"} `}></i>
                     </div>
                 </div>
 

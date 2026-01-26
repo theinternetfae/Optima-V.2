@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import DateMenu from "./Date.jsx";
 import TaskHistory from "./TaskHistory.jsx";
 import TaskStats from "./TaskStats.jsx";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { TaskContext, SettingsContext } from "./components/TaskContext.js";
 import AppLayout from "./AppLayout.jsx";
 import Settings from "./Settings.jsx";
@@ -36,6 +36,8 @@ function App() {
 
   //TASKS COMMITED
 
+  const root = document.documentElement;
+
   //THEMES
   const [theme, setTheme] = useState(() => {
       const savedTheme = localStorage.getItem('theme'); 
@@ -47,9 +49,8 @@ function App() {
   }, [theme]);
 
 
-  const root = document.documentElement;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
 
     if(theme === 'light') {
         root.classList.add('light');
@@ -69,50 +70,51 @@ function App() {
   
   useEffect(() => {
     localStorage.setItem("accent", accent);
-  })
+  }, [accent]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    root.classList.remove(
+      'accent-purple',
+      'accent-pink',
+      'accent-green'
+    );
 
-    if(accent === 'blue') {
-    
-      root.classList.remove('accent-purple');
-      root.classList.remove('accent-pink');
-      root.classList.remove('accent-green');    
-    
-    } else if (accent === 'red') {
-// CHECKING
-      root.classList.add('accent-purple');
+    if (accent === 'red') root.classList.add('accent-purple');
+    if (accent === 'pink') root.classList.add('accent-pink');
+    if (accent === 'green') root.classList.add('accent-green');
+  }, [accent]);
 
-      root.classList.remove('accent-pink');
-      root.classList.remove('accent-green');
-
-    } else if (accent === 'pink') {
-
-      root.classList.add('accent-pink');
-
-      root.classList.remove('accent-purple');
-      root.classList.remove('accent-green');
-
-    } else {
-
-      root.classList.add('accent-green');
-      
-      root.classList.remove('accent-pink');
-      root.classList.remove('accent-purple');
-
-    }
-
-  }, [accent])
 
 
   //LEVEL
-  const [optimaQuirk, setOptimaQuirk] = useState(true);
-  const [level, setLevel] = useState(1);
+  const [optimaQuirk, setOptimaQuirk] = useState(() => {
+    const savedQuirk = localStorage.getItem("optimaQuirk");
+    return savedQuirk ? JSON.parse(savedQuirk) : true;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("optimaQuirk", JSON.stringify(optimaQuirk));
+  }, [optimaQuirk])
+
+  const [level, setLevel] = useState(() => {
+    const savedLevel = localStorage.getItem("level");
+    return savedLevel ? JSON.parse(savedLevel) : 1;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("level", JSON.stringify(level));
+  }, [level])
 
 
   //STREAK
-  const [streakState, setStreakState] = useState(true);
+  const [streakState, setStreakState] = useState(() => {
+    const savedStreakState = localStorage.getItem("streakState");
+    return savedStreakState ? JSON.parse(savedStreakState) : true;
+  });
 
+  useEffect(() => {
+    localStorage.setItem("streakState", JSON.stringify(streakState));
+  }, [streakState])
 
   //REPEATING TASKS LOGIC
   const weekDaysMap = [ "sun", "mon", "tue", "wed", "thu", "fri", "sat"];
