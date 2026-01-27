@@ -431,10 +431,10 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .alert-container {
-        @apply bg-black/1 absolute flex justify-center items-center top-0 z-60 w-[90%] h-full backdrop-blur-sm;
+        @apply bg-black/1 fixed top-0 z-50 w-full h-full backdrop-blur-sm;
     
         & .alert-box {
-            @apply border border-2 border-white bg-surfacetwo p-4 text-base text-center rounded-md md:fixed md:right-[200px] md:w-[40%];
+            @apply border border-2 border-accentprimary bg-surfacetwo p-4 text-base text-center rounded-md mx-auto mt-75 md:w-[30%] md:h-[20%];
         
             & .choice {
                 @apply flex justify-between mt-4;

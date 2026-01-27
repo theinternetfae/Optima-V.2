@@ -82,6 +82,9 @@ function TaskHandler() {
     }, [taskList])
 
     const visibleTasks = useMemo(() => {
+
+        if(!handledTasks) return;
+
         if (selectedHandle === 'all') return Object.values(handledTasks);
         if (selectedHandle === 'active') return Object.values(handledTasks).filter(t => !t.isPaused);
         if (selectedHandle === 'paused') return Object.values(handledTasks).filter(t => t.isPaused);
@@ -115,7 +118,7 @@ function TaskHandler() {
                 
                 <div className="task-h-box">
                     {
-                        visibleTasks.length === 0 ? (
+                        !visibleTasks ? (
                             <p className="no-tasks">{`No ${selectedHandle === 'active' ? 'active' : selectedHandle === 'inactive' ? 'inactive' : selectedHandle === 'paused' ? 'paused' : ''} tasks`}</p>
                         ) : (
                             visibleTasks.map(t => {

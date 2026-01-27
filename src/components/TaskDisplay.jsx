@@ -177,7 +177,7 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
           
         }
 
-        {alertShow && <Alert yesDelete={() => deleteTask()} noDelete={() => setAlertShow(prev => !prev)} history={history}/>}
+        {alertShow && <Alert yesDelete={() => deleteTask()} noDelete={() => setAlertShow(prev => !prev)}/>}
       </div>
 
       {editScreen && <NewTask editExit={() => setEditScreen(editScreen => !editScreen)} task={taskE}/>}
