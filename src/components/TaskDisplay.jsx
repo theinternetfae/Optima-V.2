@@ -20,6 +20,8 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
     setAlertShow(prev => !prev);
   }
 
+  console.log(taskList.map(t => t.isPaused))
+
   useEffect(() => {
     setDone(taskE.isDone)
   }, [taskE.isDone]);
@@ -64,7 +66,12 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
 
           handler ? (
             <div className="handler-icons">
-              <button className="bi bi-pause-fill" title="Pause task"></button>
+              <button className={`pause-play ${taskE.isPaused ? 'bi bi-play-fill' : 'bi bi-pause-fill'}`} title={`${taskE.isPaused ? 'Play task' : 'Pause task'}`}
+                onClick={() => {
+                  
+                }}
+
+              ></button>
               <button className="bi bi-pencil" title="Edit task" onClick={() => setEditScreen(editScreen => !editScreen)}></button>
             </div>
           ) :

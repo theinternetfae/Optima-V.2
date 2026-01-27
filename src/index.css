@@ -420,7 +420,7 @@ input[type="number"]::-webkit-outer-spin-button {
         & .handler-icons {
             @apply w-15 mx-4 flex items-center justify-between text-xl;
 
-            .bi-pause-fill {
+            .pause-play {
                 @apply cursor-pointer active:scale-90;
             }
 

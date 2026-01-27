@@ -69,7 +69,8 @@ function NewTask({exit, editExit, statsNew, task}) {
             reminderStatus: reminder,
             reminderTime: reminder ? timeString : null,
             isDone: false,
-            isCommited: false
+            isCommited: false,
+            isPaused: false
         };
 
         saveEditedTask(theTask);

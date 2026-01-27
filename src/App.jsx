@@ -392,7 +392,7 @@ function App() {
             </Route>
 
           </Routes>
-          
+
         </BrowserRouter>
 
       </SettingsContext.Provider>
