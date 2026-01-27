@@ -5,9 +5,19 @@ import Alert from "./Alert.jsx";
 
 function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitReached}) {
 
-  const { taskList, setTaskList, setTasksDone } = useContext(TaskContext);
+  const { taskList, setTaskList, saveEditedTask, setTasksDone } = useContext(TaskContext);
   const { optimaQuirk, level } = useContext(SettingsContext);
   
+  function normalizeDate(d) {
+    const newDate = new Date(d);
+    return new Date(
+      newDate.getFullYear(),
+      newDate.getMonth(),
+      newDate.getDate()
+    )
+  }
+
+  const today = new Date();
 
   const [done, setDone] = useState(taskE.isDone);
   const[editScreen, setEditScreen] = useState(false);
@@ -20,7 +30,32 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
     setAlertShow(prev => !prev);
   }
 
-  console.log(taskList.map(t => t.isPaused))
+  const expired = normalizeDate(taskE.end) < normalizeDate(today);
+
+
+
+  function pausePlay() {
+    
+    if(taskE.isPaused) {
+      const newEnd = new Date();
+      newEnd.setDate(newEnd.getDate() + 30);
+
+      const playedTask = {...taskE,
+        isPaused: false,
+        end: newEnd
+      }
+
+      saveEditedTask(playedTask);
+    } else {
+      const pausedTask = {...taskE, 
+        isPaused: true,
+        end: Date.now()
+      }
+
+      saveEditedTask(pausedTask);
+    }
+
+  }
 
   useEffect(() => {
     setDone(taskE.isDone)
@@ -65,13 +100,16 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
           ) :
 
           handler ? (
-            <div className="handler-icons">
-              <button className={`pause-play ${taskE.isPaused ? 'bi bi-play-fill' : 'bi bi-pause-fill'}`} title={`${taskE.isPaused ? 'Play task' : 'Pause task'}`}
-                onClick={() => {
-                  
-                }}
+            <div className={`handler-icons ${expired && 'justify-end'}`}>
+              {expired ? '' : 
 
-              ></button>
+                <button className={`pause-play ${expired ? 'bi bi-arrow-repeat' : taskE.isPaused ? 'bi bi-play-fill' : 'bi bi-pause-fill'}`} title={`${expired ? 'Repeat task cycle' : taskE.isPaused ? 'Play task' : 'Pause task'}`}
+                
+                  onClick={() => pausePlay()}
+
+                ></button>
+              
+              }
               <button className="bi bi-pencil" title="Edit task" onClick={() => setEditScreen(editScreen => !editScreen)}></button>
             </div>
           ) :

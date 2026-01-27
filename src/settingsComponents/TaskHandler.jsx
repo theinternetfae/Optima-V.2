@@ -1,4 +1,4 @@
-import { useState, useContext, useMemo, useEffect } from "react";
+import { useState, useContext, useMemo, useEffect, use } from "react";
 import { TaskContext } from "../components/TaskContext.js";
 import TaskDisplay from "../components/TaskDisplay.jsx";
 import Alert from "../components/Alert.jsx";
@@ -8,9 +8,10 @@ function TaskHandler() {
     const today = new Date();
     const { taskList, setTaskList } = useContext(TaskContext);
     const [alert, setAlert] = useState(false);
+    const [selectedHandle, setSelectedHandle] = useState('all')
     const handler = true;
-
     
+
     function addDays(date, days) {
         return new Date(
             date.getFullYear(),
@@ -18,7 +19,6 @@ function TaskHandler() {
             date.getDate() + days
         );
     }
-
 
 
 
@@ -49,6 +49,17 @@ function TaskHandler() {
         return new Date(a).toDateString() === new Date(b).toDateString();
     }
 
+    function normalizeDate(d) {
+        const newDate = new Date(d);
+        return new Date(
+        newDate.getFullYear(),
+        newDate.getMonth(),
+        newDate.getDate()
+        )
+    }
+
+
+
     const handledTasks = useMemo(() => {
 
         if(taskList.length === 0) return;
@@ -70,17 +81,17 @@ function TaskHandler() {
         return indTasks;
     }, [taskList])
 
+    const visibleTasks = useMemo(() => {
+        if (selectedHandle === 'all') return Object.values(handledTasks);
+        if (selectedHandle === 'active') return Object.values(handledTasks).filter(t => !t.isPaused);
+        if (selectedHandle === 'paused') return Object.values(handledTasks).filter(t => t.isPaused);
+        return Object.values(handledTasks).filter(t => normalizeDate(t.end) < normalizeDate(today));
+    }, [handledTasks, selectedHandle])
+    
+
     useEffect(() => {
-        
-        if(!handledTasks) return;
-
-        const dates = Object.values(handledTasks).map(ht => {
-            const d = new Date(ht.id).toDateString();
-            return d;
-        })
-        console.log(dates);
-
-    }, [handledTasks]);
+        console.log(selectedHandle, visibleTasks);
+    })
 
     function yesDelete() {
         setTaskList([]);
@@ -91,8 +102,8 @@ function TaskHandler() {
         <div className="sett-body">
 
             <div className="task-h-header">
-                <select name="all-tasks" id="">
-                    <option value="all-tasks">All tasks</option>
+                <select name="all-tasks" id="" value={selectedHandle} onChange={(e) => setSelectedHandle(e.target.value)}>
+                    <option value="all">All tasks</option>
                     <option value="active">Active</option>
                     <option value="paused">Paused</option>
                     <option value="inactive">Inactive</option>
@@ -104,10 +115,10 @@ function TaskHandler() {
                 
                 <div className="task-h-box">
                     {
-                        !handledTasks ? (
-                            <p className="no-tasks">No tasks</p>
+                        visibleTasks.length === 0 ? (
+                            <p className="no-tasks">{`No ${selectedHandle === 'active' ? 'active' : selectedHandle === 'inactive' ? 'inactive' : selectedHandle === 'paused' ? 'paused' : ''} tasks`}</p>
                         ) : (
-                            Object.values(handledTasks).map(t => {
+                            visibleTasks.map(t => {
                             return <TaskDisplay
                                     key={t.keyUUID}
                                     taskE={t}
