@@ -8,6 +8,7 @@ function TaskHandler() {
     const today = new Date();
     const { taskList, setTaskList } = useContext(TaskContext);
     const [alert, setAlert] = useState(false);
+    const different = 'Are you sure? This will delete all inactive tasks but could potentially affect your level on the Optima quirk. (If enabled)'
     const [selectedHandle, setSelectedHandle] = useState('all')
     const handler = true;
     
@@ -97,7 +98,8 @@ function TaskHandler() {
     })
 
     function yesDelete() {
-        setTaskList([]);
+        const newTaskList = taskList.filter(t => normalizeDate(t.end) > normalizeDate(today));
+        setTaskList(newTaskList);
         setAlert(prev => !prev);
     }
     
@@ -111,7 +113,7 @@ function TaskHandler() {
                     <option value="paused">Paused</option>
                     <option value="inactive">Inactive</option>
                 </select>
-                <button onClick={() => setAlert(prev => !prev)}>Delete all</button>
+                <button onClick={() => setAlert(prev => !prev)}>Delete Inactive</button>
             </div>
 
             <div className="task-h-body">
@@ -139,6 +141,7 @@ function TaskHandler() {
             
                 yesDelete={() => yesDelete()}
                 noDelete={() => setAlert(prev => !prev)}
+                different={different}
 
             />}
         </div>

@@ -1,20 +1,27 @@
 import { useState, useEffect, useContext } from "react";
 import { TaskContext } from "../components/TaskContext.js";
+import Alert from "../components/Alert.jsx";
 
 function DataPrivacy() {
 
     const [toggleOne, setToggleOne] = useState(false);
     const [toggleTwo, setToggleTwo] = useState(false);
+    const [ alertOne, setAlertOne ] = useState(false);
+    const [ alertTwo, setAlertTwo ] = useState(false);
+    const differentOne = "Are you Sure? This will clear your task history.";
+    const differentTwo = "Are you Sure? This will clear your app data including tasks, themes and preferences.";
     const { setTaskList } = useContext(TaskContext);
 
     function resetAllData() {
         localStorage.clear();
         window.location.reload();
+        setAlertTwo(prev => !prev);
     }
 
     function clearTaskHistory() {
         localStorage.removeItem("tasks");
         setTaskList([]);
+        setAlertOne(prev => !prev);
     }
 
     return ( 
@@ -45,9 +52,9 @@ function DataPrivacy() {
                     <div className="controller">
                         <div>
                             <p>Clear task history</p>
-                            <span>Deletes all tasks except active tasks</span>
+                            <span>Deletes ALL tasks</span>
                         </div>
-                        <button className="bi bi-trash" onClick={() => clearTaskHistory()}></button>
+                        <button className="bi bi-trash" onClick={() => setAlertOne(prev => !prev)}></button>
                     </div>
 
                     <div className="controller">
@@ -55,7 +62,7 @@ function DataPrivacy() {
                             <p>Reset all data</p>
                             <span>Resets the whole app and deletes all data</span>
                         </div>
-                        <button className="bi bi-trash" onClick={() => resetAllData()}></button>
+                        <button className="bi bi-trash" onClick={() => setAlertTwo(prev => !prev)}></button>
                     </div>
                     
                     <button className="download-data">
@@ -66,7 +73,8 @@ function DataPrivacy() {
 
             </div>            
 
-        
+            {alertOne && <Alert yesDelete={() => clearTaskHistory()} noDelete={() => setAlertOne(prev => !prev)} different={differentOne}/>}
+            {alertTwo && <Alert yesDelete={() => resetAllData()} noDelete={() => setAlertTwo(prev => !prev)} different={differentTwo}/>}
         </div>
     );
 }
