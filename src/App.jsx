@@ -158,10 +158,11 @@ function App() {
   const [levelCounter, setLevelCounter] = useState(0);
 
   function normalizeDate(d) {
+    const newDate = new Date(d)
     return new Date(
-      d.getFullYear(),
-      d.getMonth(),
-      d.getDate()
+      newDate.getFullYear(),
+      newDate.getMonth(),
+      newDate.getDate()
     )
   };
 
@@ -172,7 +173,7 @@ function App() {
   useEffect(() => {
     const todayKey = normalizeDate(new Date()); 
     const LAST_EVAL = localStorage.getItem('lastLevelEvaluation') || normalizeDate(yesterday);
-    
+    console.log(LAST_EVAL);
     if (LAST_EVAL === todayKey) return;
 
     let counter = 0;
@@ -204,7 +205,7 @@ function App() {
     setLevelCounter(counter);
 
     localStorage.setItem('lastLevelEvaluation', todayKey);
-  }, [taskList, level])
+  }, [taskList, level]);
 
   useEffect(() => {
     console.log(levelCounter);

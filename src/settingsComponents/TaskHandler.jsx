@@ -108,7 +108,7 @@ function TaskHandler() {
                             <p className="no-tasks">No tasks</p>
                         ) : (
                             Object.values(handledTasks).map(t => {
-                            return <TaskDisplay 
+                            return <TaskDisplay
                                     key={t.keyUUID}
                                     taskE={t}
                                     handler={handler}

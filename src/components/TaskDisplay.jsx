@@ -43,7 +43,8 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
         <p className="name-t-box" onClick={() => {
         
           if(history) return;
-          new Date(taskE.id).toDateString() !== new Date().toDateString() ? '' : setEditScreen(editScreen => !editScreen)
+          if(handler) return;
+          new Date(taskE.id).toDateString() !== new Date().toDateString() ? '' : setEditScreen(editScreen => !editScreen);
 
         }}>{taskE.name}</p>
         
@@ -64,7 +65,7 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
           handler ? (
             <div className="handler-icons">
               <button className="bi bi-pause-fill" title="Pause task"></button>
-              <button className="bi bi-pencil" title="Edit task"></button>
+              <button className="bi bi-pencil" title="Edit task" onClick={() => setEditScreen(editScreen => !editScreen)}></button>
             </div>
           ) :
          
