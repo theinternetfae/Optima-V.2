@@ -68,8 +68,7 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
     <div>
     
       <div className={history ? "history-box" : handler ? "handler-box" : "task-box"} style={{
-        backgroundColor: (!history && !handler) && (done && (taskE.color || "#60A5FA")),
-        border: isChosenHist ? `2px solid ${taskE.color}` : ''
+        backgroundColor: (!handler) && (done && (taskE.color || "#60A5FA")),
       }} onClick={(e) => {
         if(e.target.closest('button')) return;
         if (history) setChosenHist(taskE);

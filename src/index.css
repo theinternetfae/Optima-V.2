@@ -614,7 +614,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 @apply flex gap-2;
 
                 & .selecting {
-                    @apply bg-surfacetwo p-2 rounded-lg w-[70px];
+                    @apply bg-surfacetwo p-2 rounded-lg w-[70px] focus:outline-none;
                 }
 
                 & button {
