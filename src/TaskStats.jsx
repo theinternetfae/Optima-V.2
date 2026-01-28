@@ -218,14 +218,18 @@ function TaskStats() {
             if(taskList.length === 0) return;
 
             const start = new Date(taskList[0].start);
-            const end = new Date(taskList[taskList.length - 1].end);
-
+            
+            const endTask = new Date(taskList[taskList.length - 1].end);
+            endTask.setDate(endTask.getDate() + 30)
+            const end = new Date(endTask);
+            
             const validDays = generateDayRange(start, end);
+            console.log('Valid Days', validDays);
             
             const generalStreak = validDays.reduce((acc, d) => {
 
                 const tasksNDays = taskList.filter(tl => normalizeDate(tl.id) === normalizeDate(d));
-
+                console.log(tasksNDays);
                 if(tasksNDays.length > 0 && tasksNDays.every(td => td.isDone)) {
                     acc.count++;
                 } else if (tasksNDays.length > 0 && tasksNDays.some(td => td.isDone === false)) {
@@ -239,6 +243,7 @@ function TaskStats() {
 
             generalStreak.count > 0 && generalStreak.streak.push(generalStreak.count);
 
+            console.log(generalStreak.streak)
             setGeneralStreak(generalStreak.streak);
 
         } else {

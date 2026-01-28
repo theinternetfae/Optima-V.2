@@ -10,6 +10,7 @@ import Profile from "./settingsComponents/Profile.jsx";
 import TaskHandler from "./settingsComponents/TaskHandler.jsx";
 import DataPrivacy from "./settingsComponents/DataPrivacy.jsx";
 import About from "./settingsComponents/About.jsx";
+import Welcome from "./settingsComponents/Welcome.jsx";
 
 
 function App() {
@@ -173,7 +174,6 @@ function App() {
   useEffect(() => {
     const todayKey = normalizeDate(new Date()); 
     const LAST_EVAL = localStorage.getItem('lastLevelEvaluation') || normalizeDate(yesterday);
-    console.log(LAST_EVAL);
     if (LAST_EVAL === todayKey) return;
 
     let counter = 0;
@@ -187,7 +187,6 @@ function App() {
     for(let day of calculatedDays) {
 
       const taskToDay = taskList.filter(t => normalizeDate(t.id) === normalizeDate(day));
-      console.log(taskToDay);
       const taskExists = taskToDay.length > 0;
       const moreThanOne =  taskToDay.filter(t => t.isCommited).length > 1;
       const requiredDone = level === 1 ? 2 : level === 2 ? 3 : 4;
@@ -200,16 +199,12 @@ function App() {
       }
     }
 
-    console.log(counter);
 
     setLevelCounter(counter);
 
     localStorage.setItem('lastLevelEvaluation', todayKey);
   }, [taskList, level]);
 
-  useEffect(() => {
-    console.log(levelCounter);
-  }, [levelCounter])
 
 
   useEffect(() => {
@@ -377,7 +372,8 @@ function App() {
 
             <Route element={<AppLayout />}>
             
-              <Route path="/" element={<DateMenu />} />
+              <Route path="/" element={<Welcome />}/>
+              <Route path="/home" element={<DateMenu />} />
               <Route path="/taskStats" element={<TaskStats />} />
               <Route path="/taskHistory" element={<TaskHistory />} />
 

@@ -9,7 +9,7 @@ function SideMenu() {
     const { level, optimaQuirk } = useContext(SettingsContext);
 
     const setPath = useMemo(() => {
-        if(location.pathname !== "/" && location.pathname !== "/taskStats" && location.pathname !== "/taskHistory" && location.pathname !== "/settings") return "/settings";
+        if(location.pathname !== "/" && location.pathname !== "/taskStats" && location.pathname !== "/taskHistory" && location.pathname !== "/settings" && location.pathname !== "/home") return "/settings";
 
         return location.pathname;
     }, [location]);
@@ -25,7 +25,7 @@ function SideMenu() {
 
             <div className="road-cont">
 
-                <Link to="/" className={`road ${setPath === "/" && 'border-[var(--color-accentprimary)]'}`}>
+                <Link to="/home" className={`road ${setPath === "/home" && 'border-[var(--color-accentprimary)]'}`}>
                     <i className="bi-house-fill"></i>
                     <p>Home</p>
                 </Link>

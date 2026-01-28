@@ -38,12 +38,8 @@ function Profile() {
 
                 <div className="the-user-info">
                     <input type="text" placeholder="Name" className="the-user-name-title"/>
+                    <input type="text" placeholder="janedoe@gmail.com" className="the-user-name-title"/>
                     <input type="text" placeholder="Title i.e The inventor" className="the-user-name-title"/>
-                </div>
-                
-                <div className="user-location">
-                    <input type="text" placeholder="Location"/>
-                    <input type="text" placeholder="Time-zone"/>
                 </div>
 
             </div>

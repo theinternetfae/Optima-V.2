@@ -112,6 +112,39 @@ input[type="number"]::-webkit-outer-spin-button {
 
 @layer components {
 
+
+    .welcome-page {
+        @apply bg-black fixed top-0 z-50 w-full h-full backdrop-blur-sm flex;
+
+        .sign {
+            @apply w-[40%] m-auto;
+
+            img {
+                @apply rounded-t-[250px] shadow-[0_0_18px_#2563EB,0_0_18px_#2563EB,0_0_18px_#2563EB];
+            }
+
+            .sign-inputs-cont {
+                @apply bg-[rgba(255,255,255,0.15)] backdrop-blur-[10px] rounded-b-lg border p-2 flex flex-col gap-7 border-x-accentprimary border-y-accentsecondary shadow-[0_0_18px_#60A5FA,_0_0_18px_#60A5FA,_0_0_18px_#60A5FA];
+
+                .sign-inputs-box {
+                    @apply flex flex-col mx-8 mt-6 gap-4;
+                
+                    input {
+                       @apply bg-muted h-15 border backdrop-blur-[10px] shadow-lg border-2 border-[rgba(255,255,255,0.15)] rounded-lg p-2 focus:outline-none
+                    }
+                }
+
+                .button {
+                    @apply mx-8 p-4 rounded-lg font-bold text-lg bg-accentsecondary shadow-lg text-center;
+                }
+
+                p {
+                    @apply text-center
+                }
+
+            }
+        }
+    }
     
     body {
         @apply bg-bgcolor text-textcolor font-bodytext;
@@ -348,7 +381,7 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             & .delete-task {
-                @apply mt-2 bg-gradient-to-b from-fromcolorr to-tocolorr p-2 rounded-lg text-sm shadow font-bold text-shadow-md text-white cursor-pointer md:text-base;
+                @apply mt-2 bg-gradient-to-b from-fromcolorr to-tocolorr p-2 rounded-lg text-sm font-bold text-shadow-md text-white cursor-pointer md:text-base;
             }
         }
     }
@@ -441,30 +474,6 @@ input[type="number"]::-webkit-outer-spin-button {
 
                 & button {
                     @apply w-[70px] rounded shadow-lg p-2 cursor-pointer;
-                }
-
-                & .yes-yes {
-                    @apply bg-gradient-to-b from-fromcolorr to-tocolorr text-white;
-                }
-
-                & .no-no {
-                    @apply bg-gradient-to-b from-accentsecondary to-accentprimary text-white;
-                }
-            }
-        }
-    }
-
-    .hist-container {
-        @apply bg-black/1 absolute flex justify-center items-center top-0 z-90 w-full h-full backdrop-blur-sm;
-    
-        & .alert-box {
-            @apply border border-2 border-white bg-surfacetwo p-4 text-base text-center rounded-md md:w-[40%];
-        
-            & .choice {
-                @apply flex justify-between mt-4;
-
-                & button {
-                    @apply w-[70px] rounded shadow-lg p-2;
                 }
 
                 & .yes-yes {
@@ -709,7 +718,7 @@ input[type="number"]::-webkit-outer-spin-button {
         
             /*Profile*/
             .the-user {
-                @apply h-[200px] flex;
+                @apply h-[300px] flex flex-col items-center;
             
                 .pfp-upload {
                     @apply w-[20%] overflow-hidden h-full cursor-pointer rounded-full bg-surfaceone shadow flex justify-center items-center;
@@ -724,20 +733,12 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 .the-user-info {
-                    @apply w-[45%] flex flex-col justify-around gap-4 p-2;   
+                    @apply flex justify-around gap-4 p-2;   
                 
                     .the-user-name-title {
-                        @apply flex items-center justify-center w-full rounded-lg bg-surfaceone p-4 shadow focus:outline-none;
+                        @apply flex items-center justify-center text-center w-full rounded-lg bg-surfaceone p-4 shadow focus:outline-none;
                     }
                     
-                }
-
-                .user-location {
-                    @apply w-[45%] flex flex-col justify-around gap-4 p-2;
-
-                    input {
-                        @apply bg-surfaceone p-4 w-full rounded-lg focus:outline-none;
-                    }
                 }
                 
 
