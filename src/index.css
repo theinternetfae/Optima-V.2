@@ -119,14 +119,14 @@ input[type="number"]::-webkit-outer-spin-button {
         .sign {
             @apply w-[40%] m-auto;
 
-            img {
-                @apply rounded-t-[250px] shadow-[0_0_18px_#2563EB,0_0_18px_#2563EB,0_0_18px_#2563EB];
-            }
-
             .sign-inputs-cont {
-                @apply bg-[rgba(255,255,255,0.15)] backdrop-blur-[10px] rounded-b-lg border p-2 flex flex-col gap-7 border-x-accentprimary border-y-accentsecondary shadow-[0_0_18px_#60A5FA,_0_0_18px_#60A5FA,_0_0_18px_#60A5FA];
+                @apply bg-[rgba(255,255,255,0.15)] backdrop-blur-[10px] rounded-lg border p-2 flex flex-col gap-7 border-x-accentprimary border-y-accentsecondary shadow-[0_0_18px_#60A5FA,_0_0_18px_#60A5FA,_0_0_18px_#60A5FA];
 
-                .sign-inputs-box {
+                h1 {
+                    @apply font-bold text-4xl text-center
+                }
+
+                & .sign-inputs-box {
                     @apply flex flex-col mx-8 mt-6 gap-4;
                 
                     input {

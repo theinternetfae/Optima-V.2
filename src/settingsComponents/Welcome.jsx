@@ -1,30 +1,69 @@
+import { useState } from "react";
 import { createPortal } from "react-dom";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { addUser } from "../actions/userActions.js";
 
 function Welcome() {
-    return createPortal( 
-        <div className="welcome-page">
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmedPassword, setConfirmedPassword] = useState('');
+
+    console.log(password);
+    console.log(confirmedPassword);
+
+    const profile = {
+        fname: firstName,
+        lname: lastName,
+        email: email,
+    }
+
+    function handleSubmit() {
+
+        addUser(profile);
+
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        setPassword('');
+        setConfirmedPassword('');
+
+
+        console.log('Yes you can!');
+    
+    }
+
+    return createPortal(
+        <form className="welcome-page">
 
             {/* <p>Welcome!</p> */}
 
             <div className="sign">
-                <img src="/Optima-banner-cropped.png" alt="" />
+
                 <div className="sign-inputs-cont">
+
+                    <div className="welcome-note">
+                        <h1>Welcome!</h1>
+                        <p>Sign up to access the app</p>    
+                    </div>                    
+
                     <div className="sign-inputs-box">
-                        <input type="text" placeholder="First Name"/>
-                        <input type="text" placeholder="Last Name"/>
-                        <input type="text" placeholder="Email"/>
-                        <input type="text" placeholder="Password"/>
-                        <input type="text" placeholder="Confirm Password"/>
+                        <input type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
+                        <input type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
+                        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        <input type="password" placeholder="Confirm Password" value={confirmedPassword} onChange={(e) => setConfirmedPassword(e.target.value)}/>
                     </div>
-                    <Link to="/home" className="button" onClick={() => console.log('Yes you can!')}>
+                    <button type="button" className="button" onClick={handleSubmit}>
                         Sign up
-                    </Link>
+                    </button>
                     <p>Already have an account? Sign in</p>
                 </div>
             </div>
 
-        </div>,
+        </form>,
         document.getElementById("modal-root")
     );
 }
