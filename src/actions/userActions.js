@@ -7,6 +7,9 @@ export async function addUser({fname, lname, email}) {
         fname: fname,
         lname: lname,
         email: email,
+        theme: theme,
+        accent: accent,
+        optimaQuirk: optimaQuirk
     }
 
     const response = await databases.createDocument(

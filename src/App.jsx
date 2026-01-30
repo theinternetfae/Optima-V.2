@@ -371,7 +371,8 @@ function App() {
           <Routes>
 
             <Route element={<AppLayout />}>
-            
+
+              <Route index element={<Navigate to="/home" replace />} />            
               <Route path="/" element={<Welcome />}/>
               <Route path="/home" element={<DateMenu />} />
               <Route path="/taskStats" element={<TaskStats />} />

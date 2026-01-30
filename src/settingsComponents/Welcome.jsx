@@ -13,11 +13,13 @@ function Welcome() {
 
     console.log(password);
     console.log(confirmedPassword);
+    
+//I'M TOO BUSY WITH WORK TO WORK ON THIS TODAY BUT I DON'T WANT TO LOSE MY STREAK. I KNOW I'M A FRAUD, I'M SORRYYYYYYYY 😭
 
     const profile = {
         fname: firstName,
         lname: lastName,
-        email: email,
+        email: email
     }
 
     function handleSubmit() {
