@@ -100,6 +100,15 @@ function Profile() {
                     </div>
 
                 </div>
+
+                <button className="logout">
+                    Log out
+                </button>
+
+                <button className="delacc">
+                    Delete account
+                </button>
+
             </div>
 
         </div>

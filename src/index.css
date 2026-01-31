@@ -745,7 +745,7 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             .user-preferences {
-                @apply border-t-2 border-grey mt-4 pt-2 h-[300px] flex flex-col gap-4 justify-around;
+                @apply border-t-2 border-grey mt-4 pt-2 flex flex-col gap-4 justify-around;
 
                 .preference {
                     @apply h-16 p-2 rounded-lg shadow bg-surfaceone flex items-center justify-between;
@@ -801,6 +801,18 @@ input[type="number"]::-webkit-outer-spin-button {
                             @apply h-[80%] w-[10%] ml-1 rounded-xl bg-gradient-to-b from-white to-gray-400 shadow;  
                         }
                     }
+                }
+
+                button {
+                    @apply m-auto w-50 p-4 shadow-lg font-bold text-lg rounded-lg active:scale-90 cursor-pointer;
+                }
+
+                .logout {
+                    @apply bg-gradient-to-b from-accentsecondary to-accentprimary
+                }
+
+                .delacc {
+                    @apply bg-gradient-to-b from-fromcolorr to-tocolorr
                 }
             }
 

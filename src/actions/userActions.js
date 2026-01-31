@@ -22,3 +22,12 @@ export async function addUser({fname, lname, email}) {
     return response;
 
 }
+
+export async function getUser() {
+    const response = await databases.listDocuments(
+        'optima',
+        'users',        
+    )
+
+    console.log(response.documents)
+}
