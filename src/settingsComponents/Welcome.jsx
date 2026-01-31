@@ -1,21 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { Link } from "react-router-dom";
-import { addUser } from "../actions/userActions.js";
+// import { Link } from "react-router-dom";
+import { addUser, deleteUser, getUser } from "../actions/userActions.js";
 
 function Welcome() {
+
+    const [users, setUsers] = useState('');
+
+    useEffect(() => {
+        async function fetchUsers() {
+            const data = await getUser();
+            setUsers(data);
+        }
+
+        fetchUsers();
+    }, [])
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmedPassword, setConfirmedPassword] = useState('');
+    // const [password, setPassword] = useState('');
+    // const [confirmedPassword, setConfirmedPassword] = useState('');
 
-    console.log(password);
-    console.log(confirmedPassword);
+    console.log(users);
+    // console.log(password);
+    // console.log(confirmedPassword);
     
-//I'M TOO BUSY WITH WORK TO WORK ON THIS TODAY BUT I DON'T WANT TO LOSE MY STREAK. I KNOW I'M A FRAUD, I'M SORRYYYYYYYY 😭
-
     const profile = {
         fname: firstName,
         lname: lastName,
@@ -29,12 +39,16 @@ function Welcome() {
         setFirstName('');
         setLastName('');
         setEmail('');
-        setPassword('');
-        setConfirmedPassword('');
 
 
         console.log('Yes you can!');
     
+    }
+
+    function handleDelete(userId) {
+
+        deleteUser(userId);
+
     }
 
     return createPortal(
@@ -55,11 +69,20 @@ function Welcome() {
                         <input type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
                         <input type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
                         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                        <input type="password" placeholder="Confirm Password" value={confirmedPassword} onChange={(e) => setConfirmedPassword(e.target.value)}/>
+                        <input type="password" placeholder="Password"/>
+                        <input type="password" placeholder="Confirm Password"/>
                     </div>
                     <button type="button" className="button" onClick={handleSubmit}>
                         Sign up
+                    </button>
+                    <button className="border border-2 m-auto p-4 rounded-lg active:scale-90" onClick={(e) => {
+                        e.preventDefault()
+                        console.log('Delete!')
+                        if(users.length > 0) (
+                            handleDelete(users[0].$id)
+                        )
+                    }}>
+                        Delete account
                     </button>
                     <p>Already have an account? Sign in</p>
                 </div>

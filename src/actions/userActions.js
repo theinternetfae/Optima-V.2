@@ -7,9 +7,6 @@ export async function addUser({fname, lname, email}) {
         fname: fname,
         lname: lname,
         email: email,
-        theme: theme,
-        accent: accent,
-        optimaQuirk: optimaQuirk
     }
 
     const response = await databases.createDocument(
@@ -30,4 +27,24 @@ export async function getUser() {
     )
 
     console.log(response.documents)
+
+    const notes = response.documents.map(doc => ({
+        $id: doc.$id,
+        $createdAt: doc.$createdAt,
+        fname: doc.fname,
+        lname: doc.lname,
+        email: doc.email
+    }))
+
+    return notes;
+}
+
+export async function deleteUser(userId) {
+    
+    await databases.deleteDocument(
+        'optima',
+        'users',
+        userId
+    )
+
 }
