@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 // import { Link } from "react-router-dom";
 import { addUser, deleteUser, getUser } from "../actions/userActions.js";
+import { client } from "../appwrite.js";
 
 function Welcome() {
 
-    const [users, setUsers] = useState('');
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
         async function fetchUsers() {
@@ -14,6 +15,31 @@ function Welcome() {
         }
 
         fetchUsers();
+    }, [])
+
+    useEffect(() => {
+        const channel = 'databases.optima.tables.users.rows';
+
+        const unsubscribe = client.subscribe(channel, (response) => {
+            const eventType = response.events[0];
+            console.log(response.events);
+            const changedUser = response.payload;
+
+            if(eventType.includes("create")) {
+                setUsers(prev => [...prev, changedUser])
+            }
+
+            if(eventType.includes("delete")) {
+                setUsers(prev => prev.filter(user => user.$id !== changedUser.$id))
+            }
+        })
+
+        console.log('Subscribed');
+        return () => {
+            console.log('Unsubscribed');
+            unsubscribe();
+        };
+
     }, [])
 
     const [firstName, setFirstName] = useState('');
@@ -75,15 +101,17 @@ function Welcome() {
                     <button type="button" className="button" onClick={handleSubmit}>
                         Sign up
                     </button>
-                    <button className="border border-2 m-auto p-4 rounded-lg active:scale-90" onClick={(e) => {
-                        e.preventDefault()
-                        console.log('Delete!')
-                        if(users.length > 0) (
-                            handleDelete(users[0].$id)
-                        )
-                    }}>
-                        Delete account
-                    </button>
+
+                    <div className="flex border border-2 gap-6">
+                        {
+                            users.map(user => {
+                                return <span key={user.$id} className="cursor-pointer" onClick={() => {
+                                    handleDelete(user.$id)
+                                }}>{user.fname}</span>
+                            })
+                        }
+                    </div>
+
                     <p>Already have an account? Sign in</p>
                 </div>
             </div>
