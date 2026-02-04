@@ -1,46 +1,45 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 // import { Link } from "react-router-dom";
-import { addUser, deleteUser, getUser } from "../actions/userActions.js";
 import { client } from "../appwrite.js";
 
 function Welcome() {
 
     const [users, setUsers] = useState([]);
 
-    useEffect(() => {
-        async function fetchUsers() {
-            const data = await getUser();
-            setUsers(data);
-        }
+    // useEffect(() => {
+    //     async function fetchUsers() {
+    //         const data = await getUser();
+    //         setUsers(data);
+    //     }
 
-        fetchUsers();
-    }, [])
+    //     fetchUsers();
+    // }, [])
 
-    useEffect(() => {
-        const channel = 'databases.optima.tables.users.rows';
+    // useEffect(() => {
+    //     const channel = 'databases.optima.tables.users.rows';
 
-        const unsubscribe = client.subscribe(channel, (response) => {
-            const eventType = response.events[0];
-            console.log(response.events);
-            const changedUser = response.payload;
+    //     const unsubscribe = client.subscribe(channel, (response) => {
+    //         const eventType = response.events[0];
+    //         console.log(response.events);
+    //         const changedUser = response.payload;
 
-            if(eventType.includes("create")) {
-                setUsers(prev => [...prev, changedUser])
-            }
+    //         if(eventType.includes("create")) {
+    //             setUsers(prev => [...prev, changedUser])
+    //         }
 
-            if(eventType.includes("delete")) {
-                setUsers(prev => prev.filter(user => user.$id !== changedUser.$id))
-            }
-        })
+    //         if(eventType.includes("delete")) {
+    //             setUsers(prev => prev.filter(user => user.$id !== changedUser.$id))
+    //         }
+    //     })
 
-        console.log('Subscribed');
-        return () => {
-            console.log('Unsubscribed');
-            unsubscribe();
-        };
+    //     console.log('Subscribed');
+    //     return () => {
+    //         console.log('Unsubscribed');
+    //         unsubscribe();
+    //     };
 
-    }, [])
+    // }, [])
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -52,30 +51,24 @@ function Welcome() {
     // console.log(password);
     // console.log(confirmedPassword);
     
-    const profile = {
-        fname: firstName,
-        lname: lastName,
-        email: email
-    }
+    // const profile = {
+    //     fname: firstName,
+    //     lname: lastName,
+    //     email: email
+    // }
 
-    function handleSubmit() {
+    // function handleSubmit() {
 
-        addUser(profile);
+    //     addUser(profile);
 
-        setFirstName('');
-        setLastName('');
-        setEmail('');
+    //     setFirstName('');
+    //     setLastName('');
+    //     setEmail('');
 
 
-        console.log('Yes you can!');
+    //     console.log('Yes you can!');
     
-    }
-
-    function handleDelete(userId) {
-
-        deleteUser(userId);
-
-    }
+    // }
 
     return createPortal(
         <form className="welcome-page">
@@ -98,16 +91,14 @@ function Welcome() {
                         <input type="password" placeholder="Password"/>
                         <input type="password" placeholder="Confirm Password"/>
                     </div>
-                    <button type="button" className="button" onClick={handleSubmit}>
+                    <button type="button" className="button">
                         Sign up
                     </button>
 
                     <div className="flex border border-2 gap-6">
                         {
                             users.map(user => {
-                                return <span key={user.$id} className="cursor-pointer" onClick={() => {
-                                    handleDelete(user.$id)
-                                }}>{user.fname}</span>
+                                return <span key={user.$id} className="cursor-pointer">{user.fname}</span>
                             })
                         }
                     </div>
