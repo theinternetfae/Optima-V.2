@@ -26,39 +26,6 @@ function Welcome() {
         console.log(users);
     }, [users]);
 
-    // useEffect(() => {
-    //     async function fetchUsers() {
-    //         const data = await getUser();
-    //         setUsers(data);
-    //     }
-
-    //     fetchUsers();
-    // }, [])
-
-    // useEffect(() => {
-    //     const channel = 'databases.optima.tables.users.rows';
-
-    //     const unsubscribe = client.subscribe(channel, (response) => {
-    //         const eventType = response.events[0];
-    //         console.log(response.events);
-    //         const changedUser = response.payload;
-
-    //         if(eventType.includes("create")) {
-    //             setUsers(prev => [...prev, changedUser])
-    //         }
-
-    //         if(eventType.includes("delete")) {
-    //             setUsers(prev => prev.filter(user => user.$id !== changedUser.$id))
-    //         }
-    //     })
-
-    //     console.log('Subscribed');
-    //     return () => {
-    //         console.log('Unsubscribed');
-    //         unsubscribe();
-    //     };
-
-    // }, [])
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -66,25 +33,28 @@ function Welcome() {
     // const [password, setPassword] = useState('');
     // const [confirmedPassword, setConfirmedPassword] = useState('');
 
-    
-    // const profile = {
-    //     fname: firstName,
-    //     lname: lastName,
-    //     email: email
-    // }
+    async function handleCreate(e) {
+        e.preventDefault();
+        
+        if(!firstName || !lastName || !email) return;
 
-    // function handleSubmit() {
+        try{
+            const payload = {
+                fname: firstName,
+                lname: lastName,
+                email: email
+            }
 
-    //     addUser(profile);
-
-    //     setFirstName('');
-    //     setLastName('');
-    //     setEmail('');
-
-
-    //     console.log('Yes you can!');
-    
-    // }
+            const response = await db.profiles.create(payload);
+            setUsers(prev => [...prev, response]);
+            console.log("Users updated!");
+            setFirstName('');
+            setLastName('');
+            setEmail('');
+        } catch(error) {
+            console.log(error);
+        }
+    }
 
     return createPortal(
         <form className="welcome-page">
@@ -107,7 +77,7 @@ function Welcome() {
                         <input type="password" placeholder="Password"/>
                         <input type="password" placeholder="Confirm Password"/>
                     </div>
-                    <button type="button" className="button">
+                    <button type="button" className="button" onClick={e => handleCreate(e)}>
                         Sign up
                     </button>
 
