@@ -1,6 +1,45 @@
 import { databases } from "./config.js";
 import { ID } from "appwrite";
 
+const db = {};
+
+const tables = [
+    {
+        dbId: import.meta.env.VITE_OPTIMA_DATABASE_ID_OPFILES,
+        id: import.meta.env.VITE_OPTIMA_TABLE_ID_PROFILES,
+        name: "profiles",
+    },
+];
+
+tables.forEach(t => {
+    db[t.name] = {
+        create: (payload, permissions, id = ID.unique()) =>
+            databases.createDocument(
+                t.dbId,
+                t.id,
+                id,
+                payload,
+                permissions
+            ),
+        update: (id, payload, permissions) =>
+            databases.updateDocument(
+                t.dbId,
+                t.id,
+                id,
+                payload,
+                permissions
+            ),
+        delete: (id) => databases.deleteDocument(t.dbId, t.id, id),
+
+        list: (queries = []) =>
+            databases.listDocuments(t.dbId, t.id, queries),
+
+        get: (id) => databases.getDocument(t.dbId, t.id, id),
+    };
+});
+
+export default db;
+
 
 
 // export async function addUser({fname, lname, email}) {

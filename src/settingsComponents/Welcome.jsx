@@ -1,11 +1,30 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import db from "../appwrite/userActions";
 // import { Link } from "react-router-dom";
-import { client } from "../appwrite.js";
+
 
 function Welcome() {
 
     const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+
+        init();
+
+    }, []);
+
+    async function init() {
+
+        const response = await db.profiles.list();    
+
+        setUsers(response.documents);
+    
+    }
+
+    useEffect(() => {
+        console.log(users);
+    }, [users]);
 
     // useEffect(() => {
     //     async function fetchUsers() {
@@ -47,9 +66,6 @@ function Welcome() {
     // const [password, setPassword] = useState('');
     // const [confirmedPassword, setConfirmedPassword] = useState('');
 
-    console.log(users);
-    // console.log(password);
-    // console.log(confirmedPassword);
     
     // const profile = {
     //     fname: firstName,
