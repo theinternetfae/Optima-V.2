@@ -56,6 +56,34 @@ function Welcome() {
         }
     }
 
+    async function handleDelete(id) {
+
+        try{
+            await db.profiles.delete(id);
+
+            setUsers(users.filter(u => u.$id !== id));
+
+            console.log("User deleted!");
+          
+        } catch(error) {
+            console.log(error);
+        }
+    }
+
+    async function handleUpdate(id) {
+
+        try{
+            await db.profiles.update(id);
+
+            setUsers(users.filter(u => u.$id !== id));
+
+            console.log("User deleted!");
+          
+        } catch(error) {
+            console.log(error);
+        }
+    }
+
     return createPortal(
         <form className="welcome-page">
 
@@ -81,10 +109,14 @@ function Welcome() {
                         Sign up
                     </button>
 
-                    <div className="flex border border-2 gap-6">
+                    <div className="border border-2 gap-6">
                         {
                             users.map(user => {
-                                return <span key={user.$id} className="cursor-pointer">{user.fname}</span>
+                                return <div className="flex items-center gap-2">
+                                    <span key={user.$id} className="cursor-pointer">{user.fname}</span>
+                                    <button className="bg-black p-2 rounded-lg" onClick={() => handleDelete(user.$id)}>Delete</button>
+                                    <button className="bg-black p-2 rounded-lg">Update</button>
+                                </div>
                             })
                         }
                     </div>
