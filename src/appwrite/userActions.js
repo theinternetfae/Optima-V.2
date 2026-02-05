@@ -89,3 +89,13 @@ export default db;
 //     )
 
 // }
+
+
+
+// db.profiles = {
+//   create(payload),
+//   update(id, payload),
+//   delete(id),
+//   list(),
+//   get(id)
+// }

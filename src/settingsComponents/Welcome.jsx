@@ -56,12 +56,12 @@ function Welcome() {
         }
     }
 
-    async function handleDelete(id) {
-
+    async function handleDelete(e, id) {
+        e.preventDefault();
         try{
             await db.profiles.delete(id);
 
-            setUsers(users.filter(u => u.$id !== id));
+            setUsers(prev => prev.filter(u => u.$id !== id));
 
             console.log("User deleted!");
           
@@ -70,18 +70,40 @@ function Welcome() {
         }
     }
 
-    async function handleUpdate(id) {
+
+    function buildUpdateData() {
+        const data = {};
+
+        if (firstName.trim()) data.fname = firstName;
+        if (lastName.trim()) data.lname = lastName;
+        if (email.trim()) data.email = email;
+
+        return data;
+    }
+
+
+    async function handleUpdate(e, id) {
+
+        e.preventDefault();
+
+        const updateData = buildUpdateData();
+
+        console.log(updateData);
+
+        if (!firstName && !lastName && !email) return;
 
         try{
-            await db.profiles.update(id);
+            await db.profiles.update(id, updateData);
 
-            setUsers(users.filter(u => u.$id !== id));
+            setUsers(users.map(u => u.$id === id ? updateData : u));
 
-            console.log("User deleted!");
+            setFirstName('');
+            console.log("User Updated!");
           
         } catch(error) {
             console.log(error);
         }
+
     }
 
     return createPortal(
@@ -112,10 +134,10 @@ function Welcome() {
                     <div className="border border-2 gap-6">
                         {
                             users.map(user => {
-                                return <div className="flex items-center gap-2">
-                                    <span key={user.$id} className="cursor-pointer">{user.fname}</span>
-                                    <button className="bg-black p-2 rounded-lg" onClick={() => handleDelete(user.$id)}>Delete</button>
-                                    <button className="bg-black p-2 rounded-lg">Update</button>
+                                return <div key={user.$id} className="flex items-center gap-2">
+                                    <span className="cursor-pointer">{user.fname}</span>
+                                    <button className="bg-black p-2 rounded-lg cursor-pointer" onClick={e => handleDelete(e, user.$id)}>Delete</button>
+                                    <button className="bg-black p-2 rounded-lg cursor-pointer" onClick={e => handleUpdate(e, user.$id)}>Update</button>
                                 </div>
                             })
                         }
