@@ -369,7 +369,7 @@ function App() {
         <BrowserRouter>    
 
           <Routes>
-
+{/* \\\\ */}
             <Route element={<AppLayout />}>
 
               {/* <Route index element={<Navigate to="/home" replace />} />             */}
