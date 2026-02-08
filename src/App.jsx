@@ -11,6 +11,7 @@ import TaskHandler from "./settingsComponents/TaskHandler.jsx";
 import DataPrivacy from "./settingsComponents/DataPrivacy.jsx";
 import About from "./settingsComponents/About.jsx";
 import Welcome from "./settingsComponents/Welcome.jsx";
+import WelcomeBack from "./settingsComponents/WelcomeBack.jsx";
 
 
 function App() {
@@ -372,6 +373,7 @@ function App() {
 
               {/* <Route index element={<Navigate to="/home" replace />} />             */}
               <Route path="/" element={<Welcome />}/>
+              <Route path="/signin" element={<WelcomeBack/>}/>
               <Route path="/home" element={<DateMenu />} />
               <Route path="/taskStats" element={<TaskStats />} />
               <Route path="/taskHistory" element={<TaskHistory />} />

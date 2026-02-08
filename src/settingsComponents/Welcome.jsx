@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import user from "../appwrite/accounts.js";
+import { Link } from "react-router-dom";
 import Alert from "../components/Alert.jsx";
-// import { Link } from "react-router-dom";
+
 
 function Welcome() {
 
@@ -119,7 +120,7 @@ function Welcome() {
 
                 <div className="welcome-note">
                     <h1>Welcome!</h1>
-                    <p>Sign up to access the app</p>    
+                    <p>Sign Up to access the app</p>    
                 </div>                    
 
                 <div className="sign-inputs-box">
@@ -155,7 +156,14 @@ function Welcome() {
                     Sign up
                 </button>
 
-                <p>Already have an account? <span className="text-tocolorb cursor-pointer">Sign in</span></p>
+                <p>
+                    Already have an account?{" "} 
+
+                    <Link to={"/signin"}>
+                        <span className="text-tocolorb cursor-pointer">Sign In</span>                       
+                    </Link>    
+
+                </p>
     
             </div>
         

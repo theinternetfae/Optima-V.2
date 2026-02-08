@@ -137,7 +137,7 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         p {
-            @apply text-center mt-2
+            @apply text-center mt-4
         }
     }
     
