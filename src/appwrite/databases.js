@@ -3,7 +3,7 @@ import { ID } from "appwrite";
 
 const db = {};
 
-const tables = [
+const database = [
     {
         dbId: import.meta.env.VITE_OPTIMA_DATABASE_ID_OPFILES,
         id: import.meta.env.VITE_OPTIMA_TABLE_ID_PROFILES,
@@ -11,30 +11,30 @@ const tables = [
     },
 ];
 
-tables.forEach(t => {
-    db[t.name] = {
+database.forEach(d => {
+    db[d.name] = {
         create: (payload, permissions, id = ID.unique()) =>
             databases.createDocument(
-                t.dbId,
-                t.id,
+                d.dbId,
+                d.id,
                 id,
                 payload,
                 permissions
             ),
         update: (id, payload, permissions) =>
             databases.updateDocument(
-                t.dbId,
-                t.id,
+                d.dbId,
+                d.id,
                 id,
                 payload,
                 permissions
             ),
-        delete: (id) => databases.deleteDocument(t.dbId, t.id, id),
+        delete: (id) => databases.deleteDocument(d.dbId, d.id, id),
 
         list: (queries = []) =>
-            databases.listDocuments(t.dbId, t.id, queries),
+            databases.listDocuments(d.dbId, d.id, queries),
 
-        get: (id) => databases.getDocument(t.dbId, t.id, id),
+        get: (id) => databases.getDocument(d.dbId, d.id, id),
     };
 });
 

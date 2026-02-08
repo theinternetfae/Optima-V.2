@@ -1,110 +1,114 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import db from "../appwrite/userActions";
+import user from "../appwrite/accounts.js";
+import Alert from "../components/Alert.jsx";
 // import { Link } from "react-router-dom";
-
 
 function Welcome() {
 
-    const [users, setUsers] = useState([]);
-
-    useEffect(() => {
-
-        init();
-
-    }, []);
-
-    async function init() {
-
-        const response = await db.profiles.list();    
-
-        setUsers(response.documents);
-    
-    }
-
-    useEffect(() => {
-        console.log(users);
-    }, [users]);
-
+    const [currentUser, setCurrentUser] = useState({});
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [confirmedPassword, setConfirmedPassword] = useState('');
+    const [emailInput, setEmailInput] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordCheck, setPasswordCheck] = useState('');
+    
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
 
-    async function handleCreate(e) {
-        e.preventDefault();
-        
-        if(!firstName || !lastName || !email) return;
+    const [passShow, setPassShow] = useState(false);
 
-        try{
-            const payload = {
-                fname: firstName,
-                lname: lastName,
-                email: email
+    function isValidEmail(email) {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+
+        return regex.test(email);
+    }
+
+    function isStrongPassword(password) {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#])[A-Za-z\d@$!%*?&.#]{8,}$/;
+
+        return regex.test(password);
+    }
+
+
+    async function creatingUser(e) {
+        try {
+            e.preventDefault();
+
+            if(!firstName || !lastName || !emailInput || !password || !passwordCheck) return;
+            if(password !== passwordCheck) {
+                alert("Your passwords don't match");
+                setPasswordCheck('');
+                return;
             }
 
-            const response = await db.profiles.create(payload);
-            setUsers(prev => [...prev, response]);
-            console.log("Users updated!");
+            const nameArray = [firstName, lastName];
+            const name = nameArray.join(' ');
+            const email = emailInput.toLowerCase();
+
+            if(!isValidEmail(email)) {
+                setEmailError(prev => !prev);
+                setEmailInput('')
+                return;
+            }
+
+            if(!isStrongPassword(password)) {
+                setPasswordError(prev => !prev);
+                setPassword('');
+                setPasswordCheck('');
+                return;
+            }
+
+            const userDetails = {
+                name,
+                email,
+                password
+            }
+
+            await user.create(userDetails);
+
+            alert("Account created successfully!");
+
             setFirstName('');
             setLastName('');
-            setEmail('');
-        } catch(error) {
+            setEmailInput('');
+            setPassword('');
+            setPasswordCheck('');
+            console.log(userDetails);
+        } catch (error) {
+
             console.log(error);
+
+            if (error?.type === "user_already_exists") {
+                alert("You already have an account.");
+            } else {
+                alert("Something went wrong. Try again.");
+            }        
         }
     }
 
-    async function handleDelete(e, id) {
-        e.preventDefault();
-        try{
-            await db.profiles.delete(id);
+    useEffect(() => {
 
-            setUsers(prev => prev.filter(u => u.$id !== id));
+        if(!passwordError) return;
 
-            console.log("User deleted!");
-          
-        } catch(error) {
-            console.log(error);
-        }
-    }
+        const timer = setTimeout(() =>{
+            setPasswordError(prev => !prev);
+        }, 3000)
 
+        return () => clearTimeout(timer);
+    }, [passwordError]);
 
-    function buildUpdateData() {
-        const data = {};
+    useEffect(() => {
 
-        if (firstName.trim()) data.fname = firstName;
-        if (lastName.trim()) data.lname = lastName;
-        if (email.trim()) data.email = email;
+        if(!emailError) return;
 
-        return data;
-    }
+        const timer = setTimeout(() =>{
+            setEmailError(prev => !prev);
+        }, 3000)
 
-
-    async function handleUpdate(e, id) {
-
-        e.preventDefault();
-
-        const updateData = buildUpdateData();
-
-        console.log(updateData);
-
-        if (!firstName && !lastName && !email) return;
-
-        try{
-            await db.profiles.update(id, updateData);
-
-            setUsers(users.map(u => u.$id === id ? updateData : u));
-
-            setFirstName('');
-            console.log("User Updated!");
-          
-        } catch(error) {
-            console.log(error);
-        }
-
-    }
+        return () => clearTimeout(timer);
+    }, [emailError]);
 
     return createPortal(
         <form className="welcome-page">
@@ -121,30 +125,41 @@ function Welcome() {
                 <div className="sign-inputs-box">
                     <input type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
                     <input type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
-                    <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                    <input type="password" placeholder="Password"/>
-                    <input type="password" placeholder="Confirm Password"/>
+                    
+                    <div className="flex flex-col">
+                        {emailError && <p className="text-start text-sm text-fromcolorr">Please enter a valid email address</p>}
+                        <input type="email" placeholder="Email" value={emailInput} onChange={(e) => setEmailInput(e.target.value)}/>
+                    </div>
+
+
+                    <div className="flex flex-col">
+                        <div className={`flex justify-between items-center ${!passwordError ? 'justify-end' : ''}`}>
+                            {passwordError && <p className="text-fromcolorr text-sm">Password must be at least 8 characters and include uppercase, lowercase, number, and symbol.</p>}
+                            <i className={`bi text-lg pr-2 ${passShow ? 'bi-eye' : 'bi-eye-slash'}`} 
+                                onClick={() => setPassShow(prev => !prev)}    
+                            ></i>
+                        </div> 
+                        <input type={passShow ? 'text' : 'password'} value={password} placeholder="Password" onChange={e => setPassword(e.target.value)}/>
+                    </div>
+
+                    <div className="flex flex-col"> 
+                        <i className={`bi text-end text-lg pr-2 ${passShow ? 'bi-eye' : 'bi-eye-slash'}`}
+                            onClick={() => setPassShow(prev => !prev)}
+                        ></i>
+                        <input type={passShow ? 'text' : 'password'} value={passwordCheck} placeholder="Confirm Password" onChange={e => setPasswordCheck(e.target.value)}/>
+                    </div>
+        
                 </div>
-                <button type="button" className="button" onClick={e => handleCreate(e)}>
+    
+                <button type="button" className="button" onClick={e => creatingUser(e)}>
                     Sign up
                 </button>
 
-                <div className="border border-2 gap-6">
-                    {
-                        users.map(user => {
-                            return <div key={user.$id} className="flex items-center gap-2">
-                                <span className="cursor-pointer">{user.fname}</span>
-                                <button className="bg-black p-2 rounded-lg cursor-pointer" onClick={e => handleDelete(e, user.$id)}>Delete</button>
-                                <button className="bg-black p-2 rounded-lg cursor-pointer" onClick={e => handleUpdate(e, user.$id)}>Update</button>
-                            </div>
-                        })
-                    }
-                </div>
-
                 <p>Already have an account? <span className="text-tocolorb cursor-pointer">Sign in</span></p>
+    
             </div>
         
-
+            {/* <Alert/> */}
         </form>,
         document.getElementById("modal-root")
     );

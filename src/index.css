@@ -114,7 +114,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 
     .welcome-page {
-        @apply bg-black fixed top-0 z-50 w-full h-full backdrop-blur-sm flex flex-col items-center justify-center;
+        @apply bg-black fixed top-0 z-40 w-full h-full backdrop-blur-sm flex flex-col items-center justify-center;
 
         .welcome-note {
             @apply flex flex-col justify-center items-center gap-2 p-2 mb-2;
@@ -128,7 +128,7 @@ input[type="number"]::-webkit-outer-spin-button {
             @apply flex flex-col gap-6;
 
             input {
-                @apply p-5 w-200 bg-muted rounded-lg shadow-lg;
+                @apply p-5 w-200 bg-muted rounded-lg shadow-lg focus:outline-none;
             }
         }
 
