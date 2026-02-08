@@ -206,7 +206,6 @@ function App() {
   }, [taskList, level]);
 
 
-
   useEffect(() => {
     if (level === 1 && levelCounter >= 7) setLevel(2);
     if (level === 2 && levelCounter >= 14) setLevel(3);
@@ -369,7 +368,6 @@ function App() {
         <BrowserRouter>    
 
           <Routes>
-{/* \\\\ */}
             <Route element={<AppLayout />}>
 
               {/* <Route index element={<Navigate to="/home" replace />} />             */}

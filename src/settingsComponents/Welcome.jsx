@@ -111,41 +111,39 @@ function Welcome() {
 
             {/* <p>Welcome!</p> */}
 
-            <div className="sign">
+            <div className="sign-inputs-cont">
 
-                <div className="sign-inputs-cont">
+                <div className="welcome-note">
+                    <h1>Welcome!</h1>
+                    <p>Sign up to access the app</p>    
+                </div>                    
 
-                    <div className="welcome-note">
-                        <h1>Welcome!</h1>
-                        <p>Sign up to access the app</p>    
-                    </div>                    
-
-                    <div className="sign-inputs-box">
-                        <input type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
-                        <input type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
-                        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                        <input type="password" placeholder="Password"/>
-                        <input type="password" placeholder="Confirm Password"/>
-                    </div>
-                    <button type="button" className="button" onClick={e => handleCreate(e)}>
-                        Sign up
-                    </button>
-
-                    <div className="border border-2 gap-6">
-                        {
-                            users.map(user => {
-                                return <div key={user.$id} className="flex items-center gap-2">
-                                    <span className="cursor-pointer">{user.fname}</span>
-                                    <button className="bg-black p-2 rounded-lg cursor-pointer" onClick={e => handleDelete(e, user.$id)}>Delete</button>
-                                    <button className="bg-black p-2 rounded-lg cursor-pointer" onClick={e => handleUpdate(e, user.$id)}>Update</button>
-                                </div>
-                            })
-                        }
-                    </div>
-
-                    <p>Already have an account? Sign in</p>
+                <div className="sign-inputs-box">
+                    <input type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
+                    <input type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
+                    <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                    <input type="password" placeholder="Password"/>
+                    <input type="password" placeholder="Confirm Password"/>
                 </div>
+                <button type="button" className="button" onClick={e => handleCreate(e)}>
+                    Sign up
+                </button>
+
+                <div className="border border-2 gap-6">
+                    {
+                        users.map(user => {
+                            return <div key={user.$id} className="flex items-center gap-2">
+                                <span className="cursor-pointer">{user.fname}</span>
+                                <button className="bg-black p-2 rounded-lg cursor-pointer" onClick={e => handleDelete(e, user.$id)}>Delete</button>
+                                <button className="bg-black p-2 rounded-lg cursor-pointer" onClick={e => handleUpdate(e, user.$id)}>Update</button>
+                            </div>
+                        })
+                    }
+                </div>
+
+                <p>Already have an account? <span className="text-tocolorb cursor-pointer">Sign in</span></p>
             </div>
+        
 
         </form>,
         document.getElementById("modal-root")

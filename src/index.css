@@ -114,40 +114,35 @@ input[type="number"]::-webkit-outer-spin-button {
 
 
     .welcome-page {
-        @apply bg-black fixed top-0 z-50 w-full h-full backdrop-blur-sm flex;
+        @apply bg-black fixed top-0 z-50 w-full h-full backdrop-blur-sm flex flex-col items-center justify-center;
 
-        .sign {
-            @apply w-[40%] m-auto;
+        .welcome-note {
+            @apply flex flex-col justify-center items-center gap-2 p-2 mb-2;
 
-            .sign-inputs-cont {
-                @apply bg-[rgba(255,255,255,0.15)] backdrop-blur-[10px] rounded-lg border p-2 flex flex-col gap-7 border-x-accentprimary border-y-accentsecondary shadow-[0_0_18px_#60A5FA,_0_0_18px_#60A5FA,_0_0_18px_#60A5FA];
-
-                h1 {
-                    @apply font-bold text-4xl text-center
-                }
-
-                & .sign-inputs-box {
-                    @apply flex flex-col mx-8 mt-6 gap-4;
-                
-                    input {
-                       @apply bg-muted h-15 border backdrop-blur-[10px] shadow-lg border-2 border-[rgba(255,255,255,0.15)] rounded-lg p-2 focus:outline-none
-                    }
-                }
-
-                .button {
-                    @apply mx-8 p-4 rounded-lg font-bold text-lg bg-accentsecondary shadow-lg text-center;
-                }
-
-                p {
-                    @apply text-center
-                }
-
+            h1 {
+                @apply text-4xl font-bold;
             }
+        }
+
+        & .sign-inputs-box {
+            @apply flex flex-col gap-6;
+
+            input {
+                @apply p-5 w-200 bg-muted rounded-lg shadow-lg;
+            }
+        }
+
+        & .button {
+            @apply w-full p-4 mt-4 rounded-lg bg-tocolorb font-bold cursor-pointer;
+        }
+
+        p {
+            @apply text-center mt-2
         }
     }
     
     body {
-        @apply bg-bgcolor text-textcolor font-bodytext;
+        @apply bg-bgcolor text-textcolor font-bodytext cursor-default;
     }
 
     .add {
@@ -808,11 +803,11 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 .logout {
-                    @apply bg-gradient-to-b from-accentsecondary to-accentprimary
+                    @apply bg-gradient-to-b from-accentsecondary to-accentprimary text-white
                 }
 
                 .delacc {
-                    @apply bg-gradient-to-b from-fromcolorr to-tocolorr
+                    @apply bg-gradient-to-b from-fromcolorr to-tocolorr text-white
                 }
             }
 
