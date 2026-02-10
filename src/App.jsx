@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import DateMenu from "./Date.jsx";
 import TaskHistory from "./TaskHistory.jsx";
 import TaskStats from "./TaskStats.jsx";
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useEffect, useLayoutEffect, useMemo } from "react";
 import { TaskContext, SettingsContext } from "./components/TaskContext.js";
 import AppLayout from "./AppLayout.jsx";
 import Settings from "./Settings.jsx";
@@ -10,8 +10,9 @@ import Profile from "./settingsComponents/Profile.jsx";
 import TaskHandler from "./settingsComponents/TaskHandler.jsx";
 import DataPrivacy from "./settingsComponents/DataPrivacy.jsx";
 import About from "./settingsComponents/About.jsx";
-import Welcome from "./settingsComponents/Welcome.jsx";
-import WelcomeBack from "./settingsComponents/WelcomeBack.jsx";
+import Welcome from "./components/Welcome.jsx";
+import WelcomeBack from "./components/WelcomeBack.jsx";
+import Verify from "./Verify.jsx";
 
 
 function App() {
@@ -101,18 +102,6 @@ function App() {
   useEffect(() => {
     localStorage.setItem("level", JSON.stringify(level));
   }, [level])
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -371,9 +360,13 @@ function App() {
           <Routes>
             <Route element={<AppLayout />}>
 
-              {/* <Route index element={<Navigate to="/home" replace />} />             */}
+              {/* <Route index element={<Navigate to="/" replace />} />             */}
+              
+              <Route path="/verify" element={<Verify />}/>
+
               <Route path="/" element={<Welcome />}/>
               <Route path="/signin" element={<WelcomeBack/>}/>
+              
               <Route path="/home" element={<DateMenu />} />
               <Route path="/taskStats" element={<TaskStats />} />
               <Route path="/taskHistory" element={<TaskHistory />} />

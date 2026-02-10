@@ -29,6 +29,7 @@ const user = {
     updatePassword: (newPassword, oldPassword) => 
         account.updatePassword(newPassword, oldPassword),
 
+    createVer: (redirectUrl) => account.createEmailVerification(redirectUrl),
 };
 
 export default user;

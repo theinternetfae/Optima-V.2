@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import user from "../appwrite/accounts.js";
-import Alert from "../components/Alert.jsx";
+import Alert from "./Alert.jsx";
+
 
 
 function WelcomeBack() {
@@ -96,7 +97,7 @@ function WelcomeBack() {
             {/* <Alert/> */}
         </form>,
         document.getElementById("modal-root")
-    )
+    );
 }
 
 export default WelcomeBack;

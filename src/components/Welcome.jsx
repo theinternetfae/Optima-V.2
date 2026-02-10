@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import user from "../appwrite/accounts.js";
 import { Link } from "react-router-dom";
-import Alert from "../components/Alert.jsx";
-
+import Alert from "./Alert.jsx";
+import Verify from "../Verify.jsx";
 
 function Welcome() {
 
@@ -68,7 +68,8 @@ function Welcome() {
             }
 
             await user.create(userDetails);
-
+            await user.login({email, password});
+            await user.createVer("http://localhost:5173/verify");
             alert("Account created successfully!");
 
             setFirstName('');
@@ -76,7 +77,7 @@ function Welcome() {
             setEmailInput('');
             setPassword('');
             setPasswordCheck('');
-            console.log(userDetails);
+
         } catch (error) {
 
             console.log(error);
@@ -152,9 +153,7 @@ function Welcome() {
         
                 </div>
     
-                <button type="button" className="button" onClick={e => creatingUser(e)}>
-                    Sign up
-                </button>
+                <button type="button" className="button" onClick={e => creatingUser(e)}>Sign In</button>
 
                 <p>
                     Already have an account?{" "} 
@@ -168,6 +167,7 @@ function Welcome() {
             </div>
         
             {/* <Alert/> */}
+            {/* <Verify /> */}
         </form>,
         document.getElementById("modal-root")
     );
