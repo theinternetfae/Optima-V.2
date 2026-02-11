@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { createPortal } from "react-dom";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import user from "../appwrite/accounts.js";
 import Alert from "./Alert.jsx";
 
 
 
 function WelcomeBack() {
+    
+    const navigate = useNavigate();
+
     const [currentUser, setCurrentUser] = useState({});
 
     const [emailInput, setEmailInput] = useState('');
@@ -45,6 +49,51 @@ function WelcomeBack() {
         return () => clearTimeout(timer);
     }, [emailError]);
 
+
+
+    async function signIn() {
+
+        // await user.logout()
+
+        try {
+
+            const userDetails = {
+                email: emailInput.toLowerCase(),
+                password: password
+            }
+
+            await user.login(userDetails);
+
+            console.log(await user.get());
+
+            const currentUser = await user.get();
+
+            if (!currentUser.emailVerification) {
+
+                if (!currentUser.emailVerificationRequested) {
+                    await user.createVer("http://localhost:5173/verify");
+                }
+
+                alert("We can't log you in just yet, check your inbox for 'AppWrite' and Verify your email first");
+                return;
+            } 
+
+            setEmailInput('');
+            setPassword('');
+            navigate("/home");            
+
+        } catch(error) {
+
+            console.log(error);
+            alert("Login failed, please try again.")
+
+        }
+        
+    }
+
+
+
+
     return createPortal(
         <form className="welcome-page">
 
@@ -79,8 +128,8 @@ function WelcomeBack() {
         
                 <p className="cursor-pointer text-start mt-8 text-sm text-grey">Forgot password?</p>
 
-                <button type="button" className="button">
-                    Sign up
+                <button type="button" className="button" onClick={() => signIn()}>
+                    Sign In
                 </button>
 
                 <p>

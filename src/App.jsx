@@ -204,21 +204,21 @@ function App() {
   }, [levelCounter]);
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (level === 1) {
-      alert('You are now at level one. You can commit to two tasks in a day. Optima recommends committing to at least two tasks a day to get the ball rolling. Complete tasks consistently to level up!');
-    }
+  //   if (level === 1) {
+  //     alert('You are now at level one. You can commit to two tasks in a day. Optima recommends committing to at least two tasks a day to get the ball rolling. Complete tasks consistently to level up!');
+  //   }
 
-    if(level === 2) {
-      alert('You are now at level two. You can commit to four tasks in a day. Optima recommends committing to at least three tasks a day to keep the ball rolling. Complete tasks consistently to level up!');
-    }
+  //   if(level === 2) {
+  //     alert('You are now at level two. You can commit to four tasks in a day. Optima recommends committing to at least three tasks a day to keep the ball rolling. Complete tasks consistently to level up!');
+  //   }
 
-    if(level === 3) {  
-      alert('You are now at level three, the max level! You can commit to six tasks in a day. At this stage, Optima recommends committing to at least four tasks a day and no more than six a day. Congratulations.');
-    };
+  //   if(level === 3) {  
+  //     alert('You are now at level three, the max level! You can commit to six tasks in a day. At this stage, Optima recommends committing to at least four tasks a day and no more than six a day. Congratulations.');
+  //   };
   
-  }, [level])
+  // }, [level])
 
 
 

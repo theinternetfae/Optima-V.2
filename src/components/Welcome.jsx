@@ -153,7 +153,7 @@ function Welcome() {
         
                 </div>
     
-                <button type="button" className="button" onClick={e => creatingUser(e)}>Sign In</button>
+                <button type="button" className="button" onClick={e => creatingUser(e)}>Sign Up</button>
 
                 <p>
                     Already have an account?{" "} 
