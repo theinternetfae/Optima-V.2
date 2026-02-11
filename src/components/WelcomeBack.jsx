@@ -52,9 +52,6 @@ function WelcomeBack() {
 
 
     async function signIn() {
-
-        // await user.logout()
-
         try {
 
             const userDetails = {
@@ -88,7 +85,6 @@ function WelcomeBack() {
             alert("Login failed, please try again.")
 
         }
-        
     }
 
 

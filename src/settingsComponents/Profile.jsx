@@ -1,8 +1,11 @@
 import { useContext, useState } from "react";
 import { SettingsContext } from "../components/TaskContext";
+import { useNavigate } from "react-router-dom";
+import user from "../appwrite/accounts";
 
 function Profile() {
     
+    const navigate = useNavigate();
     const [profileImage, setProfileImage] = useState(null);
     const [quoteState, setQuoteState] = useState(false);
 
@@ -14,6 +17,11 @@ function Profile() {
 
         const imageURL = URL.createObjectURL(file);
         setProfileImage(imageURL);
+    }
+
+    async function signOut() {
+        await user.logout();
+        navigate("/signin");
     }
 
     return ( 
@@ -101,7 +109,7 @@ function Profile() {
 
                 </div>
 
-                <button className="logout">
+                <button className="logout" onClick={() => signOut()}>
                     Log out
                 </button>
 
