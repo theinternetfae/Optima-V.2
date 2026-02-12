@@ -6,18 +6,15 @@ import user from "../appwrite/accounts.js";
 import Alert from "./Alert.jsx";
 
 
-
 function WelcomeBack() {
     
     const navigate = useNavigate();
 
-    const [currentUser, setCurrentUser] = useState({});
-
     const [emailInput, setEmailInput] = useState('');
     const [password, setPassword] = useState('');
     
-    const [emailError, setEmailError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
+    const [emailPassError, setEmailPassError] = useState(false);
+    const [formError, setFormError] = useState('');
 
     const [passShow, setPassShow] = useState(false);
 
@@ -29,30 +26,35 @@ function WelcomeBack() {
 
     useEffect(() => {
 
-        if(!passwordError) return;
+        if(!emailPassError) return;
 
         const timer = setTimeout(() =>{
-            setPasswordError(prev => !prev);
+            setEmailPassError(prev => !prev);
         }, 3000)
 
         return () => clearTimeout(timer);
-    }, [passwordError]);
-
-    useEffect(() => {
-
-        if(!emailError) return;
-
-        const timer = setTimeout(() =>{
-            setEmailError(prev => !prev);
-        }, 3000)
-
-        return () => clearTimeout(timer);
-    }, [emailError]);
+    }, [emailPassError]);
 
 
 
     async function signIn() {
+
+        // user.logout();
         try {
+
+            if (!emailInput || !password) {
+                alert("Please fill all fields");
+                return;
+            }
+
+            const emailexists = emailInput !== '';
+
+            if(emailexists && !isValidEmail(emailInput)) {
+                setEmailPassError(prev => !prev);
+                setFormError('Invalid Email.')
+                setEmailInput('')
+                return;
+            }
 
             const userDetails = {
                 email: emailInput.toLowerCase(),
@@ -60,8 +62,6 @@ function WelcomeBack() {
             }
 
             await user.login(userDetails);
-
-            console.log(await user.get());
 
             const currentUser = await user.get();
 
@@ -81,9 +81,20 @@ function WelcomeBack() {
 
         } catch(error) {
 
-            console.log(error);
-            alert("Login failed, please try again.")
-
+            console.log('ERROR:', error);
+     
+            if (error?.type === "user_invalid_credentials") {
+                setEmailPassError(prev => !prev);
+                setFormError('Your email or password is wrong')
+                setEmailInput('');
+                setPassword('');
+            } 
+            else {
+                alert("Login failed. Try again.");
+                setEmailInput('');
+                setPassword('');
+            }
+     
         }
     }
 
@@ -104,15 +115,14 @@ function WelcomeBack() {
 
                 <div className="sign-inputs-box">
                     <div className="flex flex-col">
-                        {emailError && <p className="text-start text-sm text-fromcolorr">Please enter a valid email address</p>}
+                        {emailPassError && <p className="text-start text-sm text-fromcolorr mb-6">{formError}</p>}
                         <input type="email" placeholder="Email" value={emailInput} onChange={(e) => setEmailInput(e.target.value)}/>
                     </div>
 
 
                     <div className="flex flex-col">
-                        <div className={`flex justify-between items-center ${!passwordError ? 'justify-end' : ''}`}>
-                            {passwordError && <p className="text-fromcolorr text-sm">Password must be at least 8 characters and include uppercase, lowercase, number, and symbol.</p>}
-                            <i className={`bi text-lg pr-2 ${passShow ? 'bi-eye' : 'bi-eye-slash'}`} 
+                        <div className= 'flex justify-between items-center justify-end'>
+                            <i className={`bi text-lg text-end pr-2 ${passShow ? 'bi-eye' : 'bi-eye-slash'}`} 
                                 onClick={() => setPassShow(prev => !prev)}    
                             ></i>
                         </div> 

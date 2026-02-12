@@ -70,7 +70,7 @@ function Welcome() {
             await user.create(userDetails);
             await user.login({email, password});
             await user.createVer("http://localhost:5173/verify");
-            alert("Account created successfully!");
+            alert("Account created successfully! Please check your inbox and verify your email to log in properly.");
 
             setFirstName('');
             setLastName('');
