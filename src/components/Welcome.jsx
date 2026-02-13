@@ -3,11 +3,9 @@ import { createPortal } from "react-dom";
 import user from "../appwrite/accounts.js";
 import { Link } from "react-router-dom";
 import Alert from "./Alert.jsx";
-import Verify from "../Verify.jsx";
+
 
 function Welcome() {
-
-    const [currentUser, setCurrentUser] = useState({});
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -31,7 +29,6 @@ function Welcome() {
 
         return regex.test(password);
     }
-
 
     async function creatingUser(e) {
         try {
@@ -99,6 +96,7 @@ function Welcome() {
         }, 3000)
 
         return () => clearTimeout(timer);
+
     }, [passwordError]);
 
     useEffect(() => {

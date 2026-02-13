@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { SettingsContext } from "../components/TaskContext";
+import { SettingsContext, TaskContext } from "../components/TaskContext";
 import { useNavigate } from "react-router-dom";
 import user from "../appwrite/accounts";
 
@@ -10,6 +10,7 @@ function Profile() {
     const [quoteState, setQuoteState] = useState(false);
 
     const {accent, setAccent, optimaQuirk, setOptimaQuirk, streakState, setStreakState} = useContext(SettingsContext);
+    const { setCurrentUser } = useContext(TaskContext)
 
     function handleImageChange(e) {
         const file = e.target.files[0];
@@ -20,8 +21,9 @@ function Profile() {
     }
 
     async function signOut() {
+        setCurrentUser(null);
         await user.logout();
-        navigate("/signin");
+        navigate("/");
     }
 
     return ( 

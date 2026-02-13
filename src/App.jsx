@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import DateMenu from "./Date.jsx";
 import TaskHistory from "./TaskHistory.jsx";
 import TaskStats from "./TaskStats.jsx";
-import { useState, useEffect, useLayoutEffect, useMemo } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { TaskContext, SettingsContext } from "./components/TaskContext.js";
 import AppLayout from "./AppLayout.jsx";
 import Settings from "./Settings.jsx";
@@ -13,9 +13,34 @@ import About from "./settingsComponents/About.jsx";
 import Welcome from "./components/Welcome.jsx";
 import WelcomeBack from "./components/WelcomeBack.jsx";
 import Verify from "./Verify.jsx";
+import user from "./appwrite/accounts.js";
+import Loader from "./components/Loader.jsx";
 
 
 function App() {
+
+  const [currentUser, setCurrentUser] = useState(null)
+  const [loading, setLoading] = useState(true);
+
+  async function checkUser() {
+    try{
+      const userInfo = await user.get();
+      setCurrentUser(userInfo);
+    } catch (e) {
+      setCurrentUser(null);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    checkUser();
+    console.log(currentUser);
+  }, []);
+
+  useEffect(() => {
+    console.log("current user:", currentUser)
+  }, [currentUser]);
 
   //TASKLIST
   const [taskList, setTaskList] = useState(() => {
@@ -352,36 +377,39 @@ function App() {
 
   return (
 
-    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask}}>
+    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask, setCurrentUser}}>
       <SettingsContext.Provider value={{theme, setTheme, accent, setAccent, level, setLevel, optimaQuirk, setOptimaQuirk, streakState, setStreakState}}>
 
         <BrowserRouter>    
 
-          <Routes>
-            <Route element={<AppLayout />}>
+          {
+            loading ? (
+              <Loader />
+            ) : (
+              <Routes>
+                <Route element={<AppLayout />}>
 
-              {/* <Route index element={<Navigate to="/" replace />} />             */}
-              
-              <Route path="/verify" element={<Verify />}/>
+                  <Route path="/verify" element={<Verify />}/>
 
-              <Route path="/" element={<Welcome />}/>
-              <Route path="/signin" element={<WelcomeBack/>}/>
-              
-              <Route path="/home" element={<DateMenu />} />
-              <Route path="/taskStats" element={<TaskStats />} />
-              <Route path="/taskHistory" element={<TaskHistory />} />
+                  <Route path="/" element={<Welcome />}/>
+                  <Route path="/signin" element={currentUser ? <Navigate to="/home" replace /> : <WelcomeBack/>}/>
+                  
+                  <Route path="/home" element={currentUser ? <DateMenu /> : <Navigate to="/signin" replace />}/>
+                  <Route path="/taskStats" element={<TaskStats />} />
+                  <Route path="/taskHistory" element={<TaskHistory />} />
 
-              <Route path="settings" element={<Settings />}>
-                <Route index element={<Navigate to="profile" replace />} />
-                <Route path="profile" element={<Profile />} />
-                <Route path="taskHandler" element={<TaskHandler />} />
-                <Route path="dataPrivacy" element={<DataPrivacy />} />
-                <Route path="about" element={<About />} />
-              </Route>
+                  <Route path="settings" element={<Settings />}>
+                    <Route index element={<Navigate to="profile" replace />} />
+                    <Route path="profile" element={<Profile />} />
+                    <Route path="taskHandler" element={<TaskHandler />} />
+                    <Route path="dataPrivacy" element={<DataPrivacy />} />
+                    <Route path="about" element={<About />} />
+                  </Route>
 
-            </Route>
-
-          </Routes>
+                </Route>
+              </Routes>
+            )
+          }
 
         </BrowserRouter>
 

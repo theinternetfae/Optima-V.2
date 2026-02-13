@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import user from "../appwrite/accounts.js";
+import { TaskContext } from "./TaskContext.js";
 import Alert from "./Alert.jsx";
 
 
 function WelcomeBack() {
     
     const navigate = useNavigate();
+    const {setCurrentUser} = useContext(TaskContext);
 
     const [emailInput, setEmailInput] = useState('');
     const [password, setPassword] = useState('');
@@ -75,6 +77,7 @@ function WelcomeBack() {
                 return;
             } 
 
+            setCurrentUser(currentUser);            
             setEmailInput('');
             setPassword('');
             navigate("/home");            
