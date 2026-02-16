@@ -14,13 +14,16 @@ import Welcome from "./components/Welcome.jsx";
 import WelcomeBack from "./components/WelcomeBack.jsx";
 import Verify from "./Verify.jsx";
 import user from "./appwrite/accounts.js";
+import db from "./appwrite/databases.js";
 import Loader from "./components/Loader.jsx";
+import { Query } from "appwrite";
 
 
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null)
   const [loading, setLoading] = useState(true);
+  const [currentUserData, setCurrentUserData] = useState({});
 
   async function checkUser() {
     try{
@@ -39,8 +42,66 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log("current user:", currentUser)
+    console.log("current user:", currentUser);
+
+    getUserData();
+
   }, [currentUser]);
+
+  useEffect(() => {
+    console.log("User data:", currentUserData);
+  }, [currentUserData])
+
+  async function getUserData() {
+    try {
+
+      const data = await db.profiles.get(currentUser.$id);
+
+      setCurrentUserData(data);
+
+    } catch (err) {
+
+      if(err.code === 404) {
+      
+        const payload = {
+          tasks: [],
+          title: ""
+        }
+
+        const id = currentUser.$id;
+
+        const newData = await db.profiles.create(payload, null, id);
+
+        setCurrentUserData(newData);
+      
+      } else {
+
+        console.log(err);
+
+      }
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   //TASKLIST
   const [taskList, setTaskList] = useState(() => {
@@ -391,7 +452,7 @@ function App() {
 
                   <Route path="/verify" element={<Verify />}/>
 
-                  <Route path="/" element={<Welcome />}/>
+                  <Route path="/" element={currentUser ? <Navigate to="/home" replace /> : <Welcome/>}/>
                   <Route path="/signin" element={currentUser ? <Navigate to="/home" replace /> : <WelcomeBack/>}/>
                   
                   <Route path="/home" element={currentUser ? <DateMenu /> : <Navigate to="/signin" replace />}/>

@@ -13,7 +13,7 @@ const database = [
 
 database.forEach(d => {
     db[d.name] = {
-        create: (payload, permissions, id = ID.unique()) =>
+        create: (payload, permissions, id) =>
             databases.createDocument(
                 d.dbId,
                 d.id,
