@@ -11,7 +11,7 @@ function Profile() {
     const [quoteState, setQuoteState] = useState(false);
 
     const {optimaQuirk, setOptimaQuirk, streakState, setStreakState} = useContext(SettingsContext);
-    const {setLoading, setCurrentUser, userData, setuserData } = useContext(TaskContext)
+    const { setCurrentUser, userData, setUserData } = useContext(TaskContext)
 
     function handleImageChange(e) {
         const file = e.target.files[0];
@@ -25,31 +25,15 @@ function Profile() {
 
         setCurrentUser(null);
         await user.logout();
-
         navigate("/");
         
-        // try {
-        //     setLoading(true)
-        //     setCurrentUser(null);
-        //     await user.logout();
-        //     setuserData({});
-        //     navigate("/");
-        // } catch(err) {
-            
-        //     console.log(error);
-
-        // } finally {
-
-        //     setLoading(false);
-        
-        // }
     }
 
     async function changeAccent(color) {
 
         const accent = color;
         db.profiles.update(userData.$id, {accent})
-        setuserData({...userData, accent})
+        setUserData({...userData, accent})
 
     }
 

@@ -16,14 +16,34 @@ import Verify from "./Verify.jsx";
 import user from "./appwrite/accounts.js";
 import db from "./appwrite/databases.js";
 import Loader from "./components/Loader.jsx";
-import { Query } from "appwrite";
 
 
 function App() {
 
-  const [currentUser, setCurrentUser] = useState(null)
-  const [userData, setUserData] = useState({});
+  const [currentUser, setCurrentUser] = useState(() => {
+    return JSON.parse(localStorage.getItem("currentUser")) || null;
+  });
+  
+  useEffect(() => {
+    if (currentUser) {
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    }
+  }, [currentUser]);
+
+
+  const [userData, setUserData] = useState(() => {
+    return JSON.parse(localStorage.getItem("userData")) || {};
+  });
+  
+  useEffect(() => {
+    if (userData) {
+      localStorage.setItem("userData", JSON.stringify(userData));
+    }
+  }, [userData]);
+
+
   const [loading, setLoading] = useState(true);
+
 
   async function checkUser() {
     try{
@@ -454,7 +474,7 @@ function App() {
 
   return (
 
-    <TaskContext.Provider value={{setLoading, taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask, setCurrentUser, userData}}>
+    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask, setCurrentUser, userData, setUserData}}>
       <SettingsContext.Provider value={{theme, setTheme, level, setLevel, optimaQuirk, setOptimaQuirk, streakState, setStreakState}}>
 
         <BrowserRouter>    
