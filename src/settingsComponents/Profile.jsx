@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
 import { SettingsContext, TaskContext } from "../components/TaskContext";
 import { useNavigate } from "react-router-dom";
-import user from "../appwrite/accounts";
+import user from "../appwrite/accounts.js";
+import db from "../appwrite/databases.js";
 
 function Profile() {
     
@@ -9,8 +10,8 @@ function Profile() {
     const [profileImage, setProfileImage] = useState(null);
     const [quoteState, setQuoteState] = useState(false);
 
-    const {accent, setAccent, optimaQuirk, setOptimaQuirk, streakState, setStreakState} = useContext(SettingsContext);
-    const { setCurrentUser } = useContext(TaskContext)
+    const {optimaQuirk, setOptimaQuirk, streakState, setStreakState} = useContext(SettingsContext);
+    const {setLoading, setCurrentUser, userData, setuserData } = useContext(TaskContext)
 
     function handleImageChange(e) {
         const file = e.target.files[0];
@@ -21,9 +22,35 @@ function Profile() {
     }
 
     async function signOut() {
+
         setCurrentUser(null);
         await user.logout();
+
         navigate("/");
+        
+        // try {
+        //     setLoading(true)
+        //     setCurrentUser(null);
+        //     await user.logout();
+        //     setuserData({});
+        //     navigate("/");
+        // } catch(err) {
+            
+        //     console.log(error);
+
+        // } finally {
+
+        //     setLoading(false);
+        
+        // }
+    }
+
+    async function changeAccent(color) {
+
+        const accent = color;
+        db.profiles.update(userData.$id, {accent})
+        setuserData({...userData, accent})
+
     }
 
     return ( 
@@ -47,9 +74,8 @@ function Profile() {
                 </label>
 
                 <div className="the-user-info">
-                    <input type="text" placeholder="Name" className="the-user-name-title"/>
-                    <input type="text" placeholder="janedoe@gmail.com" className="the-user-name-title"/>
-                    <input type="text" placeholder="Title i.e The inventor" className="the-user-name-title"/>
+                    <p className="the-user-name-title">Jane Doe</p>
+                    <p className="the-user-name-title">janedoe@gmail.com</p>
                 </div>
 
             </div>
@@ -61,19 +87,19 @@ function Profile() {
 
                     <div className="themes">
                         
-                        <div className={`theme-box one ${accent === 'blue' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => setAccent('blue')}>
+                        <div className={`theme-box one ${userData.accent === 'blue' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => changeAccent('blue')}>
                             <div className="in-one"></div>
                         </div>
 
-                        <div className={`theme-box two ${accent === 'red' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => setAccent('red')}>
+                        <div className={`theme-box two ${userData.accent === 'purple' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => changeAccent('purple')}>
                             <div className="in-two"></div>
                         </div>
                         
-                        <div className={`theme-box three ${accent === 'pink' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => setAccent('pink')}>
+                        <div className={`theme-box three ${userData.accent === 'pink' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => changeAccent('pink')}>
                             <div className="in-three"></div>
                         </div>
                         
-                        <div className={`theme-box four ${accent === 'green' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => setAccent('green')}>
+                        <div className={`theme-box four ${userData.accent === 'green' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => changeAccent('green')}>
                             <div className="in-four"></div>
                         </div>
                         

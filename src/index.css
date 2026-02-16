@@ -732,10 +732,10 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 .the-user-info {
-                    @apply flex justify-around gap-4 p-2;   
+                    @apply flex justify-center gap-4 p-2 w-full;   
                 
                     .the-user-name-title {
-                        @apply flex items-center justify-center text-center w-full rounded-lg bg-surfaceone p-4 shadow focus:outline-none;
+                        @apply flex items-center justify-center text-center rounded-lg bg-surfaceone p-4 shadow focus:outline-none;
                     }
                     
                 }

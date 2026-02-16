@@ -93,10 +93,6 @@ function TaskHandler() {
     }, [handledTasks, selectedHandle])
     
 
-    useEffect(() => {
-        console.log(selectedHandle, visibleTasks);
-    })
-
     function yesDelete() {
         const newTaskList = taskList.filter(t => normalizeDate(t.end) > normalizeDate(today));
         setTaskList(newTaskList);

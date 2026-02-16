@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import DateMenu from "./Date.jsx";
 import TaskHistory from "./TaskHistory.jsx";
 import TaskStats from "./TaskStats.jsx";
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useEffect, useLayoutEffect, useMemo } from "react";
 import { TaskContext, SettingsContext } from "./components/TaskContext.js";
 import AppLayout from "./AppLayout.jsx";
 import Settings from "./Settings.jsx";
@@ -22,8 +22,8 @@ import { Query } from "appwrite";
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null)
+  const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
-  const [currentUserData, setCurrentUserData] = useState({});
 
   async function checkUser() {
     try{
@@ -41,47 +41,63 @@ function App() {
     console.log(currentUser);
   }, []);
 
+
+  useEffect(() => {
+    
+    if (!currentUser) return;
+
+    async function loadProfile() {
+      try {
+  
+        setLoading(true);
+
+        const data = await db.profiles.get(currentUser.$id);
+
+        setUserData(data);
+
+      } catch (err) {
+        
+        if(err.code === 404) {
+  
+          const payload = {
+            name: currentUser.name,
+            email: currentUser.email,
+            tasks: [],
+            theme: 'dark',
+            accent: 'blue',
+            quirk: true,
+            quote: false,
+            streak: true 
+          }
+
+          const id = currentUser.$id;
+
+          const newData = await db.profiles.create(payload, null, id);
+
+          return newData;
+          
+        } else {
+          console.loading(err);
+        }
+
+      } finally {
+  
+        setLoading(false);
+        
+      }
+    }
+
+    loadProfile();
+
+  }, [currentUser])
+
   useEffect(() => {
     console.log("current user:", currentUser);
-
-    getUserData();
-
   }, [currentUser]);
 
   useEffect(() => {
-    console.log("User data:", currentUserData);
-  }, [currentUserData])
-
-  async function getUserData() {
-    try {
-
-      const data = await db.profiles.get(currentUser.$id);
-
-      setCurrentUserData(data);
-
-    } catch (err) {
-
-      if(err.code === 404) {
-      
-        const payload = {
-          tasks: [],
-          title: ""
-        }
-
-        const id = currentUser.$id;
-
-        const newData = await db.profiles.create(payload, null, id);
-
-        setCurrentUserData(newData);
-      
-      } else {
-
-        console.log(err);
-
-      }
-    }
-  }
-
+    console.log("User data:", userData);
+  }, [userData])
 
 
 
@@ -152,14 +168,14 @@ function App() {
   
   
   //ACCENTS
-  const [accent, setAccent] = useState(() => {
-    const savedAccent = localStorage.getItem("accent");
-    return savedAccent ? savedAccent : 'blue';
-  });
+  // const [accent, setAccent] = useState(() => {
+  //   const savedAccent = localStorage.getItem("accent");
+  //   return savedAccent ? savedAccent : 'blue';
+  // });
   
-  useEffect(() => {
-    localStorage.setItem("accent", accent);
-  }, [accent]);
+  // useEffect(() => {
+  //   localStorage.setItem("accent", accent);
+  // }, [accent]);
 
   useLayoutEffect(() => {
     root.classList.remove(
@@ -168,10 +184,10 @@ function App() {
       'accent-green'
     );
 
-    if (accent === 'red') root.classList.add('accent-purple');
-    if (accent === 'pink') root.classList.add('accent-pink');
-    if (accent === 'green') root.classList.add('accent-green');
-  }, [accent]);
+    if (userData.accent === 'purple') root.classList.add('accent-purple');
+    if (userData.accent === 'pink') root.classList.add('accent-pink');
+    if (userData.accent === 'green') root.classList.add('accent-green');
+  }, [userData]);
 
 
 
@@ -438,13 +454,13 @@ function App() {
 
   return (
 
-    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask, setCurrentUser}}>
-      <SettingsContext.Provider value={{theme, setTheme, accent, setAccent, level, setLevel, optimaQuirk, setOptimaQuirk, streakState, setStreakState}}>
+    <TaskContext.Provider value={{setLoading, taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask, setCurrentUser, userData}}>
+      <SettingsContext.Provider value={{theme, setTheme, level, setLevel, optimaQuirk, setOptimaQuirk, streakState, setStreakState}}>
 
         <BrowserRouter>    
 
           {
-            loading ? (
+            (loading || !userData) ? (
               <Loader />
             ) : (
               <Routes>
