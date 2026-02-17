@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect, useMemo} from "react";
-import { TaskContext, SettingsContext } from "./components/TaskContext.js";
+import { TaskContext } from "./components/TaskContext.js";
 import NewTask from "./components/NewTask.jsx";
 
 function TaskStats() {
@@ -7,7 +7,6 @@ function TaskStats() {
     const normalizeDate = date => new Date(date).toDateString();
 
     const { taskList, tasksDone, userData } = useContext(TaskContext);
-    const { streakState } = useContext(SettingsContext);
     const [ statsNew, setStatsNew ] = useState(false);
 
     function addNewTask() {
@@ -519,7 +518,7 @@ function TaskStats() {
                 <button className="bi-chevron-right bi-chevron" onClick={(() => oneMonthForward())}></button>
             </div>
 
-            { streakState && 
+            { userData.streak && 
                 <div className="average-display">
                 
                     <div className="filler-front">

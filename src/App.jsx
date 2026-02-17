@@ -344,18 +344,6 @@ function App() {
 
 
 
-
-
-
-  const [streakState, setStreakState] = useState(() => {
-    const savedStreakState = localStorage.getItem("streakState");
-    return savedStreakState ? JSON.parse(savedStreakState) : true;
-  });
-
-  useEffect(() => {
-    localStorage.setItem("streakState", JSON.stringify(streakState));
-  }, [streakState])
-
   //REPEATING TASKS LOGIC
   const weekDaysMap = [ "sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
@@ -455,7 +443,7 @@ function App() {
   return (
 
     <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask, setCurrentUser, userData, setUserData}}>
-      <SettingsContext.Provider value={{level, setLevel, streakState, setStreakState}}>
+      <SettingsContext.Provider value={{level, setLevel}}>
 
         <BrowserRouter>    
 

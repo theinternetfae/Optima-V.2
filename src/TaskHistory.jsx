@@ -4,8 +4,7 @@ import TaskDisplay from "./components/TaskDisplay.jsx";
 
 function TaskHistory() {
     
-    const { taskList } = useContext(TaskContext);
-    const { streakState } = useContext(SettingsContext);
+    const { taskList, userData } = useContext(TaskContext);
     const history = true;
 
     const [month, setMonth] = useState('');
@@ -178,7 +177,7 @@ function TaskHistory() {
 
             </div>
 
-            <div className={`tasks-per-day ${!streakState && 'h-[550px]'}`}>
+            <div className={`tasks-per-day ${!userData.streak && 'h-[550px]'}`}>
                 <div className="tasks-pd-cont">
 
                     {
@@ -198,7 +197,7 @@ function TaskHistory() {
                 </div>
             </div>
 
-            { streakState &&             
+            { userData.streak &&             
                 <div className="chosen-task-info">
                 
                     {chosenHist === '' ? (

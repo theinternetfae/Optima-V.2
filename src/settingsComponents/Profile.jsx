@@ -52,6 +52,14 @@ function Profile() {
     
     }
 
+    async function setStreak() {
+        
+        const streak = !userData.streak;
+        db.profiles.update(userData.$id, {streak});
+        setUserData({...userData, streak});
+
+    }
+
     return ( 
         <div className="sett-body">
         
@@ -130,8 +138,8 @@ function Profile() {
                     
                     <p>Streak</p>
 
-                    <div className={`toggle ${streakState && "bg-[var(--color-accentprimary)]"}`} onClick={() => setStreakState(prev => !prev)}>
-                        <div className={`ball ease duration-800 ${streakState && "translate-x-9 md:translate-x-43"}`}></div>
+                    <div className={`toggle ${userData.streak && "bg-[var(--color-accentprimary)]"}`} onClick={() => setStreak()}>
+                        <div className={`ball ease duration-800 ${userData.streak && "translate-x-9 md:translate-x-43"}`}></div>
                     </div>
 
                 </div>
