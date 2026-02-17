@@ -7,7 +7,7 @@ import { TaskContext, SettingsContext } from "./components/TaskContext.js";
 
 function DateMenu() {
 
-    const { taskList, setTaskList } = useContext(TaskContext); 
+    const { taskList } = useContext(TaskContext); 
 
     const containerRef = useRef(null);
     const dayRefs = useRef(new Map());

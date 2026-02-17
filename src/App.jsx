@@ -35,9 +35,12 @@ function App() {
     return JSON.parse(localStorage.getItem("userData")) || null;
   });
   
+
   useEffect(() => {
     if (userData) {
       localStorage.setItem("userData", JSON.stringify(userData));
+    } else {
+      localStorage.removeItem("userData");
     }
   }, [userData]);
 
@@ -93,11 +96,10 @@ function App() {
           const id = currentUser.$id;
 
           const newData = await db.profiles.create(payload, null, id);
-
-          return newData;
+          setUserData(newData);
           
         } else {
-          console.loading(err);
+          console.log(err);
         }
 
       } finally {
@@ -107,9 +109,9 @@ function App() {
       }
     }
 
-    loadProfile();
+    if (currentUser) loadProfile();
 
-  }, [currentUser])
+  }, [currentUser]);
 
   useEffect(() => {
     console.log("current user:", currentUser);
@@ -149,6 +151,8 @@ function App() {
       localStorage.setItem("tasks", JSON.stringify(taskList));
   }, [taskList]);
 
+
+
   //TASKDONE
   const [tasksDone, setTasksDone] = useState(() => {
     const savedTD = localStorage.getItem("tasksDone");
@@ -178,17 +182,11 @@ function App() {
 
   
   
-  //ACCENTS
-  // const [accent, setAccent] = useState(() => {
-  //   const savedAccent = localStorage.getItem("accent");
-  //   return savedAccent ? savedAccent : 'blue';
-  // });
-  
-  // useEffect(() => {
-  //   localStorage.setItem("accent", accent);
-  // }, [accent]);
 
   useLayoutEffect(() => {
+
+    if (!userData) return;
+
     root.classList.remove(
       'accent-purple',
       'accent-pink',
@@ -198,7 +196,8 @@ function App() {
     if (userData.accent === 'purple') root.classList.add('accent-purple');
     if (userData.accent === 'pink') root.classList.add('accent-pink');
     if (userData.accent === 'green') root.classList.add('accent-green');
-  }, [userData]);
+  
+  }, [userData?.accent]);
 
 
 
@@ -275,6 +274,9 @@ function App() {
 
 
   useEffect(() => {
+
+    if(!taskList) return;
+
     const todayKey = normalizeDate(new Date()); 
     const LAST_EVAL = localStorage.getItem('lastLevelEvaluation') || normalizeDate(yesterday);
     if (LAST_EVAL === todayKey) return;

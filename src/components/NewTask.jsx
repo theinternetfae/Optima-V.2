@@ -74,7 +74,6 @@ function NewTask({exit, editExit, statsNew, task}) {
         };
 
         saveEditedTask(theTask);
-        // setTaskList(prev => [...prev, theTask])
         exit ? exit() : statsNew();
     }
 
