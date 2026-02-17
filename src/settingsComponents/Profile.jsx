@@ -8,7 +8,7 @@ function Profile() {
     
     const navigate = useNavigate();
     const [profileImage, setProfileImage] = useState(null);
-    
+
     const { streakState, setStreakState } = useContext(SettingsContext);
     const { setCurrentUser, userData, setUserData } = useContext(TaskContext);
 
@@ -73,8 +73,8 @@ function Profile() {
                 </label>
 
                 <div className="the-user-info">
-                    <p className="the-user-name-title">Jane Doe</p>
-                    <p className="the-user-name-title">janedoe@gmail.com</p>
+                    <p className="the-user-name-title">{userData.name}</p>
+                    <p className="the-user-name-title">{userData.email}</p>
                 </div>
 
             </div>
