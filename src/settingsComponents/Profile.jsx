@@ -8,8 +8,7 @@ function Profile() {
     
     const navigate = useNavigate();
     const [profileImage, setProfileImage] = useState(null);
-    const [quoteState, setQuoteState] = useState(false);
-
+    
     const { streakState, setStreakState } = useContext(SettingsContext);
     const { setCurrentUser, userData, setUserData } = useContext(TaskContext);
 
@@ -42,6 +41,14 @@ function Profile() {
         const quirk = !userData.quirk;
         db.profiles.update(userData.$id, {quirk});
         setUserData({...userData, quirk});
+    
+    }
+
+    async function setQuote() {
+        
+        const quote = !userData.quote;
+        db.profiles.update(userData.$id, {quote});
+        setUserData({...userData, quote});
     
     }
 
@@ -113,8 +120,8 @@ function Profile() {
                     
                     <p>Daily quote</p>
 
-                    <div className={`toggle ${quoteState && "bg-[var(--color-accentprimary)]"}`} onClick={() => setQuoteState(prev => !prev)}>
-                        <div className={`ball ease duration-800 ${quoteState && "translate-x-9 md:translate-x-43"}`}></div>
+                    <div className={`toggle ${userData.quote && "bg-[var(--color-accentprimary)]"}`} onClick={() => setQuote()}>
+                        <div className={`ball ease duration-800 ${userData.quote && "translate-x-9 md:translate-x-43"}`}></div>
                     </div>
 
                 </div>
