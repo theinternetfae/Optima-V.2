@@ -10,8 +10,8 @@ function Profile() {
     const [profileImage, setProfileImage] = useState(null);
     const [quoteState, setQuoteState] = useState(false);
 
-    const {setOptimaQuirk, streakState, setStreakState} = useContext(SettingsContext);
-    const { setCurrentUser, userData, setUserData } = useContext(TaskContext)
+    const { streakState, setStreakState } = useContext(SettingsContext);
+    const { setCurrentUser, userData, setUserData } = useContext(TaskContext);
 
     function handleImageChange(e) {
         const file = e.target.files[0];

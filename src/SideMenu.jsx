@@ -1,12 +1,13 @@
 import { useMemo, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { SettingsContext } from "./components/TaskContext.js";
+import { SettingsContext, TaskContext } from "./components/TaskContext.js";
 
 function SideMenu() {
 
     const location = useLocation();
 
-    const { level, optimaQuirk } = useContext(SettingsContext);
+    const { userData } = useContext(TaskContext);
+    const { level } = useContext(SettingsContext);
 
     const setPath = useMemo(() => {
         if(location.pathname !== "/" && location.pathname !== "/taskStats" && location.pathname !== "/taskHistory" && location.pathname !== "/settings" && location.pathname !== "/home") return "/settings";
@@ -47,7 +48,7 @@ function SideMenu() {
 
             </div>
 
-            {optimaQuirk && 
+            {userData.quirk && 
                 <div className="progress-bar-cont" title=" Level One">
                     <div className="level-counter">1</div>
                     <div className="level">

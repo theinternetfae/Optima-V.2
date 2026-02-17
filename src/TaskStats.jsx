@@ -6,7 +6,7 @@ function TaskStats() {
     const today = new Date();
     const normalizeDate = date => new Date(date).toDateString();
 
-    const { taskList, tasksDone } = useContext(TaskContext);
+    const { taskList, tasksDone, userData } = useContext(TaskContext);
     const { streakState } = useContext(SettingsContext);
     const [ statsNew, setStatsNew ] = useState(false);
 

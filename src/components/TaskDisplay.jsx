@@ -5,8 +5,8 @@ import Alert from "./Alert.jsx";
 
 function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitReached}) {
 
-  const { taskList, setTaskList, saveEditedTask, setTasksDone } = useContext(TaskContext);
-  const { optimaQuirk, level } = useContext(SettingsContext);
+  const { taskList, setTaskList, saveEditedTask, setTasksDone, userData } = useContext(TaskContext);
+  const { level } = useContext(SettingsContext);
   
   function normalizeDate(d) {
     const newDate = new Date(d);
@@ -114,9 +114,9 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
           ) :
          
           (
-            <div className={`done-box ${!optimaQuirk && 'justify-end'}`}>
+            <div className={`done-box ${!userData.quirk && 'justify-end'}`}>
 
-              {optimaQuirk && 
+              {userData.quirk && 
                 <button className={`bi bi-star-fill commit ${taskE.isCommited && 'text-yellow'} ${new Date(taskE.id).toDateString() !== new Date().toDateString() && !taskE.isCommited || limitReached && !taskE.isCommited ? 'text-grey cursor-not-allowed' : ''}`}
                 
                   onClick={() => {
