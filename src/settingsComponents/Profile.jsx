@@ -10,7 +10,7 @@ function Profile() {
     const [profileImage, setProfileImage] = useState(null);
     const [quoteState, setQuoteState] = useState(false);
 
-    const {optimaQuirk, setOptimaQuirk, streakState, setStreakState} = useContext(SettingsContext);
+    const {setOptimaQuirk, streakState, setStreakState} = useContext(SettingsContext);
     const { setCurrentUser, userData, setUserData } = useContext(TaskContext)
 
     function handleImageChange(e) {
@@ -32,9 +32,17 @@ function Profile() {
     async function changeAccent(color) {
 
         const accent = color;
-        db.profiles.update(userData.$id, {accent})
-        setUserData({...userData, accent})
+        db.profiles.update(userData.$id, {accent});
+        setUserData({...userData, accent});
 
+    }
+
+    async function setQuirk() {
+        
+        const quirk = !userData.quirk;
+        db.profiles.update(userData.$id, {quirk});
+        setUserData({...userData, quirk});
+    
     }
 
     return ( 
@@ -95,8 +103,8 @@ function Profile() {
                     
                     <p>Optima Quirk</p>
 
-                    <div className={`toggle ${optimaQuirk && "bg-[var(--color-accentprimary)]"}`} onClick={() => setOptimaQuirk(prev => !prev)}>
-                        <div className={`ball ease duration-800 ${optimaQuirk && "translate-x-9 md:translate-x-43"}`}></div>
+                    <div className={`toggle ${userData.quirk && "bg-[var(--color-accentprimary)]"}`} onClick={() => setQuirk()}>
+                        <div className={`ball ease duration-800 ${userData.quirk && "translate-x-9 md:translate-x-43"}`}></div>
                     </div>
 
                 </div>

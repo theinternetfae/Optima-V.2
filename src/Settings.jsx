@@ -1,19 +1,28 @@
 import { useContext } from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
-import { SettingsContext } from "./components/TaskContext.js";
+import { TaskContext } from "./components/TaskContext.js";
+import db from "./appwrite/databases.js";
 
 function Settings() {
 
     const location = useLocation();
-    const { theme, setTheme} = useContext(SettingsContext); 
+    const { userData, setUserData} = useContext(TaskContext); 
 
 
     function settingTheme() {
 
-        if(theme === 'dark') {
-            setTheme('light');
+        if(userData.theme === 'dark') {
+
+            const theme = 'light';
+            db.profiles.update(userData.$id, {theme})
+            setUserData({...userData, theme});
+
         } else {
-            setTheme('dark');
+
+            const theme = 'dark';
+            db.profiles.update(userData.$id, {theme})
+            setUserData({...userData, theme});
+
         }
     
     }
@@ -45,10 +54,10 @@ function Settings() {
                 </div>
 
                 <div className="light-dark 'bg-[var(--color-accentprimary)]'}" onClick={() => {
-                    settingTheme()
+                    settingTheme();
                 }}>
-                    <div className={`light-dark-ball transition ease duration-600 ${theme === "light" && 'translate-x-38'}`}> 
-                        <i className={`${theme === "light" ? "bi bi-sun text-[var(--color-accentprimary)]" : "bi bi-moon text-black"} `}></i>
+                    <div className={`light-dark-ball transition ease duration-600 ${userData.theme === "light" && 'translate-x-38'}`}> 
+                        <i className={`${userData.theme === "light" ? "bi bi-sun text-[var(--color-accentprimary)]" : "bi bi-moon text-black"} `}></i>
                     </div>
                 </div>
 

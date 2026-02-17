@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import DateMenu from "./Date.jsx";
 import TaskHistory from "./TaskHistory.jsx";
 import TaskStats from "./TaskStats.jsx";
-import { useState, useEffect, useLayoutEffect, useMemo } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { TaskContext, SettingsContext } from "./components/TaskContext.js";
 import AppLayout from "./AppLayout.jsx";
 import Settings from "./Settings.jsx";
@@ -32,7 +32,7 @@ function App() {
 
 
   const [userData, setUserData] = useState(() => {
-    return JSON.parse(localStorage.getItem("userData")) || {};
+    return JSON.parse(localStorage.getItem("userData")) || null;
   });
   
   useEffect(() => {
@@ -163,27 +163,18 @@ function App() {
 
   const root = document.documentElement;
 
-  //THEMES
-  const [theme, setTheme] = useState(() => {
-      const savedTheme = localStorage.getItem('theme'); 
-      return savedTheme ? savedTheme : 'dark';
-  });
-
-  useEffect(() => {
-      localStorage.setItem('theme', theme);
-  }, [theme]);
-
-
 
   useLayoutEffect(() => {
 
-    if(theme === 'light') {
+    if (!userData) return;
+
+    if(userData.theme === 'light') {
         root.classList.add('light');
     } else {
         root.classList.remove('light');
     }
 
-  }, [theme])
+  }, [userData?.theme])
 
   
   
@@ -355,17 +346,6 @@ function App() {
 
 
 
-  //OPTIONAL QUIRKS
-
-  const [optimaQuirk, setOptimaQuirk] = useState(() => {
-    const savedQuirk = localStorage.getItem("optimaQuirk");
-    return savedQuirk ? JSON.parse(savedQuirk) : true;
-  });
-
-  useEffect(() => {
-    localStorage.setItem("optimaQuirk", JSON.stringify(optimaQuirk));
-  }, [optimaQuirk])
-
 
   const [streakState, setStreakState] = useState(() => {
     const savedStreakState = localStorage.getItem("streakState");
@@ -475,7 +455,7 @@ function App() {
   return (
 
     <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask, setCurrentUser, userData, setUserData}}>
-      <SettingsContext.Provider value={{theme, setTheme, level, setLevel, optimaQuirk, setOptimaQuirk, streakState, setStreakState}}>
+      <SettingsContext.Provider value={{level, setLevel, streakState, setStreakState}}>
 
         <BrowserRouter>    
 
