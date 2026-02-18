@@ -109,9 +109,64 @@ input[type="number"]::-webkit-outer-spin-button {
     --color-accentsecondary: var(--accent-soft);
 }
 
+@keyframes borderFade {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 1;
+    }
+    50% {  
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
 
 @layer components {
 
+    .loading-screen {
+        @apply fixed w-full min-h-svh flex items-center justify-center;
+
+        .loading-box {
+            @apply relative p-6 rounded-lg border-tocolorb transition ease-in-out duration-300;
+
+            span {
+                @apply border border-8 absolute top-0 left-0 w-full h-full rounded-lg border-tocolorb;
+                
+                animation: borderFade 1.6s linear infinite;
+            }
+
+            .one {
+                @apply border border-t-8 border-x-transparent border-b-transparent;
+                
+                animation-delay: 0s;
+            }
+
+            .two {
+                @apply border border-r-8 border-y-transparent border-l-transparent; 
+                
+                animation-delay: 0.4s;
+            }
+
+            .three {
+                @apply border border-b-8 border-x-transparent border-t-transparent;
+            
+                animation-delay: 0.8s;
+            }
+
+            .four {
+                @apply border border-l-8 border-y-transparent border-r-transparent;
+                
+                animation-delay: 1.2s;
+            }
+
+            p {
+                @apply text-xl;
+            }
+        }
+    }
 
     .verify {
         @apply fixed top-0 z-50 w-full h-full bg-black flex justify-center items-center;

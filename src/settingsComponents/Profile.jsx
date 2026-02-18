@@ -9,7 +9,7 @@ function Profile() {
     const navigate = useNavigate();
     const [profileImage, setProfileImage] = useState(null);
 
-    const { setCurrentUser, userData, setUserData } = useContext(TaskContext);
+    const { authProfile, userData, setUserData } = useContext(TaskContext);
 
     function handleImageChange(e) {
         const file = e.target.files[0];
@@ -21,8 +21,8 @@ function Profile() {
 
     async function signOut() {
 
-        setCurrentUser(null);
         await user.logout();
+        authProfile();
         navigate("/");
         
     }

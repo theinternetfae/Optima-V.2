@@ -425,7 +425,7 @@ function App() {
 
   return (
 
-    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask, setCurrentUser, userData, authProfile, setUserData}}>
+    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask, userData, authProfile, setUserData}}>
       <SettingsContext.Provider value={{level, setLevel}}>
 
         <BrowserRouter>    
