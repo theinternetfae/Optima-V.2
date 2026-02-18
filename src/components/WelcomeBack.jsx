@@ -10,7 +10,7 @@ import Alert from "./Alert.jsx";
 function WelcomeBack() {
     
     const navigate = useNavigate();
-    const {setCurrentUser} = useContext(TaskContext);
+    const { authProfile } = useContext(TaskContext);
 
     const [emailInput, setEmailInput] = useState('');
     const [password, setPassword] = useState('');
@@ -41,7 +41,6 @@ function WelcomeBack() {
 
     async function signIn() {
 
-        // user.logout();
         try {
 
             if (!emailInput || !password) {
@@ -77,7 +76,7 @@ function WelcomeBack() {
                 return;
             } 
 
-            setCurrentUser(currentUser);            
+            authProfile();
             setEmailInput('');
             setPassword('');
             navigate("/home");            

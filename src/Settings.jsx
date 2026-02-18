@@ -56,8 +56,8 @@ function Settings() {
                 <div className="light-dark 'bg-[var(--color-accentprimary)]'}" onClick={() => {
                     settingTheme();
                 }}>
-                    <div className={`light-dark-ball transition ease duration-600 ${userData.theme === "light" && 'translate-x-38'}`}> 
-                        <i className={`${userData.theme === "light" ? "bi bi-sun text-[var(--color-accentprimary)]" : "bi bi-moon text-black"} `}></i>
+                    <div className={`light-dark-ball transition ease duration-600 ${userData?.theme === "light" && 'translate-x-38'}`}> 
+                        <i className={`${userData?.theme === "light" ? "bi bi-sun text-[var(--color-accentprimary)]" : "bi bi-moon text-black"} `}></i>
                     </div>
                 </div>
 

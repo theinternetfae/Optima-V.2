@@ -9,7 +9,6 @@ function Profile() {
     const navigate = useNavigate();
     const [profileImage, setProfileImage] = useState(null);
 
-    const { streakState, setStreakState } = useContext(SettingsContext);
     const { setCurrentUser, userData, setUserData } = useContext(TaskContext);
 
     function handleImageChange(e) {
@@ -81,8 +80,8 @@ function Profile() {
                 </label>
 
                 <div className="the-user-info">
-                    <p className="the-user-name-title">{userData.name}</p>
-                    <p className="the-user-name-title">{userData.email}</p>
+                    <p className="the-user-name-title">{userData?.name}</p>
+                    <p className="the-user-name-title">{userData?.email}</p>
                 </div>
 
             </div>
@@ -94,19 +93,19 @@ function Profile() {
 
                     <div className="themes">
                         
-                        <div className={`theme-box one ${userData.accent === 'blue' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => changeAccent('blue')}>
+                        <div className={`theme-box one ${userData?.accent === 'blue' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => changeAccent('blue')}>
                             <div className="in-one"></div>
                         </div>
 
-                        <div className={`theme-box two ${userData.accent === 'purple' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => changeAccent('purple')}>
+                        <div className={`theme-box two ${userData?.accent === 'purple' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => changeAccent('purple')}>
                             <div className="in-two"></div>
                         </div>
                         
-                        <div className={`theme-box three ${userData.accent === 'pink' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => changeAccent('pink')}>
+                        <div className={`theme-box three ${userData?.accent === 'pink' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => changeAccent('pink')}>
                             <div className="in-three"></div>
                         </div>
                         
-                        <div className={`theme-box four ${userData.accent === 'green' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => changeAccent('green')}>
+                        <div className={`theme-box four ${userData?.accent === 'green' ? 'border-[var(--color-accentprimary)]' : ''}`} onClick={() => changeAccent('green')}>
                             <div className="in-four"></div>
                         </div>
                         
@@ -118,8 +117,8 @@ function Profile() {
                     
                     <p>Optima Quirk</p>
 
-                    <div className={`toggle ${userData.quirk && "bg-[var(--color-accentprimary)]"}`} onClick={() => setQuirk()}>
-                        <div className={`ball ease duration-800 ${userData.quirk && "translate-x-9 md:translate-x-43"}`}></div>
+                    <div className={`toggle ${userData?.quirk && "bg-[var(--color-accentprimary)]"}`} onClick={() => setQuirk()}>
+                        <div className={`ball ease duration-800 ${userData?.quirk && "translate-x-9 md:translate-x-43"}`}></div>
                     </div>
 
                 </div>
@@ -128,8 +127,8 @@ function Profile() {
                     
                     <p>Daily quote</p>
 
-                    <div className={`toggle ${userData.quote && "bg-[var(--color-accentprimary)]"}`} onClick={() => setQuote()}>
-                        <div className={`ball ease duration-800 ${userData.quote && "translate-x-9 md:translate-x-43"}`}></div>
+                    <div className={`toggle ${userData?.quote && "bg-[var(--color-accentprimary)]"}`} onClick={() => setQuote()}>
+                        <div className={`ball ease duration-800 ${userData?.quote && "translate-x-9 md:translate-x-43"}`}></div>
                     </div>
 
                 </div>
@@ -138,8 +137,8 @@ function Profile() {
                     
                     <p>Streak</p>
 
-                    <div className={`toggle ${userData.streak && "bg-[var(--color-accentprimary)]"}`} onClick={() => setStreak()}>
-                        <div className={`ball ease duration-800 ${userData.streak && "translate-x-9 md:translate-x-43"}`}></div>
+                    <div className={`toggle ${userData?.streak && "bg-[var(--color-accentprimary)]"}`} onClick={() => setStreak()}>
+                        <div className={`ball ease duration-800 ${userData?.streak && "translate-x-9 md:translate-x-43"}`}></div>
                     </div>
 
                 </div>

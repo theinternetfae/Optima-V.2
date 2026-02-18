@@ -48,7 +48,7 @@ function SideMenu() {
 
             </div>
 
-            {userData.quirk && 
+            {userData?.quirk && 
                 <div className="progress-bar-cont" title=" Level One">
                     <div className="level-counter">1</div>
                     <div className="level">

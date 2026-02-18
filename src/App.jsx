@@ -47,79 +47,60 @@ function App() {
 
   const [loading, setLoading] = useState(true);
 
+  async function authProfile() {
 
-  async function checkUser() {
-    try{
+    try {
+      setLoading(true);
+
       const userInfo = await user.get();
       setCurrentUser(userInfo);
-    } catch (e) {
-      setCurrentUser(null);
-    } finally {
-      setLoading(false);
-    }
-  }
 
-  useEffect(() => {
-    checkUser();
-    console.log(currentUser);
-  }, []);
-
-
-  useEffect(() => {
-    
-    if (!currentUser) return;
-
-    async function loadProfile() {
       try {
-  
-        setLoading(true);
-
-        const data = await db.profiles.get(currentUser.$id);
-
+        const data = await db.profiles.get(userInfo.$id);
         setUserData(data);
 
       } catch (err) {
-        
-        if(err.code === 404) {
-  
+        if (err.code === 404) {
+
           const payload = {
-            name: currentUser.name,
-            email: currentUser.email,
+            name: userInfo.name,
+            email: userInfo.email,
             tasks: [],
-            theme: 'dark',
-            accent: 'blue',
+            theme: "dark",
+            accent: "blue",
             quirk: true,
             quote: false,
-            streak: true 
-          }
+            streak: true,
+          };
 
-          const id = currentUser.$id;
-
-          const newData = await db.profiles.create(payload, null, id);
+          const newData = await db.profiles.create(payload, null, userInfo.$id);
           setUserData(newData);
-          
-        } else {
-          console.log(err);
         }
-
-      } finally {
-  
-        setLoading(false);
-        
       }
+
+    } catch {
+      setCurrentUser(null);
+      setUserData(null);
+
+    } finally {
+      setLoading(false);
     }
-
-    if (currentUser) loadProfile();
-
-  }, [currentUser]);
+}
 
   useEffect(() => {
-    console.log("current user:", currentUser);
-  }, [currentUser]);
+    authProfile();
+  }, []);
+
+  
+  // useEffect(() => {
+  //   if(!currentUser) return;
+
+  //   if(currentUser) loadProfile()
+  // }, [currentUser])
 
   useEffect(() => {
-    console.log("User data:", userData);
-  }, [userData])
+    console.log("Loading State:", loading);
+  }, [loading])
 
 
 
@@ -444,13 +425,13 @@ function App() {
 
   return (
 
-    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask, setCurrentUser, userData, setUserData}}>
+    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask, setCurrentUser, userData, authProfile, setUserData}}>
       <SettingsContext.Provider value={{level, setLevel}}>
 
         <BrowserRouter>    
 
           {
-            (loading || !userData) ? (
+            (loading) ? (
               <Loader />
             ) : (
               <Routes>
