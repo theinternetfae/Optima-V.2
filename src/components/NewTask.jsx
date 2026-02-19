@@ -31,6 +31,11 @@ function NewTask({exit, editExit, statsNew, task}) {
 
     const timeString = `${hour}:${String(minute).padStart(2, "0")} ${meridiem}`;
 
+    // useEffect(() => {
+    //     const now = new Date();
+    //     console.log('Date Format', now.getTime());
+    // }, [])
+
     function clickShowPicker() {
         setShowPicker(prev => !prev);
     }

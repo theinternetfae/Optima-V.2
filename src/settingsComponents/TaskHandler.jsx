@@ -91,7 +91,8 @@ function TaskHandler() {
         if (selectedHandle === 'paused') return Object.values(handledTasks).filter(t => t.isPaused);
         return Object.values(handledTasks).filter(t => normalizeDate(t.end) < normalizeDate(today));
     }, [handledTasks, selectedHandle])
-    
+
+    console.log("Visible tasks", visibleTasks);
 
     function yesDelete() {
         const newTaskList = taskList.filter(t => normalizeDate(t.end) > normalizeDate(today));
@@ -116,8 +117,8 @@ function TaskHandler() {
                 
                 <div className="task-h-box">
                     {
-                        !visibleTasks ? (
-                            <p className="no-tasks">{`No ${selectedHandle === 'active' ? 'active' : selectedHandle === 'inactive' ? 'inactive' : selectedHandle === 'paused' ? 'paused' : ''} tasks`}</p>
+                        !visibleTasks || visibleTasks.length === 0 ? (
+                            <p className="no-tasks">{`No ${selectedHandle === 'all' ? '' : selectedHandle === 'active' ? 'active' : selectedHandle === 'paused' ? 'paused' : 'inactive'} tasks`}</p>
                         ) : (
                             visibleTasks.map(t => {
                             return <TaskDisplay
