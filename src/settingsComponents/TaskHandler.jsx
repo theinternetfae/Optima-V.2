@@ -65,18 +65,18 @@ function TaskHandler() {
 
         if(taskList.length === 0) return;
 
-        const start = new Date(taskList[0].id);
+        const start = new Date(taskList[0].appearId);
         const days = generateDayRange(start, today);
 
         const validTasks = taskList.filter(task =>
             days.some(day =>
-                isSameDay(task.id, day)
+                isSameDay(task.appearId, day)
             )
         );
 
         const indTasks = {};
         for(const vTask of validTasks) {
-            indTasks[vTask.baseId] = vTask;
+            indTasks[vTask.createdId] = vTask;
         }
 
         return indTasks;
@@ -104,7 +104,7 @@ function TaskHandler() {
         <div className="sett-body">
 
             <div className="task-h-header">
-                <select name="all-tasks" id="" value={selectedHandle} onChange={(e) => setSelectedHandle(e.target.value)}>
+                <select name="all-tasks" value={selectedHandle} onChange={(e) => setSelectedHandle(e.target.value)}>
                     <option value="all">All tasks</option>
                     <option value="active">Active</option>
                     <option value="paused">Paused</option>

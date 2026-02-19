@@ -47,7 +47,7 @@ function TaskStats() {
 
         for (const task of taskList) {
             if (task.days.length > 0) {
-                uniqueTasksMap.set(task.baseId, task);
+                uniqueTasksMap.set(task.createdId, task);
             }
         }
 
@@ -227,7 +227,7 @@ function TaskStats() {
             
             const generalStreak = validDays.reduce((acc, d) => {
 
-                const tasksNDays = taskList.filter(tl => normalizeDate(tl.id) === normalizeDate(d));
+                const tasksNDays = taskList.filter(tl => normalizeDate(tl.appearId) === normalizeDate(d));
                 console.log(tasksNDays);
                 if(tasksNDays.length > 0 && tasksNDays.every(td => td.isDone)) {
                     acc.count++;
@@ -247,7 +247,7 @@ function TaskStats() {
 
         } else {
 
-            const tasksToCalculate = taskList.filter(t => t.baseId === selectedTask.baseId)
+            const tasksToCalculate = taskList.filter(t => t.createdId === selectedTask.createdId)
 
             const resultStreak = tasksToCalculate.reduce((acc, tc) => {
                 if(tc.isDone) {
@@ -288,15 +288,15 @@ function TaskStats() {
             if(taskList.length === 0) return;
 
             const tasksByBase = taskList.reduce((acc, t) => {
-                if (!acc[t.baseId]) acc[t.baseId] = [];
-                acc[t.baseId].push(t);
+                if (!acc[t.createdId]) acc[t.createdId] = [];
+                acc[t.createdId].push(t);
                 return acc;
             }, {});
 
             const lastTasks = Object.values(tasksByBase).map(ta => {
                 
                 const lastTask = ta.reduce((latest, current) =>
-                    new Date(current.id) > new Date(latest.id) ? current : latest
+                    new Date(current.appearId) > new Date(latest.appearId) ? current : latest
                 , ta[0]);
 
                 return lastTask;
@@ -310,7 +310,7 @@ function TaskStats() {
             setActiveCount(count);
 
         } else {
-            const validTasks = taskList.filter(t => t.baseId === selectedTask.baseId);
+            const validTasks = taskList.filter(t => t.createdId === selectedTask.createdId);
 
             const end = validTasks[validTasks.length - 1].end;
         
@@ -339,7 +339,7 @@ function TaskStats() {
 
         } else {
             
-            const selectedTotal = taskList.filter(t => t.baseId === selectedTask.baseId);
+            const selectedTotal = taskList.filter(t => t.createdId === selectedTask.createdId);
             
             const selectedCompleted = selectedTotal.filter(t => t.isDone);
             
@@ -359,7 +359,7 @@ function TaskStats() {
             return;
         };
 
-        const uniqueDone = taskList.filter(tl => tl.baseId === selectedTask.baseId && tl.isDone === true);
+        const uniqueDone = taskList.filter(tl => tl.createdId === selectedTask.createdId && tl.isDone === true);
         setSelectedTaskCount(uniqueDone.length);
         
     }, [selectedTask])
@@ -377,7 +377,7 @@ function TaskStats() {
             let count = 0;
 
             for(let i = validDays.length - 1; i >= 0; i--) {
-                const tasksNDays = taskList.filter(tl => normalizeDate(tl.id) === normalizeDate(validDays[i]));
+                const tasksNDays = taskList.filter(tl => normalizeDate(tl.appearId) === normalizeDate(validDays[i]));
                 
                 if(tasksNDays.length > 0 && tasksNDays.every(td => td.isDone)) {
                     count++;
@@ -390,7 +390,7 @@ function TaskStats() {
 
         } else {
 
-            const tasksToCalculate = taskList.filter(t => t.baseId === selectedTask.baseId);
+            const tasksToCalculate = taskList.filter(t => t.createdId === selectedTask.createdId);
 
             const start = new Date(tasksToCalculate[0].start);
 
@@ -399,7 +399,7 @@ function TaskStats() {
             let count = 0;
 
             for(let i = validDays.length - 1; i >= 0; i--) {
-                const tasksNDays = tasksToCalculate.filter(tl => normalizeDate(tl.id) === normalizeDate(validDays[i]));
+                const tasksNDays = tasksToCalculate.filter(tl => normalizeDate(tl.appearId) === normalizeDate(validDays[i]));
                 
                 if(tasksNDays.length > 0 && tasksNDays.some(td => td.isDone)) {
                     count++;
@@ -433,7 +433,7 @@ function TaskStats() {
                 <select name="task-selected" value={selectedId} onChange={e => {
                     
                     uniqueTasks.forEach(task => {
-                        Number(e.target.value) === task.baseId ? toggleSelected(Number(e.target.value), task) : Number(e.target.value) === 0 && toggleSelected(Number(e.target.value));
+                        Number(e.target.value) === task.createdId ? toggleSelected(Number(e.target.value), task) : Number(e.target.value) === 0 && toggleSelected(Number(e.target.value));
                     })
                     
                 }} className="task-selected">         
@@ -444,7 +444,7 @@ function TaskStats() {
                     
                     {
                         uniqueTasks.map((task, index) => (
-                            <option value={task.baseId} key={index}>
+                            <option value={task.createdId} key={index}>
                                 {task.emoji} {task.name}
                             </option>
                         ))
@@ -465,8 +465,8 @@ function TaskStats() {
                     {
                         uniqueTasks.map((task, index) => (
                             <div key={index} className="li-cont">
-                                <li onClick={() => toggleSelected(task.baseId, task)} style={selectedId === task.baseId ? { border: `2px solid ${task.color}` } : {}}>
-                                    {task.emoji} {selectedId === task.baseId && <span>{cutWords(task.name)}</span>}
+                                <li onClick={() => toggleSelected(task.createdId, task)} style={selectedId === task.createdId ? { border: `2px solid ${task.color}` } : {}}>
+                                    {task.emoji} {selectedId === task.createdId && <span>{cutWords(task.name)}</span>}
                                 </li>
                             </div>
                         ))
@@ -535,25 +535,25 @@ function TaskStats() {
 
                     <div className="the-four">
                         <div className="top">
-                            <section title="Top streak" className="sec-one-two" style={uniqueTasks.some(task => selectedId === task.baseId) ? { border: `2px solid ${selectedTask.color}`} : {}}>
-                                <i className="bi-trophy" style={uniqueTasks.some(task => selectedId === task.baseId) ? { color: `${selectedTask.color}`} : {}}></i>
+                            <section title="Top streak" className="sec-one-two" style={uniqueTasks.some(task => selectedId === task.createdId) ? { border: `2px solid ${selectedTask.color}`} : {}}>
+                                <i className="bi-trophy" style={uniqueTasks.some(task => selectedId === task.createdId) ? { color: `${selectedTask.color}`} : {}}></i>
                                 <p className="calculator">{amountGeneralStreak()}</p>
                                 <p className="calculator-label">Top streak</p>
                             </section>
-                            <section title="Current streak" className="sec-one-two" style={uniqueTasks.some(task => selectedId === task.baseId) ? { border: `2px solid ${selectedTask.color}`} : {}}>
-                                <i className="bi-fire" style={uniqueTasks.some(task => selectedId === task.baseId) ? { color: `${selectedTask.color}`} : {}}></i>
+                            <section title="Current streak" className="sec-one-two" style={uniqueTasks.some(task => selectedId === task.createdId) ? { border: `2px solid ${selectedTask.color}`} : {}}>
+                                <i className="bi-fire" style={uniqueTasks.some(task => selectedId === task.createdId) ? { color: `${selectedTask.color}`} : {}}></i>
                                 <p className="calculator">{amountGeneralCurrentStreak()}</p>
                                 <p className="calculator-label">current streak</p>
                             </section>
                         </div>
                         <div className="bottom">
-                            <section title="Tasks done" className="sec-one-two" style={uniqueTasks.some(task => selectedId === task.baseId) ? { border: `2px solid ${selectedTask.color}`} : {}}>
-                                <i className="bi bi-check2-circle" style={uniqueTasks.some(task => selectedId === task.baseId) ? { color: `${selectedTask.color}`} : {}}></i>
+                            <section title="Tasks done" className="sec-one-two" style={uniqueTasks.some(task => selectedId === task.createdId) ? { border: `2px solid ${selectedTask.color}`} : {}}>
+                                <i className="bi bi-check2-circle" style={uniqueTasks.some(task => selectedId === task.createdId) ? { color: `${selectedTask.color}`} : {}}></i>
                                 <p className="calculator">{selectedTaskCount}</p>
                                 <p className="calculator-label">{selectedTask ? 'Times Done' : 'Habits done'}</p>
                             </section>
-                                <section title="Active status" className="sec-one-two" style={uniqueTasks.some(task => selectedId === task.baseId) ? { border: `2px solid ${selectedTask.color}`} : {}}>
-                                <i className="bi-info-circle" style={uniqueTasks.some(task => selectedId === task.baseId) ? { color: `${selectedTask.color}`} : {}}></i>
+                                <section title="Active status" className="sec-one-two" style={uniqueTasks.some(task => selectedId === task.createdId) ? { border: `2px solid ${selectedTask.color}`} : {}}>
+                                <i className="bi-info-circle" style={uniqueTasks.some(task => selectedId === task.createdId) ? { color: `${selectedTask.color}`} : {}}></i>
                                 <p className="calculator">{selectedTask ? (activeStatus ? 'Active' : 'Inactive') : `${activeCount} Active`}</p>
                                 <p className="calculator-label">Status</p>
                             </section>

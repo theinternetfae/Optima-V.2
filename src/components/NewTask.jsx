@@ -31,11 +31,6 @@ function NewTask({exit, editExit, statsNew, task}) {
 
     const timeString = `${hour}:${String(minute).padStart(2, "0")} ${meridiem}`;
 
-    // useEffect(() => {
-    //     const now = new Date();
-    //     console.log('Date Format', now.getTime());
-    // }, [])
-
     function clickShowPicker() {
         setShowPicker(prev => !prev);
     }
@@ -61,9 +56,10 @@ function NewTask({exit, editExit, statsNew, task}) {
             return;
         }
 
+
         const theTask = {
-            id: Date.now(),
-            baseId: Date.now(),
+            appearId: Date.now(),
+            createdId: Date.now(),
             keyUUID: crypto.randomUUID(),
             start: startDate,
             end: endDate,
@@ -119,7 +115,7 @@ function NewTask({exit, editExit, statsNew, task}) {
 
     function deleteTask() {
 
-        const tasksRemaining = taskList.filter(t => t.id !== task.id && t.baseId !== task.baseId);
+        const tasksRemaining = taskList.filter(t => t.appearId !== task.appearId && t.createdId !== task.createdId);
         setTaskList(tasksRemaining);;
         editExit();
 
@@ -188,7 +184,7 @@ function NewTask({exit, editExit, statsNew, task}) {
                 
                 {taskDays.length > 0 && (
                     <div className="when-to-when">
-                        <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} min={today} disabled={task && task.id !== task.baseId}/>
+                        <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} min={today} disabled={task && task.appearId !== task.createdId}/>
                         <i className="bi bi-arrow-right"></i>
                         <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} min={today}/>
                     </div>

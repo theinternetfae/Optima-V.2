@@ -25,7 +25,7 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
   const [alertShow, setAlertShow] = useState(false);
 
   function deleteTask() {
-    const tasksRemaining = taskList.filter(t => t.id !== taskE.id && t.baseId !== taskE.baseId);
+    const tasksRemaining = taskList.filter(t => t.appearId !== taskE.appearId && t.createdId !== taskE.createdId);
     setTaskList(tasksRemaining);
     setAlertShow(prev => !prev);
   }
@@ -80,7 +80,7 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
         
           if(history) return;
           if(handler) return;
-          new Date(taskE.id).toDateString() !== new Date().toDateString() ? '' : setEditScreen(editScreen => !editScreen);
+          new Date(taskE.appearId).toDateString() !== new Date().toDateString() ? '' : setEditScreen(editScreen => !editScreen);
 
         }}>{taskE.name}</p>
         
@@ -117,11 +117,11 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
             <div className={`done-box ${!userData.quirk && 'justify-end'}`}>
 
               {userData.quirk && 
-                <button className={`bi bi-star-fill commit ${taskE.isCommited && 'text-yellow'} ${new Date(taskE.id).toDateString() !== new Date().toDateString() && !taskE.isCommited || limitReached && !taskE.isCommited ? 'text-grey cursor-not-allowed' : ''}`}
+                <button className={`bi bi-star-fill commit ${taskE.isCommited && 'text-yellow'} ${new Date(taskE.appearId).toDateString() !== new Date().toDateString() && !taskE.isCommited || limitReached && !taskE.isCommited ? 'text-grey cursor-not-allowed' : ''}`}
                 
                   onClick={() => {
                     
-                    if (limitReached && !taskE.isCommited && new Date(taskE.id).toDateString() === new Date().toDateString()) {
+                    if (limitReached && !taskE.isCommited && new Date(taskE.appearId).toDateString() === new Date().toDateString()) {
          
                       if (level === 3) {
                         alert('You are at the highest level! Optima advises commiting to a maximum of eight tasks a day. Doing great.')
@@ -132,7 +132,7 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
                       return;
                     }
 
-                    if (new Date(taskE.id).toDateString() !== new Date().toDateString()) return;
+                    if (new Date(taskE.appearId).toDateString() !== new Date().toDateString()) return;
                   
                     const newCommited = !taskE.isCommited;
 
@@ -167,9 +167,9 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
                   if (newDone === true) { 
                     setTasksDone(prev => [...prev, updatedTask])
                   } else {
-                    setTasksDone(prev => prev.filter(t => t.id !== taskE.id));
+                    setTasksDone(prev => prev.filter(t => t.appearId !== taskE.appearId));
                   }
-              }} disabled={new Date(taskE.id).toDateString() !== new Date().toDateString()}/>
+              }} disabled={new Date(taskE.appearId).toDateString() !== new Date().toDateString()}/>
 
             </div>
           )

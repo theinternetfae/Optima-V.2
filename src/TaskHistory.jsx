@@ -55,7 +55,7 @@ function TaskHistory() {
     }
 
     const tasksPerDay = useMemo(() => {
-        const tasks = taskList.filter(t => !chosenDate ? toDayKey(t.id) === toDayKey(today) : toDayKey(t.id) === toDayKey(chosenDate));
+        const tasks = taskList.filter(t => !chosenDate ? toDayKey(t.appearId) === toDayKey(today) : toDayKey(t.appearId) === toDayKey(chosenDate));
         return tasks;
     }, [chosenDate, taskList])
 
@@ -105,7 +105,7 @@ function TaskHistory() {
             };
         };
 
-        const chosensTasks = taskList.filter(t => t.baseId === chosenHist.baseId);
+        const chosensTasks = taskList.filter(t => t.createdId === chosenHist.createdId);
 
         if(chosensTasks.length === 0) {
             return {
@@ -137,7 +137,7 @@ function TaskHistory() {
 
         for(let i = validDays.length - 1; i >= 0; i--) {
             const tasksNDays = chosensTasks.filter(
-                c => normalizeDate(c.id) === normalizeDate(validDays[i])
+                c => normalizeDate(c.appearId) === normalizeDate(validDays[i])
             );
             
             if(tasksNDays.some(td => td.isDone)) {

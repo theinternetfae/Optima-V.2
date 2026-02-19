@@ -272,7 +272,7 @@ function App() {
 
     for(let day of calculatedDays) {
 
-      const taskToDay = taskList.filter(t => normalizeDate(t.id) === normalizeDate(day));
+      const taskToDay = taskList.filter(t => normalizeDate(t.appearId) === normalizeDate(day));
       const taskExists = taskToDay.length > 0;
       const moreThanOne =  taskToDay.filter(t => t.isCommited).length > 1;
       const requiredDone = level === 1 ? 2 : level === 2 ? 3 : 4;
@@ -349,7 +349,7 @@ function App() {
     const startBoundary = new Date(baseTask.start);
     const endBoundary = new Date(baseTask.end);
 
-    const startAfter = fromDate ? new Date(fromDate) : new Date(baseTask.id);
+    const startAfter = fromDate ? new Date(fromDate) : new Date(baseTask.appearId);
 
     startAfter.setDate(startAfter.getDate() + 1);
     startAfter.setHours(0, 0, 0, 0);
@@ -371,7 +371,7 @@ function App() {
         future.push({
           ...baseTask,
           keyUUID: crypto.randomUUID(),
-          id: d.getTime(),
+          appearId: d.getTime(),
           isDone: false
         });
 
@@ -380,7 +380,7 @@ function App() {
       }
     }
 
-    future.sort((a, b) => a.id - b.id);
+    future.sort((a, b) => a.appearId - b.appearId);
 
     return future;
   }
@@ -388,24 +388,24 @@ function App() {
 
   function updateTasks(editedTask) {
     setTaskList(prev => {
-      const editedDate = new Date(editedTask.id)
+      const editedDate = new Date(editedTask.appearId)
     
-      const cleaned = prev.filter(t => t.baseId !== editedTask.baseId || new Date(t.id) < editedDate);
+      const cleaned = prev.filter(t => t.createdId !== editedTask.createdId || new Date(t.appearId) < editedDate);
 
       return [...cleaned, editedTask];
     });
   }
 
-  function regenerateRepeats(baseId) {
+  function regenerateRepeats(createdId) {
     setTaskList(prev => {
 
-      const series = prev.filter(t => t.baseId === baseId);
+      const series = prev.filter(t => t.createdId === createdId);
 
       if(series.length === 0) return prev;
 
-      const latest = series.reduce((a,b) => (new Date(a.id) > new Date(b.id) ? a : b), series[0]);
+      const latest = series.reduce((a,b) => (new Date(a.appearId) > new Date(b.appearId) ? a : b), series[0]);
 
-      const future = generateFutureTasks(latest, new Date(latest.id));
+      const future = generateFutureTasks(latest, new Date(latest.appearId));
 
       if (future.length === 0) return prev;
 
@@ -420,7 +420,7 @@ function App() {
   function saveEditedTask(editedTask) {
     updateTasks(editedTask);
 
-    regenerateRepeats(editedTask.baseId);
+    regenerateRepeats(editedTask.createdId);
   }
 
   return (

@@ -173,7 +173,7 @@ function DateMenu() {
         });
 
         return taskList.filter(task => {
-            const taskDate = new Date(task.id).toLocaleDateString("en-us", {
+            const taskDate = new Date(task.appearId).toLocaleDateString("en-us", {
                 day: "numeric", 
                 month: "long", 
                 year: "numeric"
@@ -212,7 +212,7 @@ function DateMenu() {
 
     const limitReached = useMemo(() => {
 
-        const todaysTasks = taskList.filter(t => new Date(t.id).toDateString() === new Date(today).toDateString());
+        const todaysTasks = taskList.filter(t => new Date(t.appearId).toDateString() === new Date(today).toDateString());
         const commitedTasks = todaysTasks.filter(t => t.isCommited);
         const limitReached = commitedTasks.length >= levelLimit;
         return limitReached;
