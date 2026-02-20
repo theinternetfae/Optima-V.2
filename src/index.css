@@ -936,39 +936,23 @@ input[type="number"]::-webkit-outer-spin-button {
             /*About*/
 
             .about-background {
-                @apply h-[500px] bg-surfaceone rounded-lg p-2 overflow-y-auto no-scrollbar;
+                @apply h-[500px] bg-surfaceone relative rounded-lg p-2 overflow-y-auto no-scrollbar flex flex-col;
 
                 .dropdown {
-                    @apply flex flex-col;
+                    @apply flex flex-col z-10;
 
                     .toggle-dropdown {
                         @apply p-2 m-2 rounded-lg items-center h-15 flex gap-4 cursor-pointer bg-surfacetwo shadow-lg
                     }
 
-                    p {
+                    .drop {
                         @apply m-2 p-2 rounded-lg bg-surfacetwo shadow-lg;
                     }
 
-                    .contact-us {
-                        @apply ml-8; 
-
-                        .contacting-box {
-                            @apply m-2 rounded-lg h-50 w-[50%] bg-surfacetwo shadow-lg flex flex-col;
-
-                            textarea {
-                                @apply h-[70%] p-2 focus:outline-none m-2 rounded-lg bg-surfaceone;
-                            }
-
-                            button {
-                                @apply p-2 rounded-lg font-bold ml-auto mb-2 mr-2 bg-gradient-to-b from-accentsecondary to-accentprimary text-white shadow-lg active:scale-90;
-                            }
-                            
-                        }
-                    }
                 }
 
                 .controls {
-                    @apply h-[250px] m-2 p-2 rounded-lg flex flex-col gap-4;
+                    @apply h-[250px] p-2 rounded-lg flex flex-col gap-4 z-10;
 
                     h2 {
                         @apply border-y border-y-2 border-y-grey py-2; 
@@ -993,7 +977,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 .version-info {
-                    @apply h-[60px] flex items-center justify-center text-grey
+                    @apply h-[60px] absolute h-full w-full items-end top-0 z-0 flex items-center justify-center text-grey;
                 }
 
             }

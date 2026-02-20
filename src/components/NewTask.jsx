@@ -4,11 +4,11 @@ import Emoji from "./EmojiPicker.jsx";
 import Alert from "./Alert.jsx";
 import { TaskContext } from "./TaskContext.js";
 import db from "../appwrite/databases.js";
-
+import { ID } from "appwrite";
 
 function NewTask({exit, editExit, statsNew, task}) {
 
-    const { taskList, setTaskList, userInfo, saveEditedTask } = useContext(TaskContext);
+    const { taskList, setTaskList, userData, saveEditedTask } = useContext(TaskContext);
 
     const isEditingMode = !!task;    
 
@@ -24,7 +24,7 @@ function NewTask({exit, editExit, statsNew, task}) {
     const [startDate, setStartDate] = useState(task ? task.start : today);
     const [endDate, setEndDate] = useState(task ? task.end : today);
 
-    const [reminder, setReminder] = useState(task ? task.reminderStatus : false);
+    const [reminder, setReminder] = useState(task ? task.reminderStat : false);
 
     const [hour, setHour] = useState(task && task.reminderTime ? parseInt(task.reminderTime.split(':')[0]) : 8);
     const [minute, setMinute] = useState(task && task.reminderTime ? parseInt(task.reminderTime.split(':')[1]) : 0);
@@ -40,8 +40,7 @@ function NewTask({exit, editExit, statsNew, task}) {
         setTaskDays(t => t.includes(value) ? t.filter(task => task !== value) : [...t, value]);
     }
 
-    function creatingTask() {
-        
+    async function creatingTask() {
         const missing = [];
 
         if (!emojiInput) missing.push("pick an emoji");
@@ -57,25 +56,43 @@ function NewTask({exit, editExit, statsNew, task}) {
             return;
         }
 
+        console.log(userData)
 
-        const theTask = {
-            appearId: Date.now(),
-            createdId: Date.now(),
-            keyUUID: crypto.randomUUID(),
-            start: startDate,
-            end: endDate,
-            emoji: emojiInput,
+        // const theTask = {
+        //     reminderStat: reminder,
+        //     reminderTime: reminder ? timeString : null,
+        //     isDone: false,
+        //     isCommited: false,
+        //     isPaused: false
+        // };
+
+        const identifiers = Date.now().toString();
+
+        const payload = {
+            appearId: identifiers,
+            createdId: identifiers,
+            userId: userData.$id,
             name: nameInput,
+            emoji: emojiInput,
             color: colorCont,
             days: taskDays,
-            reminderStatus: reminder,
+            start: startDate,
+            end: endDate,
+            reminderStat: reminder,
             reminderTime: reminder ? timeString : null,
             isDone: false,
             isCommited: false,
             isPaused: false
-        };
+        }
 
-        saveEditedTask(theTask);
+        // saveEditedTask(theTask);
+    
+        db.tasks.create(
+            payload, 
+            null, 
+            ID.unique()
+        ).catch(err => console.log("Error:", err));
+
         exit ? exit() : statsNew();
     }
 
@@ -98,14 +115,13 @@ function NewTask({exit, editExit, statsNew, task}) {
 
         const editedTask = {
             ...task,
-            keyUUID: crypto.randomUUID(),
             start: startDate,
             end: endDate,
             name: nameInput,
             emoji: emojiInput,
             color: colorCont,
             days: taskDays,
-            reminderStatus: reminder,
+            reminderStat: reminder,
             reminderTime: reminder ? timeString : null,
         }        
 
@@ -163,10 +179,7 @@ function NewTask({exit, editExit, statsNew, task}) {
                             showing={clickShowPicker}
                         />
                     }
-                    {/* {showPicker && <EmojiPicker onEmojiClick={(emojiData) => {
-                        setEmojiInput(emojiData.emoji);
-                        clickShowPicker();
-                    }} />} */}
+
                 </div>
 
                 <div className="color-value">

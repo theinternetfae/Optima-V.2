@@ -91,12 +91,6 @@ function App() {
     authProfile();
   }, []);
 
-  
-  // useEffect(() => {
-  //   if(!currentUser) return;
-
-  //   if(currentUser) loadProfile()
-  // }, [currentUser])
 
   useEffect(() => {
     console.log("Loading State:", loading);

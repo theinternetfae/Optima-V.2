@@ -11,14 +11,14 @@ const database = [
     },
     {
         dbId: import.meta.env.VITE_OPTIMA_DATABASE_ID_OPFILES,
-        id: import.meta.env.VITE_OPTIMA_TABLE_ID_PROFILES,
+        id: import.meta.env.VITE_OPTIMA_TABLE_ID_TASKS,
         name: "tasks",
     },
 ];
 
 database.forEach(d => {
     db[d.name] = {
-        create: (payload, permissions, id) =>
+        create: (payload, permissions, id = ID.unique()) =>
             databases.createDocument(
                 d.dbId,
                 d.id,

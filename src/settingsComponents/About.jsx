@@ -5,10 +5,6 @@ function About() {
 
 
     const [toggleOne, setToggleOne] = useState(false);
-    const [toggleTwo, setToggleTwo] = useState(false);
-
-    const [contactOne, setContactOne] = useState(false);
-    const [contactTwo, setContactTwo] = useState(false);
 
     const [copied, setCopied] = useState(false);
 
@@ -33,46 +29,26 @@ function About() {
                         <span>What is Optima?</span>
                     </div>
 
-                    {toggleOne && <p>Optima is a productivity app that analyzes task completion patterns to dynamically adapt its behavior. Its core feature, a self-evolving system, adjusts based on user consistency to encourage sustainable productivity rather than burnout.</p>}
-
-                </section>
-
-                <section className="dropdown">
-                    <div className="toggle-dropdown" onClick={() => setToggleTwo(prev => !prev)}>
-                        <i className={toggleTwo ? "bi bi-caret-down-fill" :"bi bi-caret-right-fill"}></i>
-                        <span>Contact us</span>
-                    </div>
-                    
-                    {toggleTwo && 
-                    
-                        <div className="contact-us">
-                            <div className="toggle-dropdown" onClick={() => setContactOne(prev => !prev)}>
-                                <i className={contactOne ? "bi bi-caret-down-fill" :"bi bi-caret-right-fill"}></i>
-                                <span>Feature suggestion</span>
-                            </div>
-
-                            {contactOne && <div className="contacting-box">
-                                <textarea name="" id="" placeholder="What suggestion?"></textarea>
-                                <button>Submit</button>
-                            </div>}
-
-                            <div className="toggle-dropdown" onClick={() => setContactTwo(prev => !prev)}>
-                                <i className={contactTwo ? "bi bi-caret-down-fill" :"bi bi-caret-right-fill"}></i>
-                                <span>Report a bug</span>
-                            </div>    
-
-                            {contactTwo && <div className="contacting-box">
-                                <textarea name="" id="" placeholder="What bug?"></textarea>
-                                <button>Submit</button>
-                            </div>}
-                        </div>
-                    
-                    }
+                    {toggleOne && <p className="drop">Optima is a productivity app that analyzes task completion patterns to dynamically adapt its behavior. Its core feature, a self-evolving system, adjusts based on user consistency to encourage sustainable productivity rather than burnout.</p>}
 
                 </section>
 
                 <section className="controls">
                     <h2>More</h2>
+
+                    <div className="controller-about">
+                        <div>
+                            <p>Contact Us</p>
+                            <span>Send us a message, feeback, recommendation, etc.</span>
+                        </div>
+                        <a
+                            href="https://github.com/theinternetfae/Optima-V.2"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="bi bi-envelope-fill btn-icon"
+                        ></a>
+                    
+                    </div>
 
                     <div className="controller-about">
                         <div>
@@ -101,6 +77,7 @@ function About() {
                     </div>
                 </section>
 
+                
                 <section className="version-info">
                     <p>© 2025 • Built with sweat & tears by Favour Egwele — v1.0</p>
                 </section>
