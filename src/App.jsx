@@ -16,6 +16,7 @@ import Verify from "./Verify.jsx";
 import user from "./appwrite/accounts.js";
 import db from "./appwrite/databases.js";
 import Loader from "./components/Loader.jsx";
+import { Query } from "appwrite";
 
 
 function App() {
@@ -45,8 +46,26 @@ function App() {
   }, [userData]);
 
 
+  const [taskList, setTaskList] = useState(() => {
+    const saved = localStorage.getItem("tasks");
+    return saved ? JSON.parse(saved) : null;
+  });
+
+  useEffect(() => {
+    if(taskList) {
+      localStorage.setItem("tasks", JSON.stringify(taskList));
+    } else {
+      localStorage.removeItem("taskList");
+    }
+  }, [taskList]);
+
+  useEffect(() => {
+    console.log(taskList);
+  }, [taskList])
+
   const [loading, setLoading] = useState(true);
 
+  
   async function authProfile() {
 
     try {
@@ -55,6 +74,7 @@ function App() {
       const userInfo = await user.get();
       setCurrentUser(userInfo);
 
+      //USER-INFO
       try {
         const data = await db.profiles.get(userInfo.$id);
         setUserData(data);
@@ -75,7 +95,50 @@ function App() {
 
           const newData = await db.profiles.create(payload, null, userInfo.$id);
           setUserData(newData);
+        } else {
+          console.log("Loading user data:", err);
         }
+      }
+
+
+      //TASK-LIST
+      try {
+        
+        const tasks = await db.tasks.list([
+          Query.equal("userId", userInfo.$id)
+        ]);
+
+        setTaskList(tasks.documents.map(t => {
+          return {
+            appearId: Number(t.appearId),
+            createdId: Number(t.createdId),
+            userId: t.$id,
+            name: t.name,
+            emoji: t.emoji,
+            color: t.color,
+            days: t.days,
+            start: t.start,
+            end: t.end,
+            reminderStat: t.reminderStat,
+            reminderTime: t.reminderTime,
+            isDone: t.isDone,
+            isCommited: t.isCommited,
+            isPaused: t.isPaused
+          }
+        }));
+      
+      } catch (err) {
+
+        if(err === 404) {
+        
+          setTaskList([]);
+        
+        } else {
+        
+          console.log("Loading tasks list:", err);
+        
+        }
+
       }
 
     } catch {
@@ -85,7 +148,7 @@ function App() {
     } finally {
       setLoading(false);
     }
-}
+  }
 
   useEffect(() => {
     authProfile();
@@ -116,15 +179,11 @@ function App() {
 
 
 
-  //TASKLIST
-  const [taskList, setTaskList] = useState(() => {
-    const saved = localStorage.getItem("tasks");
-    return saved ? JSON.parse(saved) : [];
-  });
 
-  useEffect(() => {
-      localStorage.setItem("tasks", JSON.stringify(taskList));
-  }, [taskList]);
+
+
+
+
 
 
 
@@ -138,10 +197,8 @@ function App() {
       localStorage.setItem("tasksDone", JSON.stringify(tasksDone));
   }, [tasksDone]);
 
-  //TASKS COMMITED
 
   const root = document.documentElement;
-
 
   useLayoutEffect(() => {
 
