@@ -9,6 +9,11 @@ const database = [
         id: import.meta.env.VITE_OPTIMA_TABLE_ID_PROFILES,
         name: "profiles",
     },
+    {
+        dbId: import.meta.env.VITE_OPTIMA_DATABASE_ID_OPFILES,
+        id: import.meta.env.VITE_OPTIMA_TABLE_ID_PROFILES,
+        name: "tasks",
+    },
 ];
 
 database.forEach(d => {
@@ -39,7 +44,6 @@ database.forEach(d => {
 });
 
 export default db;
-
 
 
 // export async function addUser({fname, lname, email}) {

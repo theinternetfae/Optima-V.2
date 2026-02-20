@@ -3,11 +3,12 @@ import Emoji from "./EmojiPicker.jsx";
 // import EmojiPicker from "emoji-picker-react";
 import Alert from "./Alert.jsx";
 import { TaskContext } from "./TaskContext.js";
+import db from "../appwrite/databases.js";
 
 
 function NewTask({exit, editExit, statsNew, task}) {
 
-    const { taskList, setTaskList, saveEditedTask } = useContext(TaskContext);
+    const { taskList, setTaskList, userInfo, saveEditedTask } = useContext(TaskContext);
 
     const isEditingMode = !!task;    
 
