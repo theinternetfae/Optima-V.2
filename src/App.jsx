@@ -16,7 +16,7 @@ import Verify from "./Verify.jsx";
 import user from "./appwrite/accounts.js";
 import db from "./appwrite/databases.js";
 import Loader from "./components/Loader.jsx";
-import { Query } from "appwrite";
+import { Query, ID } from "appwrite";
 
 
 function App() {
@@ -110,6 +110,7 @@ function App() {
 
         setTaskList(tasks.documents.map(t => {
           return {
+            $id: t.$id,
             appearId: Number(t.appearId),
             createdId: Number(t.createdId),
             userId: t.$id,
@@ -421,7 +422,7 @@ function App() {
       while (d <= endBoundary) {
         future.push({
           ...baseTask,
-          keyUUID: crypto.randomUUID(),
+          $id: ID.unique(),
           appearId: d.getTime(),
           isDone: false
         });
@@ -434,11 +435,11 @@ function App() {
     future.sort((a, b) => a.appearId - b.appearId);
 
     return future;
-  }
-  
+  }  
 
   function updateTasks(editedTask) {
     setTaskList(prev => {
+      
       const editedDate = new Date(editedTask.appearId)
     
       const cleaned = prev.filter(t => t.createdId !== editedTask.createdId || new Date(t.appearId) < editedDate);
@@ -460,8 +461,8 @@ function App() {
 
       if (future.length === 0) return prev;
 
-      const existingIds = new Set(prev.map(t => t.keyUUID));
-      const filteredFuture = future.filter(f => !existingIds.has(f.keyUUID));
+      const existingIds = new Set(prev.map(t => t.$id));
+      const filteredFuture = future.filter(f => !existingIds.has(f.$id));
 
       return [...prev, ...filteredFuture];
 

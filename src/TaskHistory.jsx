@@ -185,7 +185,7 @@ function TaskHistory() {
                             <p className="no-tasks">No tasks...</p>
                         ) : tasksPerDay.map(t => {
                             return <TaskDisplay 
-                                key={t.keyUUID}
+                                key={t.$id}
                                 taskE={t}
                                 history={history}
                                 chosenHist={chosenHist}

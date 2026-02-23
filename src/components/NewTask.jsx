@@ -58,17 +58,10 @@ function NewTask({exit, editExit, statsNew, task}) {
 
         console.log(userData)
 
-        // const theTask = {
-        //     reminderStat: reminder,
-        //     reminderTime: reminder ? timeString : null,
-        //     isDone: false,
-        //     isCommited: false,
-        //     isPaused: false
-        // };
-
         const identifiers = Date.now().toString();
 
         const payload = {
+            $id: ID.unique(),
             appearId: identifiers,
             createdId: identifiers,
             userId: userData.$id,
@@ -85,12 +78,15 @@ function NewTask({exit, editExit, statsNew, task}) {
             isPaused: false
         }
 
-        // saveEditedTask(theTask);
+        saveEditedTask({
+            ...payload,
+            appearId: Number(identifiers),
+            createdId: Number(identifiers)
+        });
     
         db.tasks.create(
             payload, 
             null, 
-            ID.unique()
         ).catch(err => console.log("Error:", err));
 
         exit ? exit() : statsNew();
@@ -132,8 +128,10 @@ function NewTask({exit, editExit, statsNew, task}) {
 
     function deleteTask() {
 
-        const tasksRemaining = taskList.filter(t => t.appearId !== task.appearId && t.createdId !== task.createdId);
-        setTaskList(tasksRemaining);;
+        db.tasks.delete(task.$id);
+
+        const tasksRemaining = taskList.filter(t => t.$id !== task.$id);
+        setTaskList(tasksRemaining);
         editExit();
 
     }

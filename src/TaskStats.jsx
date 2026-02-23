@@ -228,7 +228,6 @@ function TaskStats() {
             const generalStreak = validDays.reduce((acc, d) => {
 
                 const tasksNDays = taskList.filter(tl => normalizeDate(tl.appearId) === normalizeDate(d));
-                console.log(tasksNDays);
                 if(tasksNDays.length > 0 && tasksNDays.every(td => td.isDone)) {
                     acc.count++;
                 } else if (tasksNDays.length > 0 && tasksNDays.some(td => td.isDone === false)) {
@@ -242,7 +241,6 @@ function TaskStats() {
 
             generalStreak.count > 0 && generalStreak.streak.push(generalStreak.count);
 
-            console.log(generalStreak.streak)
             setGeneralStreak(generalStreak.streak);
 
         } else {

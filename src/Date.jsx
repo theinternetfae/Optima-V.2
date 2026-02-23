@@ -285,7 +285,7 @@ function DateMenu() {
                 ) : (
                     visibleTasks.map(task => {
                         return <TaskDisplay
-                            key={task.keyUUID}
+                            key={task.$id}
                             taskE={task}
                             limitReached={limitReached}
                         />
