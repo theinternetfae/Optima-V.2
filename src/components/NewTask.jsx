@@ -8,7 +8,7 @@ import { ID } from "appwrite";
 
 function NewTask({exit, editExit, statsNew, task}) {
 
-    const { taskList, setTaskList, userData, saveEditedTask } = useContext(TaskContext);
+    const { taskList, setTaskList, userData, updateTasks, generateFutureTasks } = useContext(TaskContext);
 
     const isEditingMode = !!task;    
 
@@ -58,12 +58,11 @@ function NewTask({exit, editExit, statsNew, task}) {
 
         console.log(userData)
 
-        const identifiers = Date.now().toString();
+        const documentId = ID.unique();
 
         const payload = {
-            $id: ID.unique(),
-            appearId: identifiers,
-            createdId: identifiers,
+            appearId: Date.now(),
+            createdId: Date.now(),
             userId: userData.$id,
             name: nameInput,
             emoji: emojiInput,
@@ -78,16 +77,24 @@ function NewTask({exit, editExit, statsNew, task}) {
             isPaused: false
         }
 
-        saveEditedTask({
-            ...payload,
-            appearId: Number(identifiers),
-            createdId: Number(identifiers)
-        });
-    
         db.tasks.create(
             payload, 
             null, 
+            documentId
         ).catch(err => console.log("Error:", err));
+
+        setTaskList(prev => [...prev, {
+            $id: documentId,
+            ...payload
+        }]);
+
+        const future = generateFutureTasks(payload, payload.createdId);
+
+        future.forEach(f => {
+            db.tasks.create(f, null, f.$id).catch(console.log);
+        });
+
+        setTaskList(prev => [...prev, ...future]);
 
         exit ? exit() : statsNew();
     }
@@ -121,7 +128,7 @@ function NewTask({exit, editExit, statsNew, task}) {
             reminderTime: reminder ? timeString : null,
         }        
 
-        saveEditedTask(editedTask);
+        updateTasks(editedTask);
         editExit();
 
     }

@@ -105,40 +105,17 @@ function App() {
       try {
         
         const tasks = await db.tasks.list([
-          Query.equal("userId", userInfo.$id)
+          Query.equal("userId", userInfo.$id),
+          Query.orderDesc("$createdAt")
         ]);
 
-        setTaskList(tasks.documents.map(t => {
-          return {
-            $id: t.$id,
-            appearId: Number(t.appearId),
-            createdId: Number(t.createdId),
-            userId: t.$id,
-            name: t.name,
-            emoji: t.emoji,
-            color: t.color,
-            days: t.days,
-            start: t.start,
-            end: t.end,
-            reminderStat: t.reminderStat,
-            reminderTime: t.reminderTime,
-            isDone: t.isDone,
-            isCommited: t.isCommited,
-            isPaused: t.isPaused
-          }
-        }));
+        setTaskList(tasks.documents);
       
       } catch (err) {
 
-        if(err === 404) {
-        
-          setTaskList([]);
-        
-        } else {
-        
-          console.log("Loading tasks list:", err);
-        
-        }
+        setTaskList([]);
+                
+        console.log("Loading tasks list:", err);
 
       }
 
@@ -398,13 +375,19 @@ function App() {
   function generateFutureTasks(baseTask, fromDate = null) {
     if (!baseTask || !Array.isArray(baseTask.days) || baseTask.days.length === 0) return [];
 
+    console.log("Base task", baseTask);
+
     const startBoundary = new Date(baseTask.start);
     const endBoundary = new Date(baseTask.end);
 
+    console.log("Start:", startBoundary, "End:", endBoundary);
+
+    console.log("From Date?:", fromDate && fromDate);
     const startAfter = fromDate ? new Date(fromDate) : new Date(baseTask.appearId);
 
     startAfter.setDate(startAfter.getDate() + 1);
     startAfter.setHours(0, 0, 0, 0);
+
 
     const generationStart = startAfter > startBoundary ? startAfter : new Date(startBoundary);
 
@@ -420,6 +403,7 @@ function App() {
       let d = getFirstOnOrAfter(generationStart, weekDayIdx);
       
       while (d <= endBoundary) {
+        
         future.push({
           ...baseTask,
           $id: ID.unique(),
@@ -432,52 +416,93 @@ function App() {
       }
     }
 
+    console.log(future);
     future.sort((a, b) => a.appearId - b.appearId);
 
     return future;
   }  
 
-  function updateTasks(editedTask) {
+  function calculateUpdates(prev, editedTask) {
+    const editedDate = new Date(editedTask.appearId);
+
+    const cleaned = prev.filter(t => 
+      t.createdId !== editedTask.createdId ||
+      new Date(t.appearId) < editedDate
+    );
+
+    const dbCleaned = prev.filter(t => 
+      t.createdId === editedTask.createdId &&
+      new Date(t.appearId) > editedDate
+    )
+
+    const updatedList = [...cleaned, editedTask];
+
+    const series = updatedList.filter( t =>
+      t.createdId === editedTask.createdId
+    );
+
+    const latest = series.reduce((a, b) => 
+      new Date(a.appearId) > new Date(b.appearId) ? a : b
+    );
+
+    const future = generateFutureTasks(latest, new Date(latest.appearId));
+
+    return {
+      updatedList,
+      future,
+      dbCleaned
+    }
+  }
+
+  async function  updateTasks(editedTask) {
     setTaskList(prev => {
+      const { updatedList, future, dbCleaned } = calculateUpdates(prev, editedTask);
       
-      const editedDate = new Date(editedTask.appearId)
+      dbCleaned.forEach(dc => 
+        db.tasks.delete(dc.$id)
+      );
+
+      db.tasks.update(editedTask.$id, editedTask).catch(err => console.log("Updating edited task:", err));
+
+      future.forEach(f => {
+        db.tasks.create(f, null, f.$id).catch(err => console.log("Adding future tasks:", err));
+      })
+
+      return [...updatedList, ...future];
+    })
+  }
+
+  async function  updateTasks(editedTask) {
     
-      const cleaned = prev.filter(t => t.createdId !== editedTask.createdId || new Date(t.appearId) < editedDate);
+    const current = taskList; 
 
-      return [...cleaned, editedTask];
-    });
-  }
+    const { updatedList, future, dbCleaned } =
+      calculateUpdates(current, editedTask);
 
-  function regenerateRepeats(createdId) {
-    setTaskList(prev => {
+    
+    await Promise.all(
+      dbCleaned.map(dc =>
+        db.tasks.delete(dc.$id)
+      )
+    );
 
-      const series = prev.filter(t => t.createdId === createdId);
 
-      if(series.length === 0) return prev;
+    await db.tasks.update(editedTask.$id, editedTask);
 
-      const latest = series.reduce((a,b) => (new Date(a.appearId) > new Date(b.appearId) ? a : b), series[0]);
+  
+    await Promise.all(
+      future.map(f =>
+        db.tasks.create(f, null, f.$id)
+      )
+    );
 
-      const future = generateFutureTasks(latest, new Date(latest.appearId));
-
-      if (future.length === 0) return prev;
-
-      const existingIds = new Set(prev.map(t => t.$id));
-      const filteredFuture = future.filter(f => !existingIds.has(f.$id));
-
-      return [...prev, ...filteredFuture];
-
-    });
-  }
-
-  function saveEditedTask(editedTask) {
-    updateTasks(editedTask);
-
-    regenerateRepeats(editedTask.createdId);
+    setTaskList([...updatedList, ...future]);
+    
   }
 
   return (
 
-    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, saveEditedTask, userData, authProfile, setUserData}}>
+    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, updateTasks, generateFutureTasks, userData, authProfile, setUserData}}>
       <SettingsContext.Provider value={{level, setLevel}}>
 
         <BrowserRouter>    
