@@ -17,9 +17,33 @@ import user from "./appwrite/accounts.js";
 import db from "./appwrite/databases.js";
 import Loader from "./components/Loader.jsx";
 import { Query, ID } from "appwrite";
+import Offline from "./Offline.jsx";
 
 
 function App() {
+
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+
+    const handleOnline = () => {
+      setIsOnline(true);
+      authProfile();
+    };
+
+    const handleOffline = () => {
+      setIsOnline(false);
+    };
+
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    }
+
+  }, [isOnline]);
 
   const [currentUser, setCurrentUser] = useState(() => {
     return JSON.parse(localStorage.getItem("currentUser")) || null;
@@ -476,7 +500,9 @@ function App() {
 
         <BrowserRouter>    
 
-          {
+          { !isOnline ? (
+              <Offline/>
+            ): 
             (loading) ? (
               <Loader />
             ) : (

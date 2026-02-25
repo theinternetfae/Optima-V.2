@@ -126,6 +126,18 @@ input[type="number"]::-webkit-outer-spin-button {
 
 @layer components {
 
+    .offline {
+        @apply absolute z-50 h-full w-full flex flex-col items-center justify-center bg-black text-white gap-4;
+
+        .bi {
+        @apply text-tocolorb text-shadow-[0_0_5px_#60A5FA,_0_0_5px_#60A5FA,_0_0_5px_#60A5FA] text-7xl lg:text-9xl;
+        }
+
+        p {
+        @apply font-bold text-center lg:text-xl;
+        }
+    }
+
     .loading-screen {
         @apply fixed w-full min-h-svh flex items-center justify-center;
 
