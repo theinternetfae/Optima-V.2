@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import NewTask from "./NewTask.jsx";
 import { TaskContext, SettingsContext } from "./TaskContext.js";
 import Alert from "./Alert.jsx";
+import db from "../appwrite/databases.js";
 
 function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitReached}) {
 
@@ -24,9 +25,10 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
 
   const [alertShow, setAlertShow] = useState(false);
 
-  function deleteTask() {
-    const tasksRemaining = taskList.filter(t => t.appearId !== taskE.appearId && t.createdId !== taskE.createdId);
+  async function deleteTask() {
+    const tasksRemaining = taskList.filter(t => t.$id !== taskE.$id);
     setTaskList(tasksRemaining);
+    db.tasks.delete(taskE.$id);
     setAlertShow(prev => !prev);
   }
 
@@ -61,7 +63,7 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
     setDone(taskE.isDone)
   }, [taskE.isDone]);
 
-  const isChosenHist = chosenHist?.keyUUID === taskE.keyUUID;
+  const isChosenHist = chosenHist?.$id === taskE.$id;
 
   return (
 
@@ -140,9 +142,11 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
 
                     setTaskList(prev => 
                       prev.map(c => 
-                        c.keyUUID === taskE.keyUUID ? updatedCommitment : c
+                        c.$id === taskE.$id ? updatedCommitment : c
                       )
                     );
+
+                    db.tasks.update(taskE.$id, {isCommited: newCommited})
 
                   }}
 
@@ -160,9 +164,11 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
 
                   setTaskList(prev =>
                     prev.map(t =>
-                      t.keyUUID === taskE.keyUUID ? updatedTask : t
+                      t.$id === taskE.$id ? updatedTask : t
                     )
                   );
+
+                  db.tasks.update(taskE.$id, {isDone: newDone})
 
                   if (newDone === true) { 
                     setTasksDone(prev => [...prev, updatedTask])
