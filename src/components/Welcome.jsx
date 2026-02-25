@@ -91,7 +91,7 @@ function Welcome() {
 
         if(!passwordError) return;
 
-        const timer = setTimeout(() =>{
+        const timer = setTimeout(() => {
             setPasswordError(prev => !prev);
         }, 3000)
 

@@ -14,6 +14,11 @@ const database = [
         id: import.meta.env.VITE_OPTIMA_TABLE_ID_TASKS,
         name: "tasks",
     },
+    {
+        dbId: import.meta.env.VITE_OPTIMA_DATABASE_ID_OPFILES,
+        id: import.meta.env.VITE_OPTIMA_TABLE_ID_MESSAGES,
+        name: "messages",
+    },
 ];
 
 database.forEach(d => {

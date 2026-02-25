@@ -1,10 +1,11 @@
 import { useState } from "react";
+import Message from "./Message.jsx";
 
 function About() {
 
-
-
     const [toggleOne, setToggleOne] = useState(false);
+    const [message, setMessage] = useState(false);
+
 
     const [copied, setCopied] = useState(false);
 
@@ -37,16 +38,15 @@ function About() {
                     <h2>More</h2>
 
                     <div className="controller-about">
+
                         <div>
                             <p>Contact Us</p>
                             <span>Send us a message, feeback, recommendation, etc.</span>
                         </div>
-                        <a
-                            href="https://github.com/theinternetfae/Optima-V.2"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        <button
                             className="bi bi-envelope-fill btn-icon"
-                        ></a>
+                            onClick={() => setMessage(prev => !prev)}
+                        ></button>
                     
                     </div>
 
@@ -84,6 +84,7 @@ function About() {
 
             </div>
             
+            {message && <Message setMessage={setMessage}/>}
         </div>
     );
 }

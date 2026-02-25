@@ -529,6 +529,54 @@ input[type="number"]::-webkit-outer-spin-button {
         }
     }
 
+    .message {
+        @apply bg-black/1 fixed top-0 z-50 w-full h-full backdrop-blur-sm;
+
+        .exit-mess {
+            @apply text-end absolute w-full right-10 top-8 text-2xl;
+        }
+
+        & .message-intro {
+            @apply flex flex-col gap-4 justify-center items-center pt-6;
+
+            h1 {
+               @apply text-3xl font-bold;
+            }
+
+            p {
+                @apply text-textcolor text-sm;
+            }
+        }
+
+        & .message-box {
+            @apply flex flex-col gap-8 items-center justify-center border border-2 border-accentprimary p-6 w-[50%] m-auto mt-25 rounded-md bg-bgcolor
+        }
+
+        .idle-wrapper {
+            @apply w-[80%];
+            
+            .error {
+               @apply text-fromcolorr text-sm text-start mb-2 w-full;
+            }   
+
+            & input {
+                @apply w-full
+            }
+        }
+
+        & input {
+            @apply bg-surfaceone p-6 w-[80%] shadow-lg rounded-lg text-textcolor focus:outline-none
+        }
+
+        & textarea {
+            @apply bg-surfaceone p-6 w-[80%] shadow-lg rounded-lg text-textcolor focus:outline-none no-scrollbar
+        }
+
+        & button {
+            @apply bg-gradient-to-b from-accentsecondary to-accentprimary w-[80%] p-2 cursor-pointer text-xl text-white rounded-lg active:scale-95;
+        }
+    }
+
     .alert-container {
         @apply bg-black/1 fixed top-0 z-50 w-full h-full backdrop-blur-sm;
     
