@@ -6,7 +6,7 @@ import db from "../appwrite/databases.js";
 
 function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitReached}) {
 
-  const { taskList, setTaskList, saveEditedTask, setTasksDone, userData } = useContext(TaskContext);
+  const { taskList, setTaskList, updateTasks, setTasksDone, userData } = useContext(TaskContext);
   const { level } = useContext(SettingsContext);
   
   function normalizeDate(d) {
@@ -35,26 +35,41 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
   const expired = normalizeDate(taskE.end) < normalizeDate(today);
 
 
+  function dateConverter(convertDate) {
+    const adding = (n) => n < 9 ? 0 : '';
+
+    const toDbString = `${convertDate.getFullYear()}-${`${adding(convertDate.getMonth())}${convertDate.getMonth() + 1}`}-${`${adding(convertDate.getDate())}${convertDate.getDate()}`}`;
+    
+    console.log(new Date(), "VS", new Date().getTime(), "VS", toDbString);
+    return toDbString;
+  }
+    
 
   function pausePlay() {
     
     if(taskE.isPaused) {
       const newEnd = new Date();
       newEnd.setDate(newEnd.getDate() + 30);
+      
+      const newEndString = dateConverter(newEnd); 
 
       const playedTask = {...taskE,
         isPaused: false,
-        end: newEnd
+        end: newEndString,
       }
 
-      saveEditedTask(playedTask);
+      updateTasks(playedTask);
     } else {
+
+      const newEnd = new Date();
+      const newEndString = dateConverter(newEnd);
+
       const pausedTask = {...taskE, 
         isPaused: true,
-        end: Date.now()
+        end: newEndString
       }
 
-      saveEditedTask(pausedTask);
+      updateTasks(pausedTask);
     }
 
   }
@@ -62,8 +77,6 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
   useEffect(() => {
     setDone(taskE.isDone)
   }, [taskE.isDone]);
-
-  const isChosenHist = chosenHist?.$id === taskE.$id;
 
   return (
 

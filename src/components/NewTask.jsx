@@ -112,11 +112,6 @@ function NewTask({exit, editExit, statsNew, task}) {
             return;
         }   
 
-        // if (new Date(startDate) < new Date(today) || new Date(endDate) < new Date(today)) {
-        //     alert("Selected dates cannot be in the past.");
-        //     return;
-        // }
-
         const editedTask = {
             ...task,
             start: startDate,

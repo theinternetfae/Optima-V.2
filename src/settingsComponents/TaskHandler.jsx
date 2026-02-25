@@ -11,44 +11,10 @@ function TaskHandler() {
     const different = 'Are you sure? This will delete all inactive tasks but could potentially affect your level on the Optima quirk. (If enabled)'
     const [selectedHandle, setSelectedHandle] = useState('all')
     const handler = true;
-    
-
-    function addDays(date, days) {
-        return new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate() + days
-        );
-    }
 
 
 
     //HELPER FUNCTIONS
-    function generateDayRange(startDate, endDate) {
-        if (!startDate || ! endDate) return;
-
-        const days = [];
-        const start = new Date(
-            startDate.getFullYear(),
-            startDate.getMonth(),
-            startDate.getDate()
-        );
-        const end = new Date(
-            endDate.getFullYear(),
-            endDate.getMonth(),
-            endDate.getDate()
-        );
-
-        for (let d = start; d <= end; d = addDays(d, 1)) {
-            days.push(d);
-        }
-
-        return days;
-    }
-
-    function isSameDay(a, b) {
-        return new Date(a).toDateString() === new Date(b).toDateString();
-    }
 
     function normalizeDate(d) {
         const newDate = new Date(d);
@@ -60,27 +26,32 @@ function TaskHandler() {
     }
 
 
+    useEffect(() => {
+        console.log("Showing taskList in TaskHandler:", taskList);
+    });
+
 
     const handledTasks = useMemo(() => {
 
-        if(taskList.length === 0) return;
+        if(!taskList.length) return {};
 
-        const start = new Date(taskList[0].appearId);
-        const days = generateDayRange(start, today);
-
-        const validTasks = taskList.filter(task =>
-            days.some(day =>
-                isSameDay(task.appearId, day)
-            )
-        );
-
+        const normalizeToday = today.getTime();
         const indTasks = {};
-        for(const vTask of validTasks) {
-            indTasks[vTask.createdId] = vTask;
+        
+        for(const task of taskList) {
+            const id = task.createdId;
+            const taskDate = new Date(task.appearId).getTime();
+
+            if (taskDate <= normalizeToday) {
+                indTasks[id] = task;
+            } else if(!indTasks[id]) {
+                indTasks[id] = task;
+            }
         }
 
         return indTasks;
-    }, [taskList])
+    }, [taskList, today]);
+
 
     const visibleTasks = useMemo(() => {
 
@@ -92,11 +63,12 @@ function TaskHandler() {
         return Object.values(handledTasks).filter(t => normalizeDate(t.end) < normalizeDate(today));
     }, [handledTasks, selectedHandle])
 
-    console.log("Visible tasks", visibleTasks);
 
     function yesDelete() {
         const newTaskList = taskList.filter(t => normalizeDate(t.end) > normalizeDate(today));
         setTaskList(newTaskList);
+
+        
         setAlert(prev => !prev);
     }
     
@@ -122,7 +94,7 @@ function TaskHandler() {
                         ) : (
                             visibleTasks.map(t => {
                             return <TaskDisplay
-                                    key={t.keyUUID}
+                                    key={t.$id}
                                     taskE={t}
                                     handler={handler}
                                 />

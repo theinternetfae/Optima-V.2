@@ -59,10 +59,6 @@ function App() {
     }
   }, [taskList]);
 
-  useEffect(() => {
-    console.log(taskList);
-  }, [taskList])
-
   const [loading, setLoading] = useState(true);
 
   
@@ -106,7 +102,7 @@ function App() {
         
         const tasks = await db.tasks.list([
           Query.equal("userId", userInfo.$id),
-          Query.orderDesc("$createdAt")
+          Query.orderAsc("appearId")
         ]);
 
         setTaskList(tasks.documents);
@@ -131,11 +127,6 @@ function App() {
   useEffect(() => {
     authProfile();
   }, []);
-
-
-  useEffect(() => {
-    console.log("Loading State:", loading);
-  }, [loading])
 
 
 
@@ -375,14 +366,9 @@ function App() {
   function generateFutureTasks(baseTask, fromDate = null) {
     if (!baseTask || !Array.isArray(baseTask.days) || baseTask.days.length === 0) return [];
 
-    console.log("Base task", baseTask);
-
     const startBoundary = new Date(baseTask.start);
     const endBoundary = new Date(baseTask.end);
 
-    console.log("Start:", startBoundary, "End:", endBoundary);
-
-    console.log("From Date?:", fromDate && fromDate);
     const startAfter = fromDate ? new Date(fromDate) : new Date(baseTask.appearId);
 
     startAfter.setDate(startAfter.getDate() + 1);
@@ -418,7 +404,6 @@ function App() {
       }
     }
 
-    console.log(future);
     future.sort((a, b) => a.appearId - b.appearId);
 
     return future;
