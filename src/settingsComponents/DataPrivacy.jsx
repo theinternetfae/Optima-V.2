@@ -11,9 +11,23 @@ function DataPrivacy() {
     const [ alertTwo, setAlertTwo ] = useState(false);
     const differentOne = "Are you Sure? This will clear your task history.";
     const differentTwo = "Are you Sure? This will clear your app data including tasks, themes and preferences.";
-    const { taskList, setTaskList } = useContext(TaskContext);
+    const { taskList, setTaskList, userData } = useContext(TaskContext);
 
-    function resetAllData() {
+    async function resetAllData() {
+
+        await Promise.all(
+            taskList.map(dc =>
+            db.tasks.delete(dc.$id).catch(err => console.log("Deleting task in DataPrivacy:", err))
+        ));
+
+        db.profiles.update(userData.$id, {
+            theme: "dark",
+            accent: "blue",
+            quirk: true,
+            quote: false,
+            streak: true,
+        })
+
         localStorage.clear();
         window.location.reload();
         setAlertTwo(prev => !prev);
