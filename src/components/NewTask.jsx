@@ -51,8 +51,9 @@ function NewTask({exit, editExit, statsNew, task}) {
             return;
         }   
 
+
         if (new Date(startDate) < new Date(today) || new Date(endDate) < new Date(today)) {
-            alert("Selected dates cannot be in the past.");
+            alert("Selected dates can not be in the past.");
             return;
         }
 
@@ -111,10 +112,10 @@ function NewTask({exit, editExit, statsNew, task}) {
             return;
         }   
 
-        if (new Date(startDate) < new Date(today) || new Date(endDate) < new Date(today)) {
-            alert("Selected dates cannot be in the past.");
-            return;
-        }
+        // if (new Date(startDate) < new Date(today) || new Date(endDate) < new Date(today)) {
+        //     alert("Selected dates cannot be in the past.");
+        //     return;
+        // }
 
         const editedTask = {
             ...task,
@@ -203,9 +204,9 @@ function NewTask({exit, editExit, statsNew, task}) {
                 
                 {taskDays.length > 0 && (
                     <div className="when-to-when">
-                        <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} min={today} disabled={task && task.appearId !== task.createdId}/>
+                        <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} min={today} disabled={isEditingMode}/>
                         <i className="bi bi-arrow-right"></i>
-                        <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} min={today}/>
+                        <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} min={today} disabled={isEditingMode}/>
                     </div>
                 )}
 

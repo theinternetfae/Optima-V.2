@@ -28,7 +28,7 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
   async function deleteTask() {
     const tasksRemaining = taskList.filter(t => t.$id !== taskE.$id);
     setTaskList(tasksRemaining);
-    db.tasks.delete(taskE.$id);
+    db.tasks.delete(taskE.$id).catch(err => console.log("Deleting task in TaskDisplay:", err));
     setAlertShow(prev => !prev);
   }
 
@@ -146,7 +146,7 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
                       )
                     );
 
-                    db.tasks.update(taskE.$id, {isCommited: newCommited})
+                    db.tasks.update(taskE.$id, {isCommited: newCommited}).catch(err => console.log("Updating isCommited:", err))
 
                   }}
 
@@ -168,7 +168,7 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
                     )
                   );
 
-                  db.tasks.update(taskE.$id, {isDone: newDone})
+                  db.tasks.update(taskE.$id, {isDone: newDone}).catch(err => console.log("Updating isDone:", err))
 
                   if (newDone === true) { 
                     setTasksDone(prev => [...prev, updatedTask])

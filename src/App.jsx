@@ -408,7 +408,9 @@ function App() {
           ...baseTask,
           $id: ID.unique(),
           appearId: d.getTime(),
-          isDone: false
+          isDone: false,
+          isCommited: false,
+          isPaused: false
         });
 
         d = new Date(d);
@@ -452,24 +454,6 @@ function App() {
       future,
       dbCleaned
     }
-  }
-
-  async function  updateTasks(editedTask) {
-    setTaskList(prev => {
-      const { updatedList, future, dbCleaned } = calculateUpdates(prev, editedTask);
-      
-      dbCleaned.forEach(dc => 
-        db.tasks.delete(dc.$id)
-      );
-
-      db.tasks.update(editedTask.$id, editedTask).catch(err => console.log("Updating edited task:", err));
-
-      future.forEach(f => {
-        db.tasks.create(f, null, f.$id).catch(err => console.log("Adding future tasks:", err));
-      })
-
-      return [...updatedList, ...future];
-    })
   }
 
   async function  updateTasks(editedTask) {

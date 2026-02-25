@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { TaskContext } from "../components/TaskContext.js";
 import Alert from "../components/Alert.jsx";
+import db from "../appwrite/databases.js";
 
 function DataPrivacy() {
 
@@ -10,7 +11,7 @@ function DataPrivacy() {
     const [ alertTwo, setAlertTwo ] = useState(false);
     const differentOne = "Are you Sure? This will clear your task history.";
     const differentTwo = "Are you Sure? This will clear your app data including tasks, themes and preferences.";
-    const { setTaskList } = useContext(TaskContext);
+    const { taskList, setTaskList } = useContext(TaskContext);
 
     function resetAllData() {
         localStorage.clear();
@@ -18,9 +19,15 @@ function DataPrivacy() {
         setAlertTwo(prev => !prev);
     }
 
-    function clearTaskHistory() {
+    async function clearTaskHistory() {
+        await Promise.all(
+            taskList.map(dc =>
+            db.tasks.delete(dc.$id).catch(err => console.log("Deleting task in DataPrivacy:", err))
+        ));
+
         localStorage.removeItem("tasks");
-        setTaskList([]);
+        setTaskList([]); 
+
         setAlertOne(prev => !prev);
     }
 
