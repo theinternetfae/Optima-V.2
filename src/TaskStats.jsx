@@ -427,7 +427,7 @@ function TaskStats() {
         <div className="full-stats-cont">
 
             <div className="stats-header">
-                <button className="bi bi-lightbulb-fill tips"></button>
+                <button className="bi bi-lightbulb-fill tips" onClick={() => alert("Feature coming soon!")}></button>
                 <select name="task-selected" value={selectedId} onChange={e => {
                     
                     uniqueTasks.forEach(task => {

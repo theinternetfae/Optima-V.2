@@ -181,7 +181,8 @@ function Profile() {
                     
                     <p>Daily quote</p>
 
-                    <div className={`toggle ${userData?.quote && "bg-[var(--color-accentprimary)]"}`} onClick={() => setQuote()}>
+                    {/* Set quote function for this already created above */}
+                    <div className={`toggle ${userData?.quote && "bg-[var(--color-accentprimary)]"}`} onClick={() => alert("Feature coming soon!")}>
                         <div className={`ball ease duration-800 ${userData?.quote && "translate-x-9 md:translate-x-43"}`}></div>
                     </div>
 

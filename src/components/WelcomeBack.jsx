@@ -133,7 +133,9 @@ function WelcomeBack() {
         
                 </div>
         
-                <p className="cursor-pointer text-start mt-8 text-sm text-grey">Forgot password?</p>
+                <p className="cursor-pointer text-start mt-8 text-sm text-grey" onClick={() =>
+                    alert("Feature coming soon!")
+                }>Forgot password?</p>
 
                 <button type="button" className="button" onClick={() => signIn()}>
                     Sign In

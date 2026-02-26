@@ -223,11 +223,8 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .tips {
-        @apply text-xl cursor-pointer transition ease-in-out duration-300 md:text-2xl;
-    }
-
-    .tips:hover {
-        @apply text-accentprimary;
+        @apply text-xl cursor-pointer transition ease-in-out duration-300 md:text-2xl text-grey;
+        /* hover:text-accentprimary */
     }
 
     .emoji-picker {
@@ -990,7 +987,8 @@ input[type="number"]::-webkit-outer-spin-button {
                     }
 
                     .download-data {
-                        @apply h-15 rounded-lg mx-60 mt-2 bg-gradient-to-b from-accentsecondary to-accentprimary text-white shadow-lg font-bold cursor-pointer active:scale-95 flex gap-2 justify-center items-center;
+                        @apply h-15 rounded-lg mx-60 mt-2 bg-gradient-to-b from-[#707070] to-[#999999] text-white shadow-lg font-bold cursor-pointer active:scale-95 flex gap-2 justify-center items-center;
+                        /* bg-gradient-to-b from-accentsecondary to-accentprimary */
                     }
                 }
             }

@@ -86,7 +86,7 @@ function DataPrivacy() {
                         <button className="bi bi-trash" onClick={() => setAlertTwo(prev => !prev)}></button>
                     </div>
                     
-                    <button className="download-data">
+                    <button className="download-data" onClick={() => alert("Feature coming soon!")}>
                         <i className="bi bi-download"></i>
                         <span>Download your data</span>
                     </button>
