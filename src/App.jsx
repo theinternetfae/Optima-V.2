@@ -84,6 +84,19 @@ function App() {
     }
   }, [taskList]);
 
+  const [profileImage, setProfileImage] = useState(() => {
+    const saved = localStorage.getItem("profileImage");
+    return saved ? JSON.parse(saved) : null;
+  });
+
+  useEffect(() => {
+    if(profileImage) {
+      localStorage.setItem("profileImage", JSON.stringify(profileImage));
+    } else {
+      localStorage.removeItem("profileImage");
+    }
+  }, [profileImage]);
+
   const [loading, setLoading] = useState(true);
 
   
@@ -97,8 +110,13 @@ function App() {
 
       //USER-INFO
       try {
+
         const data = await db.profiles.get(userInfo.$id);
-        setUserData(data);
+        const pfp = await st.pfp.retrieve(data.$id);
+        
+        setProfileImage(pfp);
+
+        setUserData({...data, pfp});
 
       } catch (err) {
         if (err.code === 404) {
@@ -112,6 +130,7 @@ function App() {
             quirk: true,
             quote: false,
             streak: true,
+            pfp: null,
           };
 
           const newData = await db.profiles.create(payload, null, userInfo.$id);
@@ -154,6 +173,9 @@ function App() {
   }, []);
 
 
+  useEffect(() => {
+    console.log(userData);
+  }, [userData])
 
 
 
@@ -496,7 +518,7 @@ function App() {
 
   return (
 
-    <TaskContext.Provider value={{taskList, setTaskList, tasksDone, setTasksDone, updateTasks, generateFutureTasks, userData, authProfile, setUserData}}>
+    <TaskContext.Provider value={{taskList, setTaskList, profileImage, setProfileImage, tasksDone, setTasksDone, updateTasks, generateFutureTasks, userData, authProfile, setUserData}}>
       <SettingsContext.Provider value={{level, setLevel}}>
 
         <BrowserRouter>    

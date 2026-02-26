@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SettingsContext, TaskContext } from "../components/TaskContext";
 import { useNavigate } from "react-router-dom";
 import user from "../appwrite/accounts.js";
@@ -8,9 +8,8 @@ import st from "../appwrite/storage.js";
 function Profile() {
     
     const navigate = useNavigate();
-    const [profileImage, setProfileImage] = useState(null);
-
-    const { authProfile, userData, setUserData } = useContext(TaskContext);
+   
+    const { authProfile, userData, setUserData, profileImage, setProfileImage } = useContext(TaskContext);
 
     async function handleImageChange(e) {
         const file = e.target.files[0];
@@ -23,6 +22,7 @@ function Profile() {
         
         st.pfp.create(userData.$id, file).catch(err => console.log("Uploading pfp:", err));
     }
+
 
     async function signOut() {
 
@@ -71,7 +71,7 @@ function Profile() {
 
                 <label className="pfp-upload">
                     {profileImage ? (
-                        <img src={profileImage} alt="your-pfp" className="pfp-image" />
+                        <img src={userData.pfp} alt="your-pfp" className="pfp-image" />
                     ) : (
                         <span className="bi bi-plus pfp-plus"></span>
                     )}
