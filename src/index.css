@@ -72,6 +72,8 @@ input[type="number"]::-webkit-outer-spin-button {
     
     
     /*Button order*/
+    --color-defaultbg: #0D0D0D;
+    --color-defaultmuted: #111111; 
     --color-fromcolorb: #60A5FA;
     --color-tocolorb: #2563EB;
     --color-fromcolorpur: #491AB1;
@@ -185,7 +187,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .welcome-page {
-        @apply bg-bgcolor fixed top-0 z-40 w-full h-full backdrop-blur-sm flex flex-col items-center justify-center;
+        @apply bg-defaultbg fixed top-0 z-40 w-full h-full backdrop-blur-sm flex flex-col items-center justify-center text-white;
 
         .welcome-note {
             @apply flex flex-col justify-center items-center gap-2 p-2 mb-2;
@@ -199,12 +201,12 @@ input[type="number"]::-webkit-outer-spin-button {
             @apply flex flex-col gap-6;
 
             input {
-                @apply p-5 w-200 bg-muted rounded-lg shadow-lg focus:outline-none;
+                @apply p-5 w-200 bg-defaultmuted rounded-lg shadow-lg focus:outline-none;
             }
         }
 
         & .button {
-            @apply w-full p-4 mt-4 rounded-lg bg-tocolorb font-bold cursor-pointer;
+            @apply w-full p-4 mt-4 rounded-lg bg-tocolorb font-bold cursor-pointer active:scale-95;
         }
 
         p {

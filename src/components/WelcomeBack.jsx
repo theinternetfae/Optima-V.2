@@ -44,7 +44,6 @@ function WelcomeBack() {
         try {
 
             if (!emailInput || !password) {
-                alert("Please fill all fields");
                 return;
             }
 
