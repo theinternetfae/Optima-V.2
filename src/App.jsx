@@ -14,6 +14,7 @@ import Welcome from "./components/Welcome.jsx";
 import WelcomeBack from "./components/WelcomeBack.jsx";
 import Verify from "./Verify.jsx";
 import user from "./appwrite/accounts.js";
+import st from "./appwrite/storage.js"
 import db from "./appwrite/databases.js";
 import Loader from "./components/Loader.jsx";
 import { Query, ID } from "appwrite";

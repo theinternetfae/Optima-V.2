@@ -3,6 +3,7 @@ import { SettingsContext, TaskContext } from "../components/TaskContext";
 import { useNavigate } from "react-router-dom";
 import user from "../appwrite/accounts.js";
 import db from "../appwrite/databases.js";
+import st from "../appwrite/storage.js";
 
 function Profile() {
     
@@ -11,12 +12,16 @@ function Profile() {
 
     const { authProfile, userData, setUserData } = useContext(TaskContext);
 
-    function handleImageChange(e) {
+    async function handleImageChange(e) {
         const file = e.target.files[0];
         if (!file) return;
 
         const imageURL = URL.createObjectURL(file);
+        
         setProfileImage(imageURL);
+        
+        
+        st.pfp.create(userData.$id, file).catch(err => console.log("Uploading pfp:", err));
     }
 
     async function signOut() {
