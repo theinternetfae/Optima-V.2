@@ -112,8 +112,8 @@ function App() {
       try {
 
         const data = await db.profiles.get(userInfo.$id);
+        
         setUserData(data)
-
         
       } catch (err) {
         if (err.code === 404) {
@@ -138,6 +138,24 @@ function App() {
           console.log("Loading user data:", err);
 
         }
+      }
+
+      //PFP
+      try{
+
+        const data = await db.profiles.get(userInfo.$id);
+
+        await st.pfp.check(data.pfpId);
+        
+        const url = st.pfp.retrieve(data.pfpId);
+        
+        setProfileImage(url);
+
+      } catch(err) {
+
+        console.log("Setting pfp:", err);
+        setProfileImage(null);
+
       }
 
 

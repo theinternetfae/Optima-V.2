@@ -13,80 +13,59 @@ function Profile() {
     const { authProfile, userData, setUserData, profileImage, setProfileImage } = useContext(TaskContext);
 
     async function handleImageChange(e) {
+
+
+        // try{
+        //     await db.profiles.update(userData.$id, {pfpId: null});
+        //     console.log("DB updated!");
+
+        //     setUserData(prev => ({
+        //         ...prev,
+        //         pfpId: null
+        //     }));
+        // } catch(err) {
+        //     console.log(err);
+        // }
+
+
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const pfpId = ID.unique();
+        const prevPfpId = userData.pfpId;
+
+        const imageURL = URL.createObjectURL(file);
+        setProfileImage(imageURL);
+
+
+        try {
+
+            if(userData.pfpId) {
         
-        if(userData.pfpId) {
-
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const pfpId = ID.unique();
-            const prevPfpId = userData.pfpId;
-
-            console.log("PfpId:", pfpId, "prevPfpId:", prevPfpId);
-
-            const imageURL = URL.createObjectURL(file);
-            setProfileImage(imageURL);
-
-
-            try {
-
                 await st.pfp.delete(prevPfpId);
                 console.log("Old pfp deleted!");
 
-                await st.pfp.create(pfpId, file);
-                console.log("New pfp created!");
-
-                await db.profiles.update(userData.$id, {pfpId});
-                console.log("DB updated!");
-
-                setUserData(prev => ({
-                    ...prev,
-                    pfpId
-                }));
-
-            } catch(err) {
-
-                console.log("Pfp Upload:", err);
-                setProfileImage(null);
-
             }
 
-        } else {
+            await st.pfp.create(pfpId, file);
+            console.log("New pfp created!");
 
-            const file = e.target.files[0];
-            if (!file) return;
+            await db.profiles.update(userData.$id, {pfpId});
+            console.log("DB updated!");
 
-            const pfpId = ID.unique();
+            setUserData(prev => ({
+                ...prev,
+                pfpId
+            }));
 
-            console.log("PfpId:", pfpId);
+        } catch(err) {
 
-            const imageURL = URL.createObjectURL(file);
-            setProfileImage(imageURL);
-
-
-            try {
-
-                await st.pfp.create(pfpId, file);
-                console.log("Upload success");
-
-                await db.profiles.update(userData.$id, { pfpId });
-                console.log("DB updated");
-                
-                setUserData(prev => ({
-                    ...prev,
-                    pfpId
-                }));
-
-            } catch(err) {
-
-                console.log("Pfp Upload:", err);
-                setProfileImage(null);
-
-            }
+            console.log("Pfp Upload:", err);
+            setProfileImage(null);
 
         }
-
     }
+
 
     useEffect(() => {
         console.log("New user data with pfp:", userData);
