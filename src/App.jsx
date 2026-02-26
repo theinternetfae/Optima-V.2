@@ -112,12 +112,9 @@ function App() {
       try {
 
         const data = await db.profiles.get(userInfo.$id);
-        const pfp = await st.pfp.retrieve(data.$id);
+        setUserData(data)
+
         
-        setProfileImage(pfp);
-
-        setUserData({...data, pfp});
-
       } catch (err) {
         if (err.code === 404) {
 
@@ -130,13 +127,16 @@ function App() {
             quirk: true,
             quote: false,
             streak: true,
-            pfp: null,
+            pfpId: null,
           };
 
           const newData = await db.profiles.create(payload, null, userInfo.$id);
           setUserData(newData);
+
         } else {
+
           console.log("Loading user data:", err);
+
         }
       }
 

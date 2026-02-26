@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import user from "../appwrite/accounts.js";
 import db from "../appwrite/databases.js";
 import st from "../appwrite/storage.js";
+import { ID } from "appwrite";
 
 function Profile() {
     
@@ -12,21 +13,90 @@ function Profile() {
     const { authProfile, userData, setUserData, profileImage, setProfileImage } = useContext(TaskContext);
 
     async function handleImageChange(e) {
-        const file = e.target.files[0];
-        if (!file) return;
+        
+        if(userData.pfpId) {
 
-        const imageURL = URL.createObjectURL(file);
-        
-        setProfileImage(imageURL);
-        
-        
-        st.pfp.create(userData.$id, file).catch(err => console.log("Uploading pfp:", err));
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const pfpId = ID.unique();
+            const prevPfpId = userData.pfpId;
+
+            console.log("PfpId:", pfpId, "prevPfpId:", prevPfpId);
+
+            const imageURL = URL.createObjectURL(file);
+            setProfileImage(imageURL);
+
+
+            try {
+
+                await st.pfp.delete(prevPfpId);
+                console.log("Old pfp deleted!");
+
+                await st.pfp.create(pfpId, file);
+                console.log("New pfp created!");
+
+                await db.profiles.update(userData.$id, {pfpId});
+                console.log("DB updated!");
+
+                setUserData(prev => ({
+                    ...prev,
+                    pfpId
+                }));
+
+            } catch(err) {
+
+                console.log("Pfp Upload:", err);
+                setProfileImage(null);
+
+            }
+
+        } else {
+
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const pfpId = ID.unique();
+
+            console.log("PfpId:", pfpId);
+
+            const imageURL = URL.createObjectURL(file);
+            setProfileImage(imageURL);
+
+
+            try {
+
+                await st.pfp.create(pfpId, file);
+                console.log("Upload success");
+
+                await db.profiles.update(userData.$id, { pfpId });
+                console.log("DB updated");
+                
+                setUserData(prev => ({
+                    ...prev,
+                    pfpId
+                }));
+
+            } catch(err) {
+
+                console.log("Pfp Upload:", err);
+                setProfileImage(null);
+
+            }
+
+        }
+
     }
+
+    useEffect(() => {
+        console.log("New user data with pfp:", userData);
+    }, [userData])
 
 
     async function signOut() {
 
         await user.logout();
+        setProfileImage(null);
         authProfile();
         navigate("/");
         
@@ -71,7 +141,7 @@ function Profile() {
 
                 <label className="pfp-upload">
                     {profileImage ? (
-                        <img src={userData.pfp} alt="your-pfp" className="pfp-image" />
+                        <img src={profileImage} alt="your-pfp" className="pfp-image" />
                     ) : (
                         <span className="bi bi-plus pfp-plus"></span>
                     )}

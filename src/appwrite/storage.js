@@ -16,17 +16,25 @@ store.forEach(s => {
                 s.bId,
                 id,
                 file,
-            ),
+        ),
+        
+        check: (id) => 
+            storage.getFile(
+            s.bId,
+            id
+        ),
+        
         retrieve: (id) => 
             storage.getFileView(
                 s.bId,
                 id,
-            ),
+        ),
+        
         delete: (id) => 
             storage.deleteFile(
                 s.bId,
                 id
-            ) 
+        ) 
     }
 })
 
