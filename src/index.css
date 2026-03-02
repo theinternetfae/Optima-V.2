@@ -262,25 +262,29 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .side-menu {
-        @apply  bg-surfaceone w-full bottom-0 shadow-xl h-[10%] fixed bottom-0 cursor-pointer flex flex-col justify-between lg:w-[20%] lg:sticky lg:h-[100vh] lg:top-0 lg:left-0;
+        @apply bg-surfaceone z-40 w-full shadow-xl h-[10%] fixed bottom-0 cursor-pointer flex justify-between lg:flex-col lg:w-[20%] lg:sticky lg:h-[100vh] lg:top-0 lg:left-0;
 
         .road-cont {
-            @apply flex flex-col px-4 py-6 gap-6;
+            @apply flex px-2 py-4 lg:px-4 lg:py-6 gap-6 lg:flex-col;
         
             .road {
-                @apply cursor-pointer rounded-md bg-surfacetwo shadow-lg p-3 border border-2 border-transparent flex gap-2;
+                @apply cursor-pointer rounded-md bg-surfacetwo shadow-lg border border-2 border-transparent flex items-center justify-center gap-2 p-2 lg:gap-0 lg:items-start lg:justify-start lg:w-auto lg:p-3 lg:gap-2;
+            
+                .side-nav-hide {
+                    @apply hidden lg:block
+                }
             }
         }
 
         & .progress-bar-cont {
-            @apply h-[60px] rounded-lg shadow-lg bg-surfacetwo m-4 border border-2 border-accentprimary flex items-center p-2 gap-2;
+            @apply rounded-lg shadow-lg m-4 border border-0 border-accentprimary flex items-center gap-2 lg:bg-surfacetwo lg:border-2 lg:p-2 lg:h-[60px];
 
             .level-counter {
-                @apply bg-accentprimary text-white w-[15%] h-full flex items-center justify-center rounded-full shadow-lg font-bold;
+                @apply bg-accentprimary text-white w-full h-full flex p-3 items-center justify-center rounded-full shadow-lg font-bold lg:w-[15%];
             }
 
             & .level {
-                @apply w-[85%] h-full;
+                @apply w-[85%] h-full hidden lg:block;
 
                 & .level-loader {
                    @apply h-[80%] mt-1 rounded-full bg-muted shadow-lg flex gap-1;
@@ -452,7 +456,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .task-display {
-        @apply p-4 rounded-lg no-scrollbar overflow-y-auto scroll-py-4 mt-6 flex flex-col gap-4 md:snap-y md:snap-mandatory md:scroll-smooth scroll-pt-4 text-sm md:bg-surfacetwo md:mt-8 md:p-4 md:gap-6 md:text-base md:w-full md:h-[475px] md:overflow-y-auto;
+        @apply p-4 rounded-lg no-scrollbar overflow-y-auto scroll-py-4 mt-6 flex flex-col gap-4 scroll-pt-4 text-sm md:snap-y md:snap-mandatory md:scroll-smooth md:mt-8 md:p-4 md:gap-6 md:bg-surfacetwo md:text-base md:w-full md:overflow-y-auto;
     }
 
     .task-box {
