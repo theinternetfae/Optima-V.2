@@ -925,8 +925,10 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 .delacc {
-                    @apply bg-gradient-to-b from-fromcolorr to-tocolorr text-white
+                    @apply text-white bg-gradient-to-b from-[#707070] to-[#999999];
+                    /* bg-gradient-to-b from-fromcolorr to-tocolorr  */
                 }
+
             }
 
             /*task handler*/

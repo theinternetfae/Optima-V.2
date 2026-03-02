@@ -6,7 +6,7 @@ import { createPortal } from "react-dom";
 function Verify() {
     const [params] = useSearchParams();
     const navigate = useNavigate();
-;
+
     useEffect(() => {
         const userId = params.get("userId");
         const secret = params.get("secret");

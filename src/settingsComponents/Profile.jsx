@@ -1,32 +1,20 @@
 import { useContext, useEffect, useState } from "react";
-import { SettingsContext, TaskContext } from "../components/TaskContext";
+import { TaskContext } from "../components/TaskContext";
 import { useNavigate } from "react-router-dom";
 import user from "../appwrite/accounts.js";
 import db from "../appwrite/databases.js";
 import st from "../appwrite/storage.js";
 import { ID } from "appwrite";
-
+import Alert from "../components/Alert.jsx";
 function Profile() {
     
     const navigate = useNavigate();
    
     const { authProfile, userData, setUserData, profileImage, setProfileImage } = useContext(TaskContext);
 
+    const [alertShow, setAlertShow] = useState(false);
+
     async function handleImageChange(e) {
-
-
-        // try{
-        //     await db.profiles.update(userData.$id, {pfpId: null});
-        //     console.log("DB updated!");
-
-        //     setUserData(prev => ({
-        //         ...prev,
-        //         pfpId: null
-        //     }));
-        // } catch(err) {
-        //     console.log(err);
-        // }
-
 
         const file = e.target.files[0];
         if (!file) return;
@@ -113,6 +101,53 @@ function Profile() {
 
     }
 
+    //Deleting the user data and account
+    //tasks, pfp, userData, user
+
+    async function deleteAccount() {
+        
+        try {
+    
+            // if(userData) {
+            //     const tasks = await db.tasks.list([
+            //         Query.equal("userId", userData.$id)
+            //     ]);
+        
+            //     await Promise.all(
+            //         tasks.documents.map(t => 
+            //             db.tasks.delete(t.$id)
+            //         )
+            //     );
+            
+            //     if (userData.pfpId) {
+            //         await st.pfp.delete(userData.pfpId);
+            //         setProfileImage(null)
+            //     }
+            
+            //     await db.profiles.delete(userData.$id); 
+            // }
+
+            // console.log("account object:", account);
+            // console.log("methods:", Object.getOwnPropertyNames(Object.getPrototypeOf(account)));
+
+            // console.log(currentUser);
+
+            const userId = userData.$id;
+            await user.delete(userId);
+
+            // localStorage.clear();
+            // navigate("/");
+            
+        } catch(err) {
+
+            console.log("Deleting account:", err);
+            return;
+
+        }
+
+    }
+
+
     return ( 
         <div className="sett-body">
         
@@ -182,8 +217,10 @@ function Profile() {
                     <p>Daily quote</p>
 
                     {/* Set quote function for this already created above */}
-                    <div className={`toggle ${userData?.quote && "bg-[var(--color-accentprimary)]"}`} onClick={() => alert("Feature coming soon!")}>
-                        <div className={`ball ease duration-800 ${userData?.quote && "translate-x-9 md:translate-x-43"}`}></div>
+                    {/*${userData?.quote && "bg-[var(--color-accentprimary)]"}*/}
+                    {/*${userData?.quote && "translate-x-9 md:translate-x-43"}*/}
+                    <div className="toggle" onClick={() => alert("Feature coming soon!")}>
+                        <div className="ball ease duration-800"></div>
                     </div>
 
                 </div>
@@ -202,10 +239,12 @@ function Profile() {
                     Log out
                 </button>
 
-                <button className="delacc">
+                {/* () => setAlertShow(prev => !prev) */}
+                <button className="delacc" onClick={() => alert("Feature coming soon!")}>
                     Delete account
                 </button>
 
+                {alertShow && <Alert different={"Are you sure you want to delete your account, you will lose all data and this can not be undone."} yesDelete={() => deleteAccount()} noDelete={() => setAlertShow(prev => !prev)}/>}
             </div>
 
         </div>

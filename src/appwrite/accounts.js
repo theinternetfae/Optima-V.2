@@ -30,6 +30,8 @@ const user = {
         account.updatePassword(newPassword, oldPassword),
 
     createVer: (redirectUrl) => account.createEmailVerification(redirectUrl),
+
+    delete: (id) => account.delete(id),
 };
 
 export default user;

@@ -46,10 +46,12 @@ function App() {
 
   }, [isOnline]);
 
+
   const [currentUser, setCurrentUser] = useState(() => {
     return JSON.parse(localStorage.getItem("currentUser")) || null;
   });
   
+
   useEffect(() => {
     if (currentUser) {
       localStorage.setItem("currentUser", JSON.stringify(currentUser));
@@ -108,6 +110,7 @@ function App() {
       const userInfo = await user.get();
       setCurrentUser(userInfo);
 
+
       //USER-INFO
       try {
 
@@ -116,12 +119,13 @@ function App() {
         setUserData(data)
         
       } catch (err) {
+
         if (err.code === 404) {
 
+          console.log("User Data not found... creating")
           const payload = {
             name: userInfo.name,
             email: userInfo.email,
-            tasks: [],
             theme: "dark",
             accent: "blue",
             quirk: true,
@@ -153,8 +157,11 @@ function App() {
 
       } catch(err) {
 
-        console.log("Setting pfp:", err);
-        setProfileImage(null);
+        if(err.code === 404) {
+          setProfileImage(null);
+        } else {
+          console.log("Setting pfp:", err)
+        }
 
       }
 
@@ -189,12 +196,6 @@ function App() {
   useEffect(() => {
     authProfile();
   }, []);
-
-
-  useEffect(() => {
-    console.log(userData);
-  }, [userData])
-
 
 
 
@@ -536,7 +537,7 @@ function App() {
 
   return (
 
-    <TaskContext.Provider value={{taskList, setTaskList, profileImage, setProfileImage, tasksDone, setTasksDone, updateTasks, generateFutureTasks, userData, authProfile, setUserData}}>
+    <TaskContext.Provider value={{taskList, setTaskList, profileImage, currentUser, setProfileImage, tasksDone, setTasksDone, updateTasks, generateFutureTasks, userData, authProfile, setUserData}}>
       <SettingsContext.Provider value={{level, setLevel}}>
 
         <BrowserRouter>    
