@@ -223,7 +223,6 @@ function TaskStats() {
             const end = new Date(endTask);
             
             const validDays = generateDayRange(start, end);
-            console.log('Valid Days', validDays);
             
             const generalStreak = validDays.reduce((acc, d) => {
 
@@ -455,8 +454,8 @@ function TaskStats() {
                 <ul className="selected-scroll">
                 
                     <div className="li-cont">
-                        <li onClick={() => toggleSelected(0)} className={selectedId === 0 ? 'border-[var(--color-accentprimary)]' : ""}>
-                            <span>📊</span> {selectedId === 0 && <span>Overall</span>}
+                        <li onClick={() => toggleSelected(0)} className={selectedId === 0 && 'border-[var(--color-accentprimary)]'}>
+                            <span>📊</span> {selectedId === 0 && <span className="hide-scroll-text">Overall</span>}
                         </li>
                     </div>
 
@@ -464,7 +463,7 @@ function TaskStats() {
                         uniqueTasks.map((task, index) => (
                             <div key={index} className="li-cont">
                                 <li onClick={() => toggleSelected(task.createdId, task)} style={selectedId === task.createdId ? { border: `2px solid ${task.color}` } : {}}>
-                                    {task.emoji} {selectedId === task.createdId && <span>{cutWords(task.name)}</span>}
+                                    {task.emoji} {selectedId === task.createdId && <span className="hide-scroll-text">{cutWords(task.name)}</span>}
                                 </li>
                             </div>
                         ))
@@ -480,14 +479,14 @@ function TaskStats() {
                     <div className="date-box-sub">
                         <div className="calendar-grid">
 
-                            {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d, i) => (
+                            {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
                                 <div key={i} className="day-label">{d}</div>
                             ))}
 
                             {
                                 monthDays.length > 0 &&
                                 Array(monthDays[0].getDay()).fill(null).map((_, i) => (
-                                    <div key={"blank"+i} className="blank"></div>
+                                    <div key={"blank"+ i} className="blank"></div>
                                 ))
                             }
 

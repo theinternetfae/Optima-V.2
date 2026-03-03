@@ -10,13 +10,6 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-.calendar-grid {
-    height: 370px;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 25px; 
-}
-
 .day-label {
     @apply font-bold text-center;
 }
@@ -322,7 +315,7 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             & .nav-date {
-                @apply text-sm w-[30%] text-center relative left-[-20px] text-center font-bold font-headtext px-10 cursor-pointer md:left-[-30px] md:text-xl;
+                @apply text-sm w-[50%] text-center relative left-[-20px] text-center font-bold font-headtext px-10 cursor-pointer md:left-[-30px] md:text-xl;
             }
         }
 
@@ -607,25 +600,49 @@ input[type="number"]::-webkit-outer-spin-button {
     .full-stats-cont {
         @apply flex flex-col gap-8 items-center;
 
-        & .stats-header {
-            @apply w-full flex justify-between;
+        .stats-header {
+            @apply w-full mx-2 flex justify-between;
 
-            & .task-selected {
-                @apply cursor-pointer outline-none text-lg bg-surfacetwo p-2 rounded-lg font-headtext;
+            .task-selected {
+                @apply cursor-pointer outline-none text-sm lg:text-lg bg-surfacetwo p-2 rounded-lg font-headtext;
+            }
+
+            & .bi {
+                @apply m-2
             }
         }
 
+                        /* & .test-box-cont {
+                    @apply w-[100%] flex justify-between h-[7rem];
+                    
+                    & .test-box {
+                    @apply border border-2 border-transparent w-[65px] flex flex-col justify-center items-center rounded-2xl p-[3px] gap-4 md:border-surfacetwo; 
+                
+                    & .d-name {
+                        @apply h-[25%] text-xs flex justify-center md:text-base;
+                    }
+
+                    & .d-other {
+                        @apply h-[75%] text-[10px] border-accentprimary bg-muted p-[12px] rounded-full shadow-lg flex items-center justify-center cursor-pointer md:text-base md:border-[3px] md:h-[10px] md:w-[10px] md:p-6;
+                    }
+                } */
+
+
         & .selected-scroll-cont {
-            @apply bg-surfacetwo rounded-lg p-4 w-full sticky top-2 z-40;
+            @apply bg-surfacetwo rounded-lg w-[95%] p-4 sticky top-2 z-40 flex justify-center lg:w-full;
 
             & .selected-scroll {
-                @apply flex gap-5 overflow-hidden w-[1095px] overflow-x-auto ml-5 no-scrollbar snap-x snap-mandatory;
+                @apply flex w-[100%] overflow-hidden overflow-x-auto no-scrollbar snap-x snap-mandatory gap-[11.5%] lg:gap-4 lg:w-[1095px];
                 
                 .li-cont {
-                    @apply flex shrink-0 justify-center items-center w-[140px] snap-start;
+                    @apply flex shrink-0 justify-center w-[50px] items-center snap-start lg:w-[140px];
                 
                     li {
-                        @apply border border-2 border-transparent bg-muted p-4 rounded-xl cursor-pointer shadow-lg text-lg flex gap-[5px];
+                        @apply border border-2 border-transparent bg-muted p-2 rounded-xl cursor-pointer shadow-lg text-lg flex gap-[5px] lg:p-4;
+                    
+                        .hide-scroll-text{
+                            @apply hidden lg:block;
+                        }
                     }
                 }
                 
@@ -633,21 +650,33 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         & .date-box-main {
-            @apply w-[50%] h-[500px] bg-surfacetwo rounded-lg p-6 flex gap-2 justify-center font-bold;
+            @apply bg-surfacetwo rounded-lg flex gap-2 justify-center font-bold w-[95%] h-[395px] p-2 lg:p-6 lg:w-[50%] lg:h-[500px];
 
             & .bi-chevron {
                 @apply cursor-pointer;
             }
 
             & .date-box-cont {
-                @apply rounded-lg bg-surfaceone w-[90%] p-4;
+                @apply rounded-lg bg-surfaceone w-full p-4 w-[90%];
                 
                 & p {
-                    @apply mb-4 text-base font-bold;
+                    @apply text-sm font-bold mb-2 lg:mb-4 lg:text-base;
                 }
 
                 & .date-box-sub {
-                    @apply shadow-lg shadow-inset-dark bg-surfacetwo rounded flex gap-[20px] justify-center p-2;
+                    @apply shadow-lg shadow-inset-dark bg-surfacetwo w-full p-2 rounded flex h-[92%] justify-center lg:p-2 lg:gap-[20px] lg:h-auto ;
+
+                    .calendar-grid {
+                        @apply grid grid-cols-7 w-full gap-2 lg:gap-[25px] lg:h-[370px];
+
+                        .day-label {
+                            @apply text-sm lg:text-base;
+                        }
+
+                        .date-cell {
+                            @apply text-sm lg:text-base;
+                        }
+                    }
                 }
             }
         }
@@ -656,64 +685,68 @@ input[type="number"]::-webkit-outer-spin-button {
             @apply w-full h-[100vh] flex flex-col items-center justify-center;
 
             .filler-front {
-                @apply w-[50%] h-[50%] relative flex items-center justify-center p-5;
+                @apply w-[80%] h-[30%] relative flex items-center justify-center p-5 lg:w-[40%] lg:h-[40%];
 
                 & .average-loader {
-                    @apply border border-20 border-transparent absolute h-full w-[60%] rounded-full
+                    @apply border border-20 border-transparent absolute h-full w-[60%] rounded-full;
                 }
 
                 & .average-body {
                     @apply border border-20 border-surfacetwo relative rounded-full h-full w-[60%] shadow-xl;
 
                     & .rating {
-                        @apply text-4xl font-bold absolute top-[120px] left-[75px]
+                        @apply font-bold absolute top-[40px] left-[25px] text-2xl lg:text-4xl lg:top-[80px] lg:left-[60px];
                     }
 
                     & .rating-title {
-                        @apply text-2xl absolute top-[180px] left-[69px] text-surfacetwo
+                        @apply absolute text-surfacetwo top-[65px] left-[15px] text-base lg:text-2xl lg:top-[130px] lg:left-[45px];
                     }
                 }
             }
 
             .the-four {
-                @apply w-full h-[50%] flex flex-col gap-5;
+                @apply w-full h-[50%] flex flex-col gap-5 p-2 lg:p-0;
 
                 .top {
-                    @apply h-[50%] flex gap-40 items-center justify-center;
+                    @apply h-[50%] flex items-center justify-center gap-4 lg:gap-40;
 
                     & .sec-one-two {
-                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-surfaceone rounded-full shadow-xl text-accentprimary transition ease-in duration-300;
+                        @apply border border-2 h-full w-[50%] flex flex-col justify-center items-center font-bold bg-surfaceone rounded-full shadow-xl text-accentprimary transition ease-in duration-300 
+                        lg:gap-4 lg:text-xl lg:w-[30%];
                     
                         i {
-                            @apply text-4xl transition ease-in duration-300;
+                            @apply transition ease-in duration-300 text-2xl 
+                            lg:text-4xl;
                         }
 
                         .calculator {
-                            @apply text-shadow-md text-textcolor;
+                            @apply text-shadow-md text-textcolor text-sm;
                         }
 
                         .calculator-label {
-                            @apply text-base text-grey
+                            @apply text-base text-grey text-xs;
                         }
                     }
                 }
 
                 .bottom {
-                    @apply h-[50%] flex gap-40 items-center justify-center;
+                    @apply h-[50%] flex items-center justify-center gap-4 lg:gap-40;
 
                     & .sec-one-two {
-                        @apply border border-2 h-full w-[30%] flex flex-col justify-center items-center gap-4 text-xl font-bold bg-surfaceone rounded-full shadow-xl text-accentprimary transition ease-in duration-300;
+                        @apply border border-2 h-full w-[50%] flex flex-col justify-center items-center font-bold bg-surfaceone rounded-full shadow-xl text-accentprimary transition ease-in duration-300 
+                        lg:gap-4 lg:text-xl lg:w-[30%];
                     
                         i {
-                            @apply text-4xl transition ease-in duration-300;
+                            @apply transition ease-in duration-300 text-2xl 
+                            lg:text-4xl;
                         }
 
                         .calculator {
-                            @apply text-shadow-md text-textcolor;
+                            @apply text-shadow-md text-textcolor text-sm;
                         }
 
                         .calculator-label {
-                            @apply text-base text-grey
+                            @apply text-base text-grey text-xs;
                         }
                     }
                 }            
