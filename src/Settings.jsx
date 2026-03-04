@@ -49,7 +49,7 @@ function Settings() {
     
                     <h1 className="settings-header">Settings <span className="checking">{`${checking()}`}</span></h1>
 
-                    <p className="settings-subheader">Manage your account settings and preferences</p>
+                    <p className="settings-subheader">Manage your account settings</p>
 
                 </div>
 

@@ -73,7 +73,7 @@ function DataPrivacy() {
                     <div className="controller">
                         <div>
                             <p>Clear task history</p>
-                            <span>Deletes ALL tasks</span>
+                            <span>Deletes all tasks</span>
                         </div>
                         <button className="bi bi-trash" onClick={() => setAlertOne(prev => !prev)}></button>
                     </div>
@@ -81,7 +81,7 @@ function DataPrivacy() {
                     <div className="controller">
                         <div>
                             <p>Reset all data</p>
-                            <span>Resets the whole app and deletes all data</span>
+                            <span>Deletes all data and preferences</span>
                         </div>
                         <button className="bi bi-trash" onClick={() => setAlertTwo(prev => !prev)}></button>
                     </div>
