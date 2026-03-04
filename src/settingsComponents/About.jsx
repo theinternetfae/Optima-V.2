@@ -41,7 +41,7 @@ function About() {
 
                         <div>
                             <p>Contact Us</p>
-                            <span>Send us a message, feeback, recommendation, etc.</span>
+                            <span>Send us a message</span>
                         </div>
                         <button
                             className="bi bi-envelope-fill btn-icon"
@@ -53,7 +53,7 @@ function About() {
                     <div className="controller-about">
                         <div>
                             <p>Documentation</p>
-                            <span>See the behind the scenes build of the app</span>
+                            <span>Behind the scenes</span>
                         </div>
                         <a
                             href="https://github.com/theinternetfae/Optima-V.2"
@@ -67,7 +67,7 @@ function About() {
                     <div className="controller-about">
                         <div>
                             <p>Share</p>
-                            <span>Share Optima to your family and friends! Appreciate you 🤞</span>
+                            <span>Share to family and friends 🤞</span>
                         </div>
     
                         <button onClick={handleCopyLink} className="btn-icon">
@@ -75,11 +75,8 @@ function About() {
                         </button>
 
                     </div>
-                </section>
 
-                
-                <section className="version-info">
-                    <p>© 2025 • Built with sweat & tears by Favour Egwele — v1.0</p>
+                    <p className="version-info">© 2025 • Built with sweat & tears by Favour Egwele — v1.0</p>
                 </section>
 
             </div>

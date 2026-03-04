@@ -1104,13 +1104,15 @@ input[type="number"]::-webkit-outer-spin-button {
             /*About*/
 
             .about-background {
-                @apply h-[500px] bg-surfaceone relative rounded-lg p-2 overflow-y-auto no-scrollbar flex flex-col;
+                @apply h-full bg-surfaceone text-sm relative rounded-lg p-2 overflow-y-auto no-scrollbar flex flex-col
+                lg:h-[500px] lg:text-base;
 
                 .dropdown {
                     @apply flex flex-col z-10;
 
                     .toggle-dropdown {
-                        @apply p-2 m-2 rounded-lg items-center h-15 flex gap-4 cursor-pointer bg-surfacetwo shadow-lg
+                        @apply p-2 m-2 rounded-lg items-center h-10 flex gap-4 cursor-pointer bg-surfacetwo shadow-lg
+                        lg:h-15;
                     }
 
                     .drop {
@@ -1120,7 +1122,7 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 .controls {
-                    @apply h-[250px] p-2 rounded-lg flex flex-col gap-4 z-10;
+                    @apply p-2 rounded-lg flex flex-col gap-4 z-10;
 
                     h2 {
                         @apply border-y border-y-2 border-y-grey py-2; 
@@ -1130,22 +1132,23 @@ input[type="number"]::-webkit-outer-spin-button {
                         @apply h-[70px] bg-surfacetwo rounded-lg shadow flex justify-between items-center p-2;
 
                         span {
-                            @apply text-grey text-sm
+                            @apply text-grey text-xs
+                            lg:text-sm;
                         }
 
                         .btn-icon {
-                            @apply w-30 h-12 rounded-lg bg-gradient-to-b from-accentsecondary to-accentprimary text-white shadow-lg active:scale-90 cursor-pointer flex justify-center items-center text-xl;
-                        
+                            @apply w-[30%] h-10 rounded-lg bg-gradient-to-b from-accentsecondary to-accentprimary text-white shadow-lg active:scale-90 cursor-pointer flex justify-center items-center text-xl
+                            lg:w-30 lg:h-12;
+                
                             .bi {
                                 @apply text-2xl;
                             }
                         }
                     }
 
-                }
-
-                .version-info {
-                    @apply h-[60px] absolute h-full w-full items-end top-0 z-0 flex items-center justify-center text-grey;
+                    .version-info {
+                       @apply text-center text-grey;
+                    }
                 }
 
             }
