@@ -55,11 +55,6 @@ function Profile() {
     }
 
 
-    useEffect(() => {
-        console.log("New user data with pfp:", userData);
-    }, [userData])
-
-
     async function signOut() {
 
         await user.logout();

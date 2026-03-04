@@ -831,30 +831,36 @@ input[type="number"]::-webkit-outer-spin-button {
         @apply h-full flex flex-col gap-2; 
 
         & .settings-info-box {
-            @apply flex justify-between;
+            @apply flex justify-between mx-2;
 
             .settings-info {
+                @apply flex flex-col justify-center gap-2;
 
                 & .settings-header {
-                    @apply text-2xl font-bold font-headtext;
+                    @apply text-lg font-bold font-headtext
+                    lg:text-2xl;
             
                     & .checking {
-                        @apply text-grey text-base;
+                        @apply text-grey text-xs
+                        lg:text-base;
                     }
                 }
 
                 & .settings-subheader {
-                    @apply text-sm text-grey;
+                    @apply text-xs text-grey hidden
+                    lg:block; 
                 }
             
             }
 
 
             .light-dark {
-                @apply w-[200px] my-2 rounded-lg bg-surfacetwo shadow flex items-center cursor-pointer transition ease-in-out duration-400;
+                @apply w-[130px] my-2 rounded-lg bg-surfacetwo shadow flex items-center cursor-pointer transition ease-in-out duration-400
+                lg:w-[200px];
 
                 .light-dark-ball {
-                    @apply w-[20%] h-[80%] rounded-xl mx-1 bg-gradient-to-b from-white to-grey flex items-center justify-center; 
+                    @apply w-[20%] rounded-xl mx-1 bg-gradient-to-b from-white to-grey flex items-center justify-center
+                    lg:w-[20%] lg:h-[80%]; 
                 
                     .bi {
                         @apply text-xl transition ease-in-out duration-400; 
@@ -865,13 +871,15 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         & .settings-body {
-            @apply h-full mt-4 border-t-2 border-surfacetwo;
+            @apply h-full border-t-2 border-surfacetwo mt-2 mx-2
+            lg:mt-4 lg:mx-0;
 
             .settings-router {
-                @apply h-15 bg-surfacetwo rounded-lg mt-4 flex items-center justify-around;
+                @apply h-15 bg-surfacetwo rounded-lg mt-4 flex items-center justify-around px-2;
 
                 .sett-link {
-                    @apply border border-2 border-transparent p-2 rounded-lg cursor-pointer;
+                    @apply text-xs w-[100px] text-center border border-2 border-transparent p-2 rounded-lg cursor-pointer
+                    lg:text-base lg:w-[180px];
                 }
             
             }

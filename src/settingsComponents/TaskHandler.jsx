@@ -26,11 +26,6 @@ function TaskHandler() {
     }
 
 
-    useEffect(() => {
-        console.log("Showing taskList in TaskHandler:", taskList);
-    });
-
-
     const handledTasks = useMemo(() => {
 
         if(!taskList.length) return {};
