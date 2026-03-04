@@ -202,7 +202,7 @@ function Profile() {
                     <p>Optima Quirk</p>
 
                     <div className={`toggle ${userData?.quirk && "bg-[var(--color-accentprimary)]"}`} onClick={() => setQuirk()}>
-                        <div className={`ball ease duration-800 ${userData?.quirk && "translate-x-9 md:translate-x-43"}`}></div>
+                        <div className={`ball ease duration-800 ${userData?.quirk && "translate-x-33 lg:translate-x-43"}`}></div>
                     </div>
 
                 </div>
@@ -225,22 +225,34 @@ function Profile() {
                     <p>Streak</p>
 
                     <div className={`toggle ${userData?.streak && "bg-[var(--color-accentprimary)]"}`} onClick={() => setStreak()}>
-                        <div className={`ball ease duration-800 ${userData?.streak && "translate-x-9 md:translate-x-43"}`}></div>
+                        <div className={`ball ease duration-800 ${userData?.streak && "translate-x-33 lg:translate-x-43"}`}></div>
                     </div>
 
                 </div>
-
-                <button className="logout" onClick={() => signOut()}>
-                    Log out
-                </button>
-
-                {/* () => setAlertShow(prev => !prev) */}
-                <button className="delacc" onClick={() => alert("Feature coming soon!")}>
-                    Delete account
-                </button>
-
-                {alertShow && <Alert different={"Are you sure you want to delete your account, you will lose all data and this can not be undone."} yesDelete={() => deleteAccount()} noDelete={() => setAlertShow(prev => !prev)}/>}
+                
             </div>
+
+            <div className="handle-session">
+
+                <div className="session">
+
+                    <p>Log out</p>
+
+                    <button className="bi bi-person-walking logout" onClick={() => setAlertShow(prev => !prev)}></button>
+
+                </div>
+
+                <div className="session">
+
+                    <p>Delete Account</p>
+
+                    <button className="bi bi-person-x delacc" onClick={() => alert("Feature coming soon!")}></button>
+
+                </div>
+
+            </div>
+
+            {alertShow && <Alert different={"Are you sure you want to logout?"} yesDelete={() => signOut()} noDelete={() => setAlertShow(prev => !prev)}/>}
 
         </div>
     );

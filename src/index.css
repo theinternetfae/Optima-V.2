@@ -855,19 +855,19 @@ input[type="number"]::-webkit-outer-spin-button {
 
 
             .light-dark {
-                @apply w-[130px] my-2 rounded-lg bg-surfacetwo shadow flex items-center cursor-pointer transition ease-in-out duration-400
-                lg:w-[200px];
+                @apply w-[130px] h-8 my-2 rounded-lg bg-surfacetwo shadow flex items-center cursor-pointer transition ease-in-out duration-400
+                lg:w-[200px] lg:h-auto;
 
                 .light-dark-ball {
                     @apply w-[20%] rounded-xl mx-1 bg-gradient-to-b from-white to-grey flex items-center justify-center
-                    lg:w-[20%] lg:h-[80%]; 
+                    lg:h-[80%]; 
                 
                     .bi {
-                        @apply text-xl transition ease-in-out duration-400; 
+                        @apply transition ease-in-out duration-400
+                        lg:text-xl; 
                     }
                 }
             }
-
         }
 
         & .settings-body {
@@ -886,17 +886,20 @@ input[type="number"]::-webkit-outer-spin-button {
         }
     
         & .sett-body {
-            @apply mt-2 rounded-lg bg-surfacetwo shadow p-4;
+            @apply mt-2 h-[430px] overflow-y-auto no-scrollbar rounded-lg bg-surfacetwo shadow p-4
+            lg:h-auto;
         
             /*Profile*/
             .the-user {
-                @apply h-[300px] flex flex-col items-center;
+                @apply h-[300px] flex flex-col items-center justify-center;
             
                 .pfp-upload {
-                    @apply w-[20%] overflow-hidden h-full cursor-pointer rounded-full bg-surfaceone shadow flex justify-center items-center;
+                    @apply w-[60%] h-[65%] overflow-hidden cursor-pointer rounded-full bg-surfaceone shadow flex justify-center items-center
+                    lg:w-[20%] lg:h-full;
                 
                     .pfp-plus {
-                        @apply text-6xl;
+                        @apply text-2xl;
+                        lg:text-6xl;
                     }
 
                     .pfp-image {
@@ -908,7 +911,8 @@ input[type="number"]::-webkit-outer-spin-button {
                     @apply flex justify-center gap-4 p-2 w-full;   
                 
                     .the-user-name-title {
-                        @apply flex items-center justify-center text-center rounded-lg bg-surfaceone p-4 shadow focus:outline-none;
+                        @apply text-xs flex items-center justify-center text-center rounded-lg bg-surfaceone p-4 shadow focus:outline-none
+                        lg:text-base;
                     }
                     
                 }
@@ -917,13 +921,16 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             .user-preferences {
-                @apply border-t-2 border-grey mt-4 pt-2 flex flex-col gap-4 justify-around;
+                @apply border-t-2 pt-2 border-grey flex flex-col gap-4 justify-around
+                lg:mt-4;
 
                 .preference {
-                    @apply h-16 p-2 rounded-lg shadow bg-surfaceone flex items-center justify-between;
+                    @apply h-14 p-2 rounded-lg shadow bg-surfaceone flex items-center justify-between
+                    lg:h-16;
                 
                     p {
-                        @apply font-bold;
+                        @apply text-sm font-bold
+                        lg:text-base;
                     }
 
                     & .themes {
@@ -967,7 +974,8 @@ input[type="number"]::-webkit-outer-spin-button {
                     }
 
                     .toggle {
-                        @apply w-[200px] h-[80%] rounded-xl bg-muted shadow-inset-dark bg-black flex items-center transition ease-in-out duration-400 cursor-pointer;
+                        @apply w-[50%] h-[80%] rounded-xl bg-muted shadow-inset-dark bg-black flex items-center transition ease-in-out duration-400 cursor-pointer
+                        lg:w-[18%] lg:h-[80%];
 
                         .ball {
                             @apply h-[80%] w-[10%] ml-1 rounded-xl bg-gradient-to-b from-white to-gray-400 shadow;  
@@ -988,6 +996,35 @@ input[type="number"]::-webkit-outer-spin-button {
                     /* bg-gradient-to-b from-fromcolorr to-tocolorr  */
                 }
 
+            }
+
+            .handle-session {
+                @apply border-t-2 pt-2 mt-2 border-grey flex flex-col gap-4 justify-around
+                lg:mt-4;
+
+                .session {
+                    @apply h-14 p-2 rounded-lg shadow bg-surfaceone flex items-center justify-between
+                    lg:h-16;
+                
+                    p {
+                       @apply text-sm font-bold
+                        lg:text-base;
+                    }
+
+                    button {
+                       @apply w-[50%] h-[95%] shadow-lg font-bold text-lg rounded-lg active:scale-90 cursor-pointer
+                       lg:w-[18%] lg:text-2xl; 
+                    }
+
+                    .logout {
+                        @apply bg-gradient-to-b from-accentsecondary to-accentprimary text-white;
+                    }
+
+                    .delacc {
+                        @apply text-white bg-gradient-to-b from-[#707070] to-[#999999];
+                        /* bg-gradient-to-b from-fromcolorr to-tocolorr  */
+                    }
+                }
             }
 
             /*task handler*/
