@@ -1029,19 +1029,23 @@ input[type="number"]::-webkit-outer-spin-button {
 
             /*task handler*/
             .task-h-header {
-                @apply flex justify-between p-2 items-center;
+                @apply flex justify-between p-2 items-center
+                lg:pt-0;
 
                 select {
-                    @apply bg-surfaceone p-2 rounded-lg cursor-pointer focus:outline-none;
+                    @apply text-sm bg-surfaceone p-2 rounded-lg cursor-pointer focus:outline-none
+                    lg:text-base;
                 }
 
                 button {
-                    @apply p-2 rounded-lg bg-gradient-to-b from-fromcolorr to-tocolorr cursor-pointer text-white shadow-lg active:scale-90;
+                    @apply p-2 rounded-lg bg-gradient-to-b from-fromcolorr to-tocolorr cursor-pointer text-white text-sm shadow-lg active:scale-90
+                    lg:text-base;
                 }
             }
 
             .task-h-body {
-                @apply h-[450px] bg-surfaceone rounded-lg mt-2 shadow-lg;
+                @apply h-[90%] bg-surfaceone rounded-lg mt-2 shadow-lg
+                lg:h-[450px];
 
                 .task-h-box {
                     @apply w-full h-full px-4 py-2 overflow-y-auto no-scrollbar snap-y snap-mandatory scroll-py-4;
