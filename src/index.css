@@ -581,7 +581,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .alert-container {
-        @apply bg-black/1 fixed top-0 z-50 w-full h-full backdrop-blur-sm flex items-center justify-center;
+        @apply bg-black/1 backdrop-blur-sm fixed top-0 z-50 w-full h-full flex items-center justify-center;
     
         .alert-box {
             @apply border border-2 text-sm border-accentprimary bg-surfacetwo p-6 text-base text-center rounded-md 
@@ -606,15 +606,15 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .pop-container {
-        @apply fixed top-0 z-50 w-full h-full flex justify-center;
+        @apply fixed bg-black/1 backdrop-blur-sm top-0 z-50 w-full h-full flex justify-center;
     
         .pop-box {
-            @apply border border-2 text-sm border-accentprimary bg-surfacetwo p-6 text-base flex flex-col text-center rounded-md fixed top-[-120px] 
+            @apply border border-2 text-sm border-accentprimary bg-surfacetwo p-6 text-base flex flex-col gap-3 text-center rounded-md fixed top-[-120px] 
             transition ease-in duration-500
             lg:w-[30%] lg:h-[15%] lg:text-base;
 
             .exit-pop {
-                @apply text-end text-lg
+                @apply m-auto w-[60px] p-2 cursor-pointer rounded-lg font-bold bg-accentsecondary shadow-lg
             }
         }
     }

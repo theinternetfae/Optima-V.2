@@ -32,11 +32,10 @@ function Alert({yesDelete, noDelete, different, popUp}) {
             {
                 popUp ? (
                     <div className={`pop-box ${scrolling}`}>
-                        <button className="bi bi-x-circle-fill cursor-pointer exit-pop"
-                        onClick={noDelete}
-                        ></button>
-                        
+
                         <h1>{different}</h1>
+                    
+                        <button className="exit-pop" onClick={noDelete}>Ok</button>
                     </div>
                 ) : (
                     <div className="alert-box">
