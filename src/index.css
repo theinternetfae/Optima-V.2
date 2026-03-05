@@ -583,7 +583,7 @@ input[type="number"]::-webkit-outer-spin-button {
     .alert-container {
         @apply bg-black/1 fixed top-0 z-50 w-full h-full backdrop-blur-sm flex items-center justify-center;
     
-        & .alert-box {
+        .alert-box {
             @apply border border-2 text-sm border-accentprimary bg-surfacetwo p-6 text-base text-center rounded-md 
             lg:w-[30%] lg:h-[20%] lg:text-base;
         
@@ -601,6 +601,20 @@ input[type="number"]::-webkit-outer-spin-button {
                 & .no-no {
                     @apply bg-gradient-to-b from-accentsecondary to-accentprimary text-white;
                 }
+            }
+        }
+    }
+
+    .pop-container {
+        @apply fixed top-0 z-50 w-full h-full flex justify-center;
+    
+        .pop-box {
+            @apply border border-2 text-sm border-accentprimary bg-surfacetwo p-6 text-base flex flex-col text-center rounded-md fixed top-[-120px] 
+            transition ease-in duration-500
+            lg:w-[30%] lg:h-[15%] lg:text-base;
+
+            .exit-pop {
+                @apply text-end text-lg
             }
         }
     }

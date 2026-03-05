@@ -252,7 +252,7 @@ function Profile() {
 
             </div>
 
-            {alertShow && <Alert different={"Are you sure you want to logout?"} yesDelete={() => signOut()} noDelete={() => setAlertShow(prev => !prev)}/>}
+            {alertShow && <Alert different={"Are you sure you want to logout?"} yesDelete={() => signOut()} noDelete={() => setAlertShow(prev => !prev)} popUp={true}/>}
 
         </div>
     );
