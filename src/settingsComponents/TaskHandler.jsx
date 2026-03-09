@@ -2,16 +2,24 @@ import { useState, useContext, useMemo, useEffect } from "react";
 import { TaskContext } from "../components/TaskContext.js";
 import TaskDisplay from "../components/TaskDisplay.jsx";
 import Alert from "../components/Alert.jsx";
+import db from "../appwrite/databases.js";
 
 function TaskHandler() {
 
     const today = new Date();
     const { taskList, setTaskList } = useContext(TaskContext);
+
     const [alert, setAlert] = useState(false);
+    const [notification, setNotification] = useState(false);
+
+    useEffect(() => {
+        console.log("Notification:", notification);
+    }, [notification])
+
     const different = 'Are you sure? This will delete all inactive tasks but could potentially affect your level on the Optima quirk. (If enabled)'
+    
     const [selectedHandle, setSelectedHandle] = useState('all')
     const handler = true;
-
 
 
     //HELPER FUNCTIONS
@@ -59,12 +67,21 @@ function TaskHandler() {
     }, [handledTasks, selectedHandle])
 
 
-    function yesDelete() {
+    async function yesDelete() {
+
         const newTaskList = taskList.filter(t => normalizeDate(t.end) > normalizeDate(today));
+        
         setTaskList(newTaskList);
 
+        const inactive = taskList.filter(t => normalizeDate(today) > normalizeDate(t.end));
+        await Promise.all(
+            inactive.map(i =>
+            db.tasks.delete(i.$id).catch(err => console.log("Deleting task in DataPrivacy:", err))
+        ));
         
         setAlert(prev => !prev);
+
+        setNotification(prev => !prev);
     }
     
     return ( 
@@ -106,7 +123,13 @@ function TaskHandler() {
                 yesDelete={() => yesDelete()}
                 noDelete={() => setAlert(prev => !prev)}
                 different={different}
+                popUp={false}
+            />}
 
+            {notification && <Alert 
+                different={"All inactive tasks deleted!"} 
+                noDelete={() => setNotification(prev => !prev)} 
+                popUp={true}
             />}
         </div>
     );

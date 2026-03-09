@@ -6,12 +6,18 @@ function Alert({yesDelete, noDelete, different, popUp}) {
     const [scrolling, setScrolling] = useState("");
 
     useEffect(() => {
-        const scroll = setTimeout(() => {
-            setScrolling("translate-y-30");
-            console.log("translated")
-        })
+        
+        if(popUp) {
 
-        return () => clearTimeout(scroll);
+            const scroll = setTimeout(() => {
+                setScrolling("translate-y-30");
+                console.log("translated")
+            })
+
+            return () => clearTimeout(scroll);
+
+        }
+    
     }, [])
     
     useEffect(() => {

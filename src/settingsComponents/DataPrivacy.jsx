@@ -7,10 +7,10 @@ function DataPrivacy() {
 
     const [toggleOne, setToggleOne] = useState(false);
     const [toggleTwo, setToggleTwo] = useState(false);
+
     const [ alertOne, setAlertOne ] = useState(false);
     const [ alertTwo, setAlertTwo ] = useState(false);
-    const differentOne = "Are you Sure? This will clear your task history.";
-    const differentTwo = "Are you Sure? This will clear your app data including tasks, themes and preferences.";
+    
     const { taskList, setTaskList, userData } = useContext(TaskContext);
 
     async function resetAllData() {
@@ -94,8 +94,8 @@ function DataPrivacy() {
 
             </div>            
 
-            {alertOne && <Alert yesDelete={() => clearTaskHistory()} noDelete={() => setAlertOne(prev => !prev)} different={differentOne}/>}
-            {alertTwo && <Alert yesDelete={() => resetAllData()} noDelete={() => setAlertTwo(prev => !prev)} different={differentTwo}/>}
+            {alertOne && <Alert yesDelete={() => clearTaskHistory()} noDelete={() => setAlertOne(prev => !prev)} different={"Are you Sure? This will clear your task history."}/>}
+            {alertTwo && <Alert yesDelete={() => resetAllData()} noDelete={() => setAlertTwo(prev => !prev)} different={"Are you Sure? This will clear your app data including tasks, themes and preferences."}/>}
         </div>
     );
 }
