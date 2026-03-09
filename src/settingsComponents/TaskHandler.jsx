@@ -73,7 +73,13 @@ function TaskHandler() {
         
         setTaskList(newTaskList);
 
-        const inactive = taskList.filter(t => normalizeDate(today) > normalizeDate(t.end));
+        const tasks = await db.tasks.list([
+            Query.equal("userId", userData.$id)
+        ])
+
+        const tasksDoc = tasks.documents;
+
+        const inactive = tasksDoc.filter(t => normalizeDate(today) > normalizeDate(t.end));
         await Promise.all(
             inactive.map(i =>
             db.tasks.delete(i.$id).catch(err => console.log("Deleting task in DataPrivacy:", err))

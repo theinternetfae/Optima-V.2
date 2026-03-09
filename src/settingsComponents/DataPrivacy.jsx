@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { TaskContext } from "../components/TaskContext.js";
 import Alert from "../components/Alert.jsx";
 import db from "../appwrite/databases.js";
+import { Query } from "appwrite";
+import st from "../appwrite/storage.js";
 
 function DataPrivacy() {
 
@@ -10,23 +12,37 @@ function DataPrivacy() {
 
     const [ alertOne, setAlertOne ] = useState(false);
     const [ alertTwo, setAlertTwo ] = useState(false);
-    
-    const { taskList, setTaskList, userData } = useContext(TaskContext);
+    const [notificationOne, setNotificationOne] = useState(false);
+
+    const { setTaskList, userData } = useContext(TaskContext);
 
     async function resetAllData() {
 
+        const tasks = await db.tasks.list([
+            Query.equal("userId", userData.$id)
+        ])
+
+        const tasksDoc = tasks.documents;
+
         await Promise.all(
-            taskList.map(dc =>
+            tasksDoc.map(dc =>
             db.tasks.delete(dc.$id).catch(err => console.log("Deleting task in DataPrivacy:", err))
         ));
 
-        db.profiles.update(userData.$id, {
+        if(userData.pfpId) {
+    
+            await st.pfp.delete(userData.pfpId);
+            console.log("Old pfp deleted!");
+
+        }
+
+        await db.profiles.update(userData.$id, {
             theme: "dark",
             accent: "blue",
             quirk: true,
             quote: false,
             streak: true,
-        })
+        }).catch(err => console.log("Deleting all user Data", err));
 
         localStorage.clear();
         window.location.reload();
@@ -34,8 +50,15 @@ function DataPrivacy() {
     }
 
     async function clearTaskHistory() {
+
+        const tasks = await db.tasks.list([
+            Query.equal("userId", userData.$id)
+        ])
+
+        const tasksDoc = tasks.documents;
+
         await Promise.all(
-            taskList.map(dc =>
+            tasksDoc.map(dc =>
             db.tasks.delete(dc.$id).catch(err => console.log("Deleting task in DataPrivacy:", err))
         ));
 
@@ -43,6 +66,7 @@ function DataPrivacy() {
         setTaskList([]); 
 
         setAlertOne(prev => !prev);
+        setNotificationOne(prev => !prev);
     }
 
     return ( 
@@ -95,6 +119,8 @@ function DataPrivacy() {
             </div>            
 
             {alertOne && <Alert yesDelete={() => clearTaskHistory()} noDelete={() => setAlertOne(prev => !prev)} different={"Are you Sure? This will clear your task history."}/>}
+            {notificationOne && <Alert noDelete={() => setNotificationOne(prev => !prev)} different={"Your task history has been cleared successfully"} popUp={true}/>}
+
             {alertTwo && <Alert yesDelete={() => resetAllData()} noDelete={() => setAlertTwo(prev => !prev)} different={"Are you Sure? This will clear your app data including tasks, themes and preferences."}/>}
         </div>
     );
