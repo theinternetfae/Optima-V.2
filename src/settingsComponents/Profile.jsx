@@ -14,12 +14,6 @@ function Profile() {
 
     const [alertShow, setAlertShow] = useState(false);
 
-    useEffect(() => {
-        const prevPfpId = userData.pfpId;
-        console.log("Previous pfp", prevPfpId)
-        console.log(userData)
-    }, [userData])
-
     async function handleImageChange(e) {
 
         const file = e.target.files[0];
@@ -27,8 +21,6 @@ function Profile() {
 
         const pfpId = ID.unique();
         const prevPfpId = userData.pfpId;
-        console.log("Old pfp", prevPfpId);
-        console.log("New pfp", pfpId);
 
         const imageURL = URL.createObjectURL(file);
         setProfileImage(imageURL);
@@ -57,22 +49,12 @@ function Profile() {
         } catch(err) {
 
             setProfileImage(null);
-
-            const prevPfpId = userData.pfpId;
-            
-            await st.pfp.delete(prevPfpId);
-            console.log("Old pfp deleted!");
-
             await db.profiles.update(userData.$id, {pfpId: null});
             console.log("DB updated!");
 
-        } finally {
-
             console.log("Pfp Upload:", err);
-
-        }
+        } 
     }
-
 
     async function signOut() {
 

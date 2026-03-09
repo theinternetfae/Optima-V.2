@@ -37,6 +37,8 @@ function WelcomeBack() {
         return () => clearTimeout(timer);
     }, [emailPassError]);
 
+    const [notification, setNotification] = useState(false);
+    const [notifError, setNotifError] = useState('');
 
 
     async function signIn() {
@@ -71,7 +73,8 @@ function WelcomeBack() {
                     await user.createVer("http://localhost:5173/verify");
                 }
 
-                alert("We can't log you in just yet, check your inbox for 'AppWrite' and Verify your email first");
+                setNotification(prev => !prev);
+                setNotifError("We can't log you in just yet, check your inbox for 'AppWrite' and Verify your email first");
                 return;
             } 
 
@@ -91,7 +94,8 @@ function WelcomeBack() {
                 setPassword('');
             } 
             else {
-                alert("Login failed. Try again.");
+                setNotification(prev => !prev);
+                setNotifError("Login failed. Try again, OR Refresh the page.");
                 setEmailInput('');
                 setPassword('');
             }
@@ -133,9 +137,10 @@ function WelcomeBack() {
         
                 </div>
         
-                <p className="cursor-pointer text-start mt-8 text-sm text-grey" onClick={() =>
-                    alert("Feature coming soon!")
-                }>Forgot password?</p>
+                <p className="cursor-pointer text-start mt-8 text-sm text-grey" onClick={() => {
+                    setNotification(prev => !prev)
+                    setNotifError("Feature coming soon!")
+                }}>Forgot password?</p>
 
                 <button type="button" className="button" onClick={() => signIn()}>
                     Sign In
@@ -152,7 +157,7 @@ function WelcomeBack() {
     
             </div>
         
-            {/* <Alert/> */}
+            {notification && <Alert popUp={true} different={notifError} noDelete={() => setNotification(prev => !prev)}/>}
         </form>,
         document.getElementById("modal-root")
     );

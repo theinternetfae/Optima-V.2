@@ -7,6 +7,10 @@ import Alert from "./Alert.jsx";
 
 function Welcome() {
 
+    const [notification, setNotification] = useState(false);
+    const [notifError, setNotifError] = useState('');
+
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [emailInput, setEmailInput] = useState('');
@@ -30,13 +34,16 @@ function Welcome() {
         return regex.test(password);
     }
 
+
+
     async function creatingUser(e) {
         try {
             e.preventDefault();
 
             if(!firstName || !lastName || !emailInput || !password || !passwordCheck) return;
             if(password !== passwordCheck) {
-                alert("Your passwords don't match");
+                setNotification(prev => !prev);
+                setNotifError("Your passwords don't match");
                 setPasswordCheck('');
                 return;
             }
@@ -67,7 +74,8 @@ function Welcome() {
             await user.create(userDetails);
             await user.login({email, password});
             await user.createVer("http://localhost:5173/verify");
-            alert("Account created successfully! Please check your inbox and verify your email to log in properly.");
+            setNotification(prev => !prev);
+            setNotifError("Account created successfully! Please check your inbox and verify your email to log in properly.");
 
             setFirstName('');
             setLastName('');
@@ -80,9 +88,11 @@ function Welcome() {
             console.log(error);
 
             if (error?.type === "user_already_exists") {
-                alert("You already have an account.");
+                setNotification(prev => !prev);
+                setNotifError("You already have an account.");
             } else {
-                alert("Something went wrong. Try again.");
+                setNotification(prev => !prev);
+                setNotifError("Something went wrong. Try again.");
             }        
         }
     }
@@ -164,8 +174,7 @@ function Welcome() {
     
             </div>
         
-            {/* <Alert/> */}
-            {/* <Verify /> */}
+            {notification && <Alert popUp={true} different={notifError} noDelete={() => setNotification(prev => !prev)}/>}
         </form>,
         document.getElementById("modal-root")
     );

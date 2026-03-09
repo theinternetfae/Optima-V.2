@@ -610,8 +610,8 @@ input[type="number"]::-webkit-outer-spin-button {
     
         .pop-box {
             @apply border border-2 text-sm border-accentprimary bg-surfacetwo p-6 text-base flex flex-col gap-3 text-center rounded-md fixed top-[-120px] 
-            transition ease-in duration-500
-            lg:w-[30%] lg:h-[15%] lg:text-base;
+            transition ease-in duration-300
+            lg:w-[30%] lg:text-base;
 
             .exit-pop {
                 @apply m-auto w-[60px] p-2 cursor-pointer rounded-lg font-bold bg-accentsecondary shadow-lg

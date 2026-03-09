@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import db from "../appwrite/databases";
+import Alert from "../components/Alert";
 
 function Message({setMessage}) {
 
@@ -16,16 +17,17 @@ function Message({setMessage}) {
         return regex.test(email);
     }
 
+ 
+    const [notification, setNotification] = useState(false);
 
     async function sendToMe(e) {
+
+        e.preventDefault();
 
         if(!name || !email || !sendMessage) {
             setErrorMessage(prev => !prev);
             return;
         }
-
-        e.preventDefault();
-
 
         if(!isValidEmail(email)) {
             setErrorMessage(prev => !prev);
@@ -40,11 +42,12 @@ function Message({setMessage}) {
         }
 
         db.messages.create(payload).catch(err => console.log("Sending message:", err));
-        alert("Message sent! I'll get back to you");
+    
         setName('');
         setEmail('');
         setSendMessage('');
-        setMessage(prev => !prev);
+    
+        setNotification(prev => !prev);
     }
 
     useEffect(() => {
@@ -91,6 +94,7 @@ function Message({setMessage}) {
 
             </div>
 
+            {notification && <Alert popUp={true} different={"Message sent! I'll get back to you"} noDelete={() => setNotification(prev => !prev)}/>}
         </div>, 
         document.getElementById("modal-root")
     );

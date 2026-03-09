@@ -24,6 +24,8 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
   const[editScreen, setEditScreen] = useState(false);
 
   const [alertShow, setAlertShow] = useState(false);
+  const [notification, setNotification] = useState(false);
+  const [notifError, setNotifError] = useState('');
 
   async function deleteTask() {
     const tasksRemaining = taskList.filter(t => t.$id !== taskE.$id);
@@ -103,7 +105,10 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
           history ? (
 
             <div className="done-box">
-              <button className={`bi bi-star-fill commit ${taskE.isCommited ? 'text-yellow' : 'text-grey'}`} onClick={(() => alert('Go to home to edit commitments'))}></button>
+              <button className={`bi bi-star-fill commit ${taskE.isCommited ? 'text-yellow' : 'text-grey'}`} onClick={(() => {
+                setNotification(prev => !prev);
+                setNotifError('Go to home to edit commitments')
+              })}></button>
               <button className="bi bi-trash" onClick={(e) => {
                 e.stopPropagation();
                 setAlertShow(prev => !prev);
@@ -139,9 +144,11 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
                     if (limitReached && !taskE.isCommited && new Date(taskE.appearId).toDateString() === new Date().toDateString()) {
          
                       if (level === 3) {
-                        alert('You are at the highest level! Optima advises commiting to a maximum of eight tasks a day. Doing great.')
+                        setNotification(prev => !prev);
+                        setNotifError('You are at the highest level! Optima advises commiting to a maximum of eight tasks a day. Doing great.')
                       } else {
-                        alert('At level one you can only commit to two tasks a day. Finish your tasks consistently to level up!');
+                        setNotification(prev => !prev);
+                        setNotifError('At level one you can only commit to two tasks a day. Finish your tasks consistently to level up!');
                       }
                       
                       return;
@@ -196,6 +203,7 @@ function TaskDisplay({taskE, history, handler, chosenHist, setChosenHist, limitR
         }
 
         {alertShow && <Alert yesDelete={() => deleteTask()} noDelete={() => setAlertShow(prev => !prev)}/>}
+        {notification && <Alert popUp={true} different={notifError} noDelete={() => setNotification(prev => !prev)}/>}
       </div>
 
       {editScreen && <NewTask editExit={() => setEditScreen(editScreen => !editScreen)} task={taskE}/>}

@@ -1,6 +1,7 @@
 import React, {useContext, useState, useEffect, useMemo} from "react";
 import { TaskContext } from "./components/TaskContext.js";
 import NewTask from "./components/NewTask.jsx";
+import Alert from "./components/Alert.jsx";
 
 function TaskStats() {
     const today = new Date();
@@ -422,11 +423,13 @@ function TaskStats() {
         return `${number} ${number === 1 ? 'day' : 'days'}`;
     }
 
+    const [notification, setNotification] = useState(false);
+
     return ( 
         <div className="full-stats-cont">
 
             <div className="stats-header">
-                <button className="bi bi-lightbulb-fill tips" onClick={() => alert("Feature coming soon!")}></button>
+                <button className="bi bi-lightbulb-fill tips" onClick={() => setNotification(prev => !prev)}></button>
                 <select name="task-selected" value={selectedId} onChange={e => {
                     
                     uniqueTasks.forEach(task => {
@@ -561,6 +564,7 @@ function TaskStats() {
             }
 
             {statsNew && <NewTask statsNew={addNewTask}/>}
+            {notification && <Alert popUp={true} different={"Feature coming soon!"} noDelete={() => setNotification(prev => !prev)}/>}
 
         </div> 
     );

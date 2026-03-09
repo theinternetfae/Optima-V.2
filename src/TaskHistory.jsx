@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect, useMemo } from "react";
 import { TaskContext, SettingsContext } from "./components/TaskContext.js";
 import TaskDisplay from "./components/TaskDisplay.jsx";
+import Alert from "./components/Alert.jsx";
 
 function TaskHistory() {
     
@@ -40,10 +41,12 @@ function TaskHistory() {
         );
     }
 
+    const [notification, setNotification] = useState(false);
+
     function searchDate() {
         
         if(!isValidCalendarDate({year: year, month: month, day: day})) {
-            alert('Invalid date.');
+            setNotification(prev => !prev);
             return;
         } else {
             setChosenDate(`${year}-${month}-${day}`);
@@ -235,6 +238,8 @@ function TaskHistory() {
             
                 </div>
             }
+
+            {notification && <Alert popUp={true} different={"Invalid date."} noDelete={() => setNotification(prev => !prev)}/>}
         </div> 
     );
 }

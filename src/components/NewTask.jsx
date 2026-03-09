@@ -15,6 +15,9 @@ function NewTask({exit, editExit, statsNew, task}) {
     const [showPicker, setShowPicker] = useState(false);
     const [alertShow, setAlertShow] = useState(false);
 
+    const [notification, setNotification] = useState(false);
+    const [notifError, setNotifError] = useState('');
+
     const [emojiInput, setEmojiInput] = useState(task ? task.emoji : "");
     const [nameInput, setNameInput] = useState(task ? task.name : "");
     const [colorCont, setColorCont] = useState(task ? task.color : "");
@@ -47,13 +50,15 @@ function NewTask({exit, editExit, statsNew, task}) {
         if (!nameInput) missing.push("define your task");
 
         if (missing.length > 0) {
-            alert(`Please ${missing.join(", ")} then create your task.`);
+            setNotification(prev => !prev);
+            setNotifError(`Please ${missing.join(", ")} then create your task.`);
             return;
         }   
 
 
         if (new Date(startDate) < new Date(today) || new Date(endDate) < new Date(today)) {
-            alert("Selected dates can not be in the past.");
+            setNotification(prev => !prev);
+            setNotifError("Selected dates can not be in the past.");
             return;
         }
 
@@ -108,7 +113,8 @@ function NewTask({exit, editExit, statsNew, task}) {
         if (!nameInput) missing.push("define your task");
 
         if (missing.length > 0) {
-            alert(`Please ${missing.join(", ")} then create your task.`);
+            setNotification(prev => !prev);
+            setNotifError(`Please ${missing.join(", ")} then create your task.`);
             return;
         }   
 
@@ -241,7 +247,8 @@ function NewTask({exit, editExit, statsNew, task}) {
                 <button className="addTask" onClick={isEditingMode ? () => editingTask() : () => creatingTask()}>{isEditingMode ? "Save Changes" : "Add task"}</button>
                 {isEditingMode && <button className="delete-task" onClick={() => setAlertShow(prev => !prev)}>Delete task</button>}
                 {alertShow && <Alert yesDelete={() => deleteTask()} noDelete={() => setAlertShow(prev => !prev)} />}
-            </div>            
+                {notification && <Alert popUp={true} different={notifError} noDelete={() => setNotification(prev => !prev)}/>}
+            </div>           
         </div>
     );
 }
