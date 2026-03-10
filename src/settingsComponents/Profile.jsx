@@ -13,6 +13,7 @@ function Profile() {
     const { authProfile, userData, setUserData, profileImage, setProfileImage } = useContext(TaskContext);
 
     const [alertShow, setAlertShow] = useState(false);
+    const [notification, setNotification] = useState(false);
 
     async function handleImageChange(e) {
 
@@ -247,13 +248,14 @@ function Profile() {
 
                     <p>Delete Account</p>
 
-                    <button className="bi bi-person-x delacc" onClick={() => alert("Feature coming soon!")}></button>
+                    <button className="bi bi-person-x delacc" onClick={() => setNotification(prev => !prev)}></button>
 
                 </div>
 
             </div>
 
             {alertShow && <Alert different={"Are you sure you want to logout?"} yesDelete={() => signOut()} noDelete={() => setAlertShow(prev => !prev)} popUp={false}/>}
+            {notification && <Alert popUp={true} different={"Feature coming soon!"} noDelete={() => setNotification(prev => !prev)}/>}
 
         </div>
     );

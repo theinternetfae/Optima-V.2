@@ -603,7 +603,7 @@ input[type="number"]::-webkit-outer-spin-button {
     
         .alert-box {
             @apply w-[80%] border border-2 text-sm border-accentprimary bg-surfacetwo p-6 text-base text-center rounded-md 
-            lg:w-[30%] lg:h-[25%] lg:text-base;
+            lg:w-[30%] lg:text-base;
         
             & .choice {
                 @apply flex justify-between mt-4;
