@@ -31,7 +31,9 @@ function DataPrivacy() {
 
         if(userData.pfpId) {
     
-            await st.pfp.delete(userData.pfpId);
+            await st.pfp.delete(userData.pfpId).catch(
+                await db.profiles.update(userData.$id, {pfpId: null})
+            );
             console.log("Old pfp deleted!");
 
         }
