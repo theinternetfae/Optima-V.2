@@ -4,7 +4,6 @@ import user from "../appwrite/accounts.js";
 import { Link } from "react-router-dom";
 import Alert from "./Alert.jsx";
 
-
 function Welcome() {
 
     const [notification, setNotification] = useState(false);

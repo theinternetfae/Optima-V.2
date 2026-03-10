@@ -182,28 +182,45 @@ input[type="number"]::-webkit-outer-spin-button {
     .welcome-page {
         @apply bg-defaultbg fixed top-0 z-40 w-full h-full backdrop-blur-sm flex flex-col items-center justify-center text-white;
 
-        .welcome-note {
-            @apply flex flex-col justify-center items-center gap-2 p-2 mb-2;
+        .sign-inputs-cont {
+            @apply w-[80%]
+            lg:w-[50%];
 
-            h1 {
-                @apply text-4xl font-bold;
+            .welcome-note {
+                @apply flex flex-col justify-center items-center p-2 mb-2
+                lg:gap-2;
+
+                h1 {
+                    @apply font-bold text-2xl
+                    lg:text-4xl;
+                }
+
+                p {
+                    @apply text-sm
+                    lg:text-base;
+                }
             }
-        }
 
-        & .sign-inputs-box {
-            @apply flex flex-col gap-6;
+            & .sign-inputs-box {
+                @apply flex flex-col gap-4;
+                lg:gap-6;
 
-            input {
-                @apply p-5 w-200 bg-defaultmuted rounded-lg shadow-lg focus:outline-none;
+                input {
+                    @apply p-2 bg-defaultmuted text-sm rounded-lg shadow-lg w-full border border-2 border-transparent focus:outline-none
+                    lg:p-5 lg:text-base;
+                }
             }
-        }
 
-        & .button {
-            @apply w-full p-4 mt-4 rounded-lg bg-tocolorb font-bold cursor-pointer active:scale-95;
-        }
+            & .button {
+                @apply w-full p-2 text-sm mt-6 rounded-lg bg-tocolorb font-bold cursor-pointer active:scale-95
+                lg:p-4 lg:text-base lg:mt-4;
+            }
 
-        p {
-            @apply text-center mt-4
+            p {
+                @apply text-center text-sm mt-4
+                lg:text-base;
+            }
+
         }
     }
     
