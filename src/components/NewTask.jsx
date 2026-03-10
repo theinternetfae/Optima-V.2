@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import Emoji from "./EmojiPicker.jsx";
+import ColorPicker from "./ColorPicker.jsx";
 // import EmojiPicker from "emoji-picker-react";
 import Alert from "./Alert.jsx";
 import { TaskContext } from "./TaskContext.js";
@@ -20,7 +21,10 @@ function NewTask({exit, editExit, statsNew, task}) {
 
     const [emojiInput, setEmojiInput] = useState(task ? task.emoji : "");
     const [nameInput, setNameInput] = useState(task ? task.name : "");
+
     const [colorCont, setColorCont] = useState(task ? task.color : "");
+    const [callColor, setCallColor] = useState(false);
+
     const [taskDays, setTaskDays] = useState(task ? task.days : []);
 
     const today = new Date().toLocaleDateString("en-CA");
@@ -177,7 +181,7 @@ function NewTask({exit, editExit, statsNew, task}) {
             <div className="new-task-container">
 
                 <div className="task-desc">
-                    <button className={`emoji-cont ${!emojiInput ? " bi bi-plus" : "text-4xl md:text-6xl"}`} value={emojiInput} onClick={clickShowPicker}>{emojiInput || ""}</button>
+                    <button className={`emoji-cont ${!emojiInput ? "bi bi-plus" : "text-4xl md:text-6xl"}`} value={emojiInput} onClick={clickShowPicker}>{emojiInput || ""}</button>
                     <input type="text" placeholder="What to do?" value={nameInput} onChange={e => setNameInput(e.target.value)} className="name-input" />
 
                     {
@@ -190,8 +194,25 @@ function NewTask({exit, editExit, statsNew, task}) {
                 </div>
 
                 <div className="color-value">
-                    <h2>Color</h2>
-                    <input type="color" value={colorCont} className="pick-color" onChange={e => setColorCont(e.target.value)}/>
+                    <div className="display-value">
+
+                        <h2>Color</h2>
+                        <button className="color-btn" style={{backgroundColor: colorCont}} onClick={(e) => {
+                            e.preventDefault();
+                            setCallColor(prev => !prev);
+                        }}></button>
+
+                    </div>
+
+                    
+                    {
+                        callColor && <ColorPicker
+                            setColor={setColorCont}
+                            setCall={() => setCallColor(prev => !prev)}
+                        />
+                    }    
+                
+                    {/* <input type="color" value={colorCont} className="pick-color" onChange={e => setColorCont(e.target.value)}/> */}
                 </div>
 
                 <div className="goal-value">

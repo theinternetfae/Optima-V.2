@@ -244,7 +244,19 @@ input[type="number"]::-webkit-outer-spin-button {
         }
     }
 
+    .color-picker {
+        @apply rounded-lg bg-surfacetwo flex justify-center items-center shadow-lg p-4 h-45 w-[300px] 
+        lg:w-[330px];
 
+        .color-box {
+            @apply h-full flex mt-2 flex-wrap gap-2 items-center shrink-0 rounded-lg bg-surfaceone p-2 w-full;
+
+            .color-circle {
+                @apply border border-2 w-6 h-6 rounded-full cursor-pointer
+                lg:w-8 lg:h-8;
+            }
+        }
+    }
 
     .named {
         @apply flex flex-col lg:flex-row;
@@ -372,15 +384,21 @@ input[type="number"]::-webkit-outer-spin-button {
             }
 
             .color-value {
-                @apply bg-surfaceone p-2 flex justify-between gap-6 rounded-lg md:p-4;
+                @apply bg-surfaceone p-2 flex flex-col items-center gap-6 rounded-lg md:p-4;
 
-                & h2 {
-                    @apply text-sm md:font-bold md:text-lg;
-                }
+                .display-value {
+                    @apply flex justify-between items-center w-full;
+                    
+                    h2 {
+                        @apply text-sm md:font-bold md:text-lg;
+                    }
                 
-                & .pick-color {
-                    @apply rounded-xl cursor-pointer outline-none; 
+                    & .color-btn {
+                        @apply w-[10%] h-6 border border-grey cursor-pointer;
+                    }
+
                 }
+
             }
 
             .goal-value {
