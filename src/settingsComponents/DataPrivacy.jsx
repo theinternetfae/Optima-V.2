@@ -13,6 +13,7 @@ function DataPrivacy() {
     const [ alertOne, setAlertOne ] = useState(false);
     const [ alertTwo, setAlertTwo ] = useState(false);
     const [notificationOne, setNotificationOne] = useState(false);
+    const [notifError, setNotifError] = useState('');
 
     const { setTaskList, userData } = useContext(TaskContext);
 
@@ -69,6 +70,7 @@ function DataPrivacy() {
 
         setAlertOne(prev => !prev);
         setNotificationOne(prev => !prev);
+        setNotifError("Your task history has been cleared successfully");
     }
 
     return ( 
@@ -112,7 +114,10 @@ function DataPrivacy() {
                         <button className="bi bi-trash" onClick={() => setAlertTwo(prev => !prev)}></button>
                     </div>
                     
-                    <button className="download-data" onClick={() => alert("Feature coming soon!")}>
+                    <button className="download-data" onClick={() => {
+                        setNotificationOne(prev => !prev);
+                        setNotifError("Feaute coming soon!")
+                    }}>
                         <i className="bi bi-download"></i>
                         <span>Download your data</span>
                     </button>
@@ -121,7 +126,7 @@ function DataPrivacy() {
             </div>            
 
             {alertOne && <Alert yesDelete={() => clearTaskHistory()} noDelete={() => setAlertOne(prev => !prev)} different={"Are you Sure? This will clear your task history."}/>}
-            {notificationOne && <Alert noDelete={() => setNotificationOne(prev => !prev)} different={"Your task history has been cleared successfully"} popUp={true}/>}
+            {notificationOne && <Alert noDelete={() => setNotificationOne(prev => !prev)} different={notifError} popUp={true}/>}
 
             {alertTwo && <Alert yesDelete={() => resetAllData()} noDelete={() => setAlertTwo(prev => !prev)} different={"Are you Sure? This will clear your app data including tasks, themes and preferences."}/>}
         </div>

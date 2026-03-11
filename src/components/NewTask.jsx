@@ -233,8 +233,12 @@ function NewTask({exit, editExit, statsNew, task}) {
                 )}
 
                 <div className="reminder">
+                    {/* () => setReminder(prev => !prev) */}
                     <h2>{reminder ? "Off reminder?" : "On reminder?"}</h2>
-                    <div className={`switch-cont ${reminder && "bg-[var(--color-accentprimary)]"}`} onClick={() => setReminder(prev => !prev)}>
+                    <div className={`switch-cont ${reminder && "bg-[var(--color-accentprimary)]"}`} onClick={() => {
+                        setNotification(prev => !prev)
+                        setNotifError("Feature coming soon!")
+                    }}>
                         <div className={`switch-ball ease duration-600 ${reminder && "translate-x-9 md:translate-x-16"}`}></div>
                     </div>
                 </div>
