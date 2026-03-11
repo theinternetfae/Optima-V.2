@@ -470,16 +470,18 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 & .switch-ball {
-                    @apply h-[90%] w-[30%] rounded-full mt-[1px] mx-[1px] bg-gradient-to-b from-white to-gray-400 shadow md:mx-[2px] md:w-[25%] md:h-[80%] md:mt-[3px];  
+                    @apply h-[90%] w-[30%] rounded-full mt-[1px] mx-[1px] bg-white shadow md:mx-[2px] md:w-[25%] md:h-[80%] md:mt-[3px];  
                 }
             }
 
             & .addTask {
-                @apply mt-2 bg-gradient-to-b from-accentsecondary to-accentprimary p-2 rounded-lg text-sm shadow font-bold text-white text-shadow-md cursor-pointer md:text-base;
+                @apply mt-2 p-2 rounded-lg text-sm shadow bg-accentprimary font-bold text-white text-shadow-md cursor-pointer 
+                lg:bg-gradient-to-b lg:from-accentsecondary lg:to-accentprimary md:text-base;
             }
 
             & .delete-task {
-                @apply mt-2 bg-gradient-to-b from-fromcolorr to-tocolorr p-2 rounded-lg text-sm font-bold text-shadow-md text-white cursor-pointer md:text-base;
+                @apply mt-2 p-2 rounded-lg bg-fromcolorr text-sm font-bold text-shadow-md text-white cursor-pointer 
+                lg:bg-gradient-to-b lg:from-fromcolorr lg:to-tocolorr md:text-base;
             }
         }
     }
@@ -532,8 +534,8 @@ input[type="number"]::-webkit-outer-spin-button {
             }
                     
             & .bi-trash {
-                @apply cursor-pointer active:scale-90 text-white border border-2 border-tocolorr p-2 mr-2 rounded-lg bg-gradient-to-b from-fromcolorr to-tocolorr active:scale-90
-                lg:text-xl lg:px-4;
+                @apply cursor-pointer active:scale-90 text-white border border-2 border-tocolorr p-2 mr-2 rounded-lg bg-fromcolorr active:scale-90
+                lg:text-xl lg:px-4 lg:bg-gradient-to-b lg:from-fromcolorr lg:to-tocolorr;
             }
  
         }
@@ -611,7 +613,8 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         & button {
-            @apply bg-gradient-to-b from-accentsecondary to-accentprimary w-[80%] p-2 cursor-pointer text-xl text-white rounded-lg active:scale-95;
+            @apply bg-accentprimary w-[80%] p-2 cursor-pointer text-xl text-white rounded-lg active:scale-95
+            lg:bg-gradient-to-b lg:from-accentsecondary lg:to-accentprimary;
         }
     }
 
@@ -630,11 +633,13 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 & .yes-yes {
-                    @apply bg-gradient-to-b from-fromcolorr to-tocolorr text-white;
+                    @apply bg-fromcolorr text-white
+                    lg:bg-gradient-to-b lg:from-fromcolorr lg:to-tocolorr;
                 }
 
                 & .no-no {
-                    @apply bg-gradient-to-b from-accentsecondary to-accentprimary text-white;
+                    @apply text-white bg-accentprimary
+                    lg:bg-gradient-to-b lg:from-accentsecondary lg:to-accentprimary;
                 }
             }
         }
@@ -912,8 +917,8 @@ input[type="number"]::-webkit-outer-spin-button {
                 lg:w-[200px] lg:h-auto;
 
                 .light-dark-ball {
-                    @apply w-[20%] rounded-xl mx-1 bg-gradient-to-b from-white to-grey flex items-center justify-center
-                    lg:h-[80%]; 
+                    @apply w-[20%] rounded-xl mx-1 bg-white flex items-center justify-center
+                    lg:h-[80%] lg:bg-gradient-to-b lg:from-white lg:to-grey; 
                 
                     .bi {
                         @apply transition ease-in-out duration-400
@@ -997,7 +1002,8 @@ input[type="number"]::-webkit-outer-spin-button {
                             @apply bg-surfaceone border border-2 border-transparent z-10 cursor-pointer;
 
                             & .in-one {
-                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-fromcolorb to-tocolorb shadow; 
+                                @apply h-full rounded-full bg-fromcolorb scale-85 shadow
+                                lg:bg-gradient-to-b lg:from-fromcolorb lg:to-tocolorb; 
                             }
                         }
 
@@ -1005,7 +1011,8 @@ input[type="number"]::-webkit-outer-spin-button {
                             @apply bg-surfaceone border border-2 border-transparent z-10 cursor-pointer;
 
                             & .in-two {
-                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-fromcolorpur to-tocolorpur shadow; 
+                                @apply h-full rounded-full scale-85 bg-fromcolorpur shadow
+                                lg:bg-gradient-to-b lg:from-fromcolorpur lg:to-tocolorpur; 
                             }
                         }
 
@@ -1013,7 +1020,8 @@ input[type="number"]::-webkit-outer-spin-button {
                             @apply bg-surfaceone border border-2 border-transparent z-10 cursor-pointer;
 
                             & .in-three {
-                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-fromcolorp to-tocolorp shadow; 
+                                @apply h-full rounded-full scale-85 bg-fromcolorp shadow
+                                lg:bg-gradient-to-b lg:from-fromcolorp lg:to-tocolorp; 
                             }
                         }
 
@@ -1021,7 +1029,8 @@ input[type="number"]::-webkit-outer-spin-button {
                             @apply bg-surfaceone border border-2 border-transparent z-10 cursor-pointer;
 
                             & .in-four {
-                                @apply h-full rounded-full scale-85 bg-gradient-to-b from-fromcolorg to-tocolorg shadow; 
+                                @apply h-full rounded-full scale-85 bg-fromcolorg shadow
+                                lg:bg-gradient-to-b lg:from-fromcolorg lg:to-tocolorg; 
                             }
                         }
                     }
@@ -1031,7 +1040,8 @@ input[type="number"]::-webkit-outer-spin-button {
                         lg:w-[18%] lg:h-[80%];
 
                         .ball {
-                            @apply h-[80%] w-[10%] ml-1 rounded-xl bg-gradient-to-b from-white to-gray-400 shadow;  
+                            @apply h-[80%] w-[10%] ml-1 rounded-xl bg-white shadow
+                            lg:bg-gradient-to-b lg:from-white lg:to-gray-400;  
                         }
                     }
                 }
@@ -1041,11 +1051,13 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 .logout {
-                    @apply bg-gradient-to-b from-accentsecondary to-accentprimary text-white
+                    @apply bg-accentprimary text-white
+                    lg:bg-gradient-to-b lg:from-accentsecondary lg:to-accentprimary;
                 }
 
                 .delacc {
-                    @apply text-white bg-gradient-to-b from-[#707070] to-[#999999];
+                    @apply text-white bg-[#707070]
+                    lg:bg-gradient-to-b lg:from-[#707070] lg:to-[#999999];
                     /* bg-gradient-to-b from-fromcolorr to-tocolorr  */
                 }
 
@@ -1070,11 +1082,13 @@ input[type="number"]::-webkit-outer-spin-button {
                     }
 
                     .logout {
-                        @apply bg-gradient-to-b from-accentsecondary to-accentprimary text-white;
+                        @apply bg-accentprimary text-white
+                        lg:bg-gradient-to-b lg:from-accentsecondary lg:to-accentprimary;
                     }
 
                     .delacc {
-                        @apply text-white bg-gradient-to-b from-[#707070] to-[#999999];
+                        @apply text-white bg-[#707070]
+                        lg:bg-gradient-to-b lg:from-[#707070] lg:to-[#999999];
                         /* bg-gradient-to-b from-fromcolorr to-tocolorr  */
                     }
                 }
@@ -1091,8 +1105,8 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 button {
-                    @apply p-2 rounded-lg bg-gradient-to-b from-fromcolorr to-tocolorr cursor-pointer text-white text-sm shadow-lg active:scale-90
-                    lg:text-base;
+                    @apply p-2 rounded-lg bg-fromcolorr cursor-pointer text-white text-sm shadow-lg active:scale-90
+                    lg:text-base lg:bg-gradient-to-b lg:from-fromcolorr lg:to-tocolorr;
                 }
             }
 
@@ -1141,14 +1155,14 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         button {
-                            @apply w-[30%] h-10 rounded-lg bg-gradient-to-b from-fromcolorr to-tocolorr shadow-lg text-white active:scale-90 cursor-pointer
-                            lg:w-30 lg:h-12;
+                            @apply w-[30%] h-10 rounded-lg bg-fromcolorr shadow-lg text-white active:scale-90 cursor-pointer
+                            lg:w-30 lg:h-12 lg:bg-gradient-to-b lg:from-fromcolorr lg:to-tocolorr;
                         }
                     }
 
                     .download-data {
-                        @apply h-10 w-full text-sm rounded-lg mt-2 bg-gradient-to-b from-[#707070] to-[#999999] text-white shadow-lg font-bold cursor-pointer active:scale-95 flex gap-2 justify-center items-center
-                        lg:h-15 lg:text-base;
+                        @apply h-10 w-full text-sm rounded-lg mt-2 bg-[#707070] text-white shadow-lg font-bold cursor-pointer active:scale-95 flex gap-2 justify-center items-center
+                        lg:h-15 lg:text-base lg:bg-gradient-to-b lg:from-[#707070] lg:to-[#999999];
                         /* bg-gradient-to-b from-accentsecondary to-accentprimary */
                     }
                 }
@@ -1190,8 +1204,8 @@ input[type="number"]::-webkit-outer-spin-button {
                         }
 
                         .btn-icon {
-                            @apply w-[30%] h-10 rounded-lg bg-gradient-to-b from-accentsecondary to-accentprimary text-white shadow-lg active:scale-90 cursor-pointer flex justify-center items-center text-xl
-                            lg:w-30 lg:h-12;
+                            @apply w-[30%] h-10 rounded-lg bg-accentprimary text-white shadow-lg active:scale-90 cursor-pointer flex justify-center items-center text-xl
+                            lg:w-30 lg:h-12 lg:bg-gradient-to-b lg:from-accentsecondary lg:to-accentprimary;
                 
                             .bi {
                                 @apply text-2xl;
