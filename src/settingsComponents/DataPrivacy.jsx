@@ -116,7 +116,7 @@ function DataPrivacy() {
                     
                     <button className="download-data" onClick={() => {
                         setNotificationOne(prev => !prev);
-                        setNotifError("Feaute coming soon!")
+                        setNotifError("Feature coming soon!")
                     }}>
                         <i className="bi bi-download"></i>
                         <span>Download your data</span>
