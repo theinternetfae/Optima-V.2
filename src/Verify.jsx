@@ -1,16 +1,24 @@
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { createPortal } from "react-dom";
+
 import user from "./appwrite/accounts";
 
 function Verify() {
-    const [params] = useSearchParams();
     const navigate = useNavigate();
 
     useEffect(() => {
+        // const hash = window.location.search;
+        // const queryString = hash.split("?")[1];
+        const params = new URLSearchParams(window.location.search);
+        
         const userId = params.get("userId");
         const secret = params.get("secret");
 
+        console.log("Params:", params.toString());
+        console.log("userId:", userId);
+        console.log("secret:", secret);
+        
         if (!userId || !secret) return;
 
         async function verify() {
@@ -25,6 +33,7 @@ function Verify() {
         }
 
         verify();
+
     }, []);
 
     return createPortal ( 

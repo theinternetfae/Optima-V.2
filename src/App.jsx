@@ -109,7 +109,7 @@ function App() {
       let userInfo = await user.get();
       console.log("userInfo", userInfo);
 
-      if(!userInfo.emailVerification) {
+      if(userInfo.emailVerification === false) {
         setCurrentUser(null);
         userInfo = null;
         await user.logout();
@@ -126,7 +126,7 @@ function App() {
         
       } catch (err) {
 
-        if (err.code === 404) {
+        if (err.code === 404 && userInfo.emailVerification === true) {
 
           console.log("User Data not found... creating")
           const payload = {
@@ -163,7 +163,7 @@ function App() {
 
       } catch(err) {
 
-        if(err.code === 404) {
+        if(err.code === 404 && userInfo.emailVerification === true) {
           setProfileImage(null);
         } else {
           console.log("Setting pfp:", err)
