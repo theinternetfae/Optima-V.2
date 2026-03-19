@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { account } from "./appwrite/config";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { createPortal } from "react-dom";
+import user from "./appwrite/accounts";
 
 function Verify() {
     const [params] = useSearchParams();
@@ -15,7 +15,7 @@ function Verify() {
 
         async function verify() {
             try {
-                await account.updateEmailVerification(userId, secret);
+                await user.updateVer(userId, secret);
                 alert("Email verification successful!");
                 navigate("/home");
             } catch (err) {

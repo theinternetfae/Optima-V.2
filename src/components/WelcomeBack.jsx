@@ -66,13 +66,14 @@ function WelcomeBack() {
             await user.login(userDetails);
 
             const currentUser = await user.get();
-
+            
             if (!currentUser.emailVerification) {
 
                 if (!currentUser.emailVerificationRequested) {
-                    await user.createVer("http://localhost:5173/verify");
+                    await user.createVer("https://theinternetfae.github.io/Optima-V.2/#/verify");
                 }
 
+                await user.logout();
                 setNotification(prev => !prev);
                 setNotifError("We can't log you in just yet, check your inbox for 'AppWrite' and Verify your email first");
                 return;
@@ -85,11 +86,9 @@ function WelcomeBack() {
 
         } catch(error) {
 
-            console.log('ERROR:', error);
-     
             if (error?.type === "user_invalid_credentials") {
-                setEmailPassError(prev => !prev);
-                setFormError('Your email or password is wrong')
+                setNotification(prev => !prev);
+                setNotifError("Your email or password is wrong. If this error persists, it means your account might not exist.")
                 setEmailInput('');
                 setPassword('');
             } 

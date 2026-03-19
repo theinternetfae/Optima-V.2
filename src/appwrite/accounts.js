@@ -29,7 +29,11 @@ const user = {
     updatePassword: (newPassword, oldPassword) => 
         account.updatePassword(newPassword, oldPassword),
 
-    createVer: (redirectUrl) => account.createEmailVerification(redirectUrl),
+    createVer: (redirectUrl) => 
+        account.createEmailVerification(redirectUrl),
+
+    updateVer: (userId, secret) => 
+        account.updateEmailVerification(userId, secret),
 
     delete: (id) => account.delete(id),
 };

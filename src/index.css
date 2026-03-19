@@ -22,7 +22,6 @@ input[type="number"]::-webkit-outer-spin-button {
     @apply border border-2 border-accentprimary;
 }
 
-
 @utility no-scrollbar {
   -ms-overflow-style: none; 
   scrollbar-width: none;   

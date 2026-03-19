@@ -72,7 +72,7 @@ function Welcome() {
 
             await user.create(userDetails);
             await user.login({email, password});
-            await user.createVer("http://localhost:5173/verify");
+            await user.createVer("https://theinternetfae.github.io/Optima-V.2/#/verify");
             setNotification(prev => !prev);
             setNotifError("Account created successfully! Please check your inbox and verify your email to log in properly.");
 

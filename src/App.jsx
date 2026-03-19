@@ -101,20 +101,26 @@ function App() {
 
   const [loading, setLoading] = useState(true);
 
-  
   async function authProfile() {
 
     try {
       setLoading(true);
 
-      const userInfo = await user.get();
-      setCurrentUser(userInfo);
+      let userInfo = await user.get();
+      console.log("userInfo", userInfo);
 
+      if(!userInfo.emailVerification) {
+        setCurrentUser(null);
+        userInfo = null;
+        await user.logout();
+      } else {
+        setCurrentUser(userInfo);
+      }
 
       //USER-INFO
       try {
 
-        const data = await db.profiles.get(userInfo.$id);
+        const data = await db.profiles.get(userInfo?.$id);
         
         setUserData(data)
         
@@ -147,7 +153,7 @@ function App() {
       //PFP
       try{
 
-        const data = await db.profiles.get(userInfo.$id);
+        const data = await db.profiles.get(userInfo?.$id);
 
         await st.pfp.check(data.pfpId);
         
@@ -170,7 +176,7 @@ function App() {
       try {
         
         const tasks = await db.tasks.list([
-          Query.equal("userId", userInfo.$id),
+          Query.equal("userId", userInfo?.$id),
           Query.orderAsc("appearId")
         ]);
 
