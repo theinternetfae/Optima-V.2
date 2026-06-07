@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { createPortal } from "react-dom";
 
@@ -7,32 +7,42 @@ import user from "./appwrite/accounts";
 function Verify() {
     const navigate = useNavigate();
 
+    const hasVerified = useRef(false);
+
+    console.log("Window location:", window.location.href)
+    
     useEffect(() => {
-        // const hash = window.location.search;
-        // const queryString = hash.split("?")[1];
+
+        if(hasVerified.current) return;
+
+        hasVerified.current = true;
+
+        console.log("Verify effect running");
+       
         const params = new URLSearchParams(window.location.search);
         
         const userId = params.get("userId");
         const secret = params.get("secret");
 
-        console.log("Params:", params.toString());
-        console.log("userId:", userId);
-        console.log("secret:", secret);
-        
         if (!userId || !secret) return;
 
-        async function verify() {
+        async function verifyEmail() {
             try {
+                
+                console.log("userId:", userId);
+                console.log("secret:", secret);
                 await user.updateVer(userId, secret);
+
                 alert("Email verification successful!");
+                
                 navigate("/home");
             } catch (err) {
-                console.log(err)
+                console.log("Verification Error:", err)
                 alert("Verification failed.");
             }
         }
 
-        verify();
+        verifyEmail();
 
     }, []);
 

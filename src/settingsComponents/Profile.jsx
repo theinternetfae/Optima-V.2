@@ -6,6 +6,7 @@ import db from "../appwrite/databases.js";
 import st from "../appwrite/storage.js";
 import { ID } from "appwrite";
 import Alert from "../components/Alert.jsx";
+
 function Profile() {
     
     const navigate = useNavigate();
