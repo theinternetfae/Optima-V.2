@@ -109,10 +109,10 @@ function App() {
       let userInfo = await user.get();
       console.log("userInfo", userInfo);
 
-      if(userInfo.emailVerification === false) {
-        setCurrentUser(null);
-        userInfo = null;
+      if(!userInfo.emailVerification) {
         await user.logout();
+        setCurrentUser(null);
+        return;
       } else {
         setCurrentUser(userInfo);
       }

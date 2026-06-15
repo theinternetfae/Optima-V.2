@@ -34,11 +34,17 @@ function Verify() {
                 await user.updateVer(userId, secret);
 
                 alert("Email verification successful!");
-                
-                navigate("/home");
+                navigate('/home');
+               
             } catch (err) {
                 console.log("Verification Error:", err)
-                alert("Verification failed.");
+                alert(
+                    JSON.stringify({
+                        code: err.code,
+                        type: err.type,
+                        message: err.message,
+                    })
+                )
             }
         }
 
