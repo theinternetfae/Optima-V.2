@@ -124,17 +124,18 @@ function App() {
         
         await user.logout();
         setCurrentUser(null);
-      
-      } else {
+        return;
 
-        setCurrentUser(userInfo);
-        setUserData(data);
-        
-        gettingUserData(data, userInfo);
-        gettingUserPfp(data, userInfo);
-        gettingUserTasklist(userInfo);
+      } 
+
+      setCurrentUser(userInfo);
+      setUserData(data);
       
-      }
+      gettingUserData(data, userInfo);
+      gettingUserPfp(data, userInfo);
+      gettingUserTasklist(userInfo);
+    
+      
 
     } catch(err) {
 
