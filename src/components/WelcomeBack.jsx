@@ -35,6 +35,7 @@ function WelcomeBack() {
         }, 3000)
 
         return () => clearTimeout(timer);
+
     }, [emailPassError]);
 
     const [notification, setNotification] = useState(false);
@@ -92,6 +93,7 @@ function WelcomeBack() {
                 setEmailInput('');
                 setPassword('');
             } 
+
             else {
                 setNotification(prev => !prev);
                 setNotifError("Login failed. Try again, OR Refresh the page.");
@@ -107,8 +109,6 @@ function WelcomeBack() {
 
     return createPortal(
         <form className="welcome-page">
-
-            {/* <p>Welcome!</p> */}
 
             <div className="sign-inputs-cont">
 

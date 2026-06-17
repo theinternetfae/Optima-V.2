@@ -101,104 +101,129 @@ function App() {
 
   const [loading, setLoading] = useState(true);
 
-  async function authProfile() {
 
+
+
+
+
+
+
+
+
+
+
+  async function authProfile() {
     try {
+
       setLoading(true);
 
       let userInfo = await user.get();
-      console.log("userInfo", userInfo);
-
+      const data = await db.profiles.get(userInfo?.$id);
+      
       if(!userInfo.emailVerification) {
+        
         await user.logout();
         setCurrentUser(null);
-        return;
-      } else {
-        setCurrentUser(userInfo);
-      }
-
-      //USER-INFO
-      try {
-
-        const data = await db.profiles.get(userInfo?.$id);
-        
-        setUserData(data)
-        
-      } catch (err) {
-
-        if (err.code === 404 && userInfo.emailVerification === true) {
-
-          console.log("User Data not found... creating")
-          const payload = {
-            name: userInfo.name,
-            email: userInfo.email,
-            theme: "dark",
-            accent: "blue",
-            quirk: true,
-            quote: false,
-            streak: true,
-            pfpId: null,
-          };
-
-          const newData = await db.profiles.create(payload, null, userInfo.$id);
-          setUserData(newData);
-
-        } else {
-
-          console.log("Loading user data:", err);
-
-        }
-      }
-
-      //PFP
-      try{
-
-        const data = await db.profiles.get(userInfo?.$id);
-
-        await st.pfp.check(data.pfpId);
-        
-        const url = st.pfp.retrieve(data.pfpId);
-        
-        setProfileImage(url);
-
-      } catch(err) {
-
-        if(err.code === 404 && userInfo.emailVerification === true) {
-          setProfileImage(null);
-        } else {
-          console.log("Setting pfp:", err)
-        }
-
-      }
-
-
-      //TASK-LIST
-      try {
-        
-        const tasks = await db.tasks.list([
-          Query.equal("userId", userInfo?.$id),
-          Query.orderAsc("appearId")
-        ]);
-
-        setTaskList(tasks.documents);
       
-      } catch (err) {
+      } else {
 
-        setTaskList([]);
-                
-        console.log("Loading tasks list:", err);
-
+        setCurrentUser(userInfo);
+        setUserData(data);
+        
+        gettingUserData(data, userInfo);
+        gettingUserPfp(data, userInfo);
+        gettingUserTasklist(userInfo);
+      
       }
 
-    } catch {
+    } catch(err) {
+
+      console.log("Test Auth Profile Error:", err);
       setCurrentUser(null);
       setUserData(null);
-
+    
     } finally {
+    
       setLoading(false);
+    
     }
   }
 
+  async function gettingUserData(data, user) {
+    
+    try {
+
+      if(!data && user.emailVerification === true) {
+
+        console.log("User Data not found... creating")
+        const payload = {
+          name: user.name,
+          email: user.email,
+          theme: "dark",
+          accent: "blue",
+          quirk: true,
+          quote: false,
+          streak: true,
+          pfpId: null,
+        };
+
+        const newData = await db.profiles.create(payload, null, user.$id);
+        setUserData(newData);
+
+      }
+
+      console.log("Set user Data");
+      
+    } catch (err) {
+
+      console.log("Loading user data:", err);
+
+    }
+  }
+
+  async function gettingUserPfp(data, user) {
+    try{
+
+      if(!data && user.emailVerification === true) {
+        setProfileImage(null);
+        return;
+      }
+
+      await st.pfp.check(data.pfpId);
+      
+      const url = st.pfp.retrieve(data.pfpId);
+      
+      setProfileImage(url);
+
+      console.log("Set PFP")
+
+    } catch(err) {
+
+      console.log("Setting pfp:", err)
+
+    }
+  }
+
+  async function gettingUserTasklist(user) {
+    try {
+      
+      const tasks = await db.tasks.list([
+        Query.equal("userId", user.$id),
+        Query.orderAsc("appearId")
+      ]);
+
+      setTaskList(tasks.documents);
+
+      console.log("taskList set")
+    } catch (err) {
+
+      setTaskList([]);
+              
+      console.log("Loading tasks list:", err);
+
+    }
+  }
+  
   useEffect(() => {
     authProfile();
   }, []);

@@ -91,7 +91,7 @@ function DataPrivacy() {
                         <i className={toggleTwo ? "bi bi-caret-down-fill" : "bi bi-caret-right-fill"}></i>
                         <span>How is it stored?</span>
                     </div>
-                    {toggleTwo && <p>Your data is stored locally in your browser using localStorage. We do not upload or share your data with any servers at the moment.</p>}
+                    {toggleTwo && <p>Your data is stored in our appWrite database where only the creator of the app, Favour Egwele, has access.</p>}
                 </section>
                 
 
