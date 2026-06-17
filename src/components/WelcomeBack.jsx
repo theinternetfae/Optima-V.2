@@ -70,11 +70,12 @@ function WelcomeBack() {
             
             if (!currentUser.emailVerification) {
 
+                await user.logout();
+
                 if (!currentUser.emailVerificationRequested) {
                     await user.createVer("https://theinternetfae.github.io/Optima-V.2/#/verify");
                 }
 
-                await user.logout();
                 setNotification(prev => !prev);
                 setNotifError("We can't log you in just yet, check your inbox for 'AppWrite' and Verify your email first");
                 return;
@@ -82,9 +83,8 @@ function WelcomeBack() {
 
             authProfile();
             setEmailInput('');
-            setPassword('');
-            navigate("/home");            
-
+            setPassword('');      
+            
         } catch(error) {
 
             if (error?.type === "user_invalid_credentials") {

@@ -172,7 +172,7 @@ function App() {
 
       }
 
-      console.log("Set user Data");
+      console.log("UserData set");
       
     } catch (err) {
 
@@ -195,7 +195,7 @@ function App() {
       
       setProfileImage(url);
 
-      console.log("Set PFP")
+      console.log("PFP set")
 
     } catch(err) {
 
@@ -223,7 +223,7 @@ function App() {
 
     }
   }
-  
+
   useEffect(() => {
     authProfile();
   }, []);
