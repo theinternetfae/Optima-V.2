@@ -118,7 +118,6 @@ function App() {
       setLoading(true);
 
       let userInfo = await user.get();
-      const data = await db.profiles.get(userInfo?.$id);
       
       if(!userInfo.emailVerification) {
         
@@ -126,7 +125,10 @@ function App() {
         setCurrentUser(null);
         return;
 
-      } 
+      }
+
+      const data = await db.profiles.get(userInfo?.$id);
+      
 
       setCurrentUser(userInfo);
       setUserData(data);

@@ -1,17 +1,28 @@
 import { useEffect, useRef } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { createPortal } from "react-dom";
 
 import user from "./appwrite/accounts";
 
 function Verify() {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const hasVerified = useRef(false);
 
-    console.log("Window location:", window.location.href)
-    
     useEffect(() => {
+
+        if (location.pathname === "/verify") {
+            return;
+        }
+
+        authProfile();
+
+    }, [location.pathname]);
+
+    useEffect(() => {
+
+        console.log("Verify mounted");
 
         if(hasVerified.current) return;
 
@@ -27,17 +38,18 @@ function Verify() {
         if (!userId || !secret) return;
 
         async function verifyEmail() {
+            console.log("Calling updateEmailVerification");
+
             try {
                 
-                console.log("userId:", userId);
-                console.log("secret:", secret);
                 await user.updateVer(userId, secret);
 
                 alert("Email verification successful!");
-                navigate('/home');
+                // navigate('/home');
+                console.log("Verified.")
                
             } catch (err) {
-                console.log("Verification Error:", err)
+
                 alert(
                     JSON.stringify({
                         code: err.code,
@@ -45,9 +57,11 @@ function Verify() {
                         message: err.message,
                     })
                 )
+                
             }
         }
 
+        console.log("Verification returned");
         verifyEmail();
 
     }, []);
@@ -59,5 +73,6 @@ function Verify() {
         document.getElementById("modal-root")
     );
 }
+
 
 export default Verify;
