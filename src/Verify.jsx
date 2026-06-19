@@ -19,8 +19,8 @@ function Verify() {
 
         console.log("Verify effect running");
        
-        const params = new URLSearchParams(window.location.search);
         
+        const params = new URLSearchParams(window.location.search);
         const userId = params.get("userId");
         const secret = params.get("secret");
 

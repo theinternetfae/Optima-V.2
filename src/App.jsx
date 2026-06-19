@@ -128,13 +128,16 @@ function App() {
       }
 
       setCurrentUser(userInfo);
-      
-      gettingUserData(userInfo);
-      gettingUserPfp(userData, userInfo);
-      gettingUserTasklist(userInfo);
+      const data = await gettingUserData(userInfo);
+
+      await Promise.all([
+
+        await gettingUserPfp(data, userInfo),
+        await gettingUserTasklist(userInfo)
+
+      ])
     
       
-
     } catch(err) {
 
       console.log("Test Auth Profile Error:", err);
@@ -157,7 +160,9 @@ function App() {
       setUserData(data);
 
       console.log("UserData set");
-      
+
+      return data;
+
     } catch (err) {
 
       if(user.emailVerification === true) {
@@ -177,6 +182,7 @@ function App() {
         const newData = await db.profiles.create(payload, null, user.$id);
         setUserData(newData);
 
+        return newData;
       } else {
 
         console.log("Loading user data:", err);
