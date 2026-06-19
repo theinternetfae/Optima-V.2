@@ -36,9 +36,10 @@ function Verify() {
                 await user.updateVer(userId, secret);
 
                 alert("Email verification successful!");
-                // navigate('/home');
                 console.log("Verified.")
+                navigate('/home');
                
+
             } catch (err) {
 
                 alert(
