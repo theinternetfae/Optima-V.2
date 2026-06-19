@@ -237,6 +237,7 @@ function App() {
     console.log("We are at:", location.pathname)
 
     if(location.pathname === "/verify") {
+      setLoading(false);
       return;
     }
 
