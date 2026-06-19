@@ -42,6 +42,22 @@ function Verify() {
 
             } catch (err) {
 
+                console.log("Verification threw:", err);
+
+                try {
+                    const currentUser = await user.get();
+
+                    if (currentUser.emailVerification) {
+                        console.log("Verification actually succeeded.");
+
+                        alert("Email verification actually successful!");
+                        navigate("/home");
+                        return;
+                    }
+                } catch (e) {
+                    console.log("Couldn't fetch current user:", e);
+                }
+
                 alert(
                     JSON.stringify({
                         code: err.code,
