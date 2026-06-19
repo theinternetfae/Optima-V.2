@@ -160,7 +160,7 @@ function App() {
       
     } catch (err) {
 
-      if(!data && user.emailVerification === true) {
+      if(user.emailVerification === true) {
 
         console.log("User Data not found... creating")
         const payload = {

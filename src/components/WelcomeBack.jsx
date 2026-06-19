@@ -79,6 +79,8 @@ function WelcomeBack() {
 
                 setNotification(prev => !prev);
                 setNotifError("We can't log you in just yet, check your inbox for 'AppWrite' and Verify your email first");
+                setEmailInput('');
+                setPassword('');    
                 return;
             } 
 

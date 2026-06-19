@@ -6,19 +6,8 @@ import user from "./appwrite/accounts";
 
 function Verify() {
     const navigate = useNavigate();
-    const location = useLocation();
 
     const hasVerified = useRef(false);
-
-    useEffect(() => {
-
-        if (location.pathname === "/verify") {
-            return;
-        }
-
-        authProfile();
-
-    }, [location.pathname]);
 
     useEffect(() => {
 
@@ -34,6 +23,8 @@ function Verify() {
         
         const userId = params.get("userId");
         const secret = params.get("secret");
+
+        console.log("UserId & Promise:", `${userId}-${secret}`);
 
         if (!userId || !secret) return;
 
