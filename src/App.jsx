@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import DateMenu from "./Date.jsx";
 import TaskHistory from "./TaskHistory.jsx";
 import TaskStats from "./TaskStats.jsx";
@@ -127,14 +127,10 @@ function App() {
 
       }
 
-      const data = await db.profiles.get(userInfo?.$id);
-      
-
       setCurrentUser(userInfo);
-      setUserData(data);
       
-      gettingUserData(data, userInfo);
-      gettingUserPfp(data, userInfo);
+      gettingUserData(userInfo);
+      gettingUserPfp(userData, userInfo);
       gettingUserTasklist(userInfo);
     
       
@@ -152,9 +148,17 @@ function App() {
     }
   }
 
-  async function gettingUserData(data, user) {
+  async function gettingUserData(user) {
     
     try {
+
+      const data = await db.profiles.get(user?.$id);
+      
+      setUserData(data);
+
+      console.log("UserData set");
+      
+    } catch (err) {
 
       if(!data && user.emailVerification === true) {
 
@@ -173,15 +177,14 @@ function App() {
         const newData = await db.profiles.create(payload, null, user.$id);
         setUserData(newData);
 
+      } else {
+
+        console.log("Loading user data:", err);
+      
       }
 
-      console.log("UserData set");
-      
-    } catch (err) {
-
-      console.log("Loading user data:", err);
-
     }
+
   }
 
   async function gettingUserPfp(data, user) {
@@ -227,9 +230,19 @@ function App() {
     }
   }
 
+  const location = useLocation();
+
   useEffect(() => {
+    
+    console.log("We are at:", location.pathname)
+
+    if(location.pathname === "/verify") {
+      return;
+    }
+
     authProfile();
-  }, []);
+    
+  }, [location.pathname]);
 
 
 
