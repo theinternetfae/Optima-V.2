@@ -249,7 +249,7 @@ function App() {
 
     authProfile();
     
-  }, [location.pathname]);
+  }, []);
 
 
 
