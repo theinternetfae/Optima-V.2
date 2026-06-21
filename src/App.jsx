@@ -99,7 +99,8 @@ function App() {
     }
   }, [profileImage]);
 
-  const [loading, setLoading] = useState(true);
+  const [authLoading, setauthLoading] = useState(true);
+  const [profileLoading, setProfileLoading] = useState(true);
 
 
 
@@ -115,7 +116,7 @@ function App() {
   async function authProfile() {
     try {
 
-      setLoading(true);
+      setauthLoading(true);
 
       let userInfo = await user.get();
       
@@ -146,14 +147,17 @@ function App() {
     
     } finally {
     
-      setLoading(false);
+      setauthLoading(false);
     
     }
   }
 
   async function gettingUserData(user) {
     
+    
     try {
+
+      setProfileLoading(true);
 
       const data = await db.profiles.get(user?.$id);
       
@@ -189,7 +193,10 @@ function App() {
       
       }
 
+    } finally {
+      setProfileLoading(false);
     }
+
 
   }
 
@@ -246,7 +253,8 @@ function App() {
     console.log("We are at:", location.pathname)
 
     if(location.pathname === "/verify") {
-      setLoading(false);
+      setauthLoading(false);
+      setProfileLoading(false);
       return;
     }
 
@@ -601,7 +609,7 @@ function App() {
     return <Offline/>
   }
   
-  if (loading) {
+  if (authLoading || profileLoading) {
     return <Loader />
   }
 
@@ -617,10 +625,10 @@ function App() {
 
               <Route path="/verify" element={<Verify />}/>
 
-              <Route path="/" element={currentUser && userData ? <Navigate to="/home" replace /> : <Welcome/>}/>
-              <Route path="/signin" element={currentUser && userData ? <Navigate to="/home" replace /> : <WelcomeBack/>}/>
+              <Route path="/" element={currentUser ? <Navigate to="/home" replace /> : <Welcome/>}/>
+              <Route path="/signin" element={currentUser ? <Navigate to="/home" replace /> : <WelcomeBack/>}/>
               
-              <Route path="/home" element={currentUser && userData ? <DateMenu /> : <Navigate to="/signin" replace />}/>
+              <Route path="/home" element={currentUser ? <DateMenu /> : <Navigate to="/signin" replace />}/>
               <Route path="/taskStats" element={<TaskStats />} />
               <Route path="/taskHistory" element={<TaskHistory />} />
 
