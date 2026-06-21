@@ -132,8 +132,8 @@ function App() {
 
       await Promise.all([
 
-        await gettingUserPfp(data, userInfo),
-        await gettingUserTasklist(userInfo)
+        gettingUserPfp(data, userInfo),
+        gettingUserTasklist(userInfo)
 
       ])
     
@@ -194,12 +194,13 @@ function App() {
   }
 
   async function gettingUserPfp(data, user) {
+    
+    if(!data?.pfpId) {
+      setProfileImage(null);
+      return;
+    }
+    
     try{
-
-      if(!data && user.emailVerification === true) {
-        setProfileImage(null);
-        return;
-      }
 
       await st.pfp.check(data.pfpId);
       
@@ -212,8 +213,10 @@ function App() {
     } catch(err) {
 
       console.log("Setting pfp:", err)
+      setProfileImage(null);
 
     }
+    
   }
 
   async function gettingUserTasklist(user) {
@@ -247,8 +250,13 @@ function App() {
       return;
     }
 
-    authProfile();
-    
+    async function initialize() {
+
+      await authProfile();
+      
+    }
+
+    initialize();
   }, []);
 
 
@@ -589,40 +597,44 @@ function App() {
     
   }
 
+  if (!isOnline) {
+    return <Offline/>
+  }
+  
+  if (loading) {
+    return <Loader />
+  }
+
   return (
 
     <TaskContext.Provider value={{taskList, setTaskList, profileImage, currentUser, setProfileImage, tasksDone, setTasksDone, updateTasks, generateFutureTasks, userData, authProfile, setUserData}}>
       <SettingsContext.Provider value={{level, setLevel}}>
 
-        { !isOnline ? (
-            <Offline/>
-          ): 
-          (loading) ? (
-            <Loader />
-          ) : (
-            <Routes>
-              <Route element={<AppLayout />}>
+        {
+    
+          <Routes>
+            <Route element={<AppLayout />}>
 
-                <Route path="/verify" element={<Verify />}/>
+              <Route path="/verify" element={<Verify />}/>
 
-                <Route path="/" element={currentUser ? <Navigate to="/home" replace /> : <Welcome/>}/>
-                <Route path="/signin" element={currentUser ? <Navigate to="/home" replace /> : <WelcomeBack/>}/>
-                
-                <Route path="/home" element={currentUser ? <DateMenu /> : <Navigate to="/signin" replace />}/>
-                <Route path="/taskStats" element={<TaskStats />} />
-                <Route path="/taskHistory" element={<TaskHistory />} />
+              <Route path="/" element={currentUser ? <Navigate to="/home" replace /> : <Welcome/>}/>
+              <Route path="/signin" element={currentUser ? <Navigate to="/home" replace /> : <WelcomeBack/>}/>
+              
+              <Route path="/home" element={currentUser ? <DateMenu /> : <Navigate to="/signin" replace />}/>
+              <Route path="/taskStats" element={<TaskStats />} />
+              <Route path="/taskHistory" element={<TaskHistory />} />
 
-                <Route path="settings" element={<Settings />}>
-                  <Route index element={<Navigate to="profile" replace />} />
-                  <Route path="profile" element={<Profile />} />
-                  <Route path="taskHandler" element={<TaskHandler />} />
-                  <Route path="dataPrivacy" element={<DataPrivacy />} />
-                  <Route path="about" element={<About />} />
-                </Route>
-
+              <Route path="settings" element={<Settings />}>
+                <Route index element={<Navigate to="profile" replace />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="taskHandler" element={<TaskHandler />} />
+                <Route path="dataPrivacy" element={<DataPrivacy />} />
+                <Route path="about" element={<About />} />
               </Route>
-            </Routes>
-          )
+
+            </Route>
+          </Routes>
+    
         }
 
       </SettingsContext.Provider>
