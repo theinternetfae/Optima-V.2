@@ -50,7 +50,7 @@ function Verify() {
                     if (currentUser.emailVerification) {
                         console.log("Verification actually succeeded.");
 
-                        alert("Email verification actually successful!");
+                        alert("Email verification successful!");
                         navigate("/home");
                         return;
                     }
