@@ -99,8 +99,7 @@ function App() {
     }
   }, [profileImage]);
 
-  const [authLoading, setauthLoading] = useState(true);
-  const [profileLoading, setProfileLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
 
 
@@ -116,7 +115,7 @@ function App() {
   async function authProfile() {
     try {
 
-      setauthLoading(true);
+      setLoading(true);
 
       let userInfo = await user.get();
       
@@ -147,7 +146,7 @@ function App() {
     
     } finally {
     
-      setauthLoading(false);
+      setLoading(false);
     
     }
   }
@@ -156,8 +155,6 @@ function App() {
     
     
     try {
-
-      setProfileLoading(true);
 
       const data = await db.profiles.get(user?.$id);
       
@@ -193,9 +190,7 @@ function App() {
       
       }
 
-    } finally {
-      setProfileLoading(false);
-    }
+    } 
 
 
   }
@@ -253,8 +248,7 @@ function App() {
     console.log("We are at:", location.pathname)
 
     if(location.pathname === "/verify") {
-      setauthLoading(false);
-      setProfileLoading(false);
+      setLoading(false);
       return;
     }
 
@@ -609,7 +603,7 @@ function App() {
     return <Offline/>
   }
   
-  if (authLoading || profileLoading) {
+  if (loading) {
     return <Loader />
   }
 
