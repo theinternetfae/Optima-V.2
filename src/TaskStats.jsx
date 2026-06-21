@@ -518,7 +518,7 @@ function TaskStats() {
                 <button className="bi-chevron-right bi-chevron" onClick={(() => oneMonthForward())}></button>
             </div>
 
-            { userData.streak && 
+            { userData?.streak && 
                 <div className="average-display">
                 
                     <div className="filler-front">

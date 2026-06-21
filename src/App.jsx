@@ -617,10 +617,10 @@ function App() {
 
               <Route path="/verify" element={<Verify />}/>
 
-              <Route path="/" element={currentUser ? <Navigate to="/home" replace /> : <Welcome/>}/>
-              <Route path="/signin" element={currentUser ? <Navigate to="/home" replace /> : <WelcomeBack/>}/>
+              <Route path="/" element={currentUser && userData ? <Navigate to="/home" replace /> : <Welcome/>}/>
+              <Route path="/signin" element={currentUser && userData ? <Navigate to="/home" replace /> : <WelcomeBack/>}/>
               
-              <Route path="/home" element={currentUser ? <DateMenu /> : <Navigate to="/signin" replace />}/>
+              <Route path="/home" element={currentUser && userData ? <DateMenu /> : <Navigate to="/signin" replace />}/>
               <Route path="/taskStats" element={<TaskStats />} />
               <Route path="/taskHistory" element={<TaskHistory />} />
 
