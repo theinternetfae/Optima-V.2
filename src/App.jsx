@@ -128,13 +128,11 @@ function App() {
       }
 
       setCurrentUser(userInfo);
-      const data = await gettingUserData(userInfo);
 
       await Promise.all([
-
-        gettingUserPfp(data, userInfo),
+        gettingUserData(userInfo),
+        gettingUserPfp(userInfo),
         gettingUserTasklist(userInfo)
-
       ])
     
       
@@ -153,7 +151,6 @@ function App() {
 
   async function gettingUserData(user) {
     
-    
     try {
 
       const data = await db.profiles.get(user?.$id);
@@ -162,11 +159,9 @@ function App() {
 
       console.log("UserData set");
 
-      return data;
-
     } catch (err) {
 
-      if(user.emailVerification === true) {
+      if(err.code === 404 && user.emailVerification === true) {
 
         console.log("User Data not found... creating")
         const payload = {
@@ -182,8 +177,7 @@ function App() {
 
         const newData = await db.profiles.create(payload, null, user.$id);
         setUserData(newData);
-
-        return newData;
+        
       } else {
 
         console.log("Loading user data:", err);
@@ -195,8 +189,10 @@ function App() {
 
   }
 
-  async function gettingUserPfp(data, user) {
+  async function gettingUserPfp(user) {
     
+    const data = await db.profiles.get(user?.$id);
+
     if(!data?.pfpId) {
       setProfileImage(null);
       return;
