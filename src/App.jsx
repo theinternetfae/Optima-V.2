@@ -118,7 +118,7 @@ function App() {
       setLoading(true);
 
       let userInfo = await user.get();
-      
+
       if(!userInfo.emailVerification) {
         
         await user.logout();
@@ -128,6 +128,7 @@ function App() {
       }
 
       setCurrentUser(userInfo);
+
 
       await Promise.all([
         gettingUserData(userInfo),
@@ -151,9 +152,9 @@ function App() {
 
   async function gettingUserData(user) {
     
-    try {
+    const data = await db.profiles.get(user?.$id);
 
-      const data = await db.profiles.get(user?.$id);
+    try {
       
       setUserData(data);
 
@@ -181,7 +182,8 @@ function App() {
       } else {
 
         console.log("Loading user data:", err);
-      
+        setUserData(null);
+
       }
 
     } 

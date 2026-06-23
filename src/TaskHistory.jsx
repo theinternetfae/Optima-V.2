@@ -180,7 +180,7 @@ function TaskHistory() {
 
             </div>
 
-            <div className={`tasks-per-day ${!userData.streak && 'h-[550px]'}`}>
+            <div className={`tasks-per-day ${!userData?.streak && 'h-[550px]'}`}>
                 <div className="tasks-pd-cont">
 
                     {
@@ -200,7 +200,7 @@ function TaskHistory() {
                 </div>
             </div>
 
-            { userData.streak &&             
+            { userData?.streak &&             
                 <div className="chosen-task-info">
                 
                     {chosenHist === '' ? (
