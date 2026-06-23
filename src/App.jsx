@@ -152,11 +152,13 @@ function App() {
 
   async function gettingUserData(user) {
     
-    const data = await db.profiles.get(user?.$id);
+    let dataInfo = {}
 
     try {
+    
+      const data = await db.profiles.get(user?.$id);
       
-      setUserData(data);
+      dataInfo = data;
 
       console.log("UserData set");
 
@@ -177,18 +179,18 @@ function App() {
         };
 
         const newData = await db.profiles.create(payload, null, user.$id);
-        setUserData(newData);
+        dataInfo = newData;
         
       } else {
 
         console.log("Loading user data:", err);
-        setUserData(null);
+        dataInfo = null;
 
       }
 
     } 
 
-
+    setUserData(dataInfo);
   }
 
   async function gettingUserPfp(user) {
