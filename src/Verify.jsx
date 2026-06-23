@@ -6,7 +6,7 @@ import user from "./appwrite/accounts";
 
 function Verify() {
     const navigate = useNavigate();
-
+    const { authProfile } = useContext(TaskContext);
     const hasVerified = useRef(false);
 
     useEffect(() => {
@@ -36,7 +36,8 @@ function Verify() {
                 await user.updateVer(userId, secret);
 
                 alert("Email verification successful!");
-                console.log("Verified.")
+                console.log("Verified.");
+                authProfile();
                 navigate('/home');
                
 
@@ -51,6 +52,7 @@ function Verify() {
                         console.log("Verification actually succeeded.");
 
                         alert("Email verification successful!");
+                        authProfile();
                         navigate("/home");
                         return;
                     }

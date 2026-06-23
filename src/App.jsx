@@ -129,10 +129,10 @@ function App() {
 
       setCurrentUser(userInfo);
 
+      const data = await gettingUserData(userInfo)
 
       await Promise.all([
-        gettingUserData(userInfo),
-        gettingUserPfp(userInfo),
+        gettingUserPfp(data),
         gettingUserTasklist(userInfo)
       ])
     
@@ -151,16 +151,15 @@ function App() {
   }
 
   async function gettingUserData(user) {
-    
-    let dataInfo = {}
 
     try {
     
       const data = await db.profiles.get(user?.$id);
       
-      dataInfo = data;
+      setUserData(data);
 
       console.log("UserData set");
+      return data;
 
     } catch (err) {
 
@@ -179,24 +178,23 @@ function App() {
         };
 
         const newData = await db.profiles.create(payload, null, user.$id);
-        dataInfo = newData;
-        
+        setUserData(newData);
+
+        return newData;
+
       } else {
 
         console.log("Loading user data:", err);
-        dataInfo = null;
+        setUserData(null);
 
       }
 
     } 
 
-    setUserData(dataInfo);
   }
 
-  async function gettingUserPfp(user) {
+  async function gettingUserPfp(data) {
     
-    const data = await db.profiles.get(user?.$id);
-
     if(!data?.pfpId) {
       setProfileImage(null);
       return;
