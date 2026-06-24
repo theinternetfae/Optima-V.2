@@ -17,9 +17,7 @@ function DateMenu() {
 
     const [taskFilter, setTaskFilter] = useState('all');
 
-    //////////////////////////////////////////////////////////////
-
-
+    
     function dayKey(d) {
         return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
     }

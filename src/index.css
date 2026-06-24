@@ -673,21 +673,6 @@ input[type="number"]::-webkit-outer-spin-button {
             }
         }
 
-                        /* & .test-box-cont {
-                    @apply w-[100%] flex justify-between h-[7rem];
-                    
-                    & .test-box {
-                    @apply border border-2 border-transparent w-[65px] flex flex-col justify-center items-center rounded-2xl p-[3px] gap-4 md:border-surfacetwo; 
-                
-                    & .d-name {
-                        @apply h-[25%] text-xs flex justify-center md:text-base;
-                    }
-
-                    & .d-other {
-                        @apply h-[75%] text-[10px] border-accentprimary bg-muted p-[12px] rounded-full shadow-lg flex items-center justify-center cursor-pointer md:text-base md:border-[3px] md:h-[10px] md:w-[10px] md:p-6;
-                    }
-                } */
-
 
         & .selected-scroll-cont {
             @apply bg-surfacetwo rounded-lg w-[95%] p-4 sticky top-2 z-40 flex justify-center lg:w-full;
