@@ -696,7 +696,7 @@ input[type="number"]::-webkit-outer-spin-button {
         }
 
         & .date-box-main {
-            @apply bg-surfacetwo rounded-lg flex gap-2 justify-center font-bold w-[95%] h-[395px] p-2 lg:p-6 lg:w-[50%] lg:h-[500px];
+            @apply bg-surfacetwo rounded-lg flex gap-2 justify-center font-bold w-[95%] p-2 lg:p-6 lg:w-[50%];
 
             & .bi-chevron {
                 @apply cursor-pointer;
@@ -710,10 +710,10 @@ input[type="number"]::-webkit-outer-spin-button {
                 }
 
                 & .date-box-sub {
-                    @apply shadow-lg shadow-inset-dark bg-surfacetwo w-full p-2 rounded flex h-[92%] justify-center lg:p-2 lg:gap-[20px] lg:h-auto ;
+                    @apply shadow-lg shadow-inset-dark bg-surfacetwo w-full p-2 rounded flex justify-center lg:p-2 lg:gap-[20px];
 
                     .calendar-grid {
-                        @apply grid grid-cols-7 w-full gap-2 lg:gap-[25px] lg:h-[370px];
+                        @apply grid grid-cols-7 w-full gap-2 lg:gap-[25px];
 
                         .day-label {
                             @apply text-sm lg:text-base;
