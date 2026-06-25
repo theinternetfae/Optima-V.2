@@ -145,6 +145,7 @@ function Profile() {
 
     }
 
+    //Work on fixing streak calculations, dates and the quirk
 
     return ( 
         <div className="sett-body">
