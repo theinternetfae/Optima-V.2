@@ -7,8 +7,9 @@ import st from "../appwrite/storage.js";
 import { ID } from "appwrite";
 import Alert from "../components/Alert.jsx";
 
-//CLEAN UP FIXES: Work on fixing streak calculations, dates (task dates + calendar displays), the quirk + clean-up
-//NEW ADDITONS: Reminder for tasks, downloading user data and deleting user data, forgot password
+//CLEAN UP FIXES: Work on fixing dates (task dates + calendar displays), streak calculations, the quirk + clean-up
+//NEW ADDITONS: Reminder for tasks, downloading and deleting user data, forgot password
+//General note: refactor the whole site
 
 function Profile() {
     

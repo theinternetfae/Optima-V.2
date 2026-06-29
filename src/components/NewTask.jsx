@@ -47,6 +47,18 @@ function NewTask({exit, editExit, statsNew, task}) {
         setTaskDays(t => t.includes(value) ? t.filter(task => task !== value) : [...t, value]);
     }
 
+    function makeDateAppear(value) {
+        const converting = new Date(value);
+
+        const year = converting.getFullYear();
+
+        const month = converting.getMonth() + 1;
+
+        const date = converting.getDate();
+
+        return `${year}-${month <= 9 ? `0${month}` : `${month}`}-${date}`;
+    }
+
     async function creatingTask() {
         const missing = [];
 
@@ -66,7 +78,7 @@ function NewTask({exit, editExit, statsNew, task}) {
             return;
         }
 
-        console.log(userData)
+        console.log("Look like:", startDate, "Helper date function:", makeDateAppear(Date.now()), "Final revert check:", new Date(makeDateAppear(Date.now())));
 
         const documentId = ID.unique();
 
