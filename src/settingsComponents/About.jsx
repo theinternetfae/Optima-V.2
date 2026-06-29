@@ -10,7 +10,7 @@ function About() {
     const [copied, setCopied] = useState(false);
 
     function handleCopyLink() {
-    navigator.clipboard.writeText(`${window.location.origin}/`)
+    navigator.clipboard.writeText(`${'https://theinternetfae.github.io/Optima-V.2/'}/`)
         .then(() => {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);

@@ -7,6 +7,9 @@ import st from "../appwrite/storage.js";
 import { ID } from "appwrite";
 import Alert from "../components/Alert.jsx";
 
+//CLEAN UP FIXES: Work on fixing streak calculations, dates (task dates + calendar displays), the quirk + clean-up
+//NEW ADDITONS: Reminder for tasks, downloading user data and deleting user data, forgot password
+
 function Profile() {
     
     const navigate = useNavigate();
@@ -144,8 +147,6 @@ function Profile() {
         }
 
     }
-
-    //Work on fixing streak calculations, dates and the quirk + clean-up
 
     return ( 
         <div className="sett-body">
