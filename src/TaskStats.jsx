@@ -564,7 +564,7 @@ function TaskStats() {
             }
 
             {statsNew && <NewTask statsNew={addNewTask}/>}
-            {notification && <Alert popUp={true} different={"Feature coming soon!"} noDelete={() => setNotification(prev => !prev)}/>}
+            {notification && <Alert popUp={true} different={"Stats only displays reoccuring tasks. One time tasks / tasks with no repeat will not be displayed here and do not add to the metric system."} noDelete={() => setNotification(prev => !prev)}/>}
 
         </div> 
     );
