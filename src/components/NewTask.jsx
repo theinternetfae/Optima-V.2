@@ -6,6 +6,7 @@ import Alert from "./Alert.jsx";
 import { TaskContext } from "./TaskContext.js";
 import db from "../appwrite/databases.js";
 import { ID } from "appwrite";
+import { makeDateAppear } from "./utils.js";
 
 function NewTask({exit, editExit, statsNew, task}) {
 
@@ -47,18 +48,6 @@ function NewTask({exit, editExit, statsNew, task}) {
         setTaskDays(t => t.includes(value) ? t.filter(task => task !== value) : [...t, value]);
     }
 
-    function makeDateAppear(value) {
-        const converting = new Date(value);
-
-        const year = converting.getFullYear();
-
-        const month = converting.getMonth() + 1;
-
-        const date = converting.getDate();
-
-        return `${year}-${month <= 9 ? `0${month}` : `${month}`}-${date}`;
-    }
-
     async function creatingTask() {
         const missing = [];
 
@@ -83,8 +72,8 @@ function NewTask({exit, editExit, statsNew, task}) {
         const documentId = ID.unique();
 
         const payload = {
-            appearId: Date.now(),
-            createdId: Date.now(),
+            appearId: makeDateAppear(Date.now()),
+            createdId: makeDateAppear(Date.now()),
             userId: userData.$id,
             name: nameInput,
             emoji: emojiInput,

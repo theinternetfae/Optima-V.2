@@ -19,6 +19,7 @@ import db from "./appwrite/databases.js";
 import Loader from "./components/Loader.jsx";
 import { Query, ID } from "appwrite";
 import Offline from "./Offline.jsx";
+import { makeDateAppear } from "./components/utils.js";
 
 
 function App() {
@@ -521,7 +522,7 @@ function App() {
         future.push({
           ...baseTask,
           $id: ID.unique(),
-          appearId: d.getTime(),
+          appearId: makeDateAppear(d.getTime()),
           isDone: false,
           isCommited: false,
           isPaused: false
@@ -532,7 +533,7 @@ function App() {
       }
     }
 
-    future.sort((a, b) => a.appearId - b.appearId);
+    future.sort((a, b) => new Date(a.appearId) - new Date(b.appearId));
 
     return future;
   }  
