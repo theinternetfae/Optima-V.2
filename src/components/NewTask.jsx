@@ -12,7 +12,7 @@ function NewTask({exit, editExit, statsNew, task}) {
 
     const { taskList, setTaskList, userData, updateTasks, generateFutureTasks } = useContext(TaskContext);
 
-    const isEditingMode = !!task;    
+    const isEditingMode = !!task;
 
     const [showPicker, setShowPicker] = useState(false);
     const [alertShow, setAlertShow] = useState(false);
@@ -229,7 +229,7 @@ function NewTask({exit, editExit, statsNew, task}) {
                     <div className="when-to-when">
                         <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} min={today} disabled={isEditingMode}/>
                         <i className="bi bi-arrow-right"></i>
-                        <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} min={today} disabled={isEditingMode}/>
+                        <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} min={today}/>
                     </div>
                 )}
 
